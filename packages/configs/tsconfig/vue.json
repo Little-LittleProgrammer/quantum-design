@@ -1,0 +1,23 @@
+{   
+    "extends": "./base.json",
+    "compilerOptions": {
+      "target": "esnext",
+      "forceConsistentCasingInFileNames": true,
+      "allowSyntheticDefaultImports": true,
+      "strictFunctionTypes": false,
+      "resolveJsonModule": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "experimentalDecorators": true,
+      "removeComments": true
+    },
+    "include": [
+        "src/**/*.ts", 
+        "src/**/*.d.ts", 
+        "src/**/*.tsx", 
+        "src/**/*.vue",
+        "types/*.d.ts"
+    ],
+    "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
+  }
+  

@@ -1,0 +1,26 @@
+{
+  "name": "@qmfront/hooks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.ts",
+  "files": [
+    "vue",
+    "base"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Wu",
+  "license": "MIT",
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@qmfront/shared": "workspace:*",
+    "@types/sortablejs": "^1.13.0",
+    "ant-design-vue": "^3.2.11",
+    "echarts": "^5.3.3",
+    "sortablejs": "^1.15.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.3"
+  }
+}

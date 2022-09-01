@@ -1,0 +1,17 @@
+{
+    "extends": "@qmfront/configs/tsconfig/base.json",
+    "compilerOptions": {
+        "declaration": true, // 是否自动创建类型声明文件
+        "target": "esnext",
+        "module": "esnext",
+        "noEmit": true,
+        "jsx": "preserve",
+        "noImplicitAny": true,
+        "removeComments": true, // 是否移除注释
+        "forceConsistentCasingInFileNames": true, //禁止对同一个文件的不一致的引用。
+        "moduleResolution": "Node" // 引入package.json不会报红
+    },
+    "include": ["*.ts", "**/*.ts"],
+    "exclude": ["dist", "build", "node_modules"]
+  }
+  

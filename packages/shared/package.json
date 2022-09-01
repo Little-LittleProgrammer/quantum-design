@@ -1,0 +1,28 @@
+{
+  "name": "@qmfront/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "enums",
+    "types",
+    "utils",
+    "base"
+  ],
+  "author": "Evan Wu",
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "dayjs": "^1.11.5"
+  },
+  "devDependencies": {
+    "@qmfront/configs": "workspace:*",
+    "@types/crypto-js": "^4.1.1",
+    "eslint": "^7.32.0",
+    "sass": "^1.54.5"
+  }
+}

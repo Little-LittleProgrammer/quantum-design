@@ -1,10 +1,4 @@
 module.exports = {
-  root: true,
-  // This tells ESLint to load the config from the package `eslint-config-custom`
-  extends: ["custom"],
-  settings: {
-    next: {
-      rootDir: ["apps/*/"],
-    },
-  },
+    root: true,
+    extends: require.resolve('@qmfront/configs/eslint/eslint-base.js')
 };

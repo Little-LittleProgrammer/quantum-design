@@ -1,0 +1,28 @@
+{
+  "display": "Default",
+  "compilerOptions": {
+    "composite": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": false,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "jsx": "preserve",
+    "strictNullChecks": true,
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "@qmfront/*": ["packages/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

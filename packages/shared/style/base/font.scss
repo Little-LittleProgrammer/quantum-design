@@ -1,0 +1,56 @@
+// 颜色
+.font,
+.qm-font {
+    &-red {
+        color: $error-color
+    }
+
+    &-green {
+        color: $success-color
+    }
+}
+
+h1.top-title {
+    margin: $space * 2;
+    font-size: $font-size-base + 6;
+}
+
+.qm-global-tips {
+    font-size: $font-size-base - 2;
+}
+
+.qm-title1 {
+    font-weight: bold;
+    font-size: $font-size-base * 2 - 6;
+    margin: $space 0;
+}
+
+.qm-title2 {
+    font-weight: bold;
+    font-size: $font-size-base + 2;
+    margin: $space 0;
+}
+
+.qm-ellipsis-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// 字体加粗
+.fw-b {
+    font-weight: bold;
+}
+
+// 字体居中
+@each $var in (center, right) {
+    .qm-text-#{$var} {
+        text-align: $var;
+    }
+}
+
+@each $var in (100, 150, 200) {
+    .l-h-#{$var} {
+        line-height: unquote($var+ '%');
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "@qmfront/configs/tsconfig/vue.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "#/*": ["types/*"]
+    }
+  }, 
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/*.d.ts","build/**/*.ts", "build/**/*.d.ts"]
+}

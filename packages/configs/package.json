@@ -1,0 +1,22 @@
+{
+  "name": "@qmfront/configs",
+  "version": "1.0.0",
+  "description": "代码样式统一文件",
+  "main": "index.js",
+  "private":true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Wu",
+  "files": ["eslint", "tsconfig"],
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-turbo": "latest",
+    "eslint-plugin-vue": "^9.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "typescript": "^4.7.4"
+  }
+}

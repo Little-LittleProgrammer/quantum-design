@@ -8,10 +8,12 @@ node_modules
 # testing
 coverage
 
+# vue
+dist
+
 # next.js
 .next/
 out/
-build
 
 # misc
 .DS_Store
