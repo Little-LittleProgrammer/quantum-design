@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@qmfront/configs': workspace:1.0.0
+      '@qmfront/configs': workspace:*
       prettier: latest
       turbo: latest
     devDependencies:

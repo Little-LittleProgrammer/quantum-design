@@ -7,13 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --team=\"team_awesome\" --token=\"as850123119\" --api=\"http://118.31.15.199:9999\"",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@qmfront/configs": "workspace:1.0.0",
+    "@qmfront/configs": "workspace:*",
     "prettier": "latest",
     "turbo": "latest"
   },

@@ -33,7 +33,7 @@ export function init_affix_tabs(initPath: string): string[] {
                 meta: tab.meta,
                 name: tab.name,
                 path: tab.path,
-                fullPath: ignore_t(tab.fullPath)
+                fullPath: ignore_t(tab.fullPath || tab.path)
             } as unknown as RouteLocationNormalized);
         }
     }
