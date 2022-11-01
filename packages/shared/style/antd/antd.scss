@@ -26,6 +26,10 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
     }
 }
 
+.ant-divider-plain.ant-divider-with-text {
+    font-weight: 650;
+}
+
 .ant-input-number {
     width: 100%;
 }
@@ -116,24 +120,39 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
     .ant-pagination-disabled a,
     .ant-dropdown-menu-item-disabled,
     .ant-tabs-tab-btn-disabled,
-    .ant-btn[disabled]{
+    .ant-btn[disabled],
+    .anticon svg,
+    .ant-select-clear,
+    .ant-input-clear-icon,
+    .ant-picker-cell {
         color: $dark-disabled-text-color;
     }
-    .ant-switch {
+    .ant-switch,
+    .ant-switch-checked {
         background-color: $dark-disabled-text-color;
     }
-    .ant-switch-checked {
-        background-color: $primary-color;
-    }
-    .ant-select-clear,
-    .ant-input-clear-icon {
-        color: $dark-disabled-text-color;
-    } 
     .ant-select-clear:hover,
     .ant-input-clear-icon:hover,
     .ant-pagination-disabled a:hover {
         color: rgba(255,255,255,.5);
-    } 
+    }
+    .ant-picker-cell-in-view,
+    .ant-picker-header button {
+        color: #ffffffd9;
+    }
+    .ant-picker-header button:hover,
+    .ant-picker-header-view button:hover {
+        color: $primary-color;
+    }
+    .ant-form-item-label>label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        max-width: 100%;
+        height: 32px;
+        color: #ffffffd9;
+        font-size: 14px;
+    }
 
 } 
 

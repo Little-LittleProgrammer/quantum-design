@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, Canceler } from 'axios';
 import axios from 'axios';
-import { isFunction } from '@qmfront/shared/utils';
+import { isFunction } from '@qmfront/utils';
 
 // Used to store the identification and cancellation function of each request
 let pendingMap = new Map<string, Canceler>();
@@ -16,13 +16,13 @@ export class AxiosCanceler {
         this.removePending(config);
         const url = getPendingUrl(config);
         config.cancelToken =
-      config.cancelToken ||
-      new axios.CancelToken((cancel) => {
-          if (!pendingMap.has(url)) {
-              // If there is no current request in pending, add it
-              pendingMap.set(url, cancel);
-          }
-      });
+            config.cancelToken ||
+            new axios.CancelToken((cancel) => {
+                if (!pendingMap.has(url)) {
+                    // If there is no current request in pending, add it
+                    pendingMap.set(url, cancel);
+                }
+            });
     }
 
     /**

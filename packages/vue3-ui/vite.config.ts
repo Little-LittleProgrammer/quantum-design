@@ -2,6 +2,7 @@ import { UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import VueJsx from '@vitejs/plugin-vue-jsx';
 import {resolve} from 'path';
+import dts from 'vite-plugin-dts';
 
 export default ():UserConfig => {
     return {
@@ -18,13 +19,12 @@ export default ():UserConfig => {
             minify: true,
             cssCodeSplit: true,
             rollupOptions: {
-                external: ['vue', '@qmfront/shared', '@qmfront/shared/utils'],
+                external: ['vue', 'vue-router', '@qmfront/shared', '@qmfront/utils'],
                 input: ['index.ts'],
                 output: [{
                     format: 'es',
                     entryFileNames: '[name].js',
                     assetFileNames: (assetInfo) => {
-                        console.log(assetInfo.name);
                         const _componentName = assetInfo.name?.split('/')[1];
                         return `${_componentName}/style/[name][extname]`;
                     },
@@ -53,6 +53,9 @@ export default ():UserConfig => {
         plugins: [
             vue(),
             VueJsx(),
+            dts({
+                outputDir: 'dist'
+            }),
             {
                 name: 'css-deal',
                 generateBundle(options, bundle) {

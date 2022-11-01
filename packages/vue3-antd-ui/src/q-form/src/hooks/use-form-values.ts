@@ -1,14 +1,14 @@
-import { isArray, isFunction, isObject, isString, isNullOrUnDef, date_util } from '@qmfront/shared/utils';
+import { isArray, isFunction, isObject, isString, isNullOrUnDef, date_util, deep_copy } from '@qmfront/utils';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
 import { dateFormat } from '@qmfront/shared/enums';
 
 interface UseFormValuesContext {
-  defaultValueRef: Ref<any>;
-  getSchema: ComputedRef<FormSchema[]>;
-  getProps: ComputedRef<FormProps>;
-  formModel: Record<string, any>;
+    defaultValueRef: Ref<any>;
+    getSchema: ComputedRef<FormSchema[]>;
+    getProps: ComputedRef<FormProps>;
+    formModel: Record<string, any>;
 }
 export function use_form_values({
     defaultValueRef,
@@ -64,6 +64,11 @@ export function use_form_values({
             values[startTimeKey] = date_util(startTime).format(format);
             values[endTimeKey] = date_util(endTime).format(format);
             Reflect.deleteProperty(values, field);
+
+            values[field] = {
+                [startTimeKey]: values[startTimeKey],
+                [endTimeKey]: values[endTimeKey]
+            };
         }
 
         return values;
@@ -79,7 +84,7 @@ export function use_form_values({
                 formModel[item.field] = defaultValue;
             }
         });
-        defaultValueRef.value = obj;
+        defaultValueRef.value = deep_copy(obj);
     }
 
     return { handle_form_values, init_default };

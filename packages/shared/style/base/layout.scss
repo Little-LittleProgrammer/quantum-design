@@ -1,4 +1,4 @@
-$qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300 310 320 330 340 350 360 370 380 390 400 410 420 430 440 450 460 470 480);
+$qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300 310 320 330 340 350 360 370 380 390 400 410 420 430 440 450 460 470 480 500 600 700 800 900 1000);
 
 .qm-table-bottom-box {
     min-height: 30px;
@@ -29,22 +29,22 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
     }
 
     .m-l-#{$i} {
-        margin-left: $i +px !important;
+        margin-left:  unquote($i+'px')!important;
     }
 
     .m-t-#{$i} {
-        margin-top: $i +px !important;
+        margin-top: unquote($i+'px') !important;
     }
 
     .p-l-#{$i} {
-        padding-left: $i +px !important;
+        padding-left: unquote($i+'px')!important;
     }
 }
 
 // 宽度
 @each $i in $qmWidthArr {
     .w-#{$i} {
-        width: $i +px !important
+        width: unquote($i+'px') !important
     }
 }
 
@@ -190,8 +190,6 @@ body {
         display: block;
         @include flexboxChild();
         width: 100%;
-        padding: $space;
-        padding-left: $space + 8;
         height: 100%;
         box-sizing: border-box;
         overflow-y: scroll;

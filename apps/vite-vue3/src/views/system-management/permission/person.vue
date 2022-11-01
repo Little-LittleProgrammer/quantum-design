@@ -171,7 +171,7 @@ const getEditSchemas = computed(():FormSchema[] => {
             },
             {
                 trigger: 'blur',
-                validator: async(rule: RuleObject, value: string) => {
+                validator: async(_rule: RuleObject, value: string) => {
                     const _reg = regEnum.emailReg;
                     if (!_reg.test(value)) {
                         return Promise.reject('请输入正确格式的邮箱');

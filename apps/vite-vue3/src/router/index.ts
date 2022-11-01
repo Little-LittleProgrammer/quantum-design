@@ -5,7 +5,9 @@ import { redirect_route } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
 import { App } from 'vue';
 
-let _routerData = [...systemManageData, ...routerErrorData];
+let _routerData = [
+    ...systemManageData
+];
 
 // 添加error路由数据
 _routerData = [

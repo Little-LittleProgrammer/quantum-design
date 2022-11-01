@@ -1,5 +1,6 @@
 import { ExtractPropTypes } from 'vue';
-import { propTypes } from '../../utils/types';
+import { propTypes } from '@qmfront/types/vue/types';
+
 export const iconPickProps = {
     value: propTypes.string,
     width: propTypes.string.def('100%'),

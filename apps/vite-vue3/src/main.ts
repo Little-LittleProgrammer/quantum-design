@@ -7,7 +7,7 @@ import { update_theme } from './assets/ts/theme';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { MemorialEnum } from '@qmfront/shared/enums';
-import { createLocalStorage } from '@qmfront/shared/utils';
+import { createLocalStorage } from '@qmfront/utils';
 import { setup_outer_guard } from './router/setup-router';
 import { useGlobalStore } from './store/modules/global';
 import App from './App.vue';

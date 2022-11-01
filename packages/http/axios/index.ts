@@ -4,12 +4,11 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { VAxios } from './Axios';
-import { check_status } from '../check-status';
-import { ContentTypeEnum, RequestEnum, ResultEnum } from '@qmfront/shared/enums/httpEnum';
-import { deep_merge, isString } from '@qmfront/shared/utils';
+import { check_status } from './check-status';
+import { ContentTypeEnum, RequestEnum, ResultEnum } from '@qmfront/shared/enums';
+import { deep_merge, isString } from '@qmfront/utils';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl } from './helper';
 import { useMessage } from '@qmfront/hooks/vue';
-import type {SelectPartial} from '@qmfront/shared/types/global'
 
 const { createMessage } = useMessage();
 const error = createMessage.error!;
@@ -25,7 +24,7 @@ export const defaultTransform: AxiosTransform = {
      * @param options
      */
     beforeRequestHook: (config, options) => {
-        const { apiUrl, urlPrefix, joinTime = true, env = '', joinPrefix, joinCookie = true } = options;
+        const { apiUrl, urlPrefix, joinTime = true, env = () => '', joinPrefix, joinCookie = true } = options;
         const params = config.params || {};
         const data = config.data || false;
 
@@ -50,7 +49,7 @@ export const defaultTransform: AxiosTransform = {
             }
         } else {
             if (!isString(params)) {
-                config.url = config.url + '?' + `${joinTimestamp(joinTime, true)}&` + joinEnvToUrl(env, true) + `${joinCookieToUrl(joinCookie, true)}`;
+                config.url = config.url + '?' + `${joinTimestamp(joinTime, true)}&` + `${joinEnvToUrl(env, true)}&` + `${joinCookieToUrl(joinCookie, true)}`;
                 if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
                     config.data = Object.assign(data || {}, joinEnvToUrl(env, false));
                     config.params = params;
@@ -105,6 +104,8 @@ export const defaultTransform: AxiosTransform = {
             location.replace('/backend/error')
         } else if (res.data.code == ResultEnum.ERROR){
             error(res.data.msg);
+        } else if (res.data.code == ResultEnum.SERVERERROR){
+            error(res.data.msg);
         } else if (res.data.code == ResultEnum.RELOAD){
             window.location.reload();
         } else if (res.data.code == ResultEnum.LOGIN){
@@ -124,8 +125,10 @@ export const defaultTransform: AxiosTransform = {
         }
         if (error && error.response) {
             check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageMode || 'message');
-        } else if (error.__CANCEL__) {
+        } else if (error.code === 'ERR_CANCELED') {
             // 如果手动取消, 不予受理
+            console.log('请求重复, 手动取消请求')
+            return Promise.resolve(error);
         } else {
             check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageMode || 'message');
         }
@@ -158,7 +161,7 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     //  是否加入时间戳
                     joinTime: true,
                     // 是否在请求中加入环境参数
-                    env: '1',
+                    env: () =>'',
                     // 是否加入cokie
                     joinCookie: true,
                     // 忽略重复请求

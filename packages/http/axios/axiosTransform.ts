@@ -1,7 +1,6 @@
 /**
  * Data processing class, can be configured according to the project
  */
-import { SelectPartial } from '@qmfront/shared/types/global';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { RequestOptions } from './Interface';
 

@@ -13,7 +13,7 @@ export type UseFormReturnType = [RegisterFn, FormActionType];
 
 export type Rule = RuleObject & {
     trigger?: 'blur' | 'change' | ['change', 'blur'];
-  };
+};
 
 export interface RenderCallbackParams {
     schema: FormSchema;
@@ -51,9 +51,9 @@ export interface FormSchema {
     subLabel?: string;
     // 提示语
     helpMessage?:
-      | string
-      | string[]
-      | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
+    | string
+    | string[]
+    | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
     // BaseHelp component props
     helpComponentProps?: Partial<HelpComponentProps>;
     // Label width, if it is passed, the labelCol and WrapperCol configured by itemProps will be invalid
@@ -64,12 +64,12 @@ export interface FormSchema {
     component: ComponentType;
     // 用于设置调用组件的属性, 具体详情查看 ant-design-vue
     componentProps?:
-      | ((opt: {
-          schema: FormSchema;
-          formActionType: FormActionType;
-          formModel: Record<string, any>;
-        }) => Record<string, any>)
-      | object;
+    | ((opt: {
+        schema: FormSchema;
+        formActionType: FormActionType;
+        formModel: Record<string, any>;
+    }) => Record<string, any>)
+    | object;
     // Required
     required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
     suffix?: string | number | ((values: RenderCallbackParams) => string | number);
@@ -102,10 +102,10 @@ export interface FormSchema {
     renderColContent?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
 
     renderComponentContent?:
-      | ((renderCallbackParams: RenderCallbackParams) => any)
-      | VNode
-      | VNode[]
-      | string;
+    | ((renderCallbackParams: RenderCallbackParams) => any)
+    | VNode
+    | VNode[]
+    | string;
 
     // Custom slot, in from-item
     slot?: string;
@@ -129,9 +129,9 @@ export interface FormActionType {
     setProps: (formProps: Partial<FormProps>) => Promise<void>;
     removeSchemaByFiled: (field: string | string[]) => Promise<void>;
     appendSchemaByField: (
-      schema: FormSchema,
-      prefixField: string | undefined,
-      first?: boolean | undefined,
+        schema: FormSchema,
+        prefixField: string | undefined,
+        first?: boolean | undefined,
     ) => Promise<void>;
     validateFields: (nameList?: NamePath[]) => Promise<any>;
     validate: (nameList?: NamePath[]) => Promise<any>;

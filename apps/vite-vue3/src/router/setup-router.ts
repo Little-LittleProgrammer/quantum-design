@@ -2,10 +2,9 @@ import setting from '@/enums/projectEnum';
 import { IBreadcrumb } from '@/store';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress'; // Progress 进度条
-import { AxiosCanceler } from '@qmfront/http/axios/axiosCancel';
+import { AxiosCanceler } from '@qmfront/http';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
-import {Nullable} from '@qmfront/shared/types/global';
 
 export function setup_outer_guard(router: Router, routerData:RouteRecordRaw[]) {
     set_progress(router);
@@ -116,6 +115,7 @@ function create_permission_route(router: Router) { // 是否包含权限管理
             {
                 path: '/',
                 redirect: '/backend',
+                name: 'first',
                 meta: {
                     title: '第一初始页面',
                     pid: '0',
@@ -124,10 +124,11 @@ function create_permission_route(router: Router) { // 是否包含权限管理
             },
             {
                 path: '/backend',
-                redirect: '/backend/base-data', // 默认初始页面
+                redirect: '/backend/operation-module', // 默认初始页面
+                name: 'home',
                 meta: {
                     title: '初始页面',
-                    pid: '0',
+                    pid: 'first',
                     id: 'home'
                 }
             }
@@ -135,6 +136,14 @@ function create_permission_route(router: Router) { // 是否包含权限管理
         _initRouter.forEach(route => {
             router.addRoute(route);
         });
+        setTimeout(() => { // 路由的添加并不会及时刷新, 必须延时进行自行调用
+            const isInitPath = router.currentRoute.value.fullPath.split('/').length === 2;
+            if (isInitPath) {
+                router.push({
+                    path: '/'
+                });
+            }
+        }, 700);
     }
 }
 

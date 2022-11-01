@@ -2,7 +2,7 @@ import 'vue-router';
 
 export interface menuData {
     auth_name: string;
-    icon: string;
+    icon?: string;
     id: string;
     path: string;
     pid: string;

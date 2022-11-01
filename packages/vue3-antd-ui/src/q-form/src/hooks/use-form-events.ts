@@ -1,10 +1,9 @@
-import { isArray, isFunction, isObject, isString, date_util, deep_merge } from '@qmfront/shared/utils';
+import { isArray, isFunction, isObject, isString, date_util, deep_merge } from '@qmfront/utils';
 import { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ComputedRef, Ref, toRaw, unref } from 'vue';
 import { dateItemType, handle_input_number_value } from '../helper';
 import { FormActionType, FormProps, FormSchema } from '../types/form';
 import { cloneDeep, uniqBy } from 'lodash-es';
-import { Fn } from '@qmfront/shared/types/global';
 
 export type EmitType = (event: string, ...args: any[]) => void;
 
@@ -86,6 +85,21 @@ export function use_form_events({
                             arr.push(ele ? date_util(ele) : null);
                         }
                         formModel[key] = arr;
+                    } else if (isObject(_value)){
+                        const fieldMapToTime = unref(getProps).fieldMapToTime;
+                        if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
+                            formModel[key] = _value;
+                        } else {
+                            for (const [field, [startTimeKey, endTimeKey], format ] of fieldMapToTime) {
+                                if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+                                    continue;
+                                }
+                                if (key === field) {
+                                    formModel[key] = [date_util(_value[startTimeKey]), date_util(_value[endTimeKey])];
+                                    break;
+                                }
+                            }
+                        }
                     } else {
                         const { componentProps } = schema || {};
                         let _props = componentProps as any;

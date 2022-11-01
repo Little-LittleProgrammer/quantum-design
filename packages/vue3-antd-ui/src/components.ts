@@ -5,3 +5,6 @@ export * from './q-table';
 export * from './q-form';
 export * from './q-breadcrumb';
 export * from './q-dropdown';
+export * from './q-drawer';
+export * from './q-transfer';
+export * from './q-upload';

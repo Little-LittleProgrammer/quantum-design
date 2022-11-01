@@ -1,0 +1,21 @@
+{
+  "name": "@qmfront/types",
+  "version": "1.0.0",
+  "description": "代码样式统一文件",
+  "private":true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Wu",
+  "files": ["global", "vue"],
+  "license": "MIT",
+  "dependencies": {
+    "vite": "^3.0.7"
+  },
+  "devDependencies": {
+    "vue": "^3.2.37",
+    "vue-types": "^4.2.1",
+    "@qmfront/configs": "workspace:*",
+    "eslint": "^7.32.0"
+  }
+}

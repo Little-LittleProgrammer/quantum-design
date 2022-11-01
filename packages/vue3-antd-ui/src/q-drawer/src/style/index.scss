@@ -1,0 +1,87 @@
+$header-height: 60px;
+$detail-header-height: 40px;
+$footer-height: 60px;
+
+.q-drawer.container.drawer-container.add-weight {
+    .ant-drawer-wrapper-body {
+        overflow: hidden;
+    }
+
+    .ant-drawer-close {
+        &:hover {
+            color: $error-color;
+        }
+    }
+    .ant-drawer-body {
+        height: calc(100% - $header-height);
+        padding: 0;
+
+        .q-drawer-content {
+            overflow-y: auto;
+            padding: 16px;
+        }
+    }
+
+    .mr-2 {
+        margin-right: 2px;
+    }
+    .q-drawer-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 0 12px 0 20px;
+        text-align: right;
+        border-top: 1px solid $border-color-base;
+        @include border-color(border-color, top);
+    }
+
+    .q-drawer-header {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        @include text-color(text-color);
+        &-back {
+            padding: 0 12px;
+            cursor: pointer;
+            &:hover {
+                color: $primary-color;
+            }
+        }
+        &-twrap {
+            flex: 1;
+        }
+
+        &-toolbar {
+            padding-right: 50px;
+        }
+    }
+}
+.q-drawer.container.drawer-container.add-weight.q-drawer-detail {
+    position: absolute;
+
+    .ant-drawer-header {
+        width: 100%;
+        height: $detail-header-height;
+        padding: 10px;
+        border-top: 1px solid $border-color-base;
+        @include border-color(border-color);
+        box-sizing: border-box;
+    }
+
+    .ant-drawer-title {
+        height: 100%;
+    }
+
+    .ant-drawer-close {
+        height: $detail-header-height;
+        line-height: $detail-header-height;
+    }
+
+    .scrollbar-wrap {
+        padding: 0 !important;
+    }
+
+    .ant-drawer-body {
+        height: calc(100% - $detail-header-height);
+    }
+}

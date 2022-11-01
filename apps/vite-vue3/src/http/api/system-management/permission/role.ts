@@ -1,6 +1,4 @@
 import { defHttp } from '@/http/axios';
-import { Recordable } from '@qmfront/shared/types/global';
-import { Result } from '@qmfront/shared/types/http';
 
 enum Api {
     roleList = '/manage/role/index',

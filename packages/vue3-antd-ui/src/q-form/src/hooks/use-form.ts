@@ -1,7 +1,6 @@
 import type { FormProps, FormActionType, UseFormReturnType, FormSchema } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
-import { Nullable } from '@qmfront/shared/types/global';
 
 export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Record<string, any>>;
 

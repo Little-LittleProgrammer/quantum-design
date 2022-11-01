@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 // import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components';
 import { configCompressPlugin } from './compress';
-import { configImageminPlugin } from './imagemin';
 import { configPwaConfig } from './pwa';
 import { configHtmlPlugin } from './html';
 import { configStyleImportPlugin } from './style-import';
@@ -40,9 +39,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // vite-plugin-theme
     // vitePlugins.push(configThemePlugin(isBuild));
     if (isBuild) {
-        // vite-plugin-imagemin
-        VITE_USE_IMAGEMIN && vitePlugins.push(configImageminPlugin());
-
         // rollup-plugin-gzip
         vitePlugins.push(
             configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)

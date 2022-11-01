@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { isString, deep_merge } from '@qmfront/shared/utils';
+import { isString, deep_merge } from '@qmfront/utils';
 import { unref } from 'vue';
 
 import { useRouter } from 'vue-router';

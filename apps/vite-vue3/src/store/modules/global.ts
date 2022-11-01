@@ -1,7 +1,7 @@
 import { message } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-interface IExport {
+export interface IFileExport {
     title?: string;
     action: string;
     message: string;
@@ -27,7 +27,8 @@ const createState = () => {
             title: '' //  异步查看文件的列表html代码（包含查看链接）
         },
         hasHistoryUrl: false, // 是否有项目历史地址
-        authorityManage: true // 权限管理开关（默认为开启，需要配置相应的数据）
+        authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
+        citySelect: [] as ISelectOption[]
     };
     return state;
 };
@@ -50,7 +51,7 @@ export const useGlobalStore = defineStore('global', {
                 this.environmentData.title = '正式环境';
             }
         },
-        set_async_export_data(data:IExport) {
+        set_async_export_data(data:IFileExport) {
             if (data.action === 'async') {
                 if (data.title) {
                     this.asyncExportNoticePop.title = data.title;

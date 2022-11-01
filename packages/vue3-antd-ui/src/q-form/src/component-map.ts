@@ -24,6 +24,8 @@ import {
 import RadioButtonGroup from './components/radio-button-group.vue';
 import { QIcon } from '../../q-icon';
 import SelectAll from './components/select-all.vue';
+import { QCardUpload } from '@/q-upload';
+import { QTransfer } from '@/q-transfer';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -51,7 +53,10 @@ componentMap.set('MonthPicker', DatePicker.MonthPicker);
 componentMap.set('RangePicker', DatePicker.RangePicker);
 componentMap.set('WeekPicker', DatePicker.WeekPicker);
 componentMap.set('TimePicker', TimePicker);
+componentMap.set('TimeRangePicker', TimePicker.TimeRangePicker);
 componentMap.set('Icon', QIcon);
+componentMap.set('CardUpload', QCardUpload);
+componentMap.set('Transfer', QTransfer);
 
 componentMap.set('Divider', Divider);
 componentMap.set('SelectAll', SelectAll);

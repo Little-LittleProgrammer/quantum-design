@@ -5,6 +5,7 @@ export enum ResultEnum {
   SUCCESS = '200',
   NOTFOUND = '404',
   ERROR = '400',
+  SERVERERROR = '500',
   RELOAD = '403',
   LOGIN = '401',
   TIMEOUT = '408',

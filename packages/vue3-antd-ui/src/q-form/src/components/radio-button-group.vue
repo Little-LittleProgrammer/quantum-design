@@ -14,7 +14,7 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
-import { isString } from '@qmfront/shared/utils';
+import { isString } from '@qmfront/utils';
 import {QIcon} from '../../../q-icon';
 import {Tooltip} from 'ant-design-vue';
 
@@ -31,7 +31,6 @@ const props = defineProps({
     }
 });
 const attrs = useAttrs();
-console.log(attrs);
 
 // 通过 子组件 改变父组件传递的 props
 const instance = getCurrentInstance();

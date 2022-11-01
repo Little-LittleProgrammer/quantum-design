@@ -53,16 +53,15 @@ export default {
 </script>
 
 <script lang='ts' setup>
-import '../style/index.scss';
 import { reactive, onMounted, watch, watchEffect, ref} from 'vue';
 import { icons } from '../data/icons-data';
-import { throttle_event } from '@qmfront/shared/utils';
+import { throttle_event } from '@qmfront/utils';
 import { usePagination } from '@qmfront/hooks/vue';
 import {Icon} from './icon';
 import {Empty} from 'ant-design-vue';
-import type {ChangeEvent} from '@qmfront/shared/types/global';
 import { iconPickProps } from './types';
 import {Input as AInput, Pagination as APagination, Popover as APopover} from 'ant-design-vue';
+import './style/index.scss';
 interface DataProps {
     currentSelect: string; // 当前选择的图标
     visible: boolean; // 图标选择可视

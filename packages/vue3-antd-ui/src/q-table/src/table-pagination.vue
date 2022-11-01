@@ -11,6 +11,7 @@
 <script lang='ts' setup>
 import { PropType, computed} from 'vue';
 import {PaginationProps} from './interface';
+import './style/index.scss';
 
 const props = defineProps({
     pageOption: {
@@ -20,7 +21,7 @@ const props = defineProps({
 
 const getPageOption = computed(() => {
     return {
-        showTotal: (total_num:number) => `总共 ${total_num} 条`,
+        showTotal: (count:number) => `总共 ${count} 条`,
         showSizeChanger: true,
         pageSize: 10,
         current: 1,
@@ -29,11 +30,3 @@ const getPageOption = computed(() => {
     };
 });
 </script>
-<style lang='scss' scoped>
-.table-pagination {
-    display: flex;
-    .pagination-button {
-        flex: 1;
-    }
-}
-</style>

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <div class="qm-keep-alive-tabs">
+    <div class="qm-keep-alive-tabs" id="qm-keep-alive-tabs">
         <a-tabs
             type="editable-card"
             :animated="false"
@@ -36,6 +36,8 @@ import { Router } from 'vue-router';
 import { ignore_t, useTabsStore } from './hooks/use-tabs-store';
 import { tabsProps } from './props';
 import { create_tab } from './hooks/use-router';
+import './style/index.scss';
+
 export default defineComponent({
     name: 'KeepAliveTabs',
     components: {TabContent},
@@ -97,115 +99,3 @@ export default defineComponent({
     }
 });
 </script>
-<style lang='scss'>
-$multiple-height: 30px;
-.qm-keep-alive-tabs {
-    .ant-tabs-small {
-        height: $multiple-height;
-    }
-    .ant-tabs.ant-tabs-card {
-        .ant-tabs-nav {
-            height: $multiple-height;
-            &::before {
-                border: 0;
-            }
-            .ant-tabs-nav-more {
-                display: flex;
-            }
-        }
-        .ant-tabs-card-bar {
-            height: $multiple-height;
-            border: 0;
-            margin: 0;
-            box-shadow: none;
-        }
-        .ant-tabs-nav-container {
-            height: $multiple-height;
-        }
-        .ant-tabs-tab {
-            height: $multiple-height - 2px;
-            padding-right: 12px;
-            line-height: $multiple-height - 2px;
-            @include text-color(text-color);
-            transition: none;
-            border-radius: 3px;
-
-            &:hover {
-                .ant-tabs-close-x {
-                    opacity: 1;
-                }
-            }
-
-            .ant-tabs-close-x {
-                width: 8px;
-                height: 12px;
-                font-size: 12px;
-                color: inherit;
-                opacity: 0;
-                transition: none;
-
-                &:hover {
-                    svg {
-                        width: 0.8em !important;
-                    }
-                }
-            }
-
-            > div {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            svg {
-                @include text-color(text-color);
-            }
-        }
-        .ant-tabs-tab:not(.ant-tabs-tab-active) {
-            &:hover {
-                color: $primary-color;
-            }
-        }
-        .ant-tabs-tab-active {
-            position: relative;
-            padding-left: 18px;
-            background: $primary-color;
-            border: 0;
-            transition: none;
-            span {
-                color: #fff !important;
-            }
-            .ant-tabs-close-x {
-                opacity: 1;
-            }
-
-            svg {
-                width: 0.7em;
-                fill: #fff;
-            }
-        }
-        .ant-tabs-tab:not(.ant-tabs-tab-active) {
-            .anticon-close {
-                font-size: 12px;
-
-                svg {
-                    width: 0.6em;
-                }
-            }
-        }
-        .ant-tabs-extra-content {
-            margin-top: 2px;
-            line-height: $multiple-height !important;
-        }
-        .ant-dropdown-trigger {
-            display: inline-flex;
-        }
-
-        &--hide-close {
-            .ant-tabs-close-x {
-                opacity: 0 !important;
-            }
-        }
-    }
-}
-</style>

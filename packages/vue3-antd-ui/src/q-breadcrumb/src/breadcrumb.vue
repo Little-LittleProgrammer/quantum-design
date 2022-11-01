@@ -16,6 +16,7 @@ import { LocationQuery, Router } from 'vue-router';
 import { IBreadcrumb } from '../../utils/types';
 import { breadcrumbProps } from './types';
 import { flatten } from './utils';
+import './style/index.scss';
 
 interface IQueryCache {
     id: number,
@@ -98,37 +99,3 @@ watch(route, (val) => {
     }
 }, { immediate: true });
 </script>
-<style lang='scss' scoped>
-.breadcrumb-enter-from,
-.breadcrumb-leave-to {
-    opacity: 0;
-    transform: translateX(20px);
-}
-.breadcrumb-leave-active {
-  position: absolute;
-}
-
-.breadcrumb-container {
-    @include text-color(text-color-secondary);
-    cursor: pointer;
-    .breadcrumb-separator {
-        padding: 0 8px;
-    }
-    .breadcrumb-item {
-        display: inline-block;
-        transition: all 0.5s;
-        .breadcrumb-link:hover {
-            color: $primary-color;
-        }
-        &:last-of-type {
-            .breadcrumb-separator {
-                display: none;
-            }
-            .breadcrumb-link {
-                @include text-color(heading-color);
-                cursor: default;
-            }
-        }
-    }
-}
-</style>

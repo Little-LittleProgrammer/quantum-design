@@ -2,6 +2,7 @@
 <template>
     <a-form
         v-bind="getBindValue"
+        id="q-form"
         class="q-form"
         :class="getFormClass"
         ref="formElRef"
@@ -38,7 +39,7 @@
 </template>
 
 <script lang='ts'>
-import { date_util, deep_merge } from '@qmfront/shared/utils';
+import { date_util, deep_merge } from '@qmfront/utils';
 import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
@@ -48,7 +49,7 @@ import formAction from './components/form-action.vue';
 import { use_form_values } from './hooks/use-form-values';
 import { EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
-import type {Nullable} from '@qmfront/shared/types/global';
+import './style/index.scss';
 
 export default defineComponent({
     // 接收的 props
@@ -250,48 +251,3 @@ export default defineComponent({
     }
 });
 </script>
-<style lang='scss'>
-.q-form {
-    .row {
-        flex: 1
-    }
-    .ant-form-item {
-        &-label label::after {
-            margin: 0 6px 0 2px;
-        }
-
-        &-with-help {
-            margin-bottom: 0;
-        }
-
-        &:not(.ant-form-item-with-help) {
-            margin-bottom: 20px;
-        }
-
-        &.suffix-item {
-            .ant-form-item-children {
-                display: flex;
-            }
-
-            .suffix {
-                display: inline-flex;
-                padding-left: 6px;
-                margin-top: 1px;
-                line-height: 1;
-                align-items: center;
-            }
-        }
-    }
-
-    .ant-form-explain {
-      font-size: 14px;
-    }
-
-    &.compact {
-        .ant-form-item {
-            margin-bottom: 8px !important;
-        }
-    }
-}
-
-</style>

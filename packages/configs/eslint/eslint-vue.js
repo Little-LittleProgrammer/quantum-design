@@ -14,7 +14,12 @@ module.exports = {
             jsx: true
         }
     },
+    plugins: [
+        'vue',
+        '@typescript-eslint'
+    ],
     rules: {
+        '@typescript-eslint/indent': [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase
         'vue/max-attributes-per-line': [2, {
             singleline: {
                 'max': 10

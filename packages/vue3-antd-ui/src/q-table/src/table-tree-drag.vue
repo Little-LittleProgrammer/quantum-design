@@ -15,7 +15,7 @@ import { reactive, onMounted, computed, nextTick, watch, watchEffect } from 'vue
 import type { PropType } from 'vue';
 import { useSortable } from '@qmfront/hooks';
 import { TableProps } from 'ant-design-vue/lib/table/Table';
-import { deep_copy } from '@qmfront/shared/utils';
+import { deep_copy } from '@qmfront/utils';
 interface DataProps {
     expandKeysList: string[];
     tableShow: boolean;

@@ -1,4 +1,4 @@
-import { date_util, isNumber, isObject } from '@qmfront/shared/utils';
+import { date_util, isNumber, isObject } from '@qmfront/utils';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
 import type { ComponentType } from './types/index';
 

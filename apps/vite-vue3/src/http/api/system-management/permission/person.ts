@@ -1,7 +1,5 @@
 import { defHttp } from '@/http/axios';
 import type { menuData } from '#/router';
-import { Recordable } from '@qmfront/shared/types/global';
-import { Result } from '@qmfront/shared/types/http';
 enum Api {
     userList = '/manage/user/index',
     userAuths= '/manage/user/auths',

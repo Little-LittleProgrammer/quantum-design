@@ -1,4 +1,4 @@
-import { isFunction } from "@qmfront/shared/utils";
+import { isFunction } from "@qmfront/utils";
 
 /**
  * @description 添加时间戳

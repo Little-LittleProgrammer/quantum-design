@@ -1,0 +1,9 @@
+{
+    "extends": "@qmfront/configs/tsconfig/lib.json",
+    "compilerOptions": {
+        "declaration": false
+    },
+    "include": ["*.ts", "**/*.ts", "node_modules/@qmfront/types/**/*.d.ts"],
+    "exclude": ["dist", "node_modules"]
+  }
+  

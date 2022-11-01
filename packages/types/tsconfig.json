@@ -1,0 +1,5 @@
+{
+    "extends": "@qmfront/configs/tsconfig/lib.json",
+    "include": ["vue", "global"]
+  }
+  

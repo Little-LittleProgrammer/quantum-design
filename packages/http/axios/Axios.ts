@@ -4,12 +4,10 @@ import type { AxiosResponseAgent, CreateAxiosOptions } from './axiosTransform';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axiosCancel';
-import { isFunction } from '@qmfront/shared/utils';
+import { isFunction } from '@qmfront/utils';
 import { cloneDeep, omit } from 'lodash-es';
-import { RequestEnum, ContentTypeEnum} from '@qmfront/shared/enums/httpEnum';
+import { RequestEnum, ContentTypeEnum} from '@qmfront/shared/enums';
 import { joinEnvToUrl } from './helper';
-import type {SelectPartial} from '@qmfront/shared/types/global'
-import type {UploadFileParams, Result} from '@qmfront/shared/types/http'
 
 export * from './axiosTransform';
 
@@ -35,9 +33,8 @@ export class VAxios {
   }
 
   private getTransform() {
-      const { customTransform, defaultTransform } = this.options;
+      const { defaultTransform } = this.options;
       return {
-        ...customTransform,
         ...defaultTransform
       };
   }
@@ -84,12 +81,12 @@ export class VAxios {
       const axiosCanceler = new AxiosCanceler();
 
       // Request interceptor configuration processing
-      this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+      this.axiosInstance.interceptors.request.use((config: CreateAxiosOptions) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
 
           const {
                 cancelToken
-          } = config;
+          } = config.requestOptions!;
 
           const ignoreRepeat = cancelToken !== undefined ? cancelToken : this.options.requestOptions?.cancelToken;
           ignoreRepeat && axiosCanceler.addPending(config);
@@ -146,7 +143,7 @@ export class VAxios {
       });
 
       const uploadUrl = this.options.requestOptions?.uploadUrl ? this.options.requestOptions?.uploadUrl : ''
-      const url = uploadUrl + '' + config.url + `?${joinEnvToUrl(this.options.requestOptions?.env || '', true)}`;
+      const url = uploadUrl + '' + config.url + `?${joinEnvToUrl(this.options.requestOptions?.env ||(() => ''), true)}`;
       return this.axiosInstance.request<T>({
           ...config,
           method: 'POST',
@@ -194,39 +191,41 @@ export class VAxios {
   }
 
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-      let conf: CreateAxiosOptions = cloneDeep(config);
-      const transform = this.getTransform();
+        let conf: CreateAxiosOptions = cloneDeep(config);
+        const transform = this.getTransform();
 
-      const { requestOptions } = this.options;
+        const { requestOptions } = this.options;
 
-      const opt: RequestOptions = Object.assign({}, requestOptions, options);
+        const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-      const { beforeRequestHook } = transform || {};
-      if (beforeRequestHook && isFunction(beforeRequestHook)) {
-          conf = beforeRequestHook(conf, opt);
-      }
+        const { beforeRequestHook } = transform || {};
+        if (beforeRequestHook && isFunction(beforeRequestHook)) {
+            conf = beforeRequestHook(conf, opt);
+        }
 
-      conf.requestOptions = opt;
+        conf.requestOptions = opt;
 
-      conf = this.supportFormData(conf);
+        conf = this.supportFormData(conf);
 
-      return new Promise((resolve) => {
-          this.axiosInstance
-              .request<any, AxiosResponse<Result>>(conf)
-              .then((res: AxiosResponse<Result>) => {
-                  try {
-                      if (requestOptions?.isReturnNativeResponse) {
-                          resolve(res as unknown as Promise<T>);
-                      }
-                      resolve(res.data as unknown as Promise<T>);
-                  } catch (err) {
-                      console.log(err || '请求取消');
-                  }
-                  return;
-              })
-              .catch((e: Error | AxiosError) => {
-                  console.log(e || '请求取消');
-              });
-      });
+        return new Promise((resolve) => {
+            this.axiosInstance
+                .request<any, AxiosResponse<Result>>(conf)
+                .then((res: AxiosResponse<Result>) => {
+                    try {
+                        if (requestOptions?.isReturnNativeResponse) {
+                            resolve(res as unknown as Promise<T>);
+                        }
+                        if (res && res.data) {
+                            resolve(res.data as unknown as Promise<T>);
+                        } 
+                    } catch (err) {
+                        console.log(err || '请求取消');
+                    }
+                    return;
+                })
+                .catch((e: Error | AxiosError) => {
+                    console.log(e || '请求取消');
+                });
+        });
   }
 }

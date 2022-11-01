@@ -1,9 +1,9 @@
 <template>
-  <div class="basic-table-action" @click="on_cell_click">
+  <div id="basicTableAction" class="basic-table-action" @click="on_cell_click">
     <template v-for="(action, index) in get_actions" :key="`${index}-${action.label}`">
       <a-tooltip v-if="action.tooltip" v-bind="get_tooltip(action.tooltip)">
         <a-popconfirm v-if="action.popConfirm" v-bind="get_pop_confirm(action.popConfirm)">
-          <Icon :type="action.icon" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
+          <q-icon :type="action.icon" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
           <a-button v-bind="action" v-if="action.label">{{ action.label }}</a-button>
         </a-popconfirm>
         <a-button v-else v-bind="action">{{ action.label }}</a-button>
@@ -27,10 +27,11 @@
 <script lang="ts" setup>
 import { PropType, computed, toRaw } from 'vue';
 import { Divider, TooltipProps } from 'ant-design-vue';
-import { QIcon } from '../../q-icon';
+import { QIcon } from '@/q-icon';
 import { ActionItem } from './interface';
-import { isBoolean, isFunction, isString } from '@qmfront/shared/utils';
-import { propTypes } from '../../utils/types';
+import { isBoolean, isFunction, isString } from '@qmfront/utils';
+import { propTypes } from '@qmfront/types/vue/types';
+import './style/index.scss';
 
 const props = defineProps({
     actions: {
@@ -96,49 +97,3 @@ function on_cell_click(e: MouseEvent) {
     isInButton && e.stopPropagation();
 }
 </script>
-<style lang="scss">
-.basic-table-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .mr-1 {
-    margin-left: 1px;
-  }
-  .ant-btn {
-    margin-left: 0px;
-  }
-
-  .action-divider {
-    display: table;
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-
-    span {
-      margin-left: 0 !important;
-    }
-  }
-
-  button.ant-btn-circle {
-    span {
-      margin: auto !important;
-    }
-  }
-
-  .ant-divider,
-  .ant-divider-vertical {
-    margin: 0 2px;
-  }
-
-  .icon-more {
-    transform: rotate(90deg);
-
-    svg {
-      font-size: 1.1em;
-      font-weight: 700;
-    }
-  }
-}
-</style>

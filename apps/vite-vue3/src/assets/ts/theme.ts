@@ -1,40 +1,43 @@
-import dark from 'ant-design-vue/dist/antd.dark.less';
-import lighter from 'ant-design-vue/dist/antd.less';
-import { addClass, hasClass, removeClass } from '@qmfront/shared/utils';
+
+import { addClass, hasClass, removeClass } from '@qmfront/utils';
+import dark from 'ant-design-vue/dist/antd.dark.less?inline'; //?inline 参数来关闭 css注入
+import lighter from 'ant-design-vue/dist/antd.less?inline';
 
 /**
  * 更改主题
  * @param mode 主题模式
  */
-export function update_theme(mode: string | null = 'light') {
-    const $htmlRoot = document.getElementById('htmlRoot');
-    if (!$htmlRoot) {
-        return;
-    }
-    const hasDarkClass = hasClass($htmlRoot, 'dark');
-    if (mode === 'dark') {
-        $htmlRoot.setAttribute('data-theme', 'dark');
-        if (!hasDarkClass) {
-            addClass($htmlRoot, 'dark');
+export async function update_theme(mode: string = 'light') {
+    setTimeout(() => {
+        const $htmlRoot = document.getElementById('htmlRoot');
+        if (!$htmlRoot) {
+            return;
         }
-    } else if (mode == 'light') {
-        $htmlRoot.setAttribute('data-theme', 'light');
-        if (hasDarkClass) {
-            removeClass($htmlRoot, 'dark');
+        const hasDarkClass = hasClass($htmlRoot, 'dark');
+        if (mode === 'dark') {
+            $htmlRoot.setAttribute('data-theme', 'dark');
+            if (!hasDarkClass) {
+                addClass($htmlRoot, 'dark');
+            }
+        } else if (mode == 'light') {
+            $htmlRoot.setAttribute('data-theme', 'light');
+            if (hasDarkClass) {
+                removeClass($htmlRoot, 'dark');
+            }
+        } else if (mode == 'gray-mode') {
+            const hasDarkClass = hasClass($htmlRoot, 'gray-mode');
+            if (!hasDarkClass) {
+                addClass($htmlRoot, 'gray-mode');
+            }
         }
-    } else if (mode == 'gray-mode') {
-        const hasDarkClass = hasClass($htmlRoot, 'gray-mode');
-        if (!hasDarkClass) {
-            addClass($htmlRoot, 'gray-mode');
-        }
-    }
-
-    if (mode == 'light') {
+        // add_link(mode);
+        if (mode == 'light') {
         // 保证按需引入， 放在文件头会导致多次引入
-        add_skin(lighter);
-    } else if (mode == 'dark') {
-        add_skin(dark);
-    }
+            add_skin(lighter);
+        } else if (mode == 'dark') {
+            add_skin(dark);
+        }
+    });
 }
 
 /**
@@ -50,23 +53,17 @@ function add_skin(content: string) {
     // 查找style是否存在，存在的话需要删除dom
     if (_getStyle.length > 0) {
         for (let i = _getStyle.length - 1; i >= 0; i--) {
-            // if (_getStyle[i]?.getAttribute('data-type') === 'theme') {
-            //     _getStyle[i].remove();
-            // }
+            // 删除 antd 的 样式
+            if (_getStyle[i]?.dataset?.type === 'theme') {
+                _getStyle[i].remove();
+            }
             if (import.meta.env.PROD) {
-                if (_getStyle[i]?.dataset?.type === 'theme') {
-                    _getStyle[i].remove();
-                }
                 if (_getLink[i]?.rel === 'stylesheet') {
                     $startDom = _getLink[i + 1];
                 }
             } else {
                 if (_getStyle[i]?.innerHTML.includes('style-start-load')) {
                     $startDom = _getStyle[i];
-                }
-                // 删除 antd 的 样式
-                if (_getStyle[i]?.innerHTML.includes('[class^=ant-]::-ms-clear')) {
-                    _getStyle[i].remove();
                 }
             }
         }

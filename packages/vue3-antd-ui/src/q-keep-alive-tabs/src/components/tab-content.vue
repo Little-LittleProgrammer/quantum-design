@@ -13,14 +13,13 @@
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, onMounted, PropType, computed, unref} from 'vue';
 import { RouteLocationNormalized, useRouter } from 'vue-router';
-import type { DropMenu } from '../../../q-dropdown';
+import type { DropMenu } from '@/q-dropdown';
 
-import {QDropdown} from '../../../q-dropdown';
+import {QDropdown} from '@/q-dropdown';
 import { TableActionEnum, useTabs } from '../hooks/use-tabs';
-import { QIcon } from '../../../q-icon';
+import { QIcon } from '@/q-icon';
 import { useTabsStore } from '../hooks/use-tabs-store';
-import { Nullable } from '@qmfront/shared/types/global';
-import { propTypes } from '../../../utils/types';
+import { propTypes } from '@qmfront/types/vue/types';
 interface DataProps {
     current: Nullable<RouteLocationNormalized>,
     currentIndex: number
@@ -179,36 +178,5 @@ export default defineComponent({
 });
 </script>
 <style lang='scss' scoped>
-$multiple-height: 30px;
-.ml-1 {
-    margin-left: 1px;
-}
-.tabs-drop-down {
-    &-extra-quick {
-        display: inline-block;
-        width: 36px;
-        height: $multiple-height;
-        line-height: $multiple-height;
-        @include text-color(text-color-secondary);
-        text-align: center;
-        cursor: pointer;
-        border-left: 1px solid;
-        @include border-color(border-color, 'left');
 
-        &:hover {
-            @include text-color(text-color);
-        }
-    }
-
-    &-info {
-        display: inline-block;
-        width: 100%;
-        height: $multiple-height - 2;
-        padding-left: 0;
-        margin-left: -10px;
-        font-size: 12px;
-        cursor: pointer;
-        user-select: none;
-    }
-}
 </style>

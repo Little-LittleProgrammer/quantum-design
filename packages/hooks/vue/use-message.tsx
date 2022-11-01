@@ -1,7 +1,7 @@
-import { Modal, message as Message, notification } from 'ant-design-vue';
+import { Modal, message as Message } from 'ant-design-vue';
 import type { ModalFunc, ModalFuncProps } from 'ant-design-vue/lib/modal/Modal';
 import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons-vue';
-import { isString } from '@qmfront/shared/utils';
+import { isString } from '@qmfront/utils';
 import { h } from 'vue';
 import { VueNode } from 'ant-design-vue/lib/_util/type';
 

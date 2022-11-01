@@ -1,13 +1,9 @@
 {
   "extends": "@qmfront/configs/tsconfig/vue.json",
   "compilerOptions": {
-    "module": "esnext",
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-    "noImplicitAny": true,
     "baseUrl": "."
   },
   "include": ["src", "index.ts", "scripts"],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "node_modules"]
 }

@@ -7,7 +7,7 @@ declare global {
     interface ISelectOption {
         label: string | number;
         value: string | number;
-        [key: string]: string | number | boolean
+        children?: ISelectOption[];
     }
 
     // select
@@ -15,35 +15,31 @@ declare global {
         [key in T] : ISelectOption[];
     }
 
+    type IApiPageOption = {
+        page: number;
+        page_size: number;
+        count?: number
+    }
+
     // 接口返回的 table
-    type IApiTableData<T extends string, V extends string> = {
-        header: {
-        [key in T]: string;
-        };
-        list: {
-        [key in T | V]: string | Object | string[]
-        }[];
-        page_config?: {
-        page: string;
-        page_size: string;
-        total_num: string
-        };
+    type IApiTableData<T, V> = {
+        header: T;
+        list: V[];
+        pagination?: IApiPageOption;
         [k: string]: string | Object | undefined
     }
 
     // 实际渲染的 Table
-    type ITableData<T extends string> = {
+    type ITableData<T> = {
         header: ColumnType[];
-        list: {
-        [key in T & string]: string | Object | string[]
-        }[];
+        list: T[];
     }
 
     // 分页信息
     type IPageOption = Record<'current' | 'pageSize' | 'total', number>
 
     // modal信息
-    type IModalData<T = Recordable<string>> = {
+    type IModalData<T = Record<string, any>> = {
         visible: boolean,
         formData: T
     }

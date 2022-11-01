@@ -30,11 +30,10 @@ export default {
 import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
 import { QIcon } from '../../q-icon';
 import { find_search_route, ICacheObj } from './search';
-import { throttle_event } from '@qmfront/shared/utils';
+import { throttle_event } from '@qmfront/utils';
 import { useRouter } from 'vue-router';
 import { QLoading } from '@qmfront/vue3-ui';
-import { menuData } from '../../utils/types';
-import { Nullable } from '@qmfront/shared/types/global';
+import { menuData } from '@qmfront/types/vue/types';
 
 interface IData {
     searchText: string,
@@ -94,5 +93,3 @@ const open_page = (item:ICacheObj) => {
     commit_cancel();
 };
 </script>
-<style lang='scss' scoped>
-</style>

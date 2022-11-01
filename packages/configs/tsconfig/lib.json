@@ -1,0 +1,14 @@
+{   
+    "extends": "./base.json",
+    "display": "Library",
+    "compilerOptions": {
+      "target": "ES2015",
+      "allowSyntheticDefaultImports": true,
+      "strictFunctionTypes": false,
+      "resolveJsonModule": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "experimentalDecorators": true,
+      "removeComments": true
+    }
+}

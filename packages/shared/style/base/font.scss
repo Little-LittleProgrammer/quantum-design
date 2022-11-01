@@ -36,6 +36,9 @@ h1.top-title {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.text-secondary {
+    @include text-color(text-color-secondary)
+}
 
 // 字体加粗
 .fw-b {
@@ -43,7 +46,7 @@ h1.top-title {
 }
 
 // 字体居中
-@each $var in (center, right) {
+@each $var in (left, center, right) {
     .qm-text-#{$var} {
         text-align: $var;
     }

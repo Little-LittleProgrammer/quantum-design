@@ -2,6 +2,7 @@ import {createAxios} from '@qmfront/http';
 import { router } from '@/router';
 import { useViteEnv } from '@/hooks/settings/use-vite-env';
 import { useGlobalStore } from '@/store/modules/global';
+import { ContentTypeEnum } from '@qmfront/shared/enums';
 
 let _requestNum = 0; // 请求数量
 let _requestPageUrl = ''; // 请求地址所在页面
@@ -84,6 +85,7 @@ export const defHttp = createAxios({
         customResponse: custom_response,
         customResponseError: custom_response_error
     },
+    headers: {'Content-Type': ContentTypeEnum.JSON},
     requestOptions: {
         // 接口地址
         apiUrl: env.apiUrl,

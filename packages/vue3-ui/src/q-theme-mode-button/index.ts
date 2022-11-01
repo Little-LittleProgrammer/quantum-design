@@ -4,7 +4,7 @@ import type {ThemeModeTypes} from './themeModeButtonTypes';
 
 export type {ThemeModeTypes};
 
-import { withInstall } from '@qmfront/shared/utils';
+import { withInstall } from '@qmfront/utils';
 
 const QThemeModeButton = withInstall(ThemeModeButton);
 export {QThemeModeButton as default};

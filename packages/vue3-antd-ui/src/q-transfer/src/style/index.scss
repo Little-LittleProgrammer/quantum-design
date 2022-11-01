@@ -1,0 +1,13 @@
+
+.q-transfer.area-transfer {
+    .ant-transfer-list {
+        max-height: 400px;
+        .ant-transfer-list-body {
+            overflow: auto;
+        }
+    }
+    .ant-transfer-list:first-child {
+        width: 46%;
+        flex: none;
+    }
+}

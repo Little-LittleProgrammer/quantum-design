@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
-import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, first_to_upper } from '@qmfront/shared/utils';
+import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, first_to_upper } from '@qmfront/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
 import { computed, PropType, Ref, toRefs, unref } from 'vue';
@@ -11,7 +11,6 @@ import { FormActionType } from '../types/form';
 import { QIcon } from '../../../q-icon';
 import { Divider } from 'ant-design-vue';
 import { cloneDeep } from 'lodash-es';
-import { Nullable } from '@qmfront/shared/types/global';
 
 export default defineComponent({
     name: 'QAntFormItem',

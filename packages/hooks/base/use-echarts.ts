@@ -54,8 +54,10 @@ echarts.use([
 ]);
 
 import type { EChartsOption } from 'echarts';
-import { createLocalStorage } from '@qmfront/shared/utils';
+import { createLocalStorage } from '@qmfront/utils';
 import { computed, onUnmounted, ref, Ref, unref, watch, nextTick } from 'vue';
+
+export type {EChartsOption}
 
 export function useEcharts(
     elRef: Ref<HTMLDivElement>,

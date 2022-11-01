@@ -1,12 +1,20 @@
 {
-  "extends": "@qmfront/configs/tsconfig/vue.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-    "noImplicitAny": true,
-  },
-  "include": ["src"],
-  "exclude": ["dist", "build", "node_modules"]
+    "extends": "@qmfront/configs/tsconfig/vue.json",
+    "compilerOptions": {
+        "isolatedModules": true,
+        "noEmit": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": [
+        "src/**/*.ts", 
+        "src/**/*.d.ts", 
+        "src/**/*.tsx", 
+        "src/**/*.vue",
+        "types/*.ts",
+        "node_modules/@qmfront/types/**/*.d.ts"
+    ],
+    "exclude": ["dist"]
 }

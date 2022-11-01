@@ -26,7 +26,7 @@
         <div class="wrapper">
             <q-aside :menuData="sysStore.asideMenuData"></q-aside>
             <div class="main js-layout-main">
-                <div class="main-header mb sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
+                <div class="main-header sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
                     <div class="qm-flex">
                         <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
                         <q-keep-alive-tabs v-if="setting.cacheTabsSetting.show" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="layout-content">
                     <router-view >
                         <template #default="{ Component, route }">
                             <q-loading :loading="setting.transition.openPageLoading ? globalStore.pageLoading : false" size="large">
@@ -71,8 +71,8 @@ import { QKeepAliveTabs } from '@qmfront/vue3-antd-ui';
 import setting from '@/enums/projectEnum';
 import { reactive, computed, onMounted, ref, watch } from 'vue';
 import elementResizeDetectorMaker from 'element-resize-detector';
-import QHeader from '@/components/q-header.vue';
-import QAside from '@/components/q-aside.vue';
+import QHeader from '@/components/layout/q-header.vue';
+import QAside from '@/components/layout/q-aside.vue';
 import { useRouter } from 'vue-router';
 import {QThemeModeButton} from '@qmfront/vue3-ui';
 import { QIcon} from '@qmfront/vue3-antd-ui';
@@ -82,7 +82,7 @@ import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
 import { MemorialEnum } from '@qmfront/shared/enums';
 import dayjs from 'dayjs';
-import { createLocalStorage } from '@qmfront/shared/utils';
+import { createLocalStorage } from '@qmfront/utils';
 import { update_theme } from '@/assets/ts/theme';
 
 const router = useRouter();
@@ -161,11 +161,9 @@ onMounted(() => {
 </script>
 <style lang='scss' scoped>
 .main-header {
-    margin: -10px;
-    margin-left: 0px;
     padding: 5px;
     height: 40px;
-    padding-left: 5px;
+    padding-left: $space + 14;
     @include bg-color(aside-bg);
     .qm-flex {
         width: 100%;
@@ -190,7 +188,7 @@ onMounted(() => {
 }
 .sticky-header {
     position: sticky;
-    top: -10px;
+    top: 0px;
     z-index: 999;
 }
 .search-container {
@@ -218,5 +216,12 @@ onMounted(() => {
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+.js-layout-main {
+    position: relative;
+}
+.layout-content {
+    padding-top: 10px;
+    padding-left: 10px;
 }
 </style>

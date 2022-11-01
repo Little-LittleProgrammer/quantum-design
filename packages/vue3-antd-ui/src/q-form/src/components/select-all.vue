@@ -85,11 +85,3 @@ const isAll = computed({
 });
 
 </script>
-<style lang='scss' scoped>
-.checkbox-wrapper {
-    padding: 4px 8px;
-}
-.divider-line {
-    margin: 0;
-}
-</style>

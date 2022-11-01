@@ -43,6 +43,7 @@ import settings from '@/enums/projectEnum';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
+import { api_get_city_select } from './http/api/common/direction';
 
 export default defineComponent({
     name: 'App',
@@ -90,12 +91,20 @@ export default defineComponent({
             } else {
                 const _res = import('@/menus/index');
                 sysStore.mainMenuData = (await _res).default;
-                sysStore.initMenuData = '/backend/home-page/index';
+                sysStore.initMenuData = '/backend/operation-module/canary-management';
                 sysStore.menuDataLoadingEnd = true;
                 settings.func.showSearchButton && get_net_router(sysStore.mainMenuData);
             }
         };
-        get_global_env();
+        // get_global_env();
+        get_menus_data();
+        async function get_dity_select() {
+            const _res = await api_get_city_select();
+            if (_res.code === 200) {
+                globalStore.citySelect = _res.data.list;
+            }
+        };
+        get_dity_select();
         return {
             locale,
             userStore,

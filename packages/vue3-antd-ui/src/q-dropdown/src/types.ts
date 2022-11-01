@@ -1,5 +1,4 @@
 
-import type {Fn} from '@qmfront/shared/types/global';
 import { ExtractPropTypes, PropType } from 'vue';
 
 export interface DropMenu {

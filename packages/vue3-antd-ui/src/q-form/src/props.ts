@@ -3,7 +3,7 @@ import type { CSSProperties, PropType, Ref } from 'vue';
 import type { ColEx } from './types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
-import { propTypes } from '../../utils/types';
+import { propTypes } from '@qmfront/types/vue/types';
 import {dateFormat} from '@qmfront/shared/enums';
 
 export const basicProps = {

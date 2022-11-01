@@ -8,7 +8,6 @@ module.exports = {
         'turbo/no-undeclared-env-vars': 0,
         'no-var': 'error', // 禁止使用var
         'accessor-pairs': 2,
-        indent: [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase https://cloud.tencent.com/developer/section/1135626 *
         'arrow-spacing': [2, { before: true, after: true }], // 箭头函数中的箭头前后需要留空格
         'block-spacing': [2, 'always'], // 如果代码块是单行的时候，代码块内部前后需要留一个空格
         'brace-style': [2, '1tbs', { allowSingleLine: true }], // 大括号语法采用『1tbs』,允许单行样式
