@@ -27,7 +27,7 @@
     "nprogress": "0.2.0",
     "pinia": "2.0.30",
     "vue": "3.2.47",
-    "vue-router": "4.1.6",
+    "vue-router": "4.1.6"
   },
   "devDependencies": {
     "@wuefront-configs/eslint": "workspace:*",

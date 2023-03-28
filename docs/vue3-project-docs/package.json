@@ -14,13 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons-vue": "6.1.0",
-    "@wuefront-ad/mui-vue3": "1.0.0",
     "@wuefront/shared": "workspace:*",
     "@wuefront/vue3-antd-ui": "workspace:*",
     "@wuefront/vue3-ui": "workspace:*",
     "@wuefront/utils": "workspace:*",
-    "ad.qmniu.com": "workspace:*",
-    "qmdsp.qimao.com": "workspace:*",
+    "project-vue3": "workspace:*",
     "ant-design-vue": "3.2.15",
     "pinia": "2.0.30",
     "vue": "3.2.47"
