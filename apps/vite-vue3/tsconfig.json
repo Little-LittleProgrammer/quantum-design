@@ -1,11 +1,14 @@
 {
-    "extends": "@qmfront/configs/tsconfig/vue.json",
+    "extends": "@wuefront-configs/tsconfig/vue.json",
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
             "#/*": ["types/*"]
-        }
+        },
+        "types": [
+            "vite-plugin-pwa/client"
+        ]
     },
     "include": [
         "src/**/*.ts",
@@ -15,7 +18,7 @@
         "types/*.d.ts",
         "build/**/*.ts",
         "build/**/*.d.ts",
-        "node_modules/@qmfront/types/**/*.d.ts"
+        "node_modules/@wuefront/types/**/*.d.ts"
     ],
     "exclude": [
         "dist"

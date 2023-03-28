@@ -1,5 +1,5 @@
 {
-  "name": "@qmfront/vue3-antd-ui",
+  "name": "@wuefront/vue3-antd-ui",
   "version": "1.0.0",
   "description": "vue3,antd组件库",
   "main": "dist/lib/index.js",
@@ -12,27 +12,28 @@
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@ant-design/icons-vue": "^6.1.0",
-    "@qmfront/hooks": "workspace:*",
-    "@qmfront/shared": "workspace:*",
-    "@qmfront/utils": "workspace:*",
-    "@qmfront/vue3-ui": "workspace:*",
-    "ant-design-vue": "^3.2.11",
-    "lodash-es": "^4.17.21",
-    "pinia": "^2.0.19",
-    "vue": "^3.2.37",
-    "vue-router": "^4.1.3"
+    "@ant-design/icons-vue": "6.1.0",
+    "@wuefront/hooks": "workspace:*",
+    "@wuefront/shared": "workspace:*",
+    "@wuefront/utils": "workspace:*",
+    "@wuefront/vue3-ui": "workspace:*",
+    "ant-design-vue": "3.2.15",
+    "lodash-es": "4.17.21",
+    "pinia": "2.0.30",
+    "vue": "3.2.47",
+    "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@qmfront/configs": "workspace:*",
-    "@qmfront/types": "workspace:*",
-    "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.7.9",
-    "@vitejs/plugin-vue": "^3.0.3",
-    "@vitejs/plugin-vue-jsx": "^2.0.0",
-    "sass": "^1.54.5",
-    "typescript": "^4.8.4",
-    "vite": "^3.0.7",
-    "vite-plugin-dts": "^1.6.5"
+    "@wuefront-configs/eslint": "workspace:*",
+    "@wuefront-configs/tsconfig": "workspace:*",
+    "@wuefront/types": "workspace:*",
+    "@types/lodash-es": "4.17.6",
+    "@types/node": "18.14.6",
+    "@vitejs/plugin-vue": "3.2.0",
+    "@vitejs/plugin-vue-jsx": "2.1.1",
+    "sass": "1.58.3",
+    "typescript": "4.9.5",
+    "vite": "3.2.5",
+    "vite-plugin-dts": "1.7.2"
   }
 }

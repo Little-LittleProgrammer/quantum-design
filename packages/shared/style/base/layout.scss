@@ -22,6 +22,25 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
     white-space: nowrap;
 }
 
+.mt,
+.g-mt {
+    margin-top: $space;
+}
+
+.mr,
+.g-mr {
+    margin-right: $space;
+}
+
+.ml,
+.g-ml {
+    margin-left: $space;
+}
+
+.mb,
+.g-mb {
+    margin-bottom: $space;
+}
 
 @each $i in (10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100) {
     .w-p-#{$i} {
@@ -49,14 +68,32 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
 }
 
 // card 统一布局
-.qm-card {
+.qm-card,
+.g-card {
     border-radius: 10px;
     width: 100%;
     cursor: default;
 }
 
+// 遮罩
+.qm-mask {
+    position: relative;
+    .mask {
+        pointer-events: auto;
+        overflow-y:scroll;
+        overflow-x:scroll;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1001
+    }
+}
+
 // flex布局
-.qm-flex {
+.qm-flex,
+.g-flex {
     @include flex-center(left, center);
 
     .flex {
@@ -80,6 +117,13 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
     }
     &-between {
         @include flex-center(space-between, center);
+
+        .flex {
+            flex: 1
+        }
+    }
+    &-end {
+        @include flex-center(flex-end, center);
 
         .flex {
             flex: 1
@@ -126,6 +170,7 @@ body {
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    z-index: 1002;
 }
 
 // ::-webkit-scrollbar-track {
@@ -192,7 +237,7 @@ body {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         @include bg-color(body-bg);
 
@@ -295,25 +340,10 @@ body {
     }
 }
 
-.qm-position-sticky {
+.qm-position-sticky,
+.g-position-sticky {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     left: 0;
-}
-
-.mt {
-    margin-top: $space;
-}
-
-.mr {
-    margin-right: $space;
-}
-
-.ml {
-    margin-left: $space;
-}
-
-.mb {
-    margin-bottom: $space;
 }

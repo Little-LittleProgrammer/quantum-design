@@ -30,10 +30,10 @@ export default {
 import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
 import { QIcon } from '../../q-icon';
 import { find_search_route, ICacheObj } from './search';
-import { throttle_event } from '@qmfront/utils';
+import { throttle_event } from '@wuefront/utils';
 import { useRouter } from 'vue-router';
-import { QLoading } from '@qmfront/vue3-ui';
-import { menuData } from '@qmfront/types/vue/types';
+import { QLoading } from '@wuefront/vue3-ui';
+import { menuData } from '@wuefront/types/vue/types';
 
 interface IData {
     searchText: string,

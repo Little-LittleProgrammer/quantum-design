@@ -1,4 +1,4 @@
-import { isArray, isFunction, isObject, isString, date_util, deep_merge } from '@qmfront/utils';
+import { isArray, isFunction, isObject, isString, date_util, deep_merge } from '@wuefront/utils';
 import { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ComputedRef, Ref, toRaw, unref } from 'vue';
 import { dateItemType, handle_input_number_value } from '../helper';
@@ -95,7 +95,9 @@ export function use_form_events({
                                     continue;
                                 }
                                 if (key === field) {
-                                    formModel[key] = [date_util(_value[startTimeKey]), date_util(_value[endTimeKey])];
+                                    if (_value[startTimeKey] && _value[endTimeKey]) {
+                                        formModel[key] = [date_util(_value[startTimeKey]), date_util(_value[endTimeKey])];
+                                    }
                                     break;
                                 }
                             }

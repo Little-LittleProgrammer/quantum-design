@@ -18,7 +18,7 @@ export interface AxiosResponseAgent<T=any> extends AxiosResponse<T> {
 export abstract class CustomAxiosTransform {
     // 自定义拦截器
     customRequest?: (config:AxiosRequestConfig) => AxiosRequestConfig; // 自定义请求拦截
-    customResponse?: (config:AxiosResponse<any>) =>  AxiosResponse<any>; // 自定义错误响应拦截
+    customResponse?: (config:AxiosResponse<any>) => AxiosResponse<any>; // 自定义错误响应拦截
     customRequestError?: (error:Error) => void; // 自定义错误请求拦截
     customResponseError?: (error:Error) => void; // 自定义错误响应拦截
 }
@@ -44,8 +44,8 @@ export abstract class AxiosTransform {
      * @description: 请求之前的拦截器
      */
     requestInterceptors?: (
-      config: SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>,
-      options: CreateAxiosOptions
+        config: SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>,
+        options: CreateAxiosOptions
     ) => AxiosRequestConfig;
 
     /**
@@ -62,5 +62,4 @@ export abstract class AxiosTransform {
      * @description: 请求之后的拦截器错误处理
      */
     responseInterceptorsCatch?: (error: Error, options: CreateAxiosOptions) => void;
-
 }

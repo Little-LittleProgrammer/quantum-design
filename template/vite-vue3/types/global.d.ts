@@ -18,15 +18,15 @@ declare global {
     // 接口返回的 table
     type IApiTableData<T extends string, V extends string> = {
         header: {
-        [key in T]: string;
+            [key in T]: string;
         };
         list: {
-        [key in T | V]: string | Object | string[]
+            [key in T | V]: string | Object | string[]
         }[];
-        page_config?: {
-        page: string;
-        page_size: string;
-        total_num: string
+        pagination?: {
+            page: string;
+            page_size: string;
+            count: string
         };
         [k: string]: string | Object | undefined
     }
@@ -35,7 +35,7 @@ declare global {
     type ITableData<T extends string> = {
         header: ColumnType[];
         list: {
-        [key in T & string]: string | Object | string[]
+            [key in T & string]: string | Object | string[]
         }[];
     }
 

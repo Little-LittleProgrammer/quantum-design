@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <q-header
+        <qm-header
             :environmentData="globalStore.environmentData"
             :systemName="globalStore.systemName"
             :initMenu="sysStore.initMenuData"
@@ -20,15 +20,15 @@
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-theme-mode-button v-if="setting.theme.showDarkModeToggle" class="qm-flex-center search-container"></q-theme-mode-button>
+                <q-theme-mode-button v-model:mode="themePorxy" v-if="setting.theme.showDarkModeToggle" class="qm-flex-center search-container"></q-theme-mode-button>
             </template>
-        </q-header>
+        </qm-header>
         <div class="wrapper">
-            <q-aside :menuData="sysStore.asideMenuData"></q-aside>
+            <qm-aside :menuData="sysStore.asideMenuData"></qm-aside>
             <div class="main js-layout-main">
-                <div class="main-header mb sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
+                <div class="main-header sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
                     <div class="qm-flex">
-                        <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
+                        <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :router-list="_routerData" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
                         <q-keep-alive-tabs v-if="setting.cacheTabsSetting.show" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
                         <div class="reload" v-if="setting.func.showReloadButton">
                             <a-tooltip  >
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="layout-content">
                     <router-view >
                         <template #default="{ Component, route }">
                             <q-loading :loading="setting.transition.openPageLoading ? globalStore.pageLoading : false" size="large">
@@ -64,31 +64,35 @@
 </template>
 
 <script lang='ts' setup>
-import '@qmfront/shared/style/base/index.scss'; // 为了保证 全局样式 不被antd的覆盖， 所以放在此处，避免与antd样式打包到同一文件夹
-import '@qmfront/shared/style/antd/antd.scss'; // 为了保证 全局样式 不被antd的覆盖， 所以放在此处，避免与antd样式打包到同一文件夹
-import { QBreadcrumb } from '@qmfront/vue3-antd-ui';
-import { QKeepAliveTabs } from '@qmfront/vue3-antd-ui';
+import { QBreadcrumb } from '@wuefront/vue3-antd-ui';
+import { QKeepAliveTabs } from '@wuefront/vue3-antd-ui';
 import setting from '@/enums/projectEnum';
-import { reactive, computed, onMounted, ref } from 'vue';
+import { reactive, computed, onMounted, ref, watch } from 'vue';
 import elementResizeDetectorMaker from 'element-resize-detector';
-import QHeader from '@/components/q-header.vue';
-import QAside from '@/components/q-aside.vue';
+import QmHeader from '@/components/layout/qm-header.vue';
+import QmAside from '@/components/layout/qm-aside.vue';
 import { useRouter } from 'vue-router';
-import {QThemeModeButton} from '@qmfront/vue3-ui';
-import { QIcon} from '@qmfront/vue3-antd-ui';
-import {QSearch} from '@qmfront/vue3-antd-ui';
-import {QLoading} from '@qmfront/vue3-ui';
+import {QThemeModeButton} from '@wuefront/vue3-ui';
+import { QIcon} from '@wuefront/vue3-antd-ui';
+import {QSearch} from '@wuefront/vue3-antd-ui';
+import {QLoading} from '@wuefront/vue3-ui';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
+import { createLocalStorage } from '@wuefront/utils';
+import { _routerData } from '@/router';
+import { useProjectSetting } from '@/hooks/settings/use-project-setting';
 
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
+const ls = createLocalStorage();
+const {setThemeMode, getThemeMode} = useProjectSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
     reloadLoading: false,
-    width: ''
+    width: '',
+    mode: 'light'
 });
 // watch(route, (to, from) => {
 //     if (to.path == from.path && !to.query.no_refresh) {
@@ -124,6 +128,18 @@ const reload_page = async() => {
         data.reloadLoading = false;
     }, 1000);
 };
+
+// 设置主题
+const themePorxy = computed<'dark' | 'light'>({
+    get() {
+        return getThemeMode.value;
+    },
+    set(val: 'dark' | 'light') {
+        setThemeMode(val);
+    }
+});
+themePorxy.value = ls.get('themeMode');
+
 onMounted(() => {
     if (setting.cacheTabsSetting.show && setting.func.showBreadCrumb) {
         const _erd = elementResizeDetectorMaker();
@@ -139,11 +155,9 @@ onMounted(() => {
 </script>
 <style lang='scss' scoped>
 .main-header {
-    margin: -10px;
-    margin-left: 0px;
     padding: 5px;
     height: 40px;
-    padding-left: 5px;
+    padding-left: $space + 14;
     @include bg-color(aside-bg);
     .qm-flex {
         width: 100%;
@@ -168,7 +182,7 @@ onMounted(() => {
 }
 .sticky-header {
     position: sticky;
-    top: -10px;
+    top: 0px;
     z-index: 999;
 }
 .search-container {
@@ -196,5 +210,13 @@ onMounted(() => {
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+.js-layout-main {
+}
+.layout-content {
+    height: calc(100% - 40px);
+    position: relative;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 </style>

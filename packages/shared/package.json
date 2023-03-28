@@ -1,23 +1,21 @@
 {
-  "name": "@qmfront/shared",
+  "name": "@wuefront/shared",
   "version": "1.0.0",
-  "private": true,
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
     "enums",
-    "types",
-    "utils",
-    "base"
+    "style"
   ],
   "author": "Evan Wu",
   "license": "MIT",
   "devDependencies": {
-    "@qmfront/configs": "workspace:*",
-    "eslint": "^7.32.0",
-    "sass": "^1.54.5"
+    "@wuefront-configs/eslint": "workspace:*",
+    "@wuefront-configs/tsconfig": "workspace:*",
+    "sass": "1.58.3",
+    "typescript": "4.9.5"
   }
 }

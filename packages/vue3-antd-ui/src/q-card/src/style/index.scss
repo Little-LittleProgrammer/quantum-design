@@ -1,0 +1,10 @@
+.qm-shrink-card {
+    border-radius: 10px;
+    width: 100%;
+    cursor: default;
+    &-shrink-container {
+        transition: all 0.5s ease 0s;
+        overflow: hidden;
+        max-height: 2000px
+    }
+}

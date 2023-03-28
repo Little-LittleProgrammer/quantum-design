@@ -1,4 +1,3 @@
-import { Result, UploadFileParams } from '@qmfront/shared/types/http';
 import { defHttp } from '../axios';
 enum Api {
     GetEnv= '/manage/check/get-env',

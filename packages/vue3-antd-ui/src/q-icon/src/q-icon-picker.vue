@@ -55,8 +55,8 @@ export default {
 <script lang='ts' setup>
 import { reactive, onMounted, watch, watchEffect, ref} from 'vue';
 import { icons } from '../data/icons-data';
-import { throttle_event } from '@qmfront/utils';
-import { usePagination } from '@qmfront/hooks/vue';
+import { throttle_event } from '@wuefront/utils';
+import { usePagination } from '@wuefront/hooks/vue';
 import {Icon} from './icon';
 import {Empty} from 'ant-design-vue';
 import { iconPickProps } from './types';

@@ -1,4 +1,4 @@
-import {regEnum} from '@qmfront/shared/enums';
+import {regEnum} from '@wuefront/shared/enums';
 
 const toString = Object.prototype.toString;
 

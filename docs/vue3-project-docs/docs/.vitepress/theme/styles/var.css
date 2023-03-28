@@ -1,0 +1,39 @@
+:root {
+    /* 主题色 */
+
+    /* 主题基色 */
+    --vp-c-brand: #E6A817;
+    --vp-c-brand-light: #E6A817;
+    --vp-c-brand-dark: #f2c23f;
+
+    /* 标题 */
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: linear-gradient( 135deg, #dad2d2 10%, var(--vp-c-brand) 100%);
+    
+    /* 图标背景 */
+    --vp-home-hero-image-background-image: linear-gradient( 135deg, #dad2d2 10%, var(--vp-c-brand) 100%);
+    --vp-home-hero-image-filter: blur(150px);
+    
+    /* brand按钮 */
+    --vp-button-brand-border: #F6CEEC;
+    --vp-button-brand-bg: var(--vp-c-brand);
+    
+    --vp-button-brand-hover-border: #F6CEEC;
+    --vp-button-brand-hover-text: #fff;
+    --vp-button-brand-hover-bg: var(--vp-c-brand);
+    
+    --vp-button-brand-active-border: #F6CEEC;
+}
+
+
+/* $primary-color: #E6A817; // 全局主色
+$link-color: #D99116;    // 链接色
+$success-color: #12B262; // 成功色
+$warning-color: #FCA000; // 警告色
+$error-color: #f5222d; // 错误色
+$font-size-base: 14px; // 主字号
+$heading-color: rgba(0, 0, 0, 0.85); // 标题色
+$disabled-color: rgba(0, 0, 0, 0.25); // 失效色
+$border-radius-base: 4px; // 组件/浮层圆角
+$box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // 浮层阴影
+$disabled-table-color: #f5f5f5; // 表格置灰禁止颜色 */

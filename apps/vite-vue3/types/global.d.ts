@@ -8,6 +8,7 @@ declare global {
         label: string | number;
         value: string | number;
         children?: ISelectOption[];
+        custom?: any
     }
 
     // select
@@ -37,6 +38,9 @@ declare global {
 
     // 分页信息
     type IPageOption = Record<'current' | 'pageSize' | 'total', number>
+
+    // 页面状态
+    type IPageStatus = 'look' | 'add' | 'edit' | 'copy'
 
     // modal信息
     type IModalData<T = Record<string, any>> = {

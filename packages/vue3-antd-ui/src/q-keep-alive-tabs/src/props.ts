@@ -1,4 +1,4 @@
-import { propTypes } from '@qmfront/types/vue/types';
+import { propTypes } from '@wuefront/types/vue/types';
 
 export const tabsProps = {
     initPath: propTypes.string.def('/home'),

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <q-header
+        <qm-header
             :environmentData="globalStore.environmentData"
             :systemName="globalStore.systemName"
             :initMenu="sysStore.initMenuData"
@@ -20,15 +20,15 @@
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-theme-mode-button v-model:mode="data.mode" v-if="setting.theme.showDarkModeToggle" class="qm-flex-center search-container"></q-theme-mode-button>
+                <q-theme-mode-button v-model:mode="themePorxy" v-if="setting.theme.showDarkModeToggle" class="qm-flex-center search-container"></q-theme-mode-button>
             </template>
-        </q-header>
+        </qm-header>
         <div class="wrapper">
-            <q-aside :menuData="sysStore.asideMenuData"></q-aside>
+            <qm-aside :menuData="sysStore.asideMenuData"></qm-aside>
             <div class="main js-layout-main">
                 <div class="main-header sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
                     <div class="qm-flex">
-                        <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
+                        <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :router-list="_routerData" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
                         <q-keep-alive-tabs v-if="setting.cacheTabsSetting.show" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
                         <div class="reload" v-if="setting.func.showReloadButton">
                             <a-tooltip  >
@@ -64,37 +64,32 @@
 </template>
 
 <script lang='ts' setup>
-import '@qmfront/shared/style/base/index.scss'; // 为了保证 全局样式 不被antd的覆盖， 所以放在此处，避免与antd样式打包到同一文件夹
-import '@qmfront/shared/style/antd/antd.scss'; // 为了保证 全局样式 不被antd的覆盖， 所以放在此处，避免与antd样式打包到同一文件夹
-import { QBreadcrumb } from '@qmfront/vue3-antd-ui';
-import { QKeepAliveTabs } from '@qmfront/vue3-antd-ui';
+import { QBreadcrumb } from '@wuefront/vue3-antd-ui';
+import { QKeepAliveTabs } from '@wuefront/vue3-antd-ui';
 import setting from '@/enums/projectEnum';
-import { reactive, computed, onMounted, ref, watch } from 'vue';
+import { reactive, computed, onMounted, ref } from 'vue';
 import elementResizeDetectorMaker from 'element-resize-detector';
-import QHeader from '@/components/layout/q-header.vue';
-import QAside from '@/components/layout/q-aside.vue';
+import QmHeader from '@/components/layout/qm-header.vue';
+import QmAside from '@/components/layout/qm-aside.vue';
 import { useRouter } from 'vue-router';
-import {QThemeModeButton} from '@qmfront/vue3-ui';
-import { QIcon} from '@qmfront/vue3-antd-ui';
-import {QSearch} from '@qmfront/vue3-antd-ui';
-import {QLoading} from '@qmfront/vue3-ui';
+import {QThemeModeButton} from '@wuefront/vue3-ui';
+import { QIcon} from '@wuefront/vue3-antd-ui';
+import {QSearch} from '@wuefront/vue3-antd-ui';
+import {QLoading} from '@wuefront/vue3-ui';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
-import { MemorialEnum } from '@qmfront/shared/enums';
-import dayjs from 'dayjs';
-import { createLocalStorage } from '@qmfront/utils';
-import { update_theme } from '@/assets/ts/theme';
+import { _routerData } from '@/router';
+import { useProjectSetting } from '@/hooks/settings/use-project-setting';
 
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const ls = createLocalStorage();
+const {setThemeMode, getThemeMode} = useProjectSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
     reloadLoading: false,
-    width: '',
-    mode: ls.get('themeMode') || 'light'
+    width: ''
 });
 // watch(route, (to, from) => {
 //     if (to.path == from.path && !to.query.no_refresh) {
@@ -131,21 +126,17 @@ const reload_page = async() => {
     }, 1000);
 };
 
-// 设置当前主题
-const _timeNow = globalStore.date;
-console.log('_timeNow', _timeNow);
-type Enum = keyof typeof MemorialEnum
-for (const key in MemorialEnum) {
-    if (dayjs(_timeNow).format('MM-DD') == MemorialEnum[key as Enum]) {
-        data.mode = 'gray-mode';
+// 设置主题
+const themePorxy = computed<'dark' | 'light'>({
+    get() {
+        return getThemeMode.value;
+    },
+    set(val: 'dark' | 'light') {
+        setThemeMode(val);
     }
-}
-watch(() => data.mode, (val) => {
-    if (val) {
-        ls.set('themeMode', val);
-        update_theme(val);
-    }
-}, {immediate: true});
+});
+setThemeMode(getThemeMode.value);
+
 onMounted(() => {
     if (setting.cacheTabsSetting.show && setting.func.showBreadCrumb) {
         const _erd = elementResizeDetectorMaker();
@@ -218,9 +209,10 @@ onMounted(() => {
   transform: translateX(30px);
 }
 .js-layout-main {
-    position: relative;
 }
 .layout-content {
+    height: calc(100% - 40px);
+    position: relative;
     padding-top: 10px;
     padding-left: 10px;
 }

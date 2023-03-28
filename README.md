@@ -7,14 +7,23 @@ This is an official starter turborepo.
 This turborepo uses [pnpm](https://pnpm.io) as a packages manager. It includes the following packages/apps:
 
 ### Apps and Packages
+> pleace be sure to read this section carefully, path `packages/`
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `@qmfront/ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `docs`: a docs app
+- `ad.qmniu.com`: another app
+- `@wuefront/ui`: a stub component library shared by `apps`
+- `@wuefront-configs/`: configurations includes `eslint`、`tsconfig`、`stylelint`)
+- `@wuefront/hooks`: a hooks folder be used in apps
+- `@wuefront/shared`: don't need packaging utils (includes 'style', 'enums')
+- `@wuefront/types`: global ts types
+- `@wuefront/utils`: utils folder be used in apps
+- `@wuefront/http`: secondary encapsulation's axios utils will be used in apps
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/). 
+
+If you want use `Javascript`, please don't use `@wuefront/hooks` `@wuefront/shared/enums`
+
+All `packages` are treated as dependencies in `apps/<you app name>/node_modules`
 
 ### Utilities
 
@@ -33,8 +42,12 @@ This repository is used in the `npx create-turbo@latest` command, and selected w
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
 pnpm run build
+```
+if you want build uni apps
+
+```
+pnpm run build --filter <you app name, write in `package.json`>
 ```
 
 ### Develop
@@ -42,11 +55,15 @@ pnpm run build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
-pnpm run dev
+pnpm run dev --filter <you app name, write in `package.json`>
 ```
 
 ### Remote Caching
+
+We are already used remote cache, remote cache sever: `http://47.103.85.18:9000`
+
+We set up our own remote cache server. 
+Here is the official tutorial: 
 
 Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 

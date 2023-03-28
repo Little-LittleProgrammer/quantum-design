@@ -1,4 +1,3 @@
 module.exports = {
-    root: true,
-    extends: [require.resolve('@qmfront/configs/eslint/eslint-base')]
+    extends: [require.resolve('@wuefront-configs/eslint/eslint-tslib')]
 };

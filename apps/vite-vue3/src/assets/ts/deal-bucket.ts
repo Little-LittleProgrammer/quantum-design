@@ -1,4 +1,4 @@
-import { quick_sort } from '@qmfront/utils';
+import { isArray, quick_sort } from '@wuefront/utils';
 
 /**
  *
@@ -6,7 +6,7 @@ import { quick_sort } from '@qmfront/utils';
  * @returns '1-5, 7-9'
  */
 export function format_nums(nums?: number[]):string {
-    if (!nums || nums.length === 0) {
+    if (!nums || nums.length === 0 || !isArray(nums)) {
         return '';
     }
     nums = [...new Set(quick_sort(nums))];
@@ -47,7 +47,10 @@ export function format_str(str?: string): number[] {
     if (!str) {
         return [];
     }
-    const _cacheList = str.split(',');
+    if (isArray(str)) {
+        return str;
+    }
+    const _cacheList = str.split(',').filter(num => num);
     const _usedList: number[] = [];
     for (const str of _cacheList) {
         if (str.includes('-')) {

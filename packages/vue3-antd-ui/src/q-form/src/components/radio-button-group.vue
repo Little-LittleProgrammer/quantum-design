@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <a-radio-group v-bind="attrs" v-model:value="state" button-style="solid">
+    <a-radio-group button-style="solid" v-bind="attrs" v-model:value="state">
         <template v-for="item in getOptions" :key="`${item.value}`">
             <a-radio-button :value="item.value" :disabled="item.disabled">
                 {{item.label}}
@@ -14,7 +14,7 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
-import { isString } from '@qmfront/utils';
+import { isString } from '@wuefront/utils';
 import {QIcon} from '../../../q-icon';
 import {Tooltip} from 'ant-design-vue';
 

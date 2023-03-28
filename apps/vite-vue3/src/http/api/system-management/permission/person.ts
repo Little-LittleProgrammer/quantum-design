@@ -2,7 +2,7 @@ import { defHttp } from '@/http/axios';
 import type { menuData } from '#/router';
 enum Api {
     userList = '/manage/user/index',
-    userAuths= '/manage/user/auths',
+    userAuths= '/check/auths',
     userCreate = '/manage/user/create',
     userDelete = '/manage/user/delete',
     userUpdate = '/manage/user/update'

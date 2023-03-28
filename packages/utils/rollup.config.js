@@ -14,7 +14,9 @@ const FormatTypes = {
     iife: 'iife'
 };
 const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
-const isDeclaration = process.env.TYPES !== 'false';
+// 阿里云自带环境
+const isDeclaration = process.env.TYPES !== 'false' &&
+    !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
 const name = 'utils';
 
 function get_common() {
@@ -25,7 +27,7 @@ function get_common() {
             footer: '/* join us */'
         },
         // 外部依赖，也是防止重复打包的配置
-        external: ['@qmfront/shared/enums', 'dayjs', 'crypto-js'],
+        external: ['@wuefront/shared/enums', 'dayjs', 'crypto-js'],
         plugins: [
             resolve(),
             commonjs({
@@ -42,7 +44,7 @@ function get_common() {
                     compilerOptions: {
                         declaration: isDeclaration,
                         declarationMap: false,
-                        declarationDir: `${packageDirDist}/types/`, // 类型声明文件的输出目录
+                        declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
                         module: 'ES2015'
                     }
                 },

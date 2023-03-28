@@ -13,3 +13,6 @@ ARG projectName
 RUN pnpm install -r --offline && \
     pnpm run build --filter ${projectName}
 
+FROM registry.cn-hangzhou.aliyuncs.com/cr-test-docker/nginx:v1
+ADD nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder projects/dist /usr/share/nginx/html

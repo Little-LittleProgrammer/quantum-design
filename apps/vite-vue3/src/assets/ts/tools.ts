@@ -1,4 +1,4 @@
-import { isArray, isNull, isObject, offset } from '@qmfront/utils';
+import { isArray, isNull, isObject, offset } from '@wuefront/utils';
 import { ColumnsType } from 'ant-design-vue/lib/table';
 import { GetComponentProps } from 'ant-design-vue/lib/vc-table/interface';
 import { nextTick } from 'vue';
@@ -142,4 +142,30 @@ export function set_table_height(tableClass: string, subHeight: number = 0) {
             resolve(document.body.offsetHeight - offsetHeight - subHeight - 28 + 'px');
         });
     });
+}
+
+/**
+ * @description 二维数组转成json格式
+ * @param arr 传入需要转换的二维数组
+ * @example [[1, 2], [3]] -> [{"0": 1, "1": 2}, {"0": 3}]
+ */
+export function js_tools_arr_to_json(arr: Array<Array<number>>) {
+    return arr.map(item =>
+        item.reduce(
+            (obj, i, index) => ({
+                ...obj,
+                [index]: i
+            }),
+            {}
+        )
+    );
+}
+
+/**
+ * @description json转成二维数组格式
+ * @param json 传入需要转换的json数组
+ * @example [{"0": 1, "1": 2}, {"0": 3}] -> [[1, 2], [3]]
+ */
+export function js_tools_json_to_arr(json: Array<Record<string, number>>) {
+    return json.map(item => Object.keys(item).map(key => item[key]));
 }

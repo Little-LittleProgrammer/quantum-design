@@ -19,7 +19,7 @@
 </template>
 
 <script lang='ts' setup>
-import { propTypes } from '@qmfront/types/vue/types';
+import { propTypes } from '@wuefront/types/vue/types';
 import { onMounted, useSlots} from 'vue';
 import {QIcon} from '@/q-icon';
 const props = defineProps({

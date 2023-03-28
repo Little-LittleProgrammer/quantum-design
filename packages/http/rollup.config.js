@@ -14,7 +14,8 @@ const FormatTypes = {
     iife: 'iife'
 };
 const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
-const isDeclaration = process.env.TYPES !== 'false';
+const isDeclaration = process.env.TYPES !== 'false' &&
+    !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
 const name = 'http';
 
 function get_common() {
@@ -25,7 +26,7 @@ function get_common() {
             footer: '/* join us */'
         },
         // 外部依赖，也是防止重复打包的配置
-        external: ['@qmfront/hooks', '@qmfront/hooks/vue', '@qmfront/shared', '@qmfront/shared/enums', '@qmfront/utils', 'axios', 'lodash-es', 'qs'],
+        external: ['@wuefront/hooks', '@wuefront/hooks/vue', '@wuefront/shared', '@wuefront/shared/enums', '@wuefront/utils', 'axios', 'lodash-es', 'qs'],
         plugins: [
             resolve(),
             commonjs({
@@ -42,7 +43,7 @@ function get_common() {
                     compilerOptions: {
                         declaration: isDeclaration,
                         declarationMap: false,
-                        declarationDir: `${packageDirDist}/types/`, // 类型声明文件的输出目录
+                        declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
                         module: 'ES2015'
                     }
                 },
@@ -65,7 +66,12 @@ const esmPackageMin = {
     },
     plugins: [
         ...common.plugins,
-        terser()
+        terser({
+            compress: {
+                drop_console: true,
+                drop_debugger: true
+            }
+        })
     ]
 };
 

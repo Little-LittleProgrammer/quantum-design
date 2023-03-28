@@ -10,8 +10,8 @@
             :customRequest="upload_file"
             @change="handle_change">
             <div v-if="!data.uploadLoading && data.imageUrl" class="show-img" :class="{hover: data.getHover}" @mouseenter="set_class(true)" @mouseleave="set_class(false)">
-                <video :src="data.imageUrl" v-if="data.fileType === 'video'"></video>
-                <img :src="data.imageUrl" alt="avatar" v-else/>
+                <video :src="data.fullUrl || data.imageUrl" v-if="data.fileType === 'video'"></video>
+                <img :src="data.fullUrl || data.imageUrl" alt="avatar" v-else/>
                 <div class="mask qm-flex-center" v-if="data.getHover">
                     <a-button type="link" @click="open_modal">
                         <template #icon>
@@ -25,9 +25,14 @@
                     </a-button>
                 </div>
             </div>
-            <div v-else class="icon">
-                <q-icon :type="data.uploadLoading ? 'LoadingOutlined' : 'PlusOutlined'" />
+            <div v-else-if="data.uploadLoading" class="icon">
+                <q-icon type="LoadingOutlined" />
             </div>
+            <slot v-else>
+                <div class="icon">
+                    <q-icon type="PlusOutlined" />
+                </div>
+            </slot>
         </a-upload>
         <slot name="right" v-if="props.rightShow">
             <div class="upload-right">
@@ -39,7 +44,7 @@
                 </template>
             </div>
         </slot>
-        <a-modal :visible="data.modalVisible" :footer="null" @cancel="close_modal">
+        <a-modal class="preview" :visible="data.modalVisible" :footer="null" @cancel="close_modal">
             <video style="width: 100%; height: 100%;" controls muted :src="data.modalImageUrl" v-if="data.fileType === 'video'"></video>
             <img style="width: 100%; height: 100%;" v-else :src="data.modalImageUrl" alt="">
         </a-modal>
@@ -47,9 +52,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useMessage } from '@qmfront/hooks/vue';
-import { propTypes } from '@qmfront/types/vue/types';
-import { isString } from '@qmfront/utils';
+import { useMessage } from '@wuefront/hooks/vue';
+import { propTypes } from '@wuefront/types/vue/types';
+import { isFunction, isString } from '@wuefront/utils';
 import { PropType, reactive, watch } from 'vue';
 import {QIcon} from '@/q-icon';
 import './style/index.scss';
@@ -61,19 +66,41 @@ interface DataProps {
     getHover: boolean
     modalImageUrl: string
     modalVisible: boolean
+    fullUrl: string
+}
+interface ILimit {
+    type: 'size' | 'ratio', // size为固定宽高，ratio为各比例
+    width?: number,
+    height?: number,
+    minDuration?: number,
+    maxDuration?: number,
+    message?: string
 }
 const props = defineProps({
     markWord: propTypes.any.def('格式要求PNG'),
     value: propTypes.string.def(''),
+    fullUrl: propTypes.string.def(''), // 带http的
     accept: propTypes.string.def(''),
+    acceptMessage: propTypes.string.def(''),
     maxSize: propTypes.number.def(0),
+    maxSizeMessage: propTypes.string.def(''),
+    limit: {
+        type: Object as PropType<ILimit>
+    },
     rightShow: propTypes.bool.def(false),
     uploadApi: {
         type: Function as PropType<(params: UploadFileParams)=> any>,
         default: () => {}
+    },
+    curstomApiParams: {
+        type: Object,
+        default: () => {}
+    },
+    customBeforeUpload: {
+        type: Function as PropType<(file: File) => boolean | Promise<any>>
     }
 });
-const emit = defineEmits(['update:value', 'change']);
+const emit = defineEmits(['update:value', 'change', 'validatedFile']);
 const { createMessage } = useMessage();
 const data: DataProps = reactive({
     uploadLoading: false,
@@ -82,7 +109,8 @@ const data: DataProps = reactive({
     fileType: '',
     getHover: false,
     modalVisible: false,
-    modalImageUrl: ''
+    modalImageUrl: '',
+    fullUrl: ''
 });
 function set_class(flag: boolean) {
     data.getHover = flag;
@@ -95,18 +123,92 @@ function open_modal(e: ChangeEvent) {
 function close_modal() {
     data.modalVisible = false;
 }
-function before_upload(file: File) {
-    let _flag = true;
+async function before_upload(file: File) {
+    // 校验文件类型
+    if (props.accept != '' && !props.accept.includes(file.type)) {
+        createMessage.error(props.acceptMessage || `请上传 ${props.accept} 格式的文件`);
+        return false;
+    }
+    // 校验文件大小
     if (props.maxSize !== 0 && file.size > props.maxSize * 1024) {
-        createMessage.error(`上传文件的大小不得大于${props.maxSize >= 1024 ? (props.maxSize / 1024) + 'M' : props.maxSize + 'K'}`);
+        createMessage.error(props.maxSizeMessage || `上传文件的大小不得大于${props.maxSize >= 1024 ? (props.maxSize / 1024) + 'M' : props.maxSize + 'K'}`);
+        return false;
     }
-    if (props.accept != '') {
-        if (!props.accept.includes(file.type)) {
-            createMessage.error('请上传 ' + props.accept + ' 格式的文件');
-            _flag = false;
+    // 校验文件宽高
+    if (props.limit) {
+        const isVideoType = file.type.includes('video') || file.type.includes('.mp4');
+        const _res = isVideoType ? await check_video_valide(file, props.limit) : await check_image_wh(file, props.limit);
+        if (!_res) {
+            createMessage.error(props.limit.message || '上传文件尺寸不符合要求');
+            return false;
         }
+        // 返回文件详细信息
+        emit('validatedFile', _res);
     }
-    return _flag;
+    // 自定义上传前校验事件，可返回boolean或promise
+    if (isFunction(props.customBeforeUpload)) {
+        let _flag: boolean | Promise<any> = true;
+        _flag = props.customBeforeUpload(file);
+        return _flag;
+    }
+}
+// 校验图片宽高
+function check_image_wh(file: File, limit: ILimit) {
+    return new Promise((resolve, reject) => {
+        const _fileReader = new FileReader();
+        _fileReader.readAsDataURL(file);
+        _fileReader.onload = (e: any) => {
+            const _src = e.target.result;
+            const _image = new Image();
+            _image.onload = function() {
+                if (limit.type === 'size') {
+                    if (limit.width && limit.height) {
+                        return _image.width === limit.width && _image.height === limit.height ? resolve(_image) : resolve(false);
+                    } else if (limit.width) {
+                        return _image.width === limit.width ? resolve(_image) : resolve(false);
+                    } else {
+                        return _image.height === limit.height ? resolve(_image) : resolve(false);
+                    }
+                } else {
+                    return (_image.width / _image.height) === (Number(limit.width) / Number(limit.height)) ? resolve(_image) : resolve(false);
+                }
+            };
+            _image.onerror = reject;
+            _image.src = _src;
+        };
+    });
+}
+// 校验视频宽高或时长
+function check_video_valide(file: File, limit: ILimit) {
+    return new Promise(function(resolve, reject) {
+        const _url = URL.createObjectURL(file);
+        const _video = document.createElement('video');
+        _video.onloadedmetadata = (e: any) => {
+            URL.revokeObjectURL(_url);
+            const duration = Math.round(_video.duration);
+            if (duration < Number(limit.minDuration) || duration > Number(limit.maxDuration)) {
+                reject();
+            }
+            if (limit.type === 'size') {
+                if (limit.width && limit.height) {
+                    return e.target.videoWidth === limit.width && e.target.videoHeight === limit.height ? resolve(e.target) : resolve(false);
+                } else if (limit.width) {
+                    return e.target.videoWidth === limit.width ? resolve(e.target) : resolve(false);
+                } else {
+                    return e.target.videoHeight === limit.height ? resolve(e.target) : resolve(false);
+                }
+            } else {
+                return (e.target.videoWidth / e.target.videoHeight) === (Number(limit.width) / Number(limit.height)) ? resolve(e.target) : resolve(false);
+            }
+        };
+        _video.src = _url;
+        _video.load();
+    }).catch(
+        () => {
+            createMessage.error('上传视频时长不符合要求');
+            return Promise.reject();
+        }
+    );
 }
 async function upload_file(option: UploadFileParams) {
     data.imgFlag = true;
@@ -115,8 +217,8 @@ async function upload_file(option: UploadFileParams) {
     const _file = option.file;
     const _req = {
         action: 'upload',
-        imageFile: _file,
-        file: _file
+        file: _file,
+        ...props.curstomApiParams
     };
     option.onProgress(); // 进度条
     try {
@@ -124,12 +226,14 @@ async function upload_file(option: UploadFileParams) {
         if (_res.data.code != 200) {
             data.uploadLoading = false;
             option.onError(); // 上传失败
+            createMessage.error(_res.data.msg);
             return;
         }
         option.onSuccess(); // 上传成功
         data.imgFlag = false;
-        emit('update:value', _res.data.data.path);
-        emit('change', _res.data.data.path);
+        data.fullUrl = '';
+        emit('update:value', _res.data.data.url);
+        emit('change', _res.data.data.url, option);
         createMessage.success(_res.data.msg);
     } catch (e) {
         data.uploadLoading = false;
@@ -141,13 +245,13 @@ function get_base64(img: Blob, callback: Function) {
     reader.readAsDataURL(img);
 }
 function handle_change(info: any) {
-    if (info?.file.type.includes('image')) {
-        data.fileType = 'image';
-    } else {
-        data.fileType = 'video';
-    }
     if (info.file.status === 'uploading') {
         data.uploadLoading = true;
+        if (info?.file.type.includes('image')) {
+            data.fileType = 'image';
+        } else {
+            data.fileType = 'video';
+        }
         return;
     }
     if (info.file.status === 'done') {
@@ -160,19 +264,35 @@ function handle_change(info: any) {
 function remove_img(e: ChangeEvent) {
     e.stopPropagation();
     data.imageUrl = '';
+    data.fullUrl = '';
     emit('update:value', '');
     emit('change', '');
 }
 watch(() => props.value, (val) => {
     if (data.imgFlag) {
-        if (val.includes('cdn')) {
+        if (val.includes('http')) {
             data.imageUrl = val || '';
             data.fileType = (val.includes('video') || val.includes('.mp4')) ? 'video' : 'image';
         } else {
-            data.imageUrl = '';
+            data.imageUrl = val || '';
         }
+    }
+    if (!val) {
+        data.imageUrl = '';
     }
 }, {
     immediate: true
+});
+
+watch(() => props.fullUrl, (val) => {
+    if (val) {
+        data.fullUrl = val;
+        data.fileType = (val.includes('video') || val.includes('.mp4')) ? 'video' : 'image';
+    }
+}, {immediate: true});
+
+// 对父组件暴露图片/视频校验方法，可用于自定义校验规则
+defineExpose({
+    check_image_wh, check_video_valide
 });
 </script>

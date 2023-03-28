@@ -6,7 +6,7 @@
     </a-result>
 </template>
 <script lang="ts">
-import { useGo } from '@qmfront/hooks/vue';
+import { useGo } from '@wuefront/hooks/vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
     setup() {

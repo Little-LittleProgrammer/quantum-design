@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <a-card class="qm-card" >
+        <a-card class="qm-card" :size="antdStore.cardSize">
             <div class="qm-form">
                 <a-form layout="inline" :size="antdStore.modelSize">
                     <a-form-item>
@@ -29,11 +29,11 @@ import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-m
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
 import { set_table_height } from '@/assets/ts/tools';
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
-import { useMessage } from '@qmfront/hooks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 import { useAntdStore } from '@/store/modules/antd';
 import { useGlobalStore } from '@/store/modules/global';
 import EditRole from './components/edit-role.vue';
-import {useDrawer} from '@qmfront/vue3-antd-ui';
+import {useDrawer} from '@wuefront/vue3-antd-ui';
 interface DataProps {
     tableData: IRoleAuths[]
     tableHeight: unknown

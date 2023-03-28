@@ -2,10 +2,9 @@ import setting from '@/enums/projectEnum';
 import { IBreadcrumb } from '@/store';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress'; // Progress 进度条
-import { AxiosCanceler } from '@qmfront/http/axios/axiosCancel';
+import { AxiosCanceler } from '@wuefront/http/axios/axiosCancel';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
-import {Nullable} from '@qmfront/shared/types/global';
 
 export function setup_outer_guard(router: Router, routerData:RouteRecordRaw[]) {
     set_progress(router);

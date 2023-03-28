@@ -4,6 +4,7 @@ import { ComputedRef, CSSProperties } from 'vue';
 export interface DrawerInstance {
     setDrawerProps: (props: Partial<DrawerProps>) => void;
     emitVisible?: (visible: boolean, uid: number) => void;
+    events?: Record<'onClose', Fn>
 }
 
 export interface ReturnMethods extends DrawerInstance {

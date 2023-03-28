@@ -13,9 +13,10 @@
 <script lang='ts' setup>
 import { reactive, onMounted, computed, nextTick, watch, watchEffect } from 'vue';
 import type { PropType } from 'vue';
-import { useSortable } from '@qmfront/hooks';
 import { TableProps } from 'ant-design-vue/lib/table/Table';
-import { deep_copy } from '@qmfront/utils';
+import { useSortable } from '@wuefront/hooks';
+import { deep_copy } from '@wuefront/utils';
+import { propTypes } from '@wuefront/types/vue/types';
 interface DataProps {
     expandKeysList: string[];
     tableShow: boolean;
@@ -29,7 +30,9 @@ const props = defineProps({
     expandedRowKeys: {
         type: Array as PropType<string[]>,
         default: () => []
-    }
+    },
+    className: propTypes.string.def(''),
+    isCurLevel: propTypes.bool.def(false) // 是否只允许统计交换
 });
 const emit = defineEmits(['refreshTable', 'update:expandedRowKeys']);
 const data: DataProps = reactive({
@@ -73,7 +76,7 @@ function refresh_table() {
 }
 // 初始化拖拽方法
 function init_drag() {
-    const $dom = document.querySelector('.ant-table-tbody') as HTMLElement;
+    const $dom = document.querySelector(`${props.className ? '.' + props.className + ' ' : ''}.ant-table-tbody`) as HTMLElement;
     const { initSortable } = useSortable($dom, {
         onStart({item}) {
             // 展开节点中去除正在被拖拽的接待你
@@ -96,11 +99,14 @@ function init_drag() {
             }
             console.log('_targetArray', _targetArray);
             if (newIndex && newIndex > 0) {
-                const $row = document.querySelectorAll('.ant-table-row') as NodeListOf<HTMLElement>;
+                const $row = document.querySelectorAll(`${props.className ? '.' + props.className + ' ' : ''}.ant-table-row`) as NodeListOf<HTMLElement>;
                 _currentRowKey = $row[newIndex - 1].dataset.rowKey as string;
+                console.log($row, newIndex);
                 if ($row[newIndex + 1]) {
-                    _currentRowKey = $row[newIndex + 1].dataset.rowKey as string;
-                    _isNext = true;
+                    if (!props.isCurLevel) {
+                        _currentRowKey = $row[newIndex + 1].dataset.rowKey as string;
+                        _isNext = true;
+                    }
                 }
             }
             console.log('_currentRowKey', _currentRowKey);
@@ -119,7 +125,7 @@ function init_drag() {
                             _notBelong = judge_belong(_currentRowKey, _targetItem.children);
                         }
                         if (!_notBelong) {
-                            data.tableList.splice(item, 1);
+                            data.tableList.splice(item, 1); // 删除原来的
                         }
                     } else {
                         const _calcItem = deep_copy(_targetItem.children[item]);
@@ -127,7 +133,7 @@ function init_drag() {
                             _notBelong = judge_belong(_currentRowKey, _calcItem.children);
                         }
                         if (!_notBelong) {
-                            _targetItem.children.splice(item, 1);
+                            _targetItem.children.splice(item, 1); // 删除原来的
                             if (!_targetItem.children.length) {
                                 delete _targetItem.children;
                             }
@@ -140,6 +146,7 @@ function init_drag() {
                 if (newIndex > 0) {
                     if (_currentRowKey) {
                         _currentArray = get_target_index(data.tableList, _currentRowKey.toString());
+                        console.log('_currentArray', _currentArray);
                     }
                     _currentArray.forEach((item, index) => {
                         item = parseInt(item);
@@ -152,15 +159,15 @@ function init_drag() {
                         } else {
                             if (!index) {
                                 if (!_isNext) {
-                                    data.tableList.splice(item + 1, 0, _targetItem);
+                                    data.tableList.splice(item + 1, 0, _targetItem); // 新增
                                 } else {
-                                    data.tableList.splice(item, 0, _targetItem);
+                                    data.tableList.splice(item, 0, _targetItem); // 新增
                                 }
                             } else {
                                 if (!_isNext) {
-                                    _dataListItem.children.splice(item + 1, 0, _targetItem);
+                                    _dataListItem.children.splice(item + 1, 0, _targetItem); // 新增
                                 } else {
-                                    _dataListItem.children.splice(item, 0, _targetItem);
+                                    _dataListItem.children.splice(item, 0, _targetItem); // 新增
                                 }
                             }
                         }

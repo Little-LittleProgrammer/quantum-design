@@ -31,7 +31,8 @@ h1.top-title {
     margin: $space 0;
 }
 
-.qm-ellipsis-text {
+.qm-ellipsis-text,
+.g-ellipsis-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -47,7 +48,8 @@ h1.top-title {
 
 // 字体居中
 @each $var in (left, center, right) {
-    .qm-text-#{$var} {
+    .qm-text-#{$var},
+    .g-text-#{$var} {
         text-align: $var;
     }
 }

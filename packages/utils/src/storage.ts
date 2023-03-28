@@ -1,4 +1,4 @@
-import { defaultCacheTime } from '@qmfront/shared/enums';
+import { defaultCacheTime } from '@wuefront/shared/enums';
 import { AesEncryption } from './cipher';
 import { isNullOrUnDef } from './is';
 
@@ -11,6 +11,63 @@ interface IStorageParams {
 
 type Options = Partial<IStorageParams>;
 
+class WebStorage {
+    storage: Storage;
+    hasEncrypt: boolean;
+    encryption: AesEncryption;
+    prefixKey: string;
+    timeout:number | null
+
+    constructor(storage:Storage, prefixKey:string, hasEncrypt: boolean, encryption:AesEncryption, timeout:number | null) {
+        this.storage = storage;
+        this.prefixKey = prefixKey;
+        this.hasEncrypt = hasEncrypt;
+        this.encryption = encryption;
+        this.timeout = timeout
+    }
+
+    getKey(key: string) {
+        return `${this.prefixKey}_${key}`.toUpperCase();
+    }
+
+    set(key: string, value: any, expire: number | null = this.timeout) {
+        const stringData = JSON.stringify({
+            value,
+            time: Date.now(),
+            expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null
+        });
+        const storageData = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData;
+        this.storage.setItem(this.getKey(key), storageData);
+    }
+
+    get(key: string): any {
+        const val = this.storage.getItem(this.getKey(key));
+        if (!val) return null;
+        try {
+            const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;
+
+            const data = JSON.parse(decVal);
+            const { value, expire } = data;
+            if (isNullOrUnDef(expire) || expire >= new Date().getTime()) {
+                return value;
+            }
+            this.remove(key);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    remove(key: string) {
+        this.storage.removeItem(this.getKey(key));
+    }
+
+    clear(): void {
+        this.storage.clear();
+    }
+};
+
+export { WebStorage}
+
 export const createStorage = ({
     prefixKey = '',
     storage = localStorage,
@@ -18,60 +75,7 @@ export const createStorage = ({
     hasEncrypt = false
 }: Options) => {
     const encryption = new AesEncryption();
-
-    const WebStorage = class WebStorage {
-        storage: Storage;
-        hasEncrypt: boolean;
-        encryption: AesEncryption;
-        prefixKey?: string;
-
-        constructor() {
-            this.storage = storage;
-            this.prefixKey = prefixKey;
-            this.hasEncrypt = hasEncrypt;
-            this.encryption = encryption;
-        }
-
-        getKey(key: string) {
-            return `${this.prefixKey}_${key}`.toUpperCase();
-        }
-
-        set(key: string, value: any, expire: number | null = timeout) {
-            const stringData = JSON.stringify({
-                value,
-                time: Date.now(),
-                expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null
-            });
-            const storageData = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData;
-            this.storage.setItem(this.getKey(key), storageData);
-        }
-
-        get(key: string): any {
-            const val = this.storage.getItem(this.getKey(key));
-            if (!val) return null;
-            try {
-                const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;
-
-                const data = JSON.parse(decVal);
-                const { value, expire } = data;
-                if (isNullOrUnDef(expire) || expire >= new Date().getTime()) {
-                    return value;
-                }
-                this.remove(key);
-            } catch (e) {
-                return null;
-            }
-        }
-
-        remove(key: string) {
-            this.storage.removeItem(this.getKey(key));
-        }
-
-        clear(): void {
-            this.storage.clear();
-        }
-    };
-    return new WebStorage();
+    return new WebStorage(storage, prefixKey, hasEncrypt, encryption, timeout);
 };
 
 const createOptions = (storage: Storage, options: Options = {}): Options => {

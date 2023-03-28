@@ -1,31 +1,31 @@
 {
-  "name": "@qmfront/hooks",
+  "name": "@wuefront/hooks",
   "version": "1.0.0",
-  "private": true,
   "description": "",
-  "main": "index.ts",
-  "files": [
-    "vue",
-    "base"
-  ],
+  "exports": {
+    ".": "./index.ts",
+    "./base": "./base/index.ts",
+    "./vue": "./vue/index.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@ant-design/icons-vue": "^6.1.0",
-    "@qmfront/shared": "workspace:*",
-    "@qmfront/utils": "workspace:*",
-    "ant-design-vue": "^3.2.11",
-    "echarts": "^5.3.3",
-    "sortablejs": "^1.15.0",
-    "vue": "^3.2.37",
-    "vue-router": "^4.1.3"
+    "@ant-design/icons-vue": "6.1.0",
+    "@wuefront/shared": "workspace:*",
+    "@wuefront/utils": "workspace:*",
+    "ant-design-vue": "3.2.15",
+    "echarts": "5.4.1",
+    "sortablejs": "1.15.0",
+    "vue": "3.2.47",
+    "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@qmfront/configs": "workspace:*",
-    "@types/sortablejs": "^1.13.0",
-    "eslint": "^7.32.0"
+    "@wuefront-configs/eslint": "workspace:*",
+    "@wuefront-configs/tsconfig": "workspace:*",
+    "@types/sortablejs": "1.15.0",
+    "typescript": "4.9.5"
   }
 }

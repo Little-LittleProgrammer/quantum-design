@@ -1,5 +1,5 @@
 {
-  "name": "@qmfront/utils",
+  "name": "@wuefront/utils",
   "version": "1.0.0",
   "description": "",
   "main": "dist/utils.cjs.min.js",
@@ -13,24 +13,25 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@qmfront/shared": "workspace:*",
-    "crypto-js": "^4.1.1",
-    "dayjs": "^1.11.5"
+    "@wuefront/shared": "workspace:*",
+    "crypto-js": "4.1.1",
+    "dayjs": "1.11.7"
   },
   "devDependencies": {
-    "@qmfront/configs": "workspace:*",
-    "@qmfront/types": "workspace:*",
-    "@types/crypto-js": "^4.1.1",
-    "@types/lodash-es": "^4.17.6",
-    "@types/qs": "^6.9.7",
-    "eslint": "^7.32.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-cleanup": "^3.2.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.32.1",
-    "@rollup/plugin-commonjs": "^14.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "typescript": "^4.8.4"
+    "@wuefront-configs/eslint": "workspace:*",
+    "@wuefront-configs/tsconfig": "workspace:*",
+    "@wuefront/types": "workspace:*",
+    "@rollup/plugin-commonjs": "14.0.0",
+    "@rollup/plugin-json": "4.1.0",
+    "@rollup/plugin-node-resolve": "11.2.1",
+    "@types/crypto-js": "4.1.1",
+    "@types/lodash-es": "4.17.6",
+    "@types/qs": "6.9.7",
+    "rollup": "2.79.1",
+    "rollup-plugin-cleanup": "3.2.1",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-typescript2": "0.32.1",
+    "typescript": "4.9.5",
+    "tslib": "2.5.0"
   }
 }

@@ -28,7 +28,7 @@
             <form-action v-bind="getProps">
                 <template
                     #[item]="data"
-                    v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']"
+                    v-for="item in ['resetBefore', 'submitBefore', 'submitAfter', 'advanceBefore', 'advanceAfter']"
                 >
                 <slot :name="item" v-bind="data || {}"></slot>
                 </template>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang='ts'>
-import { date_util, deep_merge } from '@qmfront/utils';
+import { date_util, deep_merge, isArray, isFunction } from '@wuefront/utils';
 import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
@@ -106,7 +106,6 @@ export default defineComponent({
                     }
                 }
             }
-
             return schemas as FormSchema[];
         });
 
@@ -177,7 +176,6 @@ export default defineComponent({
                 if (unref(isInitedDefaultRef)) {
                     return;
                 }
-                console.log(isInitedDefaultRef.value);
                 if (schema?.length) {
                     init_default();
                     isInitedDefaultRef.value = true;
@@ -192,9 +190,12 @@ export default defineComponent({
         }
 
         // 设置 formObj 里的某项值, 用于form-item里具体组件的事件,例如: onChange:
-        function set_form_model(key: string, value: any) {
+        function set_form_model(key: string, value: any, schema: FormSchema) {
             formModel[key] = value;
             const { validateTrigger } = unref(getBindValue);
+            if (isFunction(schema.dynamicRules) || isArray(schema.rules)) {
+                return;
+            }
             if (!validateTrigger || validateTrigger === 'change') {
                 validateFields([key]).catch(() => {});
             }

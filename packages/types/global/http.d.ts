@@ -11,7 +11,7 @@ declare interface UploadFileParams {
     data?: Record<string, any>;
     // File parameter interface field name
     name?: string;
-    action: string;
+    action?: string;
     // file name
     file: File | Blob;
     // file name

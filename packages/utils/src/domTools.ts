@@ -58,7 +58,7 @@ export function offset(dom: Element & HTMLElement) {
     return result;
 }
 
-function trim(string: string) {
+export function trim(string: string) {
     return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
 }
 
@@ -119,10 +119,14 @@ export function removeClass(el: Element, cls: string) {
 export function on(
     element: Element | HTMLElement | Document | Window,
     event: string,
-    handler: EventListener | EventListenerObject
+    handler: EventListener | EventListenerObject,
+    options?: AddEventListenerOptions
 ): void {
     if (element && event && handler) {
-        element.addEventListener(event, handler, false);
+        element.addEventListener(event, handler, {
+            passive: true,
+            ...(options || {})
+        });
     }
 }
 
@@ -130,10 +134,14 @@ export function on(
 export function off(
     element: Element | HTMLElement | Document | Window,
     event: string,
-    handler: EventListener | EventListenerObject
+    handler: EventListener | EventListenerObject,
+    options?: AddEventListenerOptions
 ): void {
     if (element && event && handler) {
-        element.removeEventListener(event, handler, false);
+        element.removeEventListener(event, handler, {
+            passive: true,
+            ...(options || {})
+        });
     }
 }
 

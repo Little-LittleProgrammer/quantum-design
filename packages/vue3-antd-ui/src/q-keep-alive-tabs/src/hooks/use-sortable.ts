@@ -1,6 +1,6 @@
 
-import { isNullAndUnDef } from '@qmfront/utils';
-import { useSortable } from '@qmfront/hooks';
+import { isNullAndUnDef } from '@wuefront/utils';
+import { useSortable } from '@wuefront/hooks';
 import { useTabsStore } from './use-tabs-store';
 import { nextTick } from 'vue';
 

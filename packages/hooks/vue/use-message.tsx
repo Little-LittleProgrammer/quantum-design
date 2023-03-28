@@ -1,7 +1,7 @@
 import { Modal, message as Message } from 'ant-design-vue';
 import type { ModalFunc, ModalFuncProps } from 'ant-design-vue/lib/modal/Modal';
 import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons-vue';
-import { isString } from '@qmfront/utils';
+import { isString } from '@wuefront/utils';
 import { h } from 'vue';
 import { VueNode } from 'ant-design-vue/lib/_util/type';
 
@@ -28,6 +28,7 @@ function createConfirm(options: ModalOptionsEx): ConfirmOptions {
     Reflect.deleteProperty(options, 'iconType');
     const opt: ModalFuncProps = {
         centered: true,
+        wrapClassName: 'g-create-confirm',
         icon: getIcon(iconType) as unknown as (() => VueNode) | undefined,
         okText: '确认' as unknown as (() => VueNode) | undefined,
         cancelText: '取消' as unknown as (() => VueNode) | undefined,

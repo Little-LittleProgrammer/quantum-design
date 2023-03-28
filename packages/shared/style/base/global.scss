@@ -8,3 +8,34 @@
 .inline-block {
     display: inline-block;
 }
+
+.g-status-icon {
+    &-primary,
+    &-success,
+    &-error,
+    &-disable {
+        display: inline-block;
+        margin-right: 4px;
+        margin-bottom: 2px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+    }
+    &-primary {
+        background-color: $blue-color;
+    }
+    &-success {
+        background-color: $success-color;
+    }
+    &-error {
+        background-color: $error-color;
+    }
+    &-disable {
+        background-color: $border-color-base;
+    }
+    &-suffix {
+        margin-left: 2px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}

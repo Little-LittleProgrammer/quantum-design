@@ -36,6 +36,6 @@ export const basicProps = {
         type: [Function, Object] as PropType<any>,
         default: null
     },
-    destroyOnClose: { type: Boolean },
+    destroyOnClose: { type: Boolean, default: true },
     ...footerProps
 };

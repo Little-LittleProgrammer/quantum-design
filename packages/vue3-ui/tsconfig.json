@@ -1,9 +1,9 @@
 {
-  "extends": "@qmfront/configs/tsconfig/vue.json",
+  "extends": "@wuefront-configs/tsconfig/vue.json",
   "compilerOptions": {
     "isolatedModules": true,
     "baseUrl": "."
   },
-  "include": ["src", "index.ts", "scripts"],
+  "include": ["src", "index.ts", "scripts", "node_modules/@wuefront/types/**/*.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

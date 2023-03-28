@@ -1,4 +1,4 @@
-import { isBase, isFunction, isMap, isObject, isRegExp, isSet, isSymbol } from './is';
+import { isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
 export function deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
     // 判断引用类型的temp
     function check_temp(target:any) {
@@ -196,4 +196,132 @@ export function quick_sort(nums: number[]) {
     shuffle(nums);
     sort(nums, 0, nums.length - 1);
     return nums;
+}
+
+/**
+ * 格式化数字
+ */
+export function format_money_num<T extends string | number>(num: T): string {
+    if (!num && num !== 0) {
+        return '';
+    }
+    if (num.toString().includes('--')) {
+        return num.toString();
+    }
+    let _str: string = '';
+    _str = isString(num) ? num : num + '';
+    const _resArr = _str.includes('.') ? _str.split('.') : [_str, '00'];
+    const _int = _resArr[0].split('').reverse();
+    // 如果含逗号，则代表已经格式化成功，则直接返回
+    if (_int.includes(',')) {
+        return _resArr.join('.');
+    }
+    const _formatArr = [];
+    for (let i = 0; i < _int.length; i++) {
+        _formatArr.push(_int[i]);
+        if ((i + 1) % 3 === 0 && i !== _int.length - 1) {
+            _formatArr.push(',');
+        }
+    }
+    const _decimals = _resArr[1];
+    return _formatArr.reverse().join('') + '.' + _decimals;
+}
+
+/**
+ * 为对象指定位置添加新属性
+ * @param obj :目标对象
+ * @param key :要添加的新属性
+ * @param value :新属性的值
+ * @param index :添加位置，不传或长度超出则添加至末尾
+ * @returns 新对象
+ */
+export function add_to_object(obj: Record<string | number, any>, key: string | number, value: any, index: number) {
+	const temp: Record<string, any> = {};
+	let i: number = 0;
+	// 如果未传index或索引超出对象size，则添加至末尾
+	if ((!index || index >= Object.keys(obj).length) && key && value) {
+		obj[key] = value;
+        return obj;
+	}
+	// 按顺序循环遍历原对象
+	for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) {
+			// 如果位置匹配，则添加新属性
+			if (i === index && key && value) {
+				temp[key] = value;
+			}
+			// 添加当前属性到对象模版中
+			temp[prop] = obj[prop];
+			// 计数增加
+			i++;
+		}
+	}
+	return temp;
+};
+
+/**
+ * 查找多层值
+ * @param object 要查找的对象 {a: {b:{c: {}}}}
+ * @param string 要查找的属性 'a.b.c'
+ * @returns 值
+ */
+export function find_attr(object: any, path: string){
+    const tags = path.split('.');
+    const tagsCopy = JSON.parse(JSON.stringify(tags));
+    for (const _key of tagsCopy) {
+        object = object[tags[0]];
+        if (object === undefined || object === null) {
+            return undefined;
+        }
+        tags.shift();
+    }
+    return object;
+}
+
+/**
+ * @param path 要设置的属性 'a.b.c'
+ * @param value 设置值
+ * @param obj 要设置的对象 {a: {b:{c: {}}}}
+ */
+export function edit_attr(path:string, value: any, obj:any) {
+    const _list = path.split('.');
+    const _length = _list.length - 1;
+    _list.reduce((cur: any, key:string, index: number) => {
+        if (!(cur[key]))
+            cur[key] = {};
+        if (index === _length) {
+            cur[key] = value;
+        }
+        return cur[key];
+    }, obj);
+}
+
+/**
+ * 金额转化-分转元
+ * @param fen 要转化的金额
+ * @param isFormat 是否要展示为千分位格式，如：20,000.10
+ * @param digit 转化倍数，默认为100
+ */
+export function reg_fen_to_yuan(fen: number | string, isFormat: boolean = false,  digit: number = 100) {
+    let _num = (Number(fen) / digit).toFixed(2);
+    return isFormat ? format_money_num(_num) : _num;
+}
+
+/**
+ * 金额转化-元转分
+ * @param yuan 要转化的金额
+ * @param digit 转化倍数，默认为100
+ */
+export function reg_yuan_to_fen(yuan: number | string, digit: number = 100): number {
+    let _dotSum = 0;
+    let _amountStr = yuan.toString();
+    let _digitStr = digit.toString();
+    // 计算小数点位数
+    if (_amountStr.includes('.')) {
+        _dotSum += _amountStr.split(".")[1].length
+    }
+    if (_digitStr.includes('.')) {
+        _dotSum += _digitStr.split(".")[1].length
+    }
+    return Number(_amountStr.replace('.', '')) * Number(_digitStr.replace('.', '')) / Math.pow(10, _dotSum);
 }

@@ -1,4 +1,4 @@
-import { deep_copy } from '@qmfront/utils';
+import { deep_copy } from '@wuefront/utils';
 import { menuData } from '../../utils/types';
 
 export interface ICacheObj {

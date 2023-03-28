@@ -14,7 +14,7 @@
                             <a-input
                                 class="flex"
                                 v-model:value.trim="record.auth_name"
-                                :ref="el => set_input_ref(el, record.id)"
+                                :ref="(el:any) => set_input_ref(el, record.id)"
                                 :style="dynamic_width(record.id)"
                                 :placeholder="record.path_type == '1' ? '请输入菜单名称' : '请输入接口名称'"
                             />
@@ -85,15 +85,14 @@
 </template>
 
 <script lang='ts'>
-import { deep_copy } from '@qmfront/shared/utils';
-import { useMessage } from '@qmfront/hooks/vue';
-import { QIconPicker, QIcon } from '@qmfront/vue3-antd-ui';
-import {QTableTreeDrag, TableProps} from '@qmfront/vue3-antd-ui';
+import { deep_copy } from '@wuefront/utils';
+import { useMessage } from '@wuefront/hooks/vue';
+import { QIconPicker, QIcon } from '@wuefront/vue3-antd-ui';
+import {QTableTreeDrag, TableProps} from '@wuefront/vue3-antd-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';
 import { useGlobalStore } from '@/store/modules/global';
 import { get_table_header_columns } from '@/assets/ts/tools';
-import { Result } from '@qmfront/shared/types/http';
 interface IDefaultData {
     auth_name: string;
     path: string;
@@ -354,7 +353,7 @@ export default defineComponent({
             });
         };
         const front_remove_menu = (data: IDefaultData, arr: IDefaultData[]) => {
-            arr.some((n, i) => {
+            arr.some((_n, i) => {
                 if (arr[i].id === data.id) {
                     arr.splice(i, 1);
                     return true;

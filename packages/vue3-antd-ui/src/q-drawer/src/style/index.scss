@@ -85,3 +85,12 @@ $footer-height: 60px;
         height: calc(100% - $detail-header-height);
     }
 }
+[data-theme='dark'] {
+    .q-drawer.container.drawer-container.add-weight {
+        .ant-drawer-body {
+            .q-drawer-content {
+                background-color: #000;
+            }
+        }
+    }
+}

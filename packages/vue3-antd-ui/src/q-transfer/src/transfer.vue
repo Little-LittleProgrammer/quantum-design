@@ -33,10 +33,11 @@
 <script lang='ts' setup>
 
 import { reactive, PropType, computed, watch} from 'vue';
-import { deep_copy } from '@qmfront/utils';
+import { deep_copy, isObject } from '@wuefront/utils';
 import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
-import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data } from './transfer';
+import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
 import './style/index.scss';
+import { propTypes } from '@wuefront/types/vue/types';
 
 interface DataProps {
     expandedKeys: string[];
@@ -55,9 +56,24 @@ const props = defineProps({
     treeData: {
         type: Array as PropType<ICity[]>,
         default: () => []
-    }
+    },
+    fieldNames: {
+        type: Object as PropType<IFieldNames>,
+        default: () => {}
+    },
+    returnAll: propTypes.bool.def(false)
 });
 const emit = defineEmits(['update:targetKeys', 'change']);
+
+const getTreeData = computed<ICity[]>(() => {
+    if (!isObject(props.fieldNames)) {
+        throw Error('fieldNames must be object');
+    }
+    if (props.fieldNames.key || props.fieldNames.children || props.fieldNames.title) {
+        return dfs(props.treeData, props.fieldNames);
+    }
+    return props.treeData;
+});
 
 const data: DataProps = reactive({
     dataSource: [],
@@ -90,14 +106,18 @@ function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys:s
     // 防止左侧FilterLeftTreeData值不全, 导致移到右侧时有问题
     data.searchWord = '';
     on_search();
+    let _perentKey:string[] = [];
     targetKeys = targetKeys.filter(key => {
-        return !props.treeData.some(item => {
+        return !getTreeData.value.some(item => {
             if (item.children && item.children.length == 1) {
                 return false;
             }
             return !!(key == item.key && item.children);
         });
     });
+    if (props.returnAll) {
+        _perentKey = get_parent_keys(targetKeys, getTreeData.value);
+    }
 
     if (direction === 'right') {
         // 将带对勾的数据过滤掉，复制给右侧的数组
@@ -121,7 +141,7 @@ function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys:s
     // 最终返回的$emit
     if (moveKeys.length != 0) {
         emit('update:targetKeys', [...new Set(targetKeys)]);
-        emit('change', [...new Set(targetKeys)]);
+        emit('change', [...new Set(targetKeys)], _perentKey);
     }
 }
 // 点击复选框时的回调
@@ -147,7 +167,7 @@ function on_search() {
     data.expandedKeys = [];
     data.filterLeftTreeData = filter_search_data(
         value,
-        deep_copy(props.treeData)
+        deep_copy(getTreeData.value)
     );
 }
 function filter_search_data(value: string, treeData: ICity[]) {
@@ -178,13 +198,15 @@ function filter_search_data(value: string, treeData: ICity[]) {
 watch(props.targetKeys, (val) => {
     on_change(val, 'right', []);
 });
-watch(props.treeData, (val) => {
+watch(() => getTreeData.value, (val) => {
     if (val.length > 0) {
         data.searchWord = '';
-        flatten(deep_copy(props.treeData));
-        data.filterLeftTreeData = deep_copy(props.treeData);
+        flatten(deep_copy(getTreeData.value));
+        data.filterLeftTreeData = deep_copy(getTreeData.value);
         // 初始化右侧数据
-        on_change(props.targetKeys, 'right', []);
+        setTimeout(() => {
+            on_change(props.targetKeys, 'right', []);
+        });
     }
 }, {immediate: true});
 </script>

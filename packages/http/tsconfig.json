@@ -1,6 +1,6 @@
 {
-    "extends": "@qmfront/configs/tsconfig/lib.json",
-    "include": ["*.ts", "**/*.ts", "node_modules/@qmfront/types/**/*.d.ts"],
+    "extends": "@wuefront-configs/tsconfig/lib.json",
+    "include": ["*.ts", "**/*.ts", "node_modules/@wuefront/types/**/*.d.ts"],
     "exclude": ["dist"]
   }
   

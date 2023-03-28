@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
-import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, first_to_upper } from '@qmfront/utils';
+import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, first_to_upper } from '@wuefront/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
 import { computed, PropType, Ref, toRefs, unref } from 'vue';
@@ -8,7 +8,7 @@ import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
 import { FormProps, FormSchema } from '../types/form';
 import { FormActionType } from '../types/form';
-import { QIcon } from '../../../q-icon';
+import { QIcon } from '@/q-icon';
 import { Divider } from 'ant-design-vue';
 import { cloneDeep } from 'lodash-es';
 
@@ -33,7 +33,7 @@ export default defineComponent({
             default: () => ({})
         },
         setFormModel: {
-            type: Function as PropType<(key: string, value: any) => void>,
+            type: Function as PropType<(key: string, value: any, schema:FormSchema) => void>,
             default: null
         },
         formActionType: {
@@ -237,7 +237,7 @@ export default defineComponent({
                     }
                     const _target = e ? e.target : null;
                     const _value = _target ? (_isCheck ? _target.checked : _target.value) : e;
-                    props.setFormModel(field, _value);
+                    props.setFormModel(field, _value, props.schema);
                 }
             };
             const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
@@ -319,9 +319,8 @@ export default defineComponent({
                 </span>
             );
         }
-
         function render_item() {
-            const { itemProps, slot, render, field, suffix, component } = props.schema;
+            const { itemProps, slot, render, field, suffix, component, prefix } = props.schema;
             const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
             const { colon } = props.formProps;
             if (component === 'Divider') {
@@ -335,12 +334,14 @@ export default defineComponent({
                     return slot ? get_slot(slots, slot, unref(getValues)) : render ? render(unref(getValues)) : render_component();
                 };
                 const _showSuffix = !!suffix;
+                const _showPrefix = !!prefix;
                 const _getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
+                const _getPrefix = isFunction(prefix) ? prefix(unref(getValues)) : prefix;
                 return (
                     <a-form-item
                         name={field}
                         colon={colon}
-                        class={{ 'suffix-item': _showSuffix }}
+                        class={{ 'suffix-item': _showSuffix || _showPrefix }}
                         {...(itemProps as Record<string, any>)}
                         label={render_label_help_message()}
                         rules={handle_rules()}
@@ -348,6 +349,7 @@ export default defineComponent({
                         wrapperCol={wrapperCol}
                     >
                         <div style="display:flex">
+                            {_showPrefix && <span class="prefix">{_getPrefix}</span>}
                             <div style="flex:1; max-width: 100%">{get_content()}</div>
                             {_showSuffix && <span class="suffix">{_getSuffix}</span>}
                         </div>
@@ -365,14 +367,12 @@ export default defineComponent({
             const realColProps = { ...baseColProps, ...colProps };
             const { isIfShow, isShow } = get_show();
             const values = unref(getValues);
-
             const getContent = () => {
                 return colSlot ? get_slot(slots, colSlot, unref(getValues))
                     : renderColContent
                         ? renderColContent(values)
                         : render_item();
             };
-
             return (
                 isIfShow && (
                     <a-col {...realColProps} v-show={isShow}>

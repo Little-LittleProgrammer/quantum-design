@@ -1,5 +1,5 @@
 {
-    "extends": "@qmfront/configs/tsconfig/vue.json",
+    "extends": "@wuefront-configs/tsconfig/vue.json",
     "compilerOptions": {
         "isolatedModules": true,
         "noEmit": true,
@@ -14,7 +14,7 @@
         "src/**/*.tsx", 
         "src/**/*.vue",
         "types/*.ts",
-        "node_modules/@qmfront/types/**/*.d.ts"
+        "node_modules/@wuefront/types/**/*.d.ts"
     ],
     "exclude": ["dist"]
 }

@@ -1,8 +1,9 @@
-import { isArray, isFunction, isObject, isString, isNullOrUnDef, date_util, deep_copy } from '@qmfront/utils';
+import { isArray, isFunction, isObject, isString, isNullOrUnDef, date_util, deep_copy } from '@wuefront/utils';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
-import { dateFormat } from '@qmfront/shared/enums';
+import { dateFormat } from '@wuefront/shared/enums';
+import { cloneDeep } from 'lodash-es';
 
 interface UseFormValuesContext {
     defaultValueRef: Ref<any>;
@@ -29,7 +30,7 @@ export function use_form_values({
                 continue;
             }
             const transformDateFunc = unref(getProps).transformDateFunc;
-            if (isObject(value)) {
+            if (isObject(value) && value?.format) {
                 value = transformDateFunc?.(value);
             }
             if (isArray(value) && value[0]?.format && value[1]?.format) {
@@ -81,10 +82,12 @@ export function use_form_values({
             const { defaultValue } = item;
             if (!isNullOrUnDef(defaultValue)) {
                 obj[item.field] = defaultValue;
-                formModel[item.field] = defaultValue;
+                if (formModel[item.field] === undefined) {
+                    formModel[item.field] = defaultValue;
+                }
             }
         });
-        defaultValueRef.value = deep_copy(obj);
+        defaultValueRef.value = cloneDeep(obj);
     }
 
     return { handle_form_values, init_default };

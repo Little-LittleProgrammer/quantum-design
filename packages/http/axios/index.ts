@@ -5,13 +5,15 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { VAxios } from './Axios';
 import { check_status } from './check-status';
-import { ContentTypeEnum, RequestEnum, ResultEnum } from '@qmfront/shared/enums';
-import { deep_merge, isString } from '@qmfront/utils';
-import { joinTimestamp, joinEnvToUrl, joinCookieToUrl } from './helper';
-import { useMessage } from '@qmfront/hooks/vue';
+import { ContentTypeEnum, RequestEnum, ResultEnum } from '@wuefront/shared/enums';
+import { deep_merge, isString } from '@wuefront/utils';
+import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
+import { useMessage } from '@wuefront/hooks/vue';
 
 const { createMessage } = useMessage();
+
 const error = createMessage.error!;
+const {joinTokenToHeader, setTokenToHeader} = dealToken();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -72,7 +74,8 @@ export const defaultTransform: AxiosTransform = {
    */
     requestInterceptors: (config, options) => {
         if (options.customTransform && options.customTransform.customRequest) {
-            config = options.customTransform.customRequest(config) as SelectPartial<AxiosRequestConfig<any>, "url" | "headers" | "method">
+            config = options.customTransform.customRequest(config) as SelectPartial<AxiosRequestConfig<any>, 'url' | 'headers' | 'method'>;
+            config = joinTokenToHeader(options.requestOptions?.joinToken || true, config) as SelectPartial<AxiosRequestConfig<any>, 'url' | 'headers' | 'method'>;
         }
         return config;
     },
@@ -83,7 +86,7 @@ export const defaultTransform: AxiosTransform = {
      */
     requestInterceptorsCatch: (error: any, options) => {
         if (options.customTransform && options.customTransform.customRequestError) {
-            options.customTransform.customRequestError(error)
+            options.customTransform.customRequestError(error);
         }
         if (error && error.response) {
             check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageMode || 'message');
@@ -98,15 +101,16 @@ export const defaultTransform: AxiosTransform = {
    */
     responseInterceptors: (res: AxiosResponse<any>, options) => {
         if (options.customTransform && options.customTransform.customResponse) {
-            res = options.customTransform.customResponse(res)
+            res = options.customTransform.customResponse(res);
         }
         if (res.data.code == ResultEnum.NOTFOUND){
-            location.replace('/backend/error')
+            location.replace('/backend/error');
         } else if (res.data.code == ResultEnum.ERROR){
             error(res.data.msg);
         } else if (res.data.code == ResultEnum.SERVERERROR){
             error(res.data.msg);
         } else if (res.data.code == ResultEnum.RELOAD){
+            setTokenToHeader(options.requestOptions?.joinToken || true, res);
             window.location.reload();
         } else if (res.data.code == ResultEnum.LOGIN){
             window.location.href = res.data.data?.url;
@@ -121,13 +125,13 @@ export const defaultTransform: AxiosTransform = {
    */
     responseInterceptorsCatch: (error: any, options) => {
         if (options.customTransform && options.customTransform.customResponseError) {
-            options.customTransform.customResponseError(error)
+            options.customTransform.customResponseError(error);
         }
         if (error && error.response) {
             check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageMode || 'message');
         } else if (error.code === 'ERR_CANCELED') {
             // 如果手动取消, 不予受理
-            console.log('请求重复, 手动取消请求')
+            console.log('请求重复, 手动取消请求');
             return Promise.resolve(error);
         } else {
             check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageMode || 'message');
@@ -161,7 +165,7 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     //  是否加入时间戳
                     joinTime: true,
                     // 是否在请求中加入环境参数
-                    env: () =>'',
+                    env: () => '',
                     // 是否加入cokie
                     joinCookie: true,
                     // 忽略重复请求
@@ -173,6 +177,7 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     // 接口地址
                     apiUrl: '',
                     uploadUrl: '',
+                    joinToken: true, // 是否在header中加入token
                     // 接口拼接地址
                     urlPrefix: 'api'
                 }

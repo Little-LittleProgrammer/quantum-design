@@ -2,51 +2,32 @@
     <a-config-provider :locale="locale">
         <div id="app" >
             <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
-            <!-- 异步导出文件提示窗 -->
-            <a-modal
-                v-model:visible="globalStore.asyncExportNoticePop.visible"
-                class="async-export-notice-pop"
-                :centered="true"
-                :show-close="false"
-                title="导出"
-            >
-                <div class="async-download-tips">
-                    <span class="s-tit">
-                        文件名：
-                        <em>{{ globalStore.asyncExportNoticePop.file }}</em>
-                    </span>
-                    <span
-                        v-if="globalStore.asyncExportNoticePop.title && globalStore.asyncExportNoticePop.title != ''"
-                        v-html="globalStore.asyncExportNoticePop.title"
-                    ></span>
-                </div>
-                <template #footer>
-                    <span class="dialog-footer">
-                        <a-button type="primary" @click="globalStore.asyncExportNoticePop.visible = false">确定</a-button>
-                    </span>
-                </template>
-            </a-modal>
-            <!-- 异步导出文件提示窗 -->
+            <export-file></export-file>
+            <component v-if="dynamicComponent" :is="dynamicComponent"></component>
         </div>
     </a-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent, defineAsyncComponent} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { useMessage } from '@qmfront/hooks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 import { api_global_env } from '@/http/api/global';
 import { api_manage_user_auths } from './http/api/system-management/permission/person';
 import { router } from './router';
-import { get_net_router } from '@qmfront/vue3-antd-ui';
+import { get_net_router } from '@wuefront/vue3-antd-ui';
 import settings from '@/enums/projectEnum';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
-import { api_get_city_select } from './http/api/common/direction';
+import { api_get_city_select } from './http/api/common/operation/direction';
+import ExportFile from '@/components/export-file/export-modal.vue';
 
 export default defineComponent({
     name: 'App',
+    components: {
+        ExportFile
+    },
     setup() {
         const locale = zhCN;
         const {createMessage} = useMessage();
@@ -56,12 +37,17 @@ export default defineComponent({
         let requestNum = 0;
         const get_global_env = () => { // 环境检测
             api_global_env().then(res => {
-                globalStore.set_environment_data(res.data);
-                userStore.username = res.data.username;
-                if (requestNum === 0) {
-                    get_menus_data(); // 为了防止页面请求时，此接口还未返回环境数据env
+                if (res.code === 200) {
+                    globalStore.set_environment_data(res.data);
+                    userStore.username = res.data.username;
+                    if (requestNum === 0) {
+                        get_dity_select(); // 获取城市
+                        get_menus_data(); // 为了防止页面请求时，此接口还未返回环境数据env
+                    }
+                    requestNum++;
+                } else if (res.code === 400) {
+                    alert(`错误信息: ${res.msg}`);
                 }
-                requestNum++;
             });
             setTimeout(() => {
                 get_global_env();
@@ -91,25 +77,29 @@ export default defineComponent({
             } else {
                 const _res = import('@/menus/index');
                 sysStore.mainMenuData = (await _res).default;
-                sysStore.initMenuData = '/backend/operation-module/canary-management';
+                sysStore.initMenuData = '/backend/data-modules/dashboard';
                 sysStore.menuDataLoadingEnd = true;
                 settings.func.showSearchButton && get_net_router(sysStore.mainMenuData);
             }
         };
-        // get_global_env();
-        get_menus_data();
+        get_global_env();
         async function get_dity_select() {
             const _res = await api_get_city_select();
             if (_res.code === 200) {
                 globalStore.citySelect = _res.data.list;
             }
-        };
-        get_dity_select();
+        }
+
+        const dynamicComponent = import.meta.env.VITE_USE_PWA ? defineAsyncComponent(() => {
+            return import ('@/components/layout/qm-reload-prompt.vue');
+        }) : null;
+
         return {
             locale,
             userStore,
             globalStore,
-            sysStore
+            sysStore,
+            dynamicComponent
         };
     }
 });
@@ -120,23 +110,19 @@ export default defineComponent({
 }
 </style>
 <style lang="scss" scoped>
-// 异步提示弹窗
-.async-export-notice-pop {
-    .async-download-tips {
-        span {
-            display: block;
-            line-height: 30px;
-            font-size: 16px;
-            &.s-tit {
-                em {
-                    font-weight: bold;
-                    font-size: 18px;
-                }
-            }
-            a {
-                color: $primary-color;
-            }
-        }
+#app {
+    min-width: 1024px;
+    overflow-x: auto
+}
+</style>
+
+<style lang="scss">
+@import '@wuefront/shared/style/antd/antd.scss';
+@import '@wuefront/shared/style/base/index.scss';
+.table-nowrap{
+    .ant-table-cell {
+        white-space: nowrap ;
+        min-width: 100px
     }
 }
 </style>

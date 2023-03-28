@@ -11,7 +11,7 @@
         <template v-else #title>
             <slot name="title"></slot>
         </template>
-        <q-loading :loading="getLoading" class="q-drawer-content" :style="getScrollContentStyle">
+        <q-loading :loading="getLoading" class="q-drawer-content js-drawer-content" :style="getScrollContentStyle">
             <slot></slot>
         </q-loading>
         <DrawerFooter v-bind="getProps" @close="on_close" @ok="handle_ok" :height="getFooterHeight">
@@ -25,9 +25,9 @@
 <script lang='ts' setup>
 import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, CSSProperties, nextTick, watch, useSlots} from 'vue';
 import {Drawer} from 'ant-design-vue';
-import {QLoading} from '@qmfront/vue3-ui';
+import {QLoading} from '@wuefront/vue3-ui';
 import {basicProps} from './props';
-import { deep_merge, isFunction, isNumber } from '@qmfront/utils';
+import { deep_merge, isFunction, isNumber } from '@wuefront/utils';
 import { DrawerInstance, DrawerProps } from './type';
 import DrawerHeader from './components/drawer-header.vue';
 import DrawerFooter from './components/drawer-footer.vue';
@@ -42,7 +42,10 @@ const propsRef = ref<Partial<Nullable<DrawerProps>>>(null); // useDrawer
 
 const drawerInstance: DrawerInstance = {
     setDrawerProps: set_drawer_props,
-    emitVisible: undefined
+    emitVisible: undefined,
+    events: {
+        onClose: on_close
+    }
 };
 
 const instance = getCurrentInstance(); // 父组件实例
@@ -69,7 +72,7 @@ const getProps = computed(():DrawerProps => {
         opt.class = wrapClassName ? `${wrapClassName} ${detailCls}` : detailCls;
         opt.closable = false;
         if (!getContainer) {
-            opt.getContainer = `.js-layout-main`;
+            opt.getContainer = `.layout-content`;
         }
     }
     return opt as DrawerProps;

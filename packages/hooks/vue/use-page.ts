@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { isString, deep_merge } from '@qmfront/utils';
+import { isString, deep_merge } from '@wuefront/utils';
 import { unref } from 'vue';
 
 import { useRouter } from 'vue-router';
@@ -64,7 +64,60 @@ const useRedo = (_router?: Router) => {
     return redo;
 };
 
+/**
+ * @description: 关闭当前页面
+ */
+const useClosePage = () => {
+    function close_page () {
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes('Firefox') || userAgent.includes('Chrome')) {
+            window.location.replace('about:blank');
+        } else {
+            window.opener = null;
+            window.open('', '_self');
+        }
+        window.close();
+    }
+    return close_page;
+}
+
+/**
+ * @description: 元素的高度或宽度变化时同时获取元素的位置和尺寸信息
+ */
+const useResizeObserver = () => {
+    let _resizeObserver: ResizeObserver;
+
+    // 监听元素变化
+    function observe($el: HTMLElement, callback: (rect: DOMRect) => void) {
+        _resizeObserver = new ResizeObserver(() => {
+            const _rect = $el.getBoundingClientRect();
+            callback && callback(_rect);
+        });
+        _resizeObserver.observe($el);
+    }
+
+    // 停止监听某个元素变化
+    function unobserve($el: HTMLElement) {
+        _resizeObserver.unobserve($el);
+    }
+
+    // 停止监听所有元素变化
+    function disconnect() {
+        _resizeObserver.disconnect();
+    }
+
+    const _elResizeObserver = {
+        observe,
+        unobserve,
+        disconnect
+    }
+
+    return _elResizeObserver;
+}
+
 export {
     useRedo,
-    useGo
+    useGo,
+    useClosePage,
+    useResizeObserver
 };

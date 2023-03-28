@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div class="menu-config-container">
-        <a-card class="qm-card">
+        <a-card class="qm-card" :size="antdStore.cardSize">
             <a-form layout="inline" >
                 <a-form-item>
                     <a-button type="primary" @click="add_first_level_menu">添加一级菜单</a-button>
@@ -85,10 +85,10 @@
 </template>
 
 <script lang='ts'>
-import { deep_copy } from '@qmfront/utils';
-import { useMessage } from '@qmfront/hooks/vue';
-import { QIconPicker, QIcon } from '@qmfront/vue3-antd-ui';
-import {QTableTreeDrag, TableProps} from '@qmfront/vue3-antd-ui';
+import { deep_copy } from '@wuefront/utils';
+import { useMessage } from '@wuefront/hooks/vue';
+import { QIconPicker, QIcon } from '@wuefront/vue3-antd-ui';
+import {QTableTreeDrag, TableProps} from '@wuefront/vue3-antd-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';
 import { useGlobalStore } from '@/store/modules/global';

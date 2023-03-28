@@ -1,4 +1,4 @@
-import { useMessage } from '@qmfront/hooks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 const { createMessage, createErrorModal } = useMessage();
 const error = createMessage.error!;
 
@@ -23,6 +23,9 @@ export function check_status(status:string, msg: string, errorMessageMode: Error
             break;
         case '408':
             errMessage = '请求超时';
+            break;
+        case '413':
+            errMessage = '数据过大';
             break;
         case '500':
             errMessage = '服务器端出错';

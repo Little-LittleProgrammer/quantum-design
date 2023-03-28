@@ -1,11 +1,7 @@
-import { ConfigEnv, UserConfig } from 'vite';
+import { ConfigEnv, UserConfig, loadEnv } from 'vite';
 import { resolve } from 'path';
-import { wrapperEnv } from './build/utils';
-import { loadEnv } from 'vite';
-import { OUTPUT_DIR, _antdCssData, _baseScssFile } from './build/vite/config';
-import { create_proxy } from './build/vite/proxy';
-import { createVitePlugins } from './build/vite/plugin';
 import {name, author, version} from './package.json';
+import {wrapperEnv, create_proxy, createVitePlugins, OUTPUT_DIR, _antdCssData, _baseScssFile } from '@wuefront-configs/vite';
 
 function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
@@ -21,7 +17,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     const env = loadEnv(mode, root);
     const viteEnv = wrapperEnv(env);
     const isBuild = command === 'build';
-    const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE, VITE_BASE_PATH } = viteEnv;
+    const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE, VITE_BASE_PATH, VITE_USE_PWA } = viteEnv;
     return {
         base: VITE_BASE_PATH,
         css: {
@@ -51,7 +47,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
                 output: {
                     banner: _banner,
                     footer: '/**! license by QM Front-end team */'
-                }
+                },
+                external: VITE_USE_PWA ? [] : ['virtual:pwa-register/vue']
             },
             // minify: 'terser',
             // terserOptions: {

@@ -1,19 +1,18 @@
-import {createAxios} from '@qmfront/http';
+import {createAxios} from '@wuefront/http';
 import { router } from '@/router';
 import { useViteEnv } from '@/hooks/settings/use-vite-env';
 import { useGlobalStore } from '@/store/modules/global';
+import { ContentTypeEnum } from '@wuefront/shared/enums';
 
 let _requestNum = 0; // 请求数量
 let _requestPageUrl = ''; // 请求地址所在页面
-let _pageLoadTime = ''; // 页面时间戳
 
 const env = useViteEnv();
 
 function custom_request(config: any) {
     // 切换页面请求数归零 防止loading无法消失bug
-    if (_requestPageUrl != router.currentRoute.value.path || (_requestPageUrl == router.currentRoute.value.path && _pageLoadTime != router.currentRoute.value.query.t)){ // 切换页面请求数归零 防止loading无法消失bug
+    if (_requestPageUrl != router.currentRoute.value.path){ // 切换页面请求数归零 防止loading无法消失bug
         _requestPageUrl = router.currentRoute.value.path;
-        _pageLoadTime = router.currentRoute.value.query.t + '';
         _requestNum = 0;
     }
     if (!config.url.includes('/site/get-env')){ // 记录请求数
@@ -28,7 +27,7 @@ function custom_request(config: any) {
 
 function custom_request_error(error:any) {
     const globalStore = useGlobalStore();
-    if (error.response?.config != undefined && !error.response?.config?.url?.includes('/site/get-env')){
+    if (error.config != undefined && !error.config?.url?.includes('/site/get-env')){
         _requestNum--;
         if (_requestNum <= 0){
             if (globalStore.dataLoading){
@@ -43,7 +42,7 @@ function custom_request_error(error:any) {
 
 function custom_response_error(error:any) {
     const globalStore = useGlobalStore();
-    if (error.response?.config != undefined && !error.response?.config?.url?.includes('/site/get-env')){
+    if (error.code === 'ERR_CANCELED' || (error.config != undefined && !error.config?.url?.includes('/site/get-env'))) {
         _requestNum--;
         if (_requestNum <= 0){
             if (globalStore.dataLoading){
@@ -69,7 +68,7 @@ function custom_response(res: any) {
             }
         }
     }
-    globalStore.date = new Date(res.headers.date);
+    globalStore.date = res.headers.date ? new Date(res.headers.date) : new Date();
     return res;
 }
 function get_env() {
@@ -84,6 +83,7 @@ export const defHttp = createAxios({
         customResponse: custom_response,
         customResponseError: custom_response_error
     },
+    headers: {'Content-Type': ContentTypeEnum.JSON},
     requestOptions: {
         // 接口地址
         apiUrl: env.apiUrl,

@@ -2,7 +2,7 @@ import setting from '@/enums/projectEnum';
 import { IBreadcrumb } from '@/store';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress'; // Progress 进度条
-import { AxiosCanceler } from '@qmfront/http';
+import { AxiosCanceler } from '@wuefront/http';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 
@@ -124,7 +124,7 @@ function create_permission_route(router: Router) { // 是否包含权限管理
             },
             {
                 path: '/backend',
-                redirect: '/backend/operation-module', // 默认初始页面
+                redirect: '/backend/data-modules', // 默认初始页面
                 name: 'home',
                 meta: {
                     title: '初始页面',
@@ -143,7 +143,7 @@ function create_permission_route(router: Router) { // 是否包含权限管理
                     path: '/'
                 });
             }
-        }, 700);
+        }, 1500);
     }
 }
 

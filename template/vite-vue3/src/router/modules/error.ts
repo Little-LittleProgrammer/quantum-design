@@ -30,8 +30,8 @@ const _router: RouteRecordRaw[] = [
         ]
     },
     {
-        path: '/backend/*',
-        name: '/backend/*',
+        path: '/backend/:pathMatch(.*)*',
+        name: 'NotFound',
         component: LAYOUT,
         redirect: '/backend/error/404',
         meta: {
@@ -39,18 +39,7 @@ const _router: RouteRecordRaw[] = [
             pid: '0',
             id: 'error/*'
         },
-        children: [
-            {
-                path: '404',
-                component: ERROR_COMPONENT,
-                meta: {
-                    title: '404',
-                    id: 'error1',
-                    pid: 'error/*'
-                },
-                name: 'error1'
-            }
-        ]
+        children: []
     }
 ];
 

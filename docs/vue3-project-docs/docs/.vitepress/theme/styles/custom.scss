@@ -1,0 +1,49 @@
+/* qmdsp.qimao.com */
+$text-color-backup-first: #999;   // 文本备份色1
+$text-color-backup-second: #BBB; // 文本备份色2
+$disabled-color: #EEEEEE; // 失效色
+$border-color-base: #D4D4D4; // 边框色
+$body-bg: #F5F5F5; // 全站背景色
+$primary-color: #FF9000; // 全局主色
+$header-tabs-color: #222222; // tab文字颜色
+
+// 滚动条样式
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background: #666666;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background: transparent;
+    }
+}
+
+// 单行文本溢出显示省略号
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 多行文本溢出显示省略号
+@mixin ellipsisX($count) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $count;
+    -webkit-box-orient: vertical;
+}
+
+// 计算宽度百分比
+@function calc-width-percentage($width, $overall-width) {
+    // 当前宽度 总宽度
+    @return calc($width / $overall-width * 100%);
+}

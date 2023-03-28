@@ -3,7 +3,7 @@ import { parse } from 'crypto-js/enc-utf8';
 import pkcs7 from 'crypto-js/pad-pkcs7';
 import ECB from 'crypto-js/mode-ecb';
 import UTF8 from 'crypto-js/enc-utf8';
-import { cacheCipher } from '@qmfront/shared/enums';
+import { cacheCipher } from '@wuefront/shared/enums';
 
 interface IOption {
     mode: typeof ECB,

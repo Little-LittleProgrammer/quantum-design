@@ -4,7 +4,7 @@ const setting = {
         // 是否展示主题切换按钮
         showDarkModeToggle: true,
         // 是否开启网站灰色模式，悼念的日期开启(4.4, 4.5, 12.13)
-        grayMode: true
+        grayMode: false
     },
     // 功能配置
     func: {

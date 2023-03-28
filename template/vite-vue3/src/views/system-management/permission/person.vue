@@ -41,15 +41,15 @@
 </template>
 
 <script lang='ts' setup>
-import {regEnum} from '@qmfront/shared/enums';
+import {regEnum} from '@wuefront/shared/enums';
 import { set_table_height } from '@/assets/ts/tools';
-import { useMessage } from '@qmfront/hooks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 import { ITableList, IUpdateData } from '@/http/api/system-management/permission/person';
 import { api_manage_user_list, api_manage_user_delete, api_manage_user_create, api_manage_user_update} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';
 import { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { reactive, onMounted, computed, nextTick} from 'vue';
-import { FormSchema, QForm, useForm } from '@qmfront/vue3-antd-ui';
+import { FormSchema, QForm, useForm } from '@wuefront/vue3-antd-ui';
 import { useGlobalStore } from '@/store/modules/global';
 import { useAntdStore } from '@/store/modules/antd';
 
@@ -171,7 +171,7 @@ const getEditSchemas = computed(():FormSchema[] => {
             },
             {
                 trigger: 'blur',
-                validator: async(rule: RuleObject, value: string) => {
+                validator: async(_rule: RuleObject, value: string) => {
                     const _reg = regEnum.emailReg;
                     if (!_reg.test(value)) {
                         return Promise.reject('请输入正确格式的邮箱');

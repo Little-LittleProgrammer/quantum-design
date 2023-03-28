@@ -3,8 +3,8 @@ import type { CSSProperties, PropType, Ref } from 'vue';
 import type { ColEx } from './types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
-import { propTypes } from '@qmfront/types/vue/types';
-import {dateFormat} from '@qmfront/shared/enums';
+import { propTypes } from '@wuefront/types/vue/types';
+import {dateFormat} from '@wuefront/shared/enums';
 
 export const basicProps = {
     // 绑定哪个model, 将 formModel 值绑定

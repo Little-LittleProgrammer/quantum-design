@@ -15,11 +15,11 @@ export type Rule = RuleObject & {
     trigger?: 'blur' | 'change' | ['change', 'blur'];
 };
 
-export interface RenderCallbackParams {
-    schema: FormSchema;
-    values: Record<string, any>;
+export interface RenderCallbackParams<T extends object = Record<string, any>> {
+    schema: FormSchema<T>;
+    values: T;
     model: Record<string, any>;
-    field: string;
+    field: keyof T;
 }
 
 export interface HelpComponentProps {
@@ -38,9 +38,9 @@ export interface HelpComponentProps {
     position: any;
 }
 
-export interface FormSchema {
+export interface FormSchema<T extends object = Record<string, any>> {
     // Field name
-    field: string;
+    field: keyof T;
     // Event name triggered by internal value change, default change
     changeEvent?: string;
     // Variable name bound to v-model Default value
@@ -53,7 +53,7 @@ export interface FormSchema {
     helpMessage?:
     | string
     | string[]
-    | ((renderCallbackParams: RenderCallbackParams) => string | string[]);
+    | ((renderCallbackParams: RenderCallbackParams<T>) => string | string[]);
     // BaseHelp component props
     helpComponentProps?: Partial<HelpComponentProps>;
     // Label width, if it is passed, the labelCol and WrapperCol configured by itemProps will be invalid
@@ -65,14 +65,15 @@ export interface FormSchema {
     // 用于设置调用组件的属性, 具体详情查看 ant-design-vue
     componentProps?:
     | ((opt: {
-        schema: FormSchema;
+        schema: FormSchema<T>;
         formActionType: FormActionType;
-        formModel: Record<string, any>;
+        formModel: T;
     }) => Record<string, any>)
     | object;
     // Required
-    required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
-    suffix?: string | number | ((values: RenderCallbackParams) => string | number);
+    required?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
+    suffix?: string | number | ((values: RenderCallbackParams<T>) => string | number);
+    prefix?: string | number | ((values: RenderCallbackParams<T>) => string | number);
 
     // 自定义 rules
     rules?: Rule[];
@@ -91,18 +92,18 @@ export interface FormSchema {
     // Matching details components
     span?: number;
 
-    ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+    ifShow?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
-    show?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+    show?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
     // Render the content in the form-item tag
-    render?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
+    render?: (renderCallbackParams: RenderCallbackParams<T>) => VNode | VNode[] | string;
 
     // Rendering col content requires outer wrapper form-item
-    renderColContent?: (renderCallbackParams: RenderCallbackParams) => VNode | VNode[] | string;
+    renderColContent?: (renderCallbackParams: RenderCallbackParams<T>) => VNode | VNode[] | string;
 
     renderComponentContent?:
-    | ((renderCallbackParams: RenderCallbackParams) => any)
+    | ((renderCallbackParams: RenderCallbackParams<T>) => any)
     | VNode
     | VNode[]
     | string;
@@ -113,9 +114,9 @@ export interface FormSchema {
     // Custom slot, similar to renderColContent
     colSlot?: string;
 
-    dynamicDisabled?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
+    dynamicDisabled?: boolean | ((renderCallbackParams: RenderCallbackParams<T>) => boolean);
 
-    dynamicRules?: (renderCallbackParams: RenderCallbackParams) => Rule[];
+    dynamicRules?: (renderCallbackParams: RenderCallbackParams<T>) => Rule[];
 }
 
 export interface FormActionType {

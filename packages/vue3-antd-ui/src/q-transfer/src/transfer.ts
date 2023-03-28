@@ -5,6 +5,12 @@ export interface ICity {
     disabled?: boolean
 }
 
+export interface IFieldNames {
+    title: string,
+    key: string,
+    children: string,
+}
+
 // 检查 选择框是选择还是未选择
 export function handle_tree_data(list: ICity[], targetKeys:string[] = []):ICity[] {
     list.forEach(item => {
@@ -73,4 +79,46 @@ export function filter_tree_data(treeData: ICity[], selectedkeys: string[], dire
         }
     })
     return _result
+}
+
+export function dfs(list: any[], fieldNames: IFieldNames) {
+    const _key = fieldNames.key || 'key';
+    const _children = fieldNames.children || 'children';
+    const _title = fieldNames.title || 'title';
+    if (list.length === 0) {
+        return [];
+    }
+    const _res:ICity[] = [];
+    for (const ele of list) {
+        const _obj:ICity = {
+            key: ele[_key],
+            title: ele[_title]
+        };
+        if (ele.disabled) {
+            _obj.disabled = ele.disabled;
+        }
+        if (ele[_children]) {
+            _obj.children = dfs(ele[_children], fieldNames);
+        }
+        _res.push(_obj);
+    }
+    return _res;
+}
+
+export function get_parent_keys(targetKeys: string[], list: ICity[]) {
+    if (targetKeys.length === 0) {
+        return []
+    }
+    let parentKeys:string[]= []
+    for (let item of list) {
+        if (item.children) {
+            for (let child of item.children) {
+                if (targetKeys.includes(child.key) && !parentKeys.includes(item.key)) {
+                    parentKeys.push(item.key);
+                    break;
+                }
+            }
+        }
+    }
+    return parentKeys
 }

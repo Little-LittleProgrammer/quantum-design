@@ -1,4 +1,4 @@
-import { isFunction } from '@qmfront/utils';
+import { isFunction } from '@wuefront/utils';
 import { isEqual } from 'lodash-es';
 import { computed, getCurrentInstance, nextTick, onUnmounted, reactive, ref, toRaw, unref, watchEffect } from 'vue';
 import { DrawerInstance, DrawerProps, ReturnMethods, UseDrawerInnerReturnType, UseDrawerReturnType } from '../type';
@@ -77,7 +77,7 @@ export function useDrawer():UseDrawerReturnType {
             }
         },
         closeDrawer: () => {
-            getInstance()?.setDrawerProps({ visible: false });
+            getInstance()?.events?.onClose();
         }
     };
     return [register, methods];
@@ -139,7 +139,7 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
             }),
 
             closeDrawer: () => {
-                getInstance()?.setDrawerProps({ visible: false });
+                getInstance()?.events?.onClose();
             },
 
             setDrawerProps: (props: Partial<DrawerProps>) => {

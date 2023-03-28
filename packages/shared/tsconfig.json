@@ -1,5 +1,5 @@
 {
-    "extends": "@qmfront/configs/tsconfig/base.json",
+    "extends": "@wuefront-configs/tsconfig/base.json",
     "include": ["enums"],
     "exclude": ["dist", "node_modules"]
 }

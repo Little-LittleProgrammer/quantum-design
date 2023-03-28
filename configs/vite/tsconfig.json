@@ -1,0 +1,5 @@
+{
+    "extends": "@wuefront-configs/tsconfig/base.json",
+    "include": ["plugins", "utils", "index.ts", "presets"],
+    "exclude": ["dist", "node_modules"]
+  }

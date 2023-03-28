@@ -25,7 +25,7 @@
 
 <script lang='ts' setup>
 import { onMounted, PropType, computed} from 'vue';
-import { propTypes } from '@qmfront/types/vue/types';
+import { propTypes } from '@wuefront/types/vue/types';
 import { ColEx } from '../types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import { use_form_context } from '../hooks/use-form-context';

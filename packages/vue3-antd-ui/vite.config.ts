@@ -1,4 +1,4 @@
-import { UserConfig } from 'vite';
+import { ConfigEnv, UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import VueJsx from '@vitejs/plugin-vue-jsx';
 import {resolve} from 'path';
@@ -8,14 +8,47 @@ function pathResolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
-export default ():UserConfig => {
+export default ({command, mode}: ConfigEnv):UserConfig => {
+    console.log('*********************', mode);
+    const plugin = [
+        vue(),
+        VueJsx(),
+        {
+            name: 'css-deal',
+            generateBundle(options, bundle) {
+                //这里可以获取打包后的文件目录以及代码code
+                const keys = Object.keys(bundle);
+                for (const key of keys) {
+                    const source:any = bundle[key];
+                    if (source.fileName && source.fileName.includes('vue_type')) {
+                        const _code = source.code.replace(/style\/index.js/g, 'style/index.css');
+                        this.emitFile({
+                            type: 'asset',
+                            fileName: key, //文件名名不变
+                            source: _code
+                        });
+                    }
+                }
+            }
+        }
+    ];
+    const isDeclaration = !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
+    if (isDeclaration) {
+        plugin.push(dts({
+            outputDir: 'dist',
+            skipDiagnostics: true
+        }));
+    }
     return {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@qmfront/shared/style/base/base.scss'; @import '@qmfront/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@wuefront/shared/style/base/base.scss'; @import '@wuefront/shared/style/base/mixin.scss';"
                 }
             }
+        },
+        esbuild: {
+            pure: ['console.log', 'debugger']
         },
         build: {
             target: 'modules',
@@ -29,16 +62,16 @@ export default ():UserConfig => {
                     'ant-design-vue',
                     '@ant-design/icons-vue',
                     'vue-types',
-                    '@qmfront/shared',
-                    '@qmfront/utils',
-                    '@qmfront/shared/enums',
-                    '@qmfront/types',
-                    '@qmfront/types/vue',
-                    '@qmfront/types/vue/types',
-                    '@qmfront/hooks',
-                    '@qmfront/hooks/base',
-                    '@qmfront/hooks/vue',
-                    '@qmfront/vue3-ui',
+                    '@wuefront/shared',
+                    '@wuefront/utils',
+                    '@wuefront/shared/enums',
+                    '@wuefront/types',
+                    '@wuefront/types/vue',
+                    '@wuefront/types/vue/types',
+                    '@wuefront/hooks',
+                    '@wuefront/hooks/base',
+                    '@wuefront/hooks/vue',
+                    '@wuefront/vue3-ui',
                     'lodash-es',
                     'pinia'
                 ],
@@ -77,30 +110,6 @@ export default ():UserConfig => {
                 '@/': pathResolve('src') + '/'
             }
         },
-        plugins: [
-            vue(),
-            VueJsx(),
-            dts({
-                outputDir: 'dist'
-            }),
-            {
-                name: 'css-deal',
-                generateBundle(options, bundle) {
-                    //这里可以获取打包后的文件目录以及代码code
-                    const keys = Object.keys(bundle);
-                    for (const key of keys) {
-                        const source:any = bundle[key];
-                        if (source.fileName && source.fileName.includes('vue_type')) {
-                            const _code = source.code.replace(/style\/index.js/g, 'style/index.css');
-                            this.emitFile({
-                                type: 'asset',
-                                fileName: key, //文件名名不变
-                                source: _code
-                            });
-                        }
-                    }
-                }
-            }
-        ]
+        plugins: plugin
     };
 };

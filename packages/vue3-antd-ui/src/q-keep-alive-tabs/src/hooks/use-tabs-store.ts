@@ -1,4 +1,4 @@
-import { useGo, useRedo } from '@qmfront/hooks/vue';
+import { useGo, useRedo } from '@wuefront/hooks/vue';
 import { defineStore } from 'pinia';
 import { toRaw, unref } from 'vue';
 import { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';
@@ -22,7 +22,7 @@ export function ignore_t(fullPath: string):string {
     if (fullPath.indexOf('?t=') > -1) {
         return fullPath.split('?t=')[0];
     }
-    return fullPath.split('t=')[0];
+    return fullPath.split('&t=')[0];
 }
 
 const get_to_target = (tabItem: RouteLocationNormalized) => {

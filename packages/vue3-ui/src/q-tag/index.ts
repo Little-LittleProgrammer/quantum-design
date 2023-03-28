@@ -1,7 +1,7 @@
-import Tag from './tag.vue';
-import type {TagProps} from './tagTypes';
+import Tag from './src/tag.vue';
+import type {TagProps} from './src/tagTypes';
 
-import { withInstall } from '@qmfront/utils';
+import { withInstall } from '@wuefront/utils';
 const QTag = withInstall(Tag);
 
 export type {TagProps};

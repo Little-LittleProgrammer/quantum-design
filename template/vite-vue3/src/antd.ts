@@ -5,7 +5,6 @@ import {
     Layout, // 布局
     Row, // 布局
     Col, // 布局
-    Menu, // 导航菜单
     DatePicker, // 日期选择框
     Form, // 表单
     Radio, // 单选框
@@ -31,6 +30,7 @@ import {
     Pagination, // 分页
     Empty, // 空状态
     BackTop,
+    Menu,
     // AutoComplete, // 自动完成
     // Descriptions, // 描述列表
     // PageHeader, // 页头

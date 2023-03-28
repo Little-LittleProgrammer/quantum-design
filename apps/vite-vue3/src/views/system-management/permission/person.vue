@@ -1,14 +1,14 @@
 <!--  -->
 <template>
 <div>
-    <a-card class="qm-card">
+    <a-card class="qm-card" :size="antdStore.cardSize">
         <q-form @register="register">
             <template #formFooter>
                 <a-button type="primary" @click="show_add_edit_pop('add')">添加</a-button>
             </template>
         </q-form>
     </a-card>
-    <a-card class="qm-card mt">
+    <a-card class="qm-card mt" :size="antdStore.cardSize">
         <a-table
             :columns="unRefData.columns"
             :size="antdStore.tableSize"
@@ -16,7 +16,7 @@
             class="even-bg"
             rowKey="id"
             :dataSource="tableFilterData"
-            :scroll="{y: data.tableHeight, x: '1000px'}"
+            :scroll="{ x: '1000px'}"
             :pagination="false"
         >
             <template #bodyCell="{column, record, text, index}">
@@ -41,15 +41,14 @@
 </template>
 
 <script lang='ts' setup>
-import {regEnum} from '@qmfront/shared/enums';
-import { set_table_height } from '@/assets/ts/tools';
-import { useMessage } from '@qmfront/hooks/vue';
+import {regEnum} from '@wuefront/shared/enums';
+import { useMessage } from '@wuefront/hooks/vue';
 import { ITableList, IUpdateData } from '@/http/api/system-management/permission/person';
 import { api_manage_user_list, api_manage_user_delete, api_manage_user_create, api_manage_user_update} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';
 import { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { reactive, onMounted, computed, nextTick} from 'vue';
-import { FormSchema, QForm, useForm } from '@qmfront/vue3-antd-ui';
+import { FormSchema, QForm, useForm } from '@wuefront/vue3-antd-ui';
 import { useGlobalStore } from '@/store/modules/global';
 import { useAntdStore } from '@/store/modules/antd';
 
@@ -61,7 +60,6 @@ interface DataProps {
     tableData: ITableList[];
     filterData: Record<'role', string>;
     roleOptions: ISelectOption[];
-    tableHeight: unknown;
     formData: Omit<IUpdateData, 'role_id_str'> & Record<'role_id_arr', string[]>;
     addEditUserDataPop: { visible: boolean; type: string; title:string }
 }
@@ -120,8 +118,7 @@ const data: DataProps = reactive({
     },
     filterData: { // 筛选
         role: ''
-    },
-    tableHeight: '0'
+    }
 });
 const tableFilterData = computed(() => {
     return data.filterData.role != '' ? data.tableData.filter(item => item.role_id_arr.includes(data.filterData.role)) : data.tableData;
@@ -295,9 +292,6 @@ onMounted(() => {
     globalStore.pageLoading = true;
     init_data();
     get_user_options();
-    set_table_height('even-bg').then(height => {
-        data.tableHeight = height;
-    });
 });
 </script>
 <style lang='scss' scoped>
