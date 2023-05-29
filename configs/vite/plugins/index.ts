@@ -8,6 +8,8 @@ import { configPwaConfig } from './pwa';
 import { configHtmlPlugin } from './html';
 import { ViteEnv } from '../utils';
 import { configDefinePlugin } from './define-options';
+import { configVisualizerConfig } from './visualizer';
+export { configSentryEnv } from './sentry';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     const {
@@ -43,6 +45,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
         // vite-plugin-pwa
         vitePlugins.push(configPwaConfig(viteEnv));
+        vitePlugins.push(configVisualizerConfig(viteEnv));
     }
 
     return vitePlugins;

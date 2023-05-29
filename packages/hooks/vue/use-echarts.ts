@@ -57,7 +57,7 @@ import type { EChartsOption } from 'echarts';
 import { createLocalStorage } from '@wuefront/utils';
 import { computed, onUnmounted, ref, Ref, unref, watch, nextTick, ComputedRef } from 'vue';
 
-export type {EChartsOption}
+export type {EChartsOption};
 
 export function useEcharts(
     elRef: Ref<HTMLDivElement>,
@@ -85,6 +85,7 @@ export function useEcharts(
         if (getDarkMode.value !== 'dark') {
             return cacheOptions.value as EChartsOption;
         }
+        // console.log(cacheOptions.value);
         return {
             backgroundColor: 'transparent',
             ...cacheOptions.value
@@ -92,6 +93,7 @@ export function useEcharts(
     });
 
     function set_options(options: EChartsOption, clear = true) {
+        cacheOptions.value = {};// 重置后再进行赋值, 以便computed监听到深层次属性
         cacheOptions.value = options;
         if (unref(elRef)?.offsetHeight === 0) {
             setTimeout(() => {
@@ -108,7 +110,7 @@ export function useEcharts(
                 }
                 clear && chartInstance?.clear();
 
-                chartInstance?.setOption(unref(getOptions));
+                chartInstance?.setOption(getOptions.value);
             }, 30);
         });
     }

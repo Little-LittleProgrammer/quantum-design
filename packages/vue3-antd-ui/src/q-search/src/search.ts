@@ -1,19 +1,21 @@
+import type { menuData } from '@wuefront/types/vue/router';
 import { deep_copy } from '@wuefront/utils';
-import { menuData } from '../../utils/types';
 
 export interface ICacheObj {
     path: string,
     title: string,
-    id: string,
-    pid: string
+    id: number,
+    pid: number
 }
 
 const _formaObjName: Record<string, ICacheObj> = {};
-const _formaObjId: Record<string, ICacheObj> = {};
+const _formaObjId: Record<number, ICacheObj> = {};
 
-export function get_net_router(mainMenuData: menuData[]) {
+type MenuData = Required<menuData>
+
+export function get_net_router(mainMenuData: MenuData[]) {
     // 拍平router
-    const flatten_name = (list: menuData[]) => {
+    const flatten_name = (list: MenuData[]) => {
         list.forEach((item) => {
             if (item.children) {
                 const _cacheObj = {
@@ -29,7 +31,7 @@ export function get_net_router(mainMenuData: menuData[]) {
                     _formaObjName[item.auth_name] = _cacheObj;
                 }
                 _formaObjId[item.id] = _cacheObj;
-                flatten_name(item.children);
+                flatten_name(item.children as MenuData[]);
             } else {
                 const _cacheObj = {
                     id: item.id,
@@ -52,8 +54,8 @@ export function get_net_router(mainMenuData: menuData[]) {
 
 // 找到某一个子路由的全部祖先
 let _title = '';
-function find_family(map: Record<string, ICacheObj>, pid:string, _nameStr = '') {
-    if (pid != '0') {
+function find_family(map: Record<string, ICacheObj>, pid:number, _nameStr = '') {
+    if (pid != 0) {
         const _cacheObj:ICacheObj = map[pid];
         _nameStr = _cacheObj.title + '>' + _nameStr;
         find_family(map, _cacheObj.pid, _nameStr);

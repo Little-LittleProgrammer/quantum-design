@@ -2,7 +2,7 @@
 import type {App} from 'vue';
 import {createPinia} from 'pinia';
 
-import type { menuData } from '#/router';
+import { menuData } from '@wuefront/types/vue/router';
 
 export interface IBreadcrumb {
     id: string;

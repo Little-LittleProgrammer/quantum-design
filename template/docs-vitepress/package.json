@@ -15,7 +15,7 @@
   "dependencies": {
     "@wuefront/vue3-antd-ui": "workspace:*",
     "@wuefront/vue3-ui": "workspace:*",
-    "vue": "^3.2.37"
+    "vue": "3.3.4"
   },
   "devDependencies": {
     "@wuefront-configs/tsconfig": "workspace:*",

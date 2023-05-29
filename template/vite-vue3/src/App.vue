@@ -9,37 +9,45 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent, defineAsyncComponent} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import { useMessage } from '@wuefront/hooks/vue';
 import { api_global_env } from '@/http/api/global';
 import { api_manage_user_auths } from './http/api/system-management/permission/person';
 import { router } from './router';
 import { get_net_router } from '@wuefront/vue3-antd-ui';
-import settings from '@/enums/projectEnum';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
-import ExportFile from '@/components/export-file/index.vue';
+import ExportFile from '@/components/export-file/export-modal.vue';
+import { useProjectSetting } from '@wuefront/vue3-antd-ui';
+import { menuData } from '@wuefront/types/vue/router';
 
 export default defineComponent({
     name: 'App',
-    components: {ExportFile},
+    components: {
+        ExportFile
+    },
     setup() {
         const locale = zhCN;
         const {createMessage} = useMessage();
         const userStore = useUserStore();
         const globalStore = useGlobalStore();
+        const {getSearchButton} = useProjectSetting();
         const sysStore = useSysStore();
         let requestNum = 0;
         const get_global_env = () => { // 环境检测
             api_global_env().then(res => {
-                globalStore.set_environment_data(res.data);
-                userStore.username = res.data.username;
-                if (requestNum === 0) {
-                    get_menus_data(); // 为了防止页面请求时，此接口还未返回环境数据env
+                if (res.code === 200) {
+                    globalStore.set_environment_data(res.data);
+                    userStore.username = res.data.username;
+                    if (requestNum === 0) {
+                        get_menus_data(); // 为了防止页面请求时，此接口还未返回环境数据env
+                    }
+                    requestNum++;
+                } else if (res.code === 400) {
+                    alert(`错误信息: ${res.msg}`);
                 }
-                requestNum++;
             });
             setTimeout(() => {
                 get_global_env();
@@ -49,10 +57,11 @@ export default defineComponent({
             if (globalStore.authorityManage) {
                 const _res = await api_manage_user_auths();
                 if (_res.code == 200) {
-                    sysStore.mainMenuData = _res.data.auth_list;
-                    sysStore.initMenuData = _res.data.init_path;
+                    // sysStore.mainMenuData = _res.data.list;
+                    sysStore.initMenuData = _res.data.init_path || '';
                     sysStore.menuDataLoadingEnd = true;
-                    settings.func.showSearchButton && get_net_router(sysStore.mainMenuData);
+                    sysStore.set_format_route_list(_res.data.list);
+                    getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<menuData>[]);
                     if (!window.location.href.includes('/backend/')) {
                         if (_res.data.init_path == '') {
                             router.replace({
@@ -61,23 +70,26 @@ export default defineComponent({
                             createMessage.error('请通知管理员设置初始页面');
                         } else {
                             router.replace({
-                                path: _res.data.init_path
+                                path: _res.data.init_path || '/'
                             });
                         }
                     }
                 }
             } else {
                 const _res = import('@/menus/index');
-                sysStore.mainMenuData = (await _res).default;
-                sysStore.initMenuData = '/backend/operation-module/canary-management';
+                const _list = (await _res).default;
+                sysStore.initMenuData = '/backend/data-modules/dashboard';
+                sysStore.set_format_route_list(_list);
                 sysStore.menuDataLoadingEnd = true;
-                settings.func.showSearchButton && get_net_router(sysStore.mainMenuData);
+                getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<menuData>[]);
             }
         };
         get_global_env();
+
         const dynamicComponent = import.meta.env.VITE_USE_PWA ? defineAsyncComponent(() => {
             return import ('@/components/layout/qm-reload-prompt.vue');
         }) : null;
+
         return {
             locale,
             userStore,
@@ -101,12 +113,12 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@wuefront/shared/style/base/index.scss';
 @import '@wuefront/shared/style/antd/antd.scss';
+@import '@wuefront/shared/style/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
-        white-space: nowrap;
-        min-width: 100px;
+        white-space: nowrap ;
+        min-width: 100px
     }
 }
 </style>

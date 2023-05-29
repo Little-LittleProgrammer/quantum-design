@@ -9,3 +9,5 @@ export * from './q-drawer';
 export * from './q-transfer';
 export * from './q-upload';
 export * from './q-card';
+export * from './q-setting';
+export * from './q-line-chart';

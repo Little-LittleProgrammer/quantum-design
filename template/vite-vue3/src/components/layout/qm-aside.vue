@@ -17,10 +17,12 @@
             <template v-for="second_level in props.menuData">
                 <template v-if="second_level.children == undefined">
                     <a-menu-item :key="second_level.id" class="qm-aside-title">
-                        <q-icon
-                            :type="second_level.icon"
-                            v-if="second_level.icon != undefined && second_level.icon != ''"
-                        ></q-icon>
+                        <template #icon>
+                            <q-icon
+                                :type="second_level.icon as 'default'"
+                                v-if="second_level.icon != undefined && second_level.icon != ''"
+                            ></q-icon>
+                        </template>
                         {{ second_level.auth_name }}
                     </a-menu-item>
                 </template>
@@ -28,7 +30,7 @@
                     <a-sub-menu :key="second_level.id">
                         <template #icon>
                             <q-icon
-                                :type="second_level.icon"
+                                :type="second_level.icon as 'default'"
                                 v-if="second_level.icon != undefined && second_level.icon != ''"
                             ></q-icon>
                         </template>
@@ -40,7 +42,7 @@
                                 <a-sub-menu :key="third_level.id">
                                     <template #icon>
                                         <q-icon
-                                            :type="third_level.icon"
+                                            :type="third_level.icon as 'default'"
                                             v-if="third_level.icon != undefined && third_level.icon != ''"
                                         ></q-icon>
                                     </template>
@@ -48,12 +50,24 @@
                                         <span class="qm-aside-title-sub">{{ third_level.auth_name }}</span>
                                     </template>
                                     <a-menu-item class="qm-aside-link" :key="four_level.id" v-for="four_level in third_level.children">
+                                        <template #icon>
+                                            <q-icon
+                                                :type="four_level.icon as 'default'"
+                                                v-if="four_level.icon != undefined && four_level.icon != ''"
+                                            ></q-icon>
+                                        </template>
                                         {{ four_level.auth_name }}
                                     </a-menu-item>
                                 </a-sub-menu>
                             </template>
                             <template v-else>
                                 <a-menu-item class="qm-aside-link" :key="third_level.id">
+                                    <template #icon>
+                                        <q-icon
+                                            :type="third_level.icon as 'default'"
+                                            v-if="third_level.icon != undefined && third_level.icon != ''"
+                                        ></q-icon>
+                                    </template>
                                     {{ third_level.auth_name }}
                                 </a-menu-item>
                             </template>
@@ -64,8 +78,8 @@
         </a-menu>
         <div class="qm-aside-arrow-btn" :class="getClass" @click="show_hide_aside">
             <template v-if="getArrowBtnShow">
-                <q-icon :type="getArrow[0]" v-if="data.isShow" class="arrow-btn" />
-                <q-icon :type="getArrow[1]" v-else class="arrow-btn" />
+                <q-icon :type="getArrow[0] as 'default'" v-if="data.isShow" class="arrow-btn" />
+                <q-icon :type="getArrow[1] as 'default'" v-else class="arrow-btn" />
             </template>
         </div>
     </a-layout-sider>
@@ -73,13 +87,15 @@
 
 <script lang='ts'>
 import { Layout, Menu as AMenu } from 'ant-design-vue';
+import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
+import { useSysStore } from '@/store/modules/systemManage';
+import { useProjectSetting } from '@wuefront/vue3-antd-ui';
+import type { menuData } from '@wuefront/types/vue/router';
 interface DataProps {
-    openKeys: string[];
-    selectedKeys: string[];
+    openKeys: number[];
+    selectedKeys: number[];
     init: boolean;
     isShow: boolean;
-    flattenKeyMenuData: Record<string, menuData>
-    flattenPathMenuData: Record<string, menuData>
 }
 
 export default defineComponent({
@@ -89,12 +105,10 @@ export default defineComponent({
 </script>
 
 <script lang='ts' setup>
-import settings from '@/enums/projectEnum';
 import { QIcon } from '@wuefront/vue3-antd-ui';
 import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import type { menuData } from '#/router';
-import { useGo } from '@wuefront/hooks/vue';
+import { useGo } from '@/hooks/web/use-page';
 
 const props = defineProps({
     menuData: {
@@ -108,23 +122,23 @@ const props = defineProps({
 
 const go = useGo();
 const route = useRoute();
+const sysStore = useSysStore();
+const {getShowCacheTabsSetting, getBreadCrumb, getAsideRepeatClick} = useProjectSetting();
 const refAsideMenu = ref<Nullable<typeof Layout>>(null);
 const data: DataProps = reactive({
     openKeys: [],
     selectedKeys: [],
     init: true, //  初始化
-    isShow: true,
-    flattenKeyMenuData: {}, // 处理 menu 跳转的
-    flattenPathMenuData: {} // 处理 监听route， 主要为了处理 切换tab导致左侧 selectedKey不更换
+    isShow: true
 });
 const getClass = computed(() => {
-    if (settings.cacheTabsSetting.show || settings.func.showBreadCrumb || settings.func.showReloadButton) {
+    if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
         return 'qm-aside-arrow-btn-has';
     }
     return 'qm-aside-arrow-btn-no-has';
 });
 const getArrow = computed(() => {
-    if (settings.cacheTabsSetting.show || settings.func.showBreadCrumb || settings.func.showReloadButton) {
+    if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
         return ['MenuFoldOutlined', 'MenuUnfoldOutlined'];
     }
     return ['CaretLeftOutlined', 'CaretRightOutlined'];
@@ -133,26 +147,25 @@ const getArrowBtnShow = computed(() => {
     return !(props.menuData.length === 0);
 });
 watch(route, (val) => {
-    data.selectedKeys = [data.flattenPathMenuData[val.path]?.id]; // 找不到赋值underfined，然后由下面处理
+    console.log(sysStore.getFormatPathRouteList);
+    data.selectedKeys = [sysStore.getFormatPathRouteList[val.path]?.id as number]; // 找不到赋值underfined，然后由下面处理
 });
 watch(() => props.menuData, (val) => {
     // 延时处理， 等待router更新完成
     setTimeout(() => {
         const _routePath = route.path;
-        const _selectedKey: string[] = [];
-        const _defaultOpenKeys: string[] = [];
+        const _selectedKey: number[] = [];
+        const _defaultOpenKeys: number[] = [];
 
-        // 处理 _selectedKey, _defaultOpenKeys, 拍平的flattenMenuData
+        // 处理 _selectedKey, _defaultOpenKeys
         function select_key(list: menuData[]) {
             list.forEach(e => {
-                data.flattenKeyMenuData[e.id] = e;
-                data.flattenPathMenuData[e.path] = e;
                 if (e.children) {
-                    _defaultOpenKeys.push(e.id);
+                    _defaultOpenKeys.push(e.id!);
                     select_key(e.children);
                 } else {
                     if (_routePath === e.path) {
-                        _selectedKey.push(e.id);
+                        _selectedKey.push(e.id!);
                     }
                 }
             });
@@ -186,8 +199,11 @@ watch(() => props.menuData, (val) => {
         }
     }, 300);
 });
-const jump_page = (item: {key: string, keyPath: string}) => {
-    const _path = data.flattenKeyMenuData[item.key].path;
+const jump_page = (item: MenuInfo) => {
+    const _path = sysStore.getFormatIdRouteList[item.key as unknown as number].path || '/';
+    const _query = getAsideRepeatClick.value ? {
+        t: Date.now()
+    } : {};
     // 外链可以直接跳转
     if (
         !(
@@ -197,7 +213,8 @@ const jump_page = (item: {key: string, keyPath: string}) => {
         )
     ) {
         go({
-            path: _path
+            path: _path,
+            query: _query
         });
     }
 };

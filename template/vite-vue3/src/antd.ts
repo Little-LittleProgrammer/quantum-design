@@ -9,6 +9,7 @@ import {
     Form, // 表单
     Radio, // 单选框
     Checkbox, // 多选框
+    Cascader, // 联机选择器
     Select, // 选择器
     Switch, // 开关
     Input, // 输入框
@@ -31,6 +32,8 @@ import {
     Empty, // 空状态
     BackTop,
     Menu,
+    TreeSelect,
+    TimePicker,
     // AutoComplete, // 自动完成
     // Descriptions, // 描述列表
     // PageHeader, // 页头
@@ -45,5 +48,6 @@ export function register_glob_comp(app: App) {
         .use(Col).use(Menu).use(DatePicker).use(Form).use(Radio).use(Checkbox)
         .use(Select).use(Switch).use(Table).use(Tag).use(Tabs).use(Tree).use(Modal)
         .use(Upload).use(Tooltip).use(Popconfirm).use(Popover).use(InputNumber).use(Steps)
-        .use(Statistic).use(Transfer).use(Card).use(Result).use(Pagination).use(Empty).use(BackTop);
+        .use(Statistic).use(Transfer).use(Card).use(Result).use(Pagination).use(Empty).use(BackTop).use(Cascader).use(TreeSelect).use(TimePicker);
 }
+

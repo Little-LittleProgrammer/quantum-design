@@ -116,3 +116,15 @@ export function isUrl(path: string): boolean {
     const reg = regEnum.urlReg;
     return reg.test(path);
 }
+
+// 判断文件后缀是否为图片
+export function isImage(fileName: string): boolean {
+    const _types = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'];
+    return _types.some(item => fileName.toLowerCase().includes(item));
+}
+
+// 判断文件后缀是否为视频
+export function isVideo(fileName: string): boolean {
+    const _types = ['mp4', 'avi', 'wmv', 'mkv', 'mov', 'flv', 'webm'];
+    return _types.some(item => fileName.toLowerCase().includes(item));
+}

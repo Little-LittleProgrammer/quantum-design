@@ -4,6 +4,6 @@
         "declaration": false
     },
     "include": ["*.ts", "**/*.ts", "node_modules/@wuefront/types/**/*.d.ts"],
-    "exclude": ["dist", "node_modules"]
+    "exclude": ["dist"]
   }
   

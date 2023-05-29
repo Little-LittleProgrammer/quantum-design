@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import {name, author, version} from './package.json';
 import {wrapperEnv, create_proxy, createVitePlugins, OUTPUT_DIR, _antdCssData, _baseScssFile } from '@wuefront-configs/vite';
 
-function pathResolve(dir: string) {
+function path_resolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
@@ -69,8 +69,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
         resolve: {
             alias: {
-                '@/': pathResolve('src') + '/',
-                '#/': pathResolve('types') + '/'
+                '@/': path_resolve('src') + '/',
+                '#/': path_resolve('types') + '/'
             }
         },
         plugins: createVitePlugins(viteEnv, isBuild)

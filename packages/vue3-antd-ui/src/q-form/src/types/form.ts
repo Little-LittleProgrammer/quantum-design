@@ -38,7 +38,7 @@ export interface HelpComponentProps {
     position: any;
 }
 
-export interface FormSchema<T extends object = Record<string, any>> {
+export interface FormSchema<T extends object = Record<string, any>, C extends string = ''> {
     // Field name
     field: keyof T;
     // Event name triggered by internal value change, default change
@@ -61,7 +61,7 @@ export interface FormSchema<T extends object = Record<string, any>> {
     // Disable the adjustment of labelWidth with global settings of formModel, and manually set labelCol and wrapperCol by yourself
     disabledLabelWidth?: boolean;
     // 调用的组件
-    component: ComponentType;
+    component: ComponentType<C>;
     // 用于设置调用组件的属性, 具体详情查看 ant-design-vue
     componentProps?:
     | ((opt: {
@@ -163,7 +163,7 @@ export interface FormProps {
     baseColProps?: Partial<ColEx>;
 
     // Form configuration rules
-    schemas?: Ref<FormSchema[]>;
+    schemas?: Ref<FormSchema<Record<string, any>, string>[]>;
     // Function values used to merge into dynamic control form items
     mergeDynamicData?: Record<string, any>;
     // Compact mode for search forms

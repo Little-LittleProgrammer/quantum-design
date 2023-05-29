@@ -15,6 +15,8 @@ export interface ViteEnv {
     VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'; // 压缩
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
     VITE_USE_IMAGEMIN: boolean; // 图片资源压缩
+    VITE_USE_SENTRY: boolean
+    VITE_USE_VISUALIZER: boolean; // 资源分析
     VITE_GLOB_API_URL: string; // url
     // VITE_GENERATE_UI: string;
 }
@@ -54,7 +56,6 @@ type ProxyList = ProxyItem[];
 type ProxyTargetList = Record<string, ProxyOptions & { rewrite: (path: string) => string }>;
 
 const httpsRE = /^https:\/\//;
-
 
 /**
  * Generate 代理

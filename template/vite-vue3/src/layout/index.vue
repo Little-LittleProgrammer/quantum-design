@@ -8,8 +8,8 @@
             :menuData="sysStore.mainMenuData"
         >
             <template #header-function>
-                <div v-if="setting.func.showSearchButton" class="qm-flex-center search-container"  @click="change_search_modal">
-                    <a-tooltip v-if="setting.func.showSearchButton">
+                <div v-if="getSearchButton" class="g-flex-center search-container"  @click="change_search_modal">
+                    <a-tooltip v-if="getSearchButton">
                         <template #title>
                             <span>搜索</span>
                         </template>
@@ -20,17 +20,18 @@
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-theme-mode-button v-model:mode="themePorxy" v-if="setting.theme.showDarkModeToggle" class="qm-flex-center search-container"></q-theme-mode-button>
+                <q-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-theme-mode-button>
+                <q-setting class="g-flex-center search-container" :defaultSetting="setting"></q-setting>
             </template>
         </qm-header>
         <div class="wrapper">
             <qm-aside :menuData="sysStore.asideMenuData"></qm-aside>
             <div class="main js-layout-main">
-                <div class="main-header sticky-header" v-if="setting.func.showBreadCrumb || setting.cacheTabsSetting.show || setting.func.showReloadButton" size="small">
-                    <div class="qm-flex">
-                        <q-breadcrumb v-if="setting.func.showBreadCrumb" class="breadcrumb" :router-list="_routerData" :class="!setting.cacheTabsSetting.show ? 'flex': ''"></q-breadcrumb>
-                        <q-keep-alive-tabs v-if="setting.cacheTabsSetting.show" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
-                        <div class="reload" v-if="setting.func.showReloadButton">
+                <div class="main-header sticky-header" v-if="getBreadCrumb || getShowCacheTabsSetting" size="small">
+                    <div class="g-flex">
+                        <q-breadcrumb v-if="getBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!getShowCacheTabsSetting ? 'flex': ''"></q-breadcrumb>
+                        <q-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="getCacheCanDrag" :showQuick="getShowQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
+                        <div class="reload" v-if="getShowReloadButton">
                             <a-tooltip  >
                                 <template #title>
                                     <span>刷新页面</span>
@@ -45,9 +46,9 @@
                 <div class="layout-content">
                     <router-view >
                         <template #default="{ Component, route }">
-                            <q-loading :loading="setting.transition.openPageLoading ? globalStore.pageLoading : false" size="large">
+                            <q-loading :loading="getShowPageLoading ? globalStore.pageLoading : false" size="large">
                                 <transition :name="getTransName" mode="out-in" appear>
-                                    <keep-alive v-if="setting.cacheTabsSetting.openKeepAlive" :include="cacheList">
+                                    <keep-alive v-if="getShowCacheTabsSetting && getOpenKeepAlive" :include="cacheList">
                                         <component :is="Component" :key="route.fullPath"></component>
                                     </keep-alive>
                                     <component  v-else :is="Component" :key="route.fullPath"></component>
@@ -58,41 +59,35 @@
                 </div>
             </div>
         </div>
-        <a-back-top v-if="setting.func.showBackTop" :target="getTarget"></a-back-top>
+        <back-top v-if="getBackTop" :target="getTarget"></back-top>
         <q-search :visible="data.modalVisible" :mainMenuData="sysStore.mainMenuData" @cancel="change_search_modal"></q-search>
     </div>
 </template>
 
 <script lang='ts' setup>
-import { QBreadcrumb } from '@wuefront/vue3-antd-ui';
-import { QKeepAliveTabs } from '@wuefront/vue3-antd-ui';
-import setting from '@/enums/projectEnum';
-import { reactive, computed, onMounted, ref, watch } from 'vue';
+import { reactive, computed, ref, watch, nextTick } from 'vue';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
 import { useRouter } from 'vue-router';
-import {QThemeModeButton} from '@wuefront/vue3-ui';
-import { QIcon} from '@wuefront/vue3-antd-ui';
-import {QSearch} from '@wuefront/vue3-antd-ui';
-import {QLoading} from '@wuefront/vue3-ui';
+import {QLoading, QThemeModeButton} from '@wuefront/vue3-ui';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
-import { createLocalStorage } from '@wuefront/utils';
-import { _routerData } from '@/router';
-import { useProjectSetting } from '@/hooks/settings/use-project-setting';
-
+import { routerData } from '@/router';
+import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
+import setting from '@/enums/projectEnum';
+import { BackTop } from 'ant-design-vue';
+import { QKeepAliveTabs, QSetting, QBreadcrumb, useProjectSetting, QSearch, QIcon } from '@wuefront/vue3-antd-ui';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const ls = createLocalStorage();
-const {setThemeMode, getThemeMode} = useProjectSetting();
+const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanDrag, getShowQuick} = useProjectSetting();
+const {setThemeMode, getThemeMode} = useThemeSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
     reloadLoading: false,
-    width: '',
-    mode: 'light'
+    width: ''
 });
 // watch(route, (to, from) => {
 //     if (to.path == from.path && !to.query.no_refresh) {
@@ -102,12 +97,12 @@ const data = reactive({
 //         });
 //     }
 // });
-const getTarget = () => document.getElementsByClassName('js-layout-main')[0];
+const getTarget = () => document.getElementsByClassName('js-main-conatiner')[0] as HTMLElement;
 const change_search_modal = () => {
     data.modalVisible = !data.modalVisible;
 };
 const getTransName = computed(() => {
-    if (setting.transition.enable) {
+    if (getShowTransition.value) {
         return 'fade-slide';
     }
     return '';
@@ -138,20 +133,22 @@ const themePorxy = computed<'dark' | 'light'>({
         setThemeMode(val);
     }
 });
-themePorxy.value = ls.get('themeMode');
-
-onMounted(() => {
-    if (setting.cacheTabsSetting.show && setting.func.showBreadCrumb) {
-        const _erd = elementResizeDetectorMaker();
-        _erd.listenTo(document.getElementsByClassName('breadcrumb')[0] as HTMLElement, function(e) {
+setThemeMode(getThemeMode.value);
+watch(() => getBreadCrumb.value, (val) => {
+    nextTick(() => {
+        if (getShowCacheTabsSetting.value && val) {
+            const _erd = elementResizeDetectorMaker();
+            _erd.listenTo(document.getElementsByClassName('breadcrumb')[0] as HTMLElement, function(e) {
+                const $dom = document.getElementsByClassName('main-header')[0];
+                data.width = `width: ${$dom.clientWidth - e.clientWidth - 74}px`; // 当开启tabs配置与面包屑配置时, 要动态计算下tabs的宽度
+            });
+        } else if (getShowCacheTabsSetting.value && !val) {
             const $dom = document.getElementsByClassName('main-header')[0];
-            data.width = `width: ${$dom.clientWidth - e.clientWidth - 74}px`;
-        });
-    } else if (setting.cacheTabsSetting.show && !setting.func.showBreadCrumb) {
-        const $dom = document.getElementsByClassName('main-header')[0];
-        data.width = `width: ${$dom.clientWidth - 40}px`;
-    }
-});
+            data.width = `width: ${$dom.clientWidth - 40}px`; // 当开启tabs配置与面包屑配置时, 要动态计算下tabs的宽度
+        }
+    });
+}, {immediate: true});
+
 </script>
 <style lang='scss' scoped>
 .main-header {
@@ -159,8 +156,9 @@ onMounted(() => {
     height: 40px;
     padding-left: $space + 14;
     @include bg-color(aside-bg);
-    .qm-flex {
+    .g-flex {
         width: 100%;
+        height: 100%;
         .breadcrumb {
             font-size: 14px;
             margin-right: 10px;

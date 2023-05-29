@@ -1,5 +1,6 @@
 import { createLocalStorage, isFunction } from '@wuefront/utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CreateAxiosOptions } from './axios-transform';
 
 /**
  * @description 添加时间戳
@@ -53,40 +54,39 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
 }
 
 /**
- * @description: 添加cookie
+ * @description: 添加token
  */
 
 export function dealToken() {
     const ls = createLocalStorage();
-    function joinTokenToHeader(join: boolean, config: AxiosRequestConfig<any>) {
-        if (!join) {
+    function setTokenToHeader(options: CreateAxiosOptions, config: AxiosRequestConfig<any>) {
+        const {withToken = true } = options.requestOptions!;
+        if (!withToken) {
             return config;
         }
-        const _token = ls.get('qm-token');
+        const _token = ls.get('qm_token');
         if (_token && _token['x-qm-devops-token']) {
             if (config.headers) {
                 config.headers['x-qm-devops-token'] = _token['x-qm-devops-token'];
             } else {
                 config.headers = {
-                    'x-qm-devops-token': _token['x-qm-devops-token']
+                    'x-qm-devops-token': options.authenticationScheme ? `${options.authenticationScheme} ${_token['x-qm-devops-token']}` : _token['x-qm-devops-token']
                 };
             }
         }
-        console.log(ls.get('qm-token'));
         return config;
     }
-    function setTokenToHeader(join: boolean, res:AxiosResponse<any>) {
+    function setTokenToLs(join: boolean, res:AxiosResponse<any>) {
         if (!join) {
             return;
         }
-        console.log(ls.get('qm-token'));
         if (res.headers['x-qm-devops-token']) {
-            ls.set('qm-token', {
+            ls.set('qm_token', {
                 'x-qm-devops-token': res.headers['x-qm-devops-token']
             });
         }
     }
     return {
-        joinTokenToHeader, setTokenToHeader
+        setTokenToHeader, setTokenToLs
     };
 }

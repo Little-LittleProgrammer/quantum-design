@@ -4,9 +4,9 @@ import { createTypes, VueTypeValidableDef, VueTypesInterface } from 'vue-types';
 export type VueNode = VNodeChild | VNode;
 
 type PropTypes = VueTypesInterface & {
-  readonly style: VueTypeValidableDef<CSSProperties>;
-  readonly VNodeChild: VueTypeValidableDef<VueNode>;
-  // readonly trueBool: VueTypeValidableDef<boolean>;
+    readonly style: VueTypeValidableDef<CSSProperties>;
+    readonly VNodeChild: VueTypeValidableDef<VueNode>;
+    // readonly trueBool: VueTypeValidableDef<boolean>;
 };
 
 const propTypes = createTypes({
@@ -33,16 +33,6 @@ propTypes.extend([
 ]);
 
 export { propTypes };
-
-export interface menuData {
-    auth_name: string;
-    icon?: string;
-    id: string;
-    path: string;
-    pid: string;
-    children?: menuData[]
-}
-
 export interface IBreadcrumb {
     id: string;
     name: string;

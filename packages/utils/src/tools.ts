@@ -208,7 +208,7 @@ export function format_money_num<T extends string | number>(num: T): string {
     if (num.toString().includes('--')) {
         return num.toString();
     }
-    let _str: string = '';
+    let _str = '';
     _str = isString(num) ? num : num + '';
     const _resArr = _str.includes('.') ? _str.split('.') : [_str, '00'];
     const _int = _resArr[0].split('').reverse();
@@ -236,28 +236,28 @@ export function format_money_num<T extends string | number>(num: T): string {
  * @returns 新对象
  */
 export function add_to_object(obj: Record<string | number, any>, key: string | number, value: any, index: number) {
-	const temp: Record<string, any> = {};
-	let i: number = 0;
-	// 如果未传index或索引超出对象size，则添加至末尾
-	if ((!index || index >= Object.keys(obj).length) && key && value) {
-		obj[key] = value;
+    const temp: Record<string, any> = {};
+    let i = 0;
+    // 如果未传index或索引超出对象size，则添加至末尾
+    if ((!index || index >= Object.keys(obj).length) && key && value) {
+        obj[key] = value;
         return obj;
-	}
-	// 按顺序循环遍历原对象
-	for (var prop in obj) {
-		if (obj.hasOwnProperty(prop)) {
-			// 如果位置匹配，则添加新属性
-			if (i === index && key && value) {
-				temp[key] = value;
-			}
-			// 添加当前属性到对象模版中
-			temp[prop] = obj[prop];
-			// 计数增加
-			i++;
-		}
-	}
-	return temp;
-};
+    }
+    // 按顺序循环遍历原对象
+    for (const prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+            // 如果位置匹配，则添加新属性
+            if (i === index && key && value) {
+                temp[key] = value;
+            }
+            // 添加当前属性到对象模版中
+            temp[prop] = obj[prop];
+            // 计数增加
+            i++;
+        }
+    }
+    return temp;
+}
 
 /**
  * 查找多层值
@@ -302,8 +302,8 @@ export function edit_attr(path:string, value: any, obj:any) {
  * @param isFormat 是否要展示为千分位格式，如：20,000.10
  * @param digit 转化倍数，默认为100
  */
-export function reg_fen_to_yuan(fen: number | string, isFormat: boolean = false,  digit: number = 100) {
-    let _num = (Number(fen) / digit).toFixed(2);
+export function reg_fen_to_yuan(fen: number | string, isFormat = false, digit = 100): string {
+    const _num = (Number(fen) / digit).toFixed(2);
     return isFormat ? format_money_num(_num) : _num;
 }
 
@@ -312,16 +312,59 @@ export function reg_fen_to_yuan(fen: number | string, isFormat: boolean = false,
  * @param yuan 要转化的金额
  * @param digit 转化倍数，默认为100
  */
-export function reg_yuan_to_fen(yuan: number | string, digit: number = 100): number {
+export function reg_yuan_to_fen(yuan: number | string, digit = 100): number {
     let _dotSum = 0;
-    let _amountStr = yuan.toString();
-    let _digitStr = digit.toString();
+    const _amountStr = yuan.toString();
+    const _digitStr = digit.toString();
     // 计算小数点位数
     if (_amountStr.includes('.')) {
-        _dotSum += _amountStr.split(".")[1].length
+        _dotSum += _amountStr.split('.')[1].length;
     }
     if (_digitStr.includes('.')) {
-        _dotSum += _digitStr.split(".")[1].length
+        _dotSum += _digitStr.split('.')[1].length;
     }
     return Number(_amountStr.replace('.', '')) * Number(_digitStr.replace('.', '')) / Math.pow(10, _dotSum);
+}
+/**
+ * 数组转化成csv文件
+ * @param list 转化的数组
+ * @returns 结果下载链接
+ * @example
+ * ```
+ * const _list = [["name", "city"], ["sam", "shanghai"]]
+ * array_to_csv(_list)
+ * ```
+ */
+export function array_to_csv(list: string[][]) {
+    let _csvContent = 'data:text/csv;charset=utf-8,';
+    list.forEach((row) => {
+        const _rowStr = row.join(',');
+        _csvContent += _rowStr + '\r\n';
+    });
+    return encodeURI(_csvContent);
+}
+/**
+ * csv转化为 array
+ * @param file File
+ * @param encoding 编码格式
+ * @returns promise
+ */
+export function csv_to_array(file: File, encoding = 'utf-8') {
+    const _fileReader = new FileReader();
+    _fileReader.readAsText(file, encoding);
+    return new Promise((resolve, reject) => {
+        _fileReader.onload = function() {
+            if (isString(this.result)) {
+                const _data = this.result.split('\n');
+                const _res:string[][] = [];
+                _data.map(item => {
+                    if (item) {
+                        _res.push(item.split(',').map(e => e.trim()));
+                    }
+                });
+                resolve(_res);
+            }
+            reject('请上传正确的格式');
+        };
+    });
 }

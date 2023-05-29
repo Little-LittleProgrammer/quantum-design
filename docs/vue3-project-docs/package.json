@@ -21,7 +21,7 @@
     "project-vue3": "workspace:*",
     "ant-design-vue": "3.2.15",
     "pinia": "2.0.30",
-    "vue": "3.2.47"
+    "vue": "3.3.4"
   },
   "devDependencies": {
     "@wuefront-configs/eslint": "workspace:*",

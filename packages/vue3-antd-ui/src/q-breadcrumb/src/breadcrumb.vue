@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div class="breadcrumb-container">
-        <transition-group name="breadcrumb" mode="out-in" >
+        <transition-group name="breadcrumb">
             <span class="breadcrumb-item" v-for="(item, index) in data.breadcrumbList" :key="item.id">
                 <span class="breadcrumb-link" @click="jump_page(item, index)">{{item.title}}</span>
                 <span class="breadcrumb-separator">/</span>

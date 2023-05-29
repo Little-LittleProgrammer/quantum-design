@@ -1,25 +1,30 @@
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
 export interface RequestOptions {
-    // Whether to return native response headers
-    // For example: use this attribute when you need to get the response headers
+    // 是否返回原生的response
     isReturnNativeResponse?: boolean;
-    // Whether to join url
+    // 接口前缀
     joinPrefix?: boolean;
-    // Interface address, use the default apiUrl if you leave it blank
+    // 接口地址
     apiUrl?: string;
     urlPrefix?: string;
-    // Error message prompt type
+    // 错误提示方式 default: 'message'
     errorMessageMode?: ErrorMessageMode;
-    // Whether to add a timestamp
+    // 是否携带时间戳
     joinTime?: boolean;
     cancelToken?: boolean;
     joinCookie?:boolean;
-    joinToken?:boolean;
     uploadUrl?:string;
     env?: () =>string;
     [key: string]: any
-    // Whether to send token in header
-    // withToken?: boolean;
+    // 是否在header中携带token
+    withToken?: boolean;
+    // 请求重试机制, 暂未实现
+    retryRequest?: RetryRequest;
 }
 
+export interface RetryRequest {
+    isOpenRetry: boolean;
+    count: number;
+    waitTime: number;
+}

@@ -1,6 +1,7 @@
 // 颜色
 .font,
-.qm-font {
+.qm-font,
+.g-font {
     &-red {
         color: $error-color
     }
@@ -10,22 +11,15 @@
     }
 }
 
-h1.top-title {
-    margin: $space * 2;
-    font-size: $font-size-base + 6;
-}
-
-.qm-global-tips {
-    font-size: $font-size-base - 2;
-}
-
-.qm-title1 {
+.qm-title1,
+.g-title2 {
     font-weight: bold;
     font-size: $font-size-base * 2 - 6;
     margin: $space 0;
 }
 
-.qm-title2 {
+.qm-title2,
+.g-title2 {
     font-weight: bold;
     font-size: $font-size-base + 2;
     margin: $space 0;
@@ -37,12 +31,14 @@ h1.top-title {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.text-secondary {
+.text-secondary,
+.g-text-secondary {
     @include text-color(text-color-secondary)
 }
 
 // 字体加粗
-.fw-b {
+.fw-b,
+.g-fw-b {
     font-weight: bold;
 }
 

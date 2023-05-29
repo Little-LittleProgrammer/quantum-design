@@ -1,11 +1,13 @@
 @each $i in ('url', 'pointer', 'move', 'text') {
-    .qm-cursor-style-#{$i} {
+    .qm-cursor-style-#{$i},
+    .g-cursor-style-#{$i} {
         cursor: unquote($i) !important;
     }
 }
 
 
-.inline-block {
+.inline-block,
+.g-inline-block {
     display: inline-block;
 }
 

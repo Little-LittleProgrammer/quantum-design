@@ -16,7 +16,7 @@
   "devDependencies": {
     "@wuefront-configs/eslint": "workspace:*",
     "@wuefront-configs/tsconfig": "workspace:*",
-    "vue": "3.2.47",
+    "vue": "3.3.4",
     "vue-types": "4.2.1",
     "typescript": "4.9.5"
   }

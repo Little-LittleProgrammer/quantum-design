@@ -1,25 +1,29 @@
 import routerErrorData from '@/router/modules/error'; //  错误
 import systemManageData from '@/router/modules/system-manage';
 import { createRouter, createWebHistory } from 'vue-router';
-import { redirect_route } from './modules/reload';
+import { redirectRoute } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
 import { App } from 'vue';
+import { exampleRoute } from './modules/example';
 
-let _routerData = [...systemManageData, ...routerErrorData, ...operationModule];
+let routerData = [
+    ...systemManageData,
+    exampleRoute
+];
 
 // 添加error路由数据
-_routerData = [
-    ..._routerData,
-    redirect_route,
+routerData = [
+    ...routerData,
+    redirectRoute,
     ...routerErrorData // routerErrorData必须添加在最后
 ];
 
-_routerData = flat_multi_level_routes(_routerData);
+routerData = flat_multi_level_routes(routerData);
 
 // app router
 const router = createRouter({
     history: createWebHistory(import.meta.env.VITE_BASE_PATH as string),
-    routes: _routerData,
+    routes: routerData,
     strict: true
 });
 
@@ -29,5 +33,5 @@ export function setup_router(app: App) {
 
 export {
     router,
-    _routerData
+    routerData
 };

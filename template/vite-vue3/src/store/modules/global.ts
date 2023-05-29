@@ -1,26 +1,24 @@
 import { update_theme } from '@/assets/ts/theme';
-import setting from '@/enums/projectEnum';
-import { MemorialEnum } from '@wuefront/shared/enums';
 import { createLocalStorage } from '@wuefront/utils';
 import { message } from 'ant-design-vue';
 import { defineStore } from 'pinia';
-
-import {date_util} from '@wuefront/utils';
 
 export interface IFileExport {
     title?: string;
     action: string;
     message: string;
-    url: string
+    export_url: string
 }
 
 let timeId: TimeoutHandle;
+
+const ls = createLocalStorage();
 
 // state
 const createState = () => {
     const state = {
         systemName: '七猫广告',
-        theme: 'light' as 'light' | 'dark',
+        theme: ls.get('themeMode') || 'light' as 'light' | 'dark',
         date: new Date(),
         dataLoading: false,
         pageLoading: false,
@@ -34,43 +32,27 @@ const createState = () => {
             title: '' //  异步查看文件的列表html代码（包含查看链接）
         },
         hasHistoryUrl: false, // 是否有项目历史地址
-        authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
+        authorityManage: true, // 权限管理开关（默认为开启，需要配置相应的数据）
         citySelect: [] as ISelectOption[]
-        // projectConfig:
     };
     return state;
 };
 export type globalState = ReturnType<typeof createState>
 
 export const state = createState();
-const ls = createLocalStorage();
 
 export const useGlobalStore = defineStore('global', {
     state: ():globalState => (state),
     getters: {
-        getThemeMode(): 'light' | 'dark' {
-            return this.theme || ls.get('themeMode') || 'light';
+        getThemeMode(state): 'light' | 'dark' {
+            return state.theme || ls.get('themeMode') || 'light';
         }
     },
     actions: {
         set_theme_mode(mode: 'light' | 'dark') {
             this.theme = mode;
             ls.set('themeMode', mode);
-            let _theme: 'light' | 'dark'|'gray-mode' = this.theme;
-            if (setting.theme.grayMode) {
-                const _timeNow = this.date;
-                console.log('_timeNow', _timeNow);
-                type Enum = keyof typeof MemorialEnum
-                for (const key in MemorialEnum) {
-                    if (date_util(_timeNow).format('MM-DD') == MemorialEnum[key as Enum]) {
-                        _theme = 'gray-mode';
-                    }
-                }
-            }
-            update_theme(_theme);
-        },
-        set_project_config(config: any) {
-            // 方便以后项目可视化配置
+            update_theme(mode);
         },
         set_environment_data(data: SelectPartial<globalState['environmentData'], 'env'>) {
             if (this.environmentData.env != '' && parseInt(data.env) != parseInt(this.environmentData.env)){
@@ -92,7 +74,7 @@ export const useGlobalStore = defineStore('global', {
                 this.asyncExportNoticePop.file = data.message;
                 this.asyncExportNoticePop.visible = true;
             } else if (data.action === 'sync') {
-                window.open(data.url, '_blank');
+                window.open(data.export_url, '_blank');
                 message.success('导出成功');
             }
         },

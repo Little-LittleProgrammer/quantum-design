@@ -69,7 +69,7 @@ interface DataProps {
     fullUrl: string
 }
 interface ILimit {
-    type: 'size' | 'ratio', // size为固定宽高，ratio为各比例
+    type: 'size' | 'ratio' | 'maxSize', // size为固定宽高，ratio为各比例
     width?: number,
     height?: number,
     minDuration?: number,
@@ -169,6 +169,14 @@ function check_image_wh(file: File, limit: ILimit) {
                     } else {
                         return _image.height === limit.height ? resolve(_image) : resolve(false);
                     }
+                } else if (limit.type === 'maxSize') {
+                    if (limit.width && limit.height) {
+                        return _image.width <= limit.width && _image.height <= limit.height ? resolve(_image) : resolve(false);
+                    } else if (limit.width) {
+                        return _image.width <= limit.width ? resolve(_image) : resolve(false);
+                    } else if (limit.height) {
+                        return _image.height <= limit.height ? resolve(_image) : resolve(false);
+                    }
                 } else {
                     return (_image.width / _image.height) === (Number(limit.width) / Number(limit.height)) ? resolve(_image) : resolve(false);
                 }
@@ -196,6 +204,14 @@ function check_video_valide(file: File, limit: ILimit) {
                     return e.target.videoWidth === limit.width ? resolve(e.target) : resolve(false);
                 } else {
                     return e.target.videoHeight === limit.height ? resolve(e.target) : resolve(false);
+                }
+            } else if (limit.type === 'maxSize') {
+                if (limit.width && limit.height) {
+                    return e.target.videoWidth <= limit.width && e.target.videoHeight <= limit.height ? resolve(e.target) : resolve(false);
+                } else if (limit.width) {
+                    return e.target.videoWidth <= limit.width ? resolve(e.target) : resolve(false);
+                } else if (limit.height) {
+                    return e.target.videoHeight <= limit.height ? resolve(e.target) : resolve(false);
                 }
             } else {
                 return (e.target.videoWidth / e.target.videoHeight) === (Number(limit.width) / Number(limit.height)) ? resolve(e.target) : resolve(false);

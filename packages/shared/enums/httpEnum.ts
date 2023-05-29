@@ -2,34 +2,34 @@
  * @description: Request result set
  */
 export enum ResultEnum {
-  SUCCESS = '200',
-  NOTFOUND = '404',
-  ERROR = '400',
-  SERVERERROR = '500',
-  RELOAD = '307',
-  LOGIN = '401',
-  TIMEOUT = '408',
-  TYPE = 'success',
+    SUCCESS = '200',
+    NOTFOUND = '404',
+    ERROR = '400',
+    SERVERERROR = '500',
+    RELOAD = '307',
+    LOGIN = '401',
+    TIMEOUT = '408',
+    TYPE = 'success',
 }
 
 /**
  * @description: request method
  */
 export enum RequestEnum {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
 }
 
 /**
  * @description:  contentTyp
  */
 export enum ContentTypeEnum {
-  // json
-  JSON = 'application/json;charset=UTF-8',
-  // form-data qs
-  FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
-  // form-data  upload
-  FORM_DATA = 'multipart/form-data;charset=UTF-8',
+    // json
+    JSON = 'application/json;charset=UTF-8',
+    // form-data qs
+    FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
+    // form-data  upload
+    FORM_DATA = 'multipart/form-data;charset=UTF-8',
 }

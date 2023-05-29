@@ -64,7 +64,11 @@ export function use_form_events({
     }
     // 校验
     async function validate(nameList?: NamePath[] | undefined) {
-        return await unref(formElRef)?.validate(nameList);
+        try {
+            return await unref(formElRef)?.validate(nameList);
+        } catch (error) {
+            throw new Error('validate error');
+        }
     }
     // 设置表单数据
     async function setFieldsValue(values:Record<string, any>): Promise<void> {

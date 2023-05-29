@@ -1,5 +1,5 @@
-import { menuData } from '#/router';
 
+import { menuData } from '@wuefront/types/vue/router';
 const _menus:menuData[] = [
 ];
 

@@ -2,18 +2,14 @@
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
 
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
+import type { AxiosTransform, CreateAxiosOptions } from './axios-transform';
 import { VAxios } from './Axios';
 import { check_status } from './check-status';
 import { ContentTypeEnum, RequestEnum, ResultEnum } from '@wuefront/shared/enums';
 import { deep_merge, isString } from '@wuefront/utils';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
-import { useMessage } from '@wuefront/hooks/vue';
 
-const { createMessage } = useMessage();
-
-const error = createMessage.error!;
-const {joinTokenToHeader, setTokenToHeader} = dealToken();
+const {setTokenToHeader, setTokenToLs} = dealToken();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -75,8 +71,8 @@ export const defaultTransform: AxiosTransform = {
     requestInterceptors: (config, options) => {
         if (options.customTransform && options.customTransform.customRequest) {
             config = options.customTransform.customRequest(config) as SelectPartial<AxiosRequestConfig<any>, 'url' | 'headers' | 'method'>;
-            config = joinTokenToHeader(options.requestOptions?.joinToken || true, config) as SelectPartial<AxiosRequestConfig<any>, 'url' | 'headers' | 'method'>;
         }
+        config = setTokenToHeader(options, config) as SelectPartial<AxiosRequestConfig<any>, 'url' | 'headers' | 'method'>;
         return config;
     },
 
@@ -100,22 +96,23 @@ export const defaultTransform: AxiosTransform = {
    * @description: 响应拦截器处理
    */
     responseInterceptors: (res: AxiosResponse<any>, options) => {
+        console.log(res, options);
         if (options.customTransform && options.customTransform.customResponse) {
             res = options.customTransform.customResponse(res);
         }
         if (res.data.code == ResultEnum.NOTFOUND){
             location.replace('/backend/error');
         } else if (res.data.code == ResultEnum.ERROR){
-            error(res.data.msg);
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
         } else if (res.data.code == ResultEnum.SERVERERROR){
-            error(res.data.msg);
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
         } else if (res.data.code == ResultEnum.RELOAD){
-            setTokenToHeader(options.requestOptions?.joinToken || true, res);
+            setTokenToLs(options.requestOptions?.withToken || true, res);
             window.location.reload();
         } else if (res.data.code == ResultEnum.LOGIN){
             window.location.href = res.data.data?.url;
         } else if (res.data.code == ResultEnum.TIMEOUT) {
-            error('请求超时');
+            check_status('408', '', options.requestOptions?.errorMessageMode || 'message');
         }
         return res;
     },
@@ -124,19 +121,20 @@ export const defaultTransform: AxiosTransform = {
    * @description: 响应错误处理
    */
     responseInterceptorsCatch: (error: any, options) => {
+        console.log(error, options);
         if (options.customTransform && options.customTransform.customResponseError) {
             options.customTransform.customResponseError(error);
         }
         if (error && error.response) {
-            check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageMode || 'message');
+            check_status(error.response?.status, '连接错误', options.requestOptions?.errorMessageMode || 'message');
         } else if (error.code === 'ERR_CANCELED') {
             // 如果手动取消, 不予受理
             console.log('请求重复, 手动取消请求');
             return Promise.resolve(error);
         } else {
-            check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageMode || 'message');
+            check_status('400', '连接到服务器失败', options.requestOptions?.errorMessageMode || 'message');
         }
-        return Promise.reject(error.response);
+        return Promise.reject(error.response ? error.response : error);
     }
 };
 
@@ -149,10 +147,6 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                 // authenticationScheme: 'Bearer',
                 authenticationScheme: '',
                 timeout: 60 * 1000,
-                // 基础接口地址
-                // baseURL: env.apiUrl,
-                // 接口可能会有通用的地址部分，可以统一抽取出来
-                // urlPrefix: import.meta.env.VITE_GLOB_API_URL,
                 headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
                 defaultTransform,
                 customTransform: {},
@@ -171,13 +165,12 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     // 忽略重复请求
                     cancelToken: true,
                     // 是否携带token
-                    // withToken: true,
+                    withToken: true,
                     // 消息提示类型
                     errorMessageMode: 'message',
                     // 接口地址
                     apiUrl: '',
                     uploadUrl: '',
-                    joinToken: true, // 是否在header中加入token
                     // 接口拼接地址
                     urlPrefix: 'api'
                 }

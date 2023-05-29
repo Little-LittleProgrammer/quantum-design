@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <a-card class="qm-card" >
+        <a-card class="qm-card" :size="antdStore.cardSize">
             <div class="qm-form">
                 <a-form layout="inline" :size="antdStore.modelSize">
                     <a-form-item>
@@ -27,7 +27,7 @@
 <script lang='ts'>
 import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-management/permission/role';
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
-import { set_table_height } from '@/assets/ts/tools';
+import { js_tools_set_table_height } from '@/assets/ts/tools';
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
 import { useMessage } from '@wuefront/hooks/vue';
 import { useAntdStore } from '@/store/modules/antd';
@@ -52,11 +52,11 @@ export default defineComponent({
                     width: 160,
                     dataIndex: 'role_name'
                 },
-                {
-                    title: '初始页面',
-                    width: 200,
-                    dataIndex: 'init_auth_name'
-                },
+                // {
+                //     title: '初始页面',
+                //     width: 200,
+                //     dataIndex: 'init_auth_name'
+                // },
                 {
                     title: '备注',
                     // width: 160,
@@ -80,7 +80,7 @@ export default defineComponent({
             const _res = await api_manage_role_list();
 
             if (_res.code == 200){
-                data.tableData = _res.data.table_list;
+                data.tableData = _res.data.list;
             }
         };
 
@@ -92,7 +92,7 @@ export default defineComponent({
         };
         // 删除
         const role_del = (obj: IRoleAuths, index: number) => {
-            api_manage_role_delete({id: obj.id}).then(res => {
+            api_manage_role_delete({id: obj.id!}).then(res => {
                 if (res.code == 200){
                     createMessage.success('删除成功');
                     data.tableData.splice(index, 1);
@@ -105,7 +105,7 @@ export default defineComponent({
         onMounted(() => {
             globalStore.pageLoading = true;
             init_data();
-            set_table_height('even-bg').then(height => {
+            js_tools_set_table_height('even-bg').then(height => {
                 data.tableHeight = height;
             });
         });

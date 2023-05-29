@@ -3,11 +3,11 @@
     <header class="qm-header">
         <a :href="initMenu" class="qm-header-logo">
             <img src="@/assets/images/logo.png" />
-            <span class="s-name" v-if="systemName != ''">{{ systemName }}</span>
+            <span class="s-name" v-if="systemName != ''">{{ systemName }} </span>
         </a>
         <span class="qm-header-environment">
             &bull;
-            <em>{{ environmentData.env == '1' ? '正式' : '测试' }}</em>
+            <em> {{ environmentData.env == '1' ? '正式' : '测试' }}</em>
         </span>
         <div class="qm-header-tabs">
             <a-menu mode="horizontal" v-model:selectedKeys="selectedKeysAgent">
@@ -27,12 +27,12 @@
 </template>
 
 <script lang='ts' setup>
-import { useGo } from '@wuefront/hooks/vue';
+import { useGo } from '@/hooks/web/use-page';
 import { onMounted, PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import type { menuData } from '#/router';
 import { useSysStore } from '@/store/modules/systemManage';
 import { propTypes } from '@wuefront/types/vue/types';
+import type { menuData } from '@wuefront/types/vue/router';
 
 const props = defineProps({
     menuData: { // 导航数据
@@ -59,7 +59,7 @@ const store = useSysStore();
 const route = useRoute();
 const go = useGo();
 const jump_page = (item: menuData, event: Event) => {
-    if (!(item.path.includes('http://') || item.path.includes('https://') || item.path.match(/^\/\//) != null)) {
+    if (item.path && !(item.path.includes('http://') || item.path.includes('https://') || item.path.match(/^\/\//) != null)) {
         if (item.children != undefined) {
             store.asideMenuData = item.children;
         } else { // 无二级导航时 清空二级导航数据
@@ -67,18 +67,18 @@ const jump_page = (item: menuData, event: Event) => {
         }
         event.preventDefault();
         if (item.children != undefined && item.children.length > 0) {
-            if ((item.children[0].path.includes('http://') || item.children[0].path.includes('https://') || item.children[0].path.match(/^\/\//) != null)) {
+            if (item.children[0].path && (item.children[0].path.includes('http://') || item.children[0].path.includes('https://') || item.children[0].path.match(/^\/\//) != null)) {
                 go({
                     path: item.path
                 });
             } else {
                 if (item.children[0].children != undefined && item.children[0].children.length > 0) {
                     go({
-                        path: item.children[0].children[0].path
+                        path: item.children[0].children[0].path!
                     });
                 } else {
                     go({
-                        path: item.children[0].path
+                        path: item.children[0].path!
                     });
                 }
             }
@@ -91,10 +91,10 @@ const jump_page = (item: menuData, event: Event) => {
 };
 const selectedKeysAgent = computed(() => {
     const _routePath = route.path;
-    const _selectedKey: string[] = [];
+    const _selectedKey: number[] = [];
     props.menuData.some((n) => {
-        if (_routePath.includes(n.path)) {
-            _selectedKey.push(n.id);
+        if (n.path && _routePath.includes(n.path)) {
+            n.id && _selectedKey.push(n.id);
             if (n.children != undefined) {
                 store.asideMenuData = n.children;
             } else {
@@ -117,11 +117,11 @@ onMounted(() => {
         padding: $space 0;
         height: $header-height;
         box-sizing: border-box;
-        vertical-align: top;
         display: block;
         img {
             display: inline-block;
-            height: 100%;
+            height: 28px;
+            width: 28px;
             vertical-align: top;
         }
         .s-name {
@@ -139,7 +139,6 @@ onMounted(() => {
         color: $header-environment-color;
         display: block;
         font-weight: bold;
-        vertical-align: top;
         line-height: $header-height;
         white-space: nowrap;
         padding-left: div($space, 2);

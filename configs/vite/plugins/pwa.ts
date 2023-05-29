@@ -21,7 +21,7 @@ export function configPwaConfig(env: ViteEnv) {
                 navigateFallback: null,
                 runtimeCaching: [ // 运行时缓存
                     {
-                        urlPattern: ({url}) => url.pathname.includes('/api') || url.pathname.includes('/backend') ,
+                        urlPattern: ({url}) => url.pathname.includes('/api') || url.pathname.includes('/backend'),
                         handler: 'NetworkFirst', // 网络优先
                         options: {
                             cacheName: 'api-cache', // 缓存get请求
@@ -31,7 +31,7 @@ export function configPwaConfig(env: ViteEnv) {
                             matchOptions: {
                                 ignoreSearch: true
                             }
-                        },
+                        }
                     },
                     {
                         urlPattern: /\.(?:png|jpg|jpeg|svg)$/,

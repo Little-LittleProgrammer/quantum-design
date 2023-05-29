@@ -44,7 +44,7 @@ export interface ColEx {
     pull?: ColSpanType;
 }
 
-export type ComponentType =
+export type ComponentType<T extends string> =
   | 'Input'
   | 'InputGroup'
   | 'InputPassword'
@@ -74,4 +74,4 @@ export type ComponentType =
   | 'Slider'
   | 'Rate'
   | 'SelectAll'
-  | 'Divider';
+  | 'Divider' | T;

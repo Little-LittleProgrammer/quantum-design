@@ -3,34 +3,34 @@
     "version": "0.0.0",
     "private": true,
     "workspaces": [
-      "apps/*",
-      "packages/*",
-      "docs/*",
-      "configs/*"
+        "apps/*",
+        "packages/*",
+        "docs/*",
+        "configs/*"
     ],
     "scripts": {
-      "build": "turbo run build",
-      "dev": "turbo run dev --parallel",
-      "lint": "turbo run lint"
+        "build": "turbo run build",
+        "build:lib": "turbo run build:lib",
+        "dev": "turbo run dev --parallel",
+        "lint": "turbo run lint"
     },
     "engines": {
-      "npm": ">=7.0.0",
-      "node": ">=14.0.0"
+        "npm": ">=7.0.0",
+        "node": ">=16.0.0"
     },
-    "packageManager": "pnpm@7.28.0",
     "dependencies": {
-      "turbo": "1.7.2"
+        "turbo": "^1.9.9",
+        "typescript": "^5.0.4"
     },
     "devDependencies": {
-      "@wuefront-configs/eslint": "workspace:*",
-      "typescript": "4.9.5"
+        "@wuefront-configs/eslint": "workspace:*"
     },
     "pnpm": {
-      "peerDependencyRules": {
-        "ignoreMissing": [
-          "@algolia/client-search",
-          "@vue/composition-api"
-        ]
-      }
+        "peerDependencyRules": {
+            "ignoreMissing": [
+                "@algolia/client-search",
+                "@vue/composition-api"
+            ]
+        }
     }
-  }
+}

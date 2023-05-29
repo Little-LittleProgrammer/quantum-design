@@ -33,7 +33,7 @@ import { find_search_route, ICacheObj } from './search';
 import { throttle_event } from '@wuefront/utils';
 import { useRouter } from 'vue-router';
 import { QLoading } from '@wuefront/vue3-ui';
-import { menuData } from '@wuefront/types/vue/types';
+import type { menuData } from '@wuefront/types/vue/router';
 
 interface IData {
     searchText: string,

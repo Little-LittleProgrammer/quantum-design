@@ -1,12 +1,12 @@
 import { useEcharts as globalUseEcharts } from '@wuefront/hooks/vue';
 import { Ref } from 'vue';
-import { useProjectSetting } from '../settings/use-project-setting';
+import { useThemeSetting } from '../settings/use-theme-setting';
 
 export function useEcharts(
     elRef: Ref<HTMLDivElement>,
     theme: 'light' | 'dark' | 'default' = 'default'
 ) {
-    const {getThemeMode} = useProjectSetting();
+    const {getThemeMode} = useThemeSetting();
     const instance = globalUseEcharts(elRef, theme, getThemeMode);
     return {...instance};
 }

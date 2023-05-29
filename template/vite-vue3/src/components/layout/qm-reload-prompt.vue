@@ -1,15 +1,15 @@
 <template>
-    <div v-if="offlineReady || needRefresh" class="qm-pwa pwa-toast" role="alert">
+    <div v-if="needRefresh" class="qm-pwa pwa-toast" role="alert">
         <div class="message">
-            <span v-if="offlineReady">
-                应用程序准备离线工作
-            </span>
-            <span v-else>
+            <span >
                 新的内容可用，点击重新加载按钮更新。
             </span>
         </div>
-        <button v-if="needRefresh" @click="updateServiceWorker()">
+        <button @click="updateServiceWorker?.()">
             重新加载
+        </button>
+        <button @click="close">
+            关闭
         </button>
     </div>
 </template>
@@ -18,12 +18,9 @@
 
 import { useRegisterSW } from 'virtual:pwa-register/vue';
 
+/**
 const intervalMS = 60 * 60 * 1000; // 一小时
-const {
-    offlineReady,
-    needRefresh,
-    updateServiceWorker
-} = useRegisterSW({
+ * {
     onRegisteredSW(swUrl, r) {
         r && setInterval(async() => {
             if (!(!r.installing && navigator))
@@ -41,17 +38,24 @@ const {
             });
 
             if (resp?.status === 200) {
-                needRefresh.value = true;
-                // await r.update();
+                // needRefresh.value = true;
+                await r.update();
             }
         }, intervalMS);
     }
+}
+ */
+
+const {
+    needRefresh,
+    updateServiceWorker
+} = useRegisterSW({
+    immediate: true
 });
 
-// const close = async() => {
-//     offlineReady.value = false;
-//     needRefresh.value = false;
-// };
+const close = async() => {
+    needRefresh.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -65,7 +69,7 @@ const {
         border: 1px solid;
         @include border-color(border-color);
         border-radius: 6px;
-        z-index: 1;
+        z-index: 9000;
         text-align: left;
         @include bg-color(aside-bg);
         & .message {

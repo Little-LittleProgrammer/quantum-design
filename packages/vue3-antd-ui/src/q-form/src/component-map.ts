@@ -27,7 +27,7 @@ import SelectAll from './components/select-all.vue';
 import { QCardUpload } from '@/q-upload';
 import { QTransfer } from '@/q-transfer';
 
-const componentMap = new Map<ComponentType, Component>();
+const componentMap = new Map<ComponentType<string>, Component>();
 
 componentMap.set('Input', Input);
 componentMap.set('InputGroup', Input.Group);
@@ -61,11 +61,11 @@ componentMap.set('Transfer', QTransfer);
 componentMap.set('Divider', Divider);
 componentMap.set('SelectAll', SelectAll);
 
-export function add(compName: ComponentType, component: Component) {
+export function add<T extends string>(compName: T, component: Component) {
     componentMap.set(compName, component);
 }
 
-export function del(compName: ComponentType) {
+export function del<T extends string>(compName: T) {
     componentMap.delete(compName);
 }
 

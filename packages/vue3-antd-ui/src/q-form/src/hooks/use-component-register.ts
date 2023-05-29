@@ -3,11 +3,11 @@ import { add, del } from '../component-map';
 import type { Component } from 'vue';
 
 // 自定义组件添加
-export function useComponentRegister(compName: ComponentType, comp: Component) {
+export function useComponentRegister<T extends string>(compName: ComponentType<T>, comp: Component) {
     add(compName, comp);
 }
 
 // 自定义组件删除
-export function delComponentRegister(compName: ComponentType) {
+export function delComponentRegister<T extends string>(compName: ComponentType<T>) {
     del(compName);
 }

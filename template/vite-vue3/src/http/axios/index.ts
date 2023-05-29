@@ -21,6 +21,9 @@ function custom_request(config: any) {
         }
         _requestNum++;
     }
+    if (config.requestOptions.notDeal) { // 如果不需要进行数据处理, 直接返回
+        return config;
+    }
 
     return config;
 }
@@ -40,25 +43,11 @@ function custom_request_error(error:any) {
     }
 }
 
-function custom_response_error(error:any) {
-    const globalStore = useGlobalStore();
-    if (error.code === 'ERR_CANCELED' || (error.config != undefined && !error.config?.url?.includes('/site/get-env'))) {
-        _requestNum--;
-        if (_requestNum <= 0){
-            if (globalStore.dataLoading){
-                globalStore.dataLoading = false;
-            }
-            if (globalStore.pageLoading){
-                globalStore.pageLoading = false;
-            }
-        }
-    }
-}
-
 function custom_response(res: any) {
     const globalStore = useGlobalStore();
     if (!res.config.url!.includes('/site/get-env')){
         _requestNum--;
+        console.log(res, _requestNum);
         if (_requestNum <= 0){
             if (globalStore.dataLoading){
                 globalStore.dataLoading = false;
@@ -71,9 +60,25 @@ function custom_response(res: any) {
     globalStore.date = res.headers.date ? new Date(res.headers.date) : new Date();
     return res;
 }
+
+function custom_response_error(error:any) {
+    const globalStore = useGlobalStore();
+    if (error.code === 'ERR_CANCELED' || (error.config != undefined && !error.config?.url?.includes('/site/get-env'))){
+        _requestNum--;
+        if (_requestNum <= 0){
+            if (globalStore.dataLoading){
+                globalStore.dataLoading = false;
+            }
+            if (globalStore.pageLoading){
+                globalStore.pageLoading = false;
+            }
+        }
+    }
+}
+
 function get_env() {
     const globalStore = useGlobalStore();
-    return globalStore.environmentData.env || '1';
+    return globalStore.environmentData.env || '0';
 }
 
 export const defHttp = createAxios({

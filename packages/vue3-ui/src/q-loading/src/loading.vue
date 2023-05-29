@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="main-conatiner" :class="{'mask': loading}">
+        <div class="main-conatiner js-main-conatiner" :class="{'mask': loading}">
             <slot></slot>
         </div>
     </div>

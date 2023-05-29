@@ -1,27 +1,3 @@
-$qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300 310 320 330 340 350 360 370 380 390 400 410 420 430 440 450 460 470 480 500 600 700 800 900 1000);
-
-.qm-table-bottom-box {
-    min-height: 30px;
-}
-
-.qm-table-page {
-    display: inline-block;
-    position: absolute;
-    right: 0;
-}
-
-.qm-table-pagination {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.qm-table-operation a {
-    display: inline-block;
-    min-width: 22px;
-    margin: 0 5px;
-    white-space: nowrap;
-}
-
 .mt,
 .g-mt {
     margin-top: $space;
@@ -76,7 +52,8 @@ $qmWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 23
 }
 
 // 遮罩
-.qm-mask {
+.qm-mask,
+.g-mask {
     position: relative;
     .mask {
         pointer-events: auto;

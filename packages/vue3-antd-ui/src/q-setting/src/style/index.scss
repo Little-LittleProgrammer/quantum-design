@@ -1,0 +1,25 @@
+.q-project-setting {
+    &-icon {
+        color: #fff !important;
+        font-size: 18px
+    }
+    &-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            width: 95%;
+        }
+        button:last-child {
+            margin-top: 10px;
+        }
+        .ant-btn ~ .ant-btn {
+            margin-left: 0;
+        }
+    }
+    &-switch-item {
+        display: flex;
+        justify-content: space-between;
+        margin: 16px 0;
+    }
+}

@@ -1,7 +1,7 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
 import { isString, deep_merge } from '@wuefront/utils';
-import { unref } from 'vue';
+import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';
 
@@ -22,7 +22,7 @@ function useGo(router?: Router) {
         if (!opt) {
             return;
         }
-        
+
         if (isString(opt)) {
             isReplace ? replace(opt).catch(handleError) : push(opt).catch(handleError);
         } else {
@@ -68,7 +68,7 @@ const useRedo = (_router?: Router) => {
  * @description: 关闭当前页面
  */
 const useClosePage = () => {
-    function close_page () {
+    function close_page() {
         const userAgent = navigator.userAgent;
         if (userAgent.includes('Firefox') || userAgent.includes('Chrome')) {
             window.location.replace('about:blank');
@@ -79,7 +79,7 @@ const useClosePage = () => {
         window.close();
     }
     return close_page;
-}
+};
 
 /**
  * @description: 元素的高度或宽度变化时同时获取元素的位置和尺寸信息
@@ -110,14 +110,43 @@ const useResizeObserver = () => {
         observe,
         unobserve,
         disconnect
-    }
+    };
 
     return _elResizeObserver;
+};
+
+/**
+ * @description: 用于Antd表格的getContainer属性绑定目标Dom
+ */
+const useStickyContainer = (className: string = 'js-main-conatiner') => {
+    const $dom = ref<HTMLElement | null>(null);
+    onMounted(() => {
+        $dom.value = document.getElementsByClassName(className)?.[0] as HTMLElement;
+    });
+    return $dom;
+};
+
+/**
+ * @description: 用于修复Antd表格组件在边界情况下出现的双滚动条问题
+ */
+const useFixStickyScrollBar = (className: string = 'js-layout-main') => {
+    setTimeout(() => {
+        const $scroolDom = document.querySelector('.ant-table-sticky-scroll') as HTMLElement;
+        const $tableDom = document.querySelector('.ant-table-body') as HTMLElement;
+        const $layoutDom = document.querySelector(`.${className}`) as HTMLElement;
+        if (!$scroolDom || !$tableDom || !$layoutDom) return;
+        const _isTableBottomInView = $tableDom.getBoundingClientRect().bottom <= $layoutDom.getBoundingClientRect().bottom;
+        if ($scroolDom && _isTableBottomInView) {
+            $scroolDom.style.opacity = '0';
+        }
+    }, 0);
 }
 
 export {
     useRedo,
     useGo,
     useClosePage,
-    useResizeObserver
+    useResizeObserver,
+    useStickyContainer,
+    useFixStickyScrollBar
 };

@@ -1,10 +1,12 @@
-const setting = {
+import { IProjectConfig } from '@wuefront/vue3-antd-ui';
+
+const setting: IProjectConfig = {
     // 主题配置
     theme: {
         // 是否展示主题切换按钮
         showDarkModeToggle: true,
         // 是否开启网站灰色模式，悼念的日期开启(4.4, 4.5, 12.13)
-        grayMode: true
+        grayMode: false
     },
     // 功能配置
     func: {
@@ -25,7 +27,7 @@ const setting = {
         // 是否展示
         show: true,
         // 是否开启KeepAlive缓存
-        openKeepAlive: true,
+        openKeepAlive: false,
         // 是否展示快速操作
         showQuick: true,
         // 是否可以拖拽
