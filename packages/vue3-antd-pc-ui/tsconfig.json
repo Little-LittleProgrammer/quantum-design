@@ -1,0 +1,13 @@
+{
+  "extends": "@wuefront-config/tsconfig/vue.json",
+  "compilerOptions": {
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+        "@/*": ["src/*"]
+    }
+  },
+  "include": ["src", "index.ts", "types", "node_modules/@q-front-npm/types/**/*.d.ts"],
+  "exclude": ["dist"]
+}

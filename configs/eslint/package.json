@@ -1,8 +1,11 @@
 {
-  "name": "@wuefront-configs/eslint",
+  "name": "@wuefront-config/eslint",
   "version": "1.0.0",
-  "description": "代码样式统一文件",
+  "description": "代码eslint统一文件",
   "main": "index.js",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,12 +16,11 @@
     "eslint-tslib.js"
   ],
   "license": "MIT",
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.33.0",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.59.9",
+    "@typescript-eslint/parser": "5.59.9",
     "eslint": "7.32.0",
-    "eslint-config-turbo": "latest",
-    "eslint-plugin-vue": "9.9.0",
-    "typescript": "4.9.5"
+    "eslint-config-turbo": "1.10.2",
+    "eslint-plugin-vue": "9.14.1"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "name": "@q-front-npm/vue3-pc-ui",
+  "version": "1.0.0",
+  "description": "vue3-pc端组件库",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Wu",
+  "license": "MIT",
+  "dependencies": {
+    "@q-front-npm/shared": "workspace:*",
+    "@q-front-npm/utils": "workspace:*",
+    "@wuefront-config/vite": "workspace:*",
+    "vue": "3.2.47",
+    "vue-router": "4.1.6"
+  },
+  "devDependencies": {
+    "@q-front-npm/types": "workspace:*",
+    "sass": "1.63.3"
+  }
+}

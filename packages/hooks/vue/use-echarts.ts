@@ -54,7 +54,7 @@ echarts.use([
 ]);
 
 import type { EChartsOption } from 'echarts';
-import { createLocalStorage } from '@wuefront/utils';
+import { js_create_local_storage } from '@q-front-npm/utils';
 import { computed, onUnmounted, ref, Ref, unref, watch, nextTick, ComputedRef } from 'vue';
 
 export type {EChartsOption};
@@ -64,7 +64,7 @@ export function useEcharts(
     theme: 'light' | 'dark' | 'default' = 'default',
     getThemeRef?: ComputedRef<string>
 ) {
-    const ls = createLocalStorage();
+    const ls = js_create_local_storage();
     const _themeMode = getThemeRef || ls.get('themeMode');
     const getDarkMode = computed(() => {
         return theme == 'default' ? _themeMode.value : theme;

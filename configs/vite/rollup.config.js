@@ -1,8 +1,6 @@
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
-
-const masterVersion = require('./package.json').version;
-const author = require('./package.json').author;
+import pkg from './package.json';
 
 const FormatTypes = {
     cjs: 'cjs'
@@ -11,16 +9,15 @@ const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
 const isDeclaration = process.env.TYPES !== 'false' &&
     !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
 const name = 'vite';
-
 function get_common() {
     const common = {
         input: `./index.ts`,
         output: {
-            banner: `/* http version: ${masterVersion} \n author: ${author} */`,
+            banner: `/* http version: ${pkg.version} \n author: ${pkg.author} */`,
             footer: '/* join us */'
         },
         // 外部依赖，也是防止重复打包的配置
-        external: [ '@wuefront/shared', 'vite', 'vue', 'vite-plugin-pwa'],
+        external: [ 'vite', 'vue'],
         plugins: [
             typescript({
                 tsconfig: './tsconfig.json',
@@ -29,7 +26,7 @@ function get_common() {
                     compilerOptions: {
                         declaration: isDeclaration,
                         declarationMap: false,
-                        declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
+                        declarationDir: isDeclaration ? `./${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
                         module: 'ES2015'
                     }
                 },

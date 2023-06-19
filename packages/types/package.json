@@ -1,7 +1,10 @@
 {
-  "name": "@wuefront/types",
+  "name": "@q-front-npm/types",
   "version": "1.0.0",
-  "description": "代码样式统一文件",
+  "description": "ts公共type类",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,12 +14,9 @@
     "vue"
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@wuefront-configs/eslint": "workspace:*",
-    "@wuefront-configs/tsconfig": "workspace:*",
-    "vue": "3.3.4",
+    "vue": "3.2.47",
     "vue-types": "4.2.1",
     "typescript": "4.9.5"
   }

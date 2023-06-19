@@ -18,6 +18,8 @@ module.exports = {
         '@typescript-eslint'
     ],
     rules: {
-        '@typescript-eslint/indent': [2, 4, { SwitchCase: 1 }] // 缩进 SwitchCase
+        '@typescript-eslint/indent': [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase,
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
     }
 };
+

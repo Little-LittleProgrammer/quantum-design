@@ -1,12 +1,12 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import type { RequestOptions} from './Interface';
+import type { RequestOptions} from './interface';
 import type { AxiosResponseAgent, CreateAxiosOptions } from './axios-transform';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axios-cancel';
-import { isFunction } from '@wuefront/utils';
+import { js_is_function } from '@q-front-npm/utils';
 import { cloneDeep, omit } from 'lodash-es';
-import { RequestEnum, ContentTypeEnum} from '@wuefront/shared/enums';
+import { gRequestEnum, gContentTypeEnum} from '@q-front-npm/shared/enums';
 import { joinEnvToUrl } from './helper';
 
 export * from './axios-transform';
@@ -88,7 +88,7 @@ export class VAxios {
 
             const ignoreRepeat = cancelToken !== undefined ? cancelToken : this.options.requestOptions?.cancelToken;
             ignoreRepeat && axiosCanceler.addPending(config);
-            if (requestInterceptors && isFunction(requestInterceptors)) {
+            if (requestInterceptors && js_is_function(requestInterceptors)) {
                 config = requestInterceptors(config as SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>, this.options);
             }
             return config;
@@ -96,13 +96,13 @@ export class VAxios {
 
         // Request interceptor error capture
         requestInterceptorsCatch &&
-      isFunction(requestInterceptorsCatch) &&
+        js_is_function(requestInterceptorsCatch) &&
       this.axiosInstance.interceptors.request.use(undefined, (error) => { requestInterceptorsCatch(error, this.options); });
 
         // Response result interceptor processing
         this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
             res && axiosCanceler.removePending(res.config);
-            if (responseInterceptors && isFunction(responseInterceptors)) {
+            if (responseInterceptors && js_is_function(responseInterceptors)) {
                 res = responseInterceptors(res as AxiosResponseAgent<any>, this.options);
             }
             return res;
@@ -110,7 +110,7 @@ export class VAxios {
 
         // Response result interceptor error capture
         responseInterceptorsCatch &&
-      isFunction(responseInterceptorsCatch) &&
+        js_is_function(responseInterceptorsCatch) &&
       this.axiosInstance.interceptors.response.use(undefined, (error) => { responseInterceptorsCatch(error, this.options); });
     }
 
@@ -154,7 +154,7 @@ export class VAxios {
             url: url,
             // url: config.url! + '?' + `${joinTimestamp(this.options.requestOptions?.joinEnv ?? true, true)}&` + `${joinEnvToUrl(this.options.requestOptions?.joinEnv ?? true, true)}`,
             headers: {
-                'Content-type': ContentTypeEnum.FORM_DATA
+                'Content-type': gContentTypeEnum.FORM_DATA
             },
             requestOptions: opt
         };
@@ -167,7 +167,7 @@ export class VAxios {
         const contentType = headers?.['Content-Type'] || headers?.['content-type'];
 
         if (
-            contentType !== ContentTypeEnum.FORM_URLENCODED || !Reflect.has(config, 'data') || config.method?.toUpperCase() === RequestEnum.GET
+            contentType !== gContentTypeEnum.FORM_URLENCODED || !Reflect.has(config, 'data') || config.method?.toUpperCase() === gRequestEnum.GET
         ) {
             return config;
         }
@@ -203,7 +203,7 @@ export class VAxios {
         const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
         const { beforeRequestHook } = transform || {};
-        if (beforeRequestHook && isFunction(beforeRequestHook)) {
+        if (beforeRequestHook && js_is_function(beforeRequestHook)) {
             conf = beforeRequestHook(conf, opt);
         }
 

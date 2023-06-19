@@ -1,4 +1,4 @@
-import { createLocalStorage, isFunction } from '@wuefront/utils';
+import { js_create_local_storage, js_is_function } from '@q-front-npm/utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { CreateAxiosOptions } from './axios-transform';
 
@@ -23,7 +23,7 @@ export function joinTimestamp(join: boolean, restful = false): string | Recordab
  */
 
 export function joinEnvToUrl(env: ()=>string, restful = false): string | Recordable<string> {
-    if (!env || !isFunction(env)) {
+    if (!env || !js_is_function(env)) {
         return restful ? '' : {};
     }
     if (restful) {
@@ -58,7 +58,7 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
  */
 
 export function dealToken() {
-    const ls = createLocalStorage();
+    const ls = js_create_local_storage();
     function setTokenToHeader(options: CreateAxiosOptions, config: AxiosRequestConfig<any>) {
         const {withToken = true } = options.requestOptions!;
         if (!withToken) {

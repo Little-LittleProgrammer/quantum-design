@@ -3,10 +3,10 @@
 
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axios-transform';
-import { VAxios } from './Axios';
+import { VAxios } from './axios';
 import { check_status } from './check-status';
-import { ContentTypeEnum, RequestEnum, ResultEnum } from '@wuefront/shared/enums';
-import { deep_merge, isString } from '@wuefront/utils';
+import { gContentTypeEnum, gRequestEnum, gResultEnum } from '@q-front-npm/shared/enums';
+import { js_utils_deep_merge, js_is_string } from '@q-front-npm/utils';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
 
 const {setTokenToHeader, setTokenToLs} = dealToken();
@@ -30,14 +30,14 @@ export const defaultTransform: AxiosTransform = {
             if (joinPrefix) {
                 config.url = `${urlPrefix}${config.url}`;
             }
-            if (apiUrl && isString(apiUrl)) {
+            if (apiUrl && js_is_string(apiUrl)) {
                 config.url = `${apiUrl}${config.url}`;
             }
         }
 
         // 处理时间戳
-        if (config.method?.toUpperCase() === RequestEnum.GET) {
-            if (!isString(params)) {
+        if (config.method?.toUpperCase() === gRequestEnum.GET) {
+            if (!js_is_string(params)) {
                 // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
                 config.params = Object.assign(params || {}, joinEnvToUrl(env, false), joinTimestamp(joinTime, false), joinCookieToUrl(joinCookie, false));
             } else {
@@ -46,7 +46,7 @@ export const defaultTransform: AxiosTransform = {
                 config.params = undefined;
             }
         } else {
-            if (!isString(params)) {
+            if (!js_is_string(params)) {
                 config.url = config.url + '?' + `${joinTimestamp(joinTime, true)}&` + `${joinEnvToUrl(env, true)}&` + `${joinCookieToUrl(joinCookie, true)}`;
                 if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
                     config.data = Object.assign(data || {}, joinEnvToUrl(env, false));
@@ -100,18 +100,18 @@ export const defaultTransform: AxiosTransform = {
         if (options.customTransform && options.customTransform.customResponse) {
             res = options.customTransform.customResponse(res);
         }
-        if (res.data.code == ResultEnum.NOTFOUND){
+        if (res.data.code == gResultEnum.NOTFOUND){
             location.replace('/backend/error');
-        } else if (res.data.code == ResultEnum.ERROR){
+        } else if (res.data.code == gResultEnum.ERROR){
             check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
-        } else if (res.data.code == ResultEnum.SERVERERROR){
+        } else if (res.data.code == gResultEnum.SERVERERROR){
             check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
-        } else if (res.data.code == ResultEnum.RELOAD){
+        } else if (res.data.code == gResultEnum.RELOAD){
             setTokenToLs(options.requestOptions?.withToken || true, res);
             window.location.reload();
-        } else if (res.data.code == ResultEnum.LOGIN){
+        } else if (res.data.code == gResultEnum.LOGIN){
             window.location.href = res.data.data?.url;
-        } else if (res.data.code == ResultEnum.TIMEOUT) {
+        } else if (res.data.code == gResultEnum.TIMEOUT) {
             check_status('408', '', options.requestOptions?.errorMessageMode || 'message');
         }
         return res;
@@ -140,14 +140,14 @@ export const defaultTransform: AxiosTransform = {
 
 export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTransform'>) {
     return new VAxios(
-        deep_merge(
+        js_utils_deep_merge(
             {
                 // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
                 // authentication schemes，e.g: Bearer
                 // authenticationScheme: 'Bearer',
                 authenticationScheme: '',
                 timeout: 60 * 1000,
-                headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
+                headers: { 'Content-Type': gContentTypeEnum.FORM_URLENCODED },
                 defaultTransform,
                 customTransform: {},
                 // 配置项，下面的选项都可以在独立的接口请求中覆盖

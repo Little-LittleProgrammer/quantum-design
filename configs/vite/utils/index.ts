@@ -1,28 +1,9 @@
-/**
- * Used to parse the .env.development proxy configuration
- */
-import type { ProxyOptions } from 'vite';
+import { ProxyList, ProxyTargetList, ViteEnv, httpsRE } from "../types";
 
-export interface ViteEnv {
-    VITE_PORT: number; // 端口
-    // VITE_USE_MOCK: boolean;
-    VITE_USE_PWA: boolean; // 使用pwa
-    VITE_PROXY: [string, string][];
-    VITE_GLOB_APP_TITLE: string;
-    VITE_BASE_PATH: string;
-    // VITE_USE_CDN: boolean;
-    VITE_DROP_CONSOLE: boolean; // 是否删除console
-    VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'; // 压缩
-    VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
-    VITE_USE_IMAGEMIN: boolean; // 图片资源压缩
-    VITE_USE_SENTRY: boolean
-    VITE_USE_VISUALIZER: boolean; // 资源分析
-    VITE_GLOB_API_URL: string; // url
-    // VITE_GENERATE_UI: string;
-}
+export const outputDir = 'dist';
 
 // Read all environment variable configuration files to process.env
-export function wrapperEnv(envConf: Record<string, any>): ViteEnv {
+export function vite_utils_wrapper_env(envConf: Record<string, any>): ViteEnv {
     const ret: any = {};
 
     for (const envName of Object.keys(envConf)) {
@@ -49,19 +30,11 @@ export function wrapperEnv(envConf: Record<string, any>): ViteEnv {
     return ret;
 }
 
-type ProxyItem = [string, string];
-
-type ProxyList = ProxyItem[];
-
-type ProxyTargetList = Record<string, ProxyOptions & { rewrite: (path: string) => string }>;
-
-const httpsRE = /^https:\/\//;
-
 /**
  * Generate 代理
  * @param list
  */
-export function create_proxy(list: ProxyList = []) {
+export function vite_utils_create_proxy(list: ProxyList = []) {
     const _ret: ProxyTargetList = {};
     for (const [prefix, target] of list) {
         const _isHttps = httpsRE.test(target);
@@ -77,4 +50,3 @@ export function create_proxy(list: ProxyList = []) {
 
     return _ret;
 }
-

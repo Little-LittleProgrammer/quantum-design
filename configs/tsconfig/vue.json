@@ -1,5 +1,5 @@
 {   
-    "extends": "./base.json",
+    "extends": "./tsconfig-base.json",
     "display": "Vue",
     "compilerOptions": {
       "target": "ES2015",

@@ -17,5 +17,5 @@ declare interface UploadFileParams {
     // file name
     filename?: string;
     [key: string]: any;
-  }
+}
 

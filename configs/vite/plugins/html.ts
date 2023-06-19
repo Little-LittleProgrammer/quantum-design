@@ -1,8 +1,8 @@
 import type { PluginOption } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import { ViteEnv } from '../utils';
+import { ViteEnv } from '../types';
 
-export function configHtmlPlugin(env: ViteEnv, isBuild:boolean) {
+export function vite_plugin_html(env: ViteEnv, isBuild:boolean) {
     const { VITE_GLOB_APP_TITLE, VITE_BASE_PATH } = env;
 
     const _path = VITE_BASE_PATH.endsWith('/') ? VITE_BASE_PATH : `${VITE_BASE_PATH}/`;

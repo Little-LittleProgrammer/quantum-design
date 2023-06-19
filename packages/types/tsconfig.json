@@ -1,5 +1,5 @@
 {
-    "extends": "@wuefront-configs/tsconfig/lib.json",
+    "extends": "@wuefront-config/tsconfig/lib.json",
     "include": ["vue", "global"]
   }
   

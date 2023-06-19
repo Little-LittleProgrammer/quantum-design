@@ -1,24 +1,19 @@
 import type { PluginOption } from 'vite';
+import { ViteEnv } from '../types';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-// import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components';
-import { configCompressPlugin } from './compress';
-import { configPwaConfig } from './pwa';
-import { configHtmlPlugin } from './html';
-import { ViteEnv } from '../utils';
-import { configDefinePlugin } from './define-options';
-import { configVisualizerConfig } from './visualizer';
-export { configSentryEnv } from './sentry';
+import { vite_plugin_options } from './define-options';
+import { vite_plugin_html } from './html';
+import { vite_plugin_compress } from './compress';
+import { vite_plugin_pwa } from './pwa';
 
-export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
+export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean) {
     const {
-        VITE_USE_IMAGEMIN,
         VITE_BUILD_COMPRESS,
         VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
     } = viteEnv;
-
-    const vitePlugins: (PluginOption | PluginOption[])[] = [
+    const _vitePlugins: (PluginOption | PluginOption[])[] = [
         // have to
         vue(),
         // have to
@@ -29,24 +24,15 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
         //     customComponentResolvers: [AntDesignVueResolver()]
         // })
     ];
-
-    vitePlugins.push(configDefinePlugin());
-
+    _vitePlugins.push(vite_plugin_options());
     // vite-plugin-html
-    vitePlugins.push(configHtmlPlugin(viteEnv, isBuild));
+    _vitePlugins.push(vite_plugin_html(viteEnv, isBuild));
 
-    // vite-plugin-theme
-    // vitePlugins.push(configThemePlugin(isBuild));
     if (isBuild) {
-        // rollup-plugin-gzip
-        vitePlugins.push(
-            configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE)
-        );
+        _vitePlugins.push(vite_plugin_compress(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE));
 
         // vite-plugin-pwa
-        vitePlugins.push(configPwaConfig(viteEnv));
-        vitePlugins.push(configVisualizerConfig(viteEnv));
+        _vitePlugins.push(vite_plugin_pwa(viteEnv));
     }
-
-    return vitePlugins;
+    return _vitePlugins;
 }

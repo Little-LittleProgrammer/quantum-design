@@ -1,3 +1,3 @@
-# @wuefront/utils
+# @q-front-npm/utils
 
-目的: 为所有项目提供工具方法
+提供公共工具类与方法

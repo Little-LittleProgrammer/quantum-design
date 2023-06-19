@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { isString, deep_merge } from '@wuefront/utils';
+import { js_is_string, js_utils_deep_merge } from '@q-front-npm/utils';
 import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';
@@ -23,11 +23,11 @@ function useGo(router?: Router) {
             return;
         }
 
-        if (isString(opt)) {
+        if (js_is_string(opt)) {
             isReplace ? replace(opt).catch(handleError) : push(opt).catch(handleError);
         } else {
             if (joinTime) {
-                deep_merge(
+                js_utils_deep_merge(
                     opt,
                     {
                         query: {
@@ -118,7 +118,7 @@ const useResizeObserver = () => {
 /**
  * @description: 用于Antd表格的getContainer属性绑定目标Dom
  */
-const useStickyContainer = (className: string = 'js-main-conatiner') => {
+const useStickyContainer = (className = 'js-main-conatiner') => {
     const $dom = ref<HTMLElement | null>(null);
     onMounted(() => {
         $dom.value = document.getElementsByClassName(className)?.[0] as HTMLElement;
@@ -129,7 +129,7 @@ const useStickyContainer = (className: string = 'js-main-conatiner') => {
 /**
  * @description: 用于修复Antd表格组件在边界情况下出现的双滚动条问题
  */
-const useFixStickyScrollBar = (className: string = 'js-layout-main') => {
+const useFixStickyScrollBar = (className = 'js-layout-main') => {
     setTimeout(() => {
         const $scroolDom = document.querySelector('.ant-table-sticky-scroll') as HTMLElement;
         const $tableDom = document.querySelector('.ant-table-body') as HTMLElement;
@@ -140,7 +140,7 @@ const useFixStickyScrollBar = (className: string = 'js-layout-main') => {
             $scroolDom.style.opacity = '0';
         }
     }, 0);
-}
+};
 
 export {
     useRedo,

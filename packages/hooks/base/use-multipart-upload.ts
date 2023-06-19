@@ -24,9 +24,9 @@ interface IMergeApiReq {
 interface IUploadParams {
     partSize?: number; //分片大小，非必填，默认10M
     dir?: string; //上传目录标识，非必填
-    initApi: Function; //获取uploadId接口
-    uploadApi: Function; //上传分片文件接口
-    mergeApi: Function; //合并分片文件接口
+    initApi: Fn; //获取uploadId接口
+    uploadApi: Fn; //上传分片文件接口
+    mergeApi: Fn; //合并分片文件接口
 }
 
 /**
@@ -54,7 +54,7 @@ interface IUploadParams {
         createMessage.success('上传成功', res.url);
     });
  */
-let _progressTimer: number; // 进度条计时器
+let _progressTimer: TimeoutHandle; // 进度条计时器
 export function useMultipartUpload(sourceFile: File, uploadParams: IUploadParams, onProgress?: (progress: number) => void): Promise<Record<'url', string>> {
     // 切片大小
     const _chunkSize = uploadParams.partSize || 10 * 1024 * 1024;
@@ -76,7 +76,7 @@ export function useMultipartUpload(sourceFile: File, uploadParams: IUploadParams
     // 随机最大进度阈值，70%～90%之间
     const _maxProgress = 0.7 + Math.random() * 0.2;
     // 分片任务队列
-    const _partList: Array<Function> = [];
+    const _partList: Array<Fn> = [];
 
     // 模拟上传进度
     function update_progress() {
@@ -196,7 +196,7 @@ function request_control(fnList: any[], max: number) {
             calc(fnList.shift());
         }
         // 调用执行函数获取结果
-        function calc(fn: Function) {
+        function calc(fn: Fn) {
             Promise.resolve(fn())
                 .then(() => {
                     _count++;

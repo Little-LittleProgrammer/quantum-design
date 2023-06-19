@@ -1,7 +1,7 @@
 
-import defineOptionsPlugin from 'unplugin-vue-define-options/vite';
+import defineOptionsPlugin from 'unplugin-vue-define-options';
 
-export function configDefinePlugin() {
-    const plugin = defineOptionsPlugin();
+export function vite_plugin_options() {
+    const plugin = defineOptionsPlugin.vite();
     return plugin;
 }

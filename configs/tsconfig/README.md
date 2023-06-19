@@ -1,3 +1,3 @@
-# @wuefront-configs/
+# @q-front-npm-config/tsconfig
 
-目的: 统一所有代码的规范 包括 tsconfig, stylelint, eslint
+提供公共的tsconfig配置

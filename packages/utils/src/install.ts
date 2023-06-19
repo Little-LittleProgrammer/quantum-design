@@ -1,24 +1,31 @@
+type EventShim = {
+    new (...args: any[]): {
+        $props: {
+            onClick?: (...args: any[]) => void;
+        };
+    };
+};
 
-type SFCWithInstall<T> = T & {
-    install: any
-}
+export type WithInstall<T> = T & {
+    install(app: App): void;
+} & EventShim;
+
 type App ={
-    component: any
+    component: any,
+    config: any
 }
-export const withInstall = <T, E extends Record<string, any>>(
-    main: T,
-    extra?: E
-) => {
-    (main as SFCWithInstall<T>).install = (app: App): void => {
-        for (const comp of [main, ...Object.values(extra ?? {})]) {
-            app.component(comp.name, comp);
+
+export type CustomComponent = { displayName?: string, name?: string };
+
+export const component_with_install = <T extends CustomComponent>(component: T, alias?: string) => {
+    const _c = component as Record<string, unknown>;
+    _c.install = function(app: App) {
+        const _compName = _c.displayName || _c.name;
+        if (!_compName) return;
+        app.component(_compName, component);
+        if (alias) {
+            app.config.globalProperties[alias] = component;
         }
     };
-
-    if (extra) {
-        for (const [key, comp] of Object.entries(extra)) {
-            (main as any)[key] = comp;
-        }
-    }
-    return main as SFCWithInstall<T> & E;
+    return component as WithInstall<T>;
 };

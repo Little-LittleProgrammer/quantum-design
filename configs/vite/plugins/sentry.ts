@@ -1,6 +1,6 @@
-import { ViteEnv } from '../utils';
+import { ViteEnv } from '../types';
 
-export function configSentryEnv(env: ViteEnv) {
+export function vite_plugin_sentry(env: ViteEnv) {
     if (env.VITE_USE_SENTRY) {
         if (
             process.env.PIPELINE_NAME?.includes('生产') ||

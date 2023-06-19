@@ -1,7 +1,7 @@
 /**
  * @description: Request result set
  */
-export enum ResultEnum {
+export enum gResultEnum {
     SUCCESS = '200',
     NOTFOUND = '404',
     ERROR = '400',
@@ -15,7 +15,7 @@ export enum ResultEnum {
 /**
  * @description: request method
  */
-export enum RequestEnum {
+export enum gRequestEnum {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
@@ -25,7 +25,7 @@ export enum RequestEnum {
 /**
  * @description:  contentTyp
  */
-export enum ContentTypeEnum {
+export enum gContentTypeEnum {
     // json
     JSON = 'application/json;charset=UTF-8',
     // form-data qs

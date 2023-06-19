@@ -3,7 +3,7 @@ import type { Plugin } from 'vite';
 import compressPlugin from 'vite-plugin-compression';
 
 // 开启gzip、br压缩
-export function configCompressPlugin(
+export function vite_plugin_compress(
     compress: 'gzip' | 'brotli' | 'none' = 'none',
     deleteOriginFile = false
 ): Plugin | Plugin[] {

@@ -1,22 +1,21 @@
 {
-  "name": "@wuefront-configs/tsconfig",
+  "name": "@wuefront-config/tsconfig",
   "version": "1.0.0",
-  "description": "代码样式统一文件",
+  "description": "代码tslint统一文件",
   "main": "index.js",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Evan Wu",
   "files": [
-    "base.json",
+    "tsconfig-base.json",
     "lib.json",
     "vue.json"
   ],
   "license": "MIT",
-  "dependencies": {
-    "typescript": "4.9.5"
-  },
-  "devDependencies": {
-    "@types/node": "18.14.6"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

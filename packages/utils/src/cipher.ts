@@ -3,8 +3,7 @@ import { parse } from 'crypto-js/enc-utf8';
 import pkcs7 from 'crypto-js/pad-pkcs7';
 import ECB from 'crypto-js/mode-ecb';
 import UTF8 from 'crypto-js/enc-utf8';
-import { cacheCipher } from '@wuefront/shared/enums';
-
+import md5 from 'crypto-js/md5';
 interface IOption {
     mode: typeof ECB,
     padding: typeof pkcs7,
@@ -14,16 +13,16 @@ interface IOption {
 export interface EncryptionParams {
     key: string;
     iv: string;
-  }
+}
 
-export class AesEncryption {
+export class Encryption {
     private key;
     private iv;
 
-    constructor(opt: Partial<EncryptionParams> = {}) {
+    constructor(opt: EncryptionParams) {
         const { key, iv } = opt;
-        this.key = parse(key || cacheCipher.key);
-        this.iv = parse(iv || cacheCipher.iv);
+        this.key = parse(key);
+        this.iv = parse(iv);
     }
 
     get getOptions():IOption {
@@ -40,5 +39,9 @@ export class AesEncryption {
 
     decryptByAES(cipherText: string) {
         return decrypt(cipherText, this.key, this.getOptions).toString(UTF8);
+    }
+
+    encryptByMd5(cipherText: string) {
+        return md5(cipherText);
     }
 }

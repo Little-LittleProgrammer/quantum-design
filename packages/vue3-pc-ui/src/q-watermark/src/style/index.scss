@@ -1,0 +1,22 @@
+.watermark-container {
+    position: relative;
+    .watermark { // 水印
+        text-align: center;
+        font-family: Cursive, serif;
+        // overflow: hidden;
+        display: inline-block;
+        span {
+            margin: 0 auto;
+            display: inline-block;
+            transform-origin: 50% 50%;
+        }
+    }
+    .error-warning {
+        margin: 100px auto;
+        text-align: center;
+        font-size: 30px;
+    }
+    .mt-20 {
+        margin-top: 20px;
+    }
+}

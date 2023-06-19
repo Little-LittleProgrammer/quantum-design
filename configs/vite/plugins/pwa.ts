@@ -4,9 +4,9 @@
  */
 
 import { VitePWA } from 'vite-plugin-pwa';
-import { ViteEnv } from '../utils';
+import { ViteEnv } from '../types';
 
-export function configPwaConfig(env: ViteEnv) {
+export function vite_plugin_pwa(env: ViteEnv) {
     const { VITE_USE_PWA, VITE_GLOB_APP_TITLE } = env;
 
     if (VITE_USE_PWA) {

@@ -1,4 +1,3 @@
-export * from './cipherEnum'
 export * from './dateEnum'
 export * from './httpEnum'
 export * from './regEnum'

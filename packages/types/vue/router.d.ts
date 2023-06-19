@@ -1,4 +1,4 @@
-export declare interface menuData {
+export declare interface IMenuData {
     /**
      * 权限名称
      */
@@ -6,7 +6,7 @@ export declare interface menuData {
     /**
       * 子级
       */
-    children?: menuData[];
+    children?: IMenuData[];
     /**
       * 菜单图标
       */

@@ -1,6 +1,6 @@
 {
-    "extends": "@wuefront-configs/tsconfig/base.json",
-    "include": ["enums"],
+    "extends": "@wuefront-config/tsconfig/tsconfig-base.json",
+    "include": ["enums", "plugin"],
     "exclude": ["dist", "node_modules"]
 }
   

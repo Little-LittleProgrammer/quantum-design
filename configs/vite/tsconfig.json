@@ -1,5 +1,7 @@
 {
-    "extends": "@wuefront-configs/tsconfig/base.json",
-    "include": ["plugins", "utils", "index.ts", "presets"],
-    "exclude": ["dist", "node_modules"]
+    "extends": "@wuefront-config/tsconfig/tsconfig-base.json",
+    "include": ["plugins", "utils", "index.ts", "config", "types"],
+    "exclude": ["dist", "node_modules"],
+    "compilerOptions": {
+    }
   }

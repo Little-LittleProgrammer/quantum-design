@@ -1,4 +1,4 @@
-import { isFunction } from '@wuefront/utils';
+import { js_is_function } from '@q-front-npm/utils';
 import type { Slots } from 'vue';
 
 export function useSlots() {
@@ -9,7 +9,7 @@ export function useSlots() {
         if (!slots || !Reflect.has(slots, slot)) {
             return null;
         }
-        if (!isFunction(slots[slot])) {
+        if (!js_is_function(slots[slot])) {
             console.error(`${slot} is not a function!`);
             return null;
         }

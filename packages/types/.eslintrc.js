@@ -1,3 +1,3 @@
 module.exports = {
-    extends: [require.resolve('@wuefront-configs/eslint/eslint-tslib')]
+    extends: [require.resolve('@wuefront-config/eslint/eslint-tslib')]
 };

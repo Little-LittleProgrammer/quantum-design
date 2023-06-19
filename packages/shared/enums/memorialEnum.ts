@@ -1,5 +1,5 @@
 // 用于开启灰色模式
-export enum MemorialEnum {
+export enum gMemorialEnum {
     // 清明
     qingming1 = '04-04',
     qingming2 = '04-05',
