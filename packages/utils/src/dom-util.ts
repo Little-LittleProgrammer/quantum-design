@@ -273,3 +273,18 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
 
     return init_main();
 }
+
+export function js_utils_copy_code(str: string) {
+    const $input = document.createElement('textarea');
+    document.body.appendChild($input);
+    $input.value = str; // 修改文本框的内容
+    $input.select(); // 选中文本
+    if (document.execCommand('copy')) {
+        document.execCommand('copy');
+        document.body.removeChild($input);
+        return true;
+    } else {
+        document.body.removeChild($input);
+        return false;
+    }
+}

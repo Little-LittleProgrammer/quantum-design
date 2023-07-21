@@ -2,10 +2,10 @@ import { defineConfig, DefaultTheme } from 'vitepress';
 import fs from 'fs'
 import path from 'path'
 
-const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@q-front-npm/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
+const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@wuefront/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const _antdCssData = JSON.parse('{' + _antdCssStrTemp + '}');
 
-const _baseScssFile = "@import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
+const _baseScssFile = "@import '@wuefrontared/style/base/base.scss'; @import '@wu@wuefrontd/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
 
 
 export default defineConfig({
@@ -16,6 +16,11 @@ export default defineConfig({
     lastUpdated: true,
     ignoreDeadLinks: true,
     outDir: '../dist',
+    markdown: {
+        anchor: {
+            tabIndex:1
+        }
+    },
     themeConfig: {
         logo: '/logo.png',
         siteTitle: '七猫',
@@ -33,7 +38,11 @@ export default defineConfig({
         },
         socialLinks: [
             { icon: 'github', link: 'https://codeup.aliyun.com/qimao/front/q-front-npm' }
-        ]
+        ],
+        editLink: {
+            text: '编辑此页',
+            pattern: 'https://codeup.aliyun.com/qimao/front/q-front-npm/tree/master/docs/project-docs/docs/:path'
+        }
     },
     vite: {
         base: '/',

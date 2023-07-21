@@ -1,4 +1,4 @@
-import {gRegEnum} from '@q-front-npm/shared/enums';
+import {gRegEnum} from '@wuefront/shared/enums';
 
 const toString = Object.prototype.toString;
 
@@ -40,10 +40,6 @@ export function js_is_date(val: unknown): val is Date {
 
 export function js_is_null(val: unknown): val is null {
     return val === null;
-}
-
-export function js_is_null_and_undef(val: unknown): val is null | undefined {
-    return js_is_un_def(val) && js_is_null(val);
 }
 
 export function js_is_null_or_undef(val: unknown): val is null | undefined {

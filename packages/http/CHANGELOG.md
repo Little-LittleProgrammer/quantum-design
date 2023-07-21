@@ -1,4 +1,4 @@
-# @q-front-npm/http
+# @wuefront/http
 
 ## 1.0.1
 
@@ -15,10 +15,10 @@
 ### Patch Changes
 
 - Updated dependencies [b768af8]
-  - @q-front-npm/utils@1.0.0
-  - @wuefront-config/rollup@1.0.0
-  - @q-front-npm/hooks@1.0.0
-  - @q-front-npm/shared@1.0.0
+  - @wuefront/utils@1.0.0
+  - @wuefront-configs/rollup@1.0.0
+  - @wuefront/hooks@1.0.0
+  - @wuefront/shared@1.0.0
 
 ## 1.0.0-rc.0
 
@@ -29,17 +29,17 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @q-front-npm/utils@1.0.0-rc.0
-  - @wuefront-config/rollup@1.0.0-rc.0
-  - @q-front-npm/hooks@1.0.0-rc.0
-  - @q-front-npm/shared@1.0.0-rc.0
+  - @wuefront/utils@1.0.0-rc.0
+  - @wuefront-configs/rollup@1.0.0-rc.0
+  - @wuefront/hooks@1.0.0-rc.0
+  - @wuefront/shared@1.0.0-rc.0
 
 ## 0.1.1
 
 ### Patch Changes
 
-- @q-front-npm/hooks@0.1.1
-- @q-front-npm/utils@0.1.0
+- @wuefront/hooks@0.1.1
+- @wuefront/utils@0.1.0
 
 ## 0.1.0
 
@@ -54,10 +54,10 @@
 - Updated dependencies
 - Updated dependencies
 - Updated dependencies
-  - @q-front-npm/hooks@0.1.0
-  - @q-front-npm/shared@0.1.0
-  - @wuefront-config/rollup@0.1.0
-  - @q-front-npm/utils@0.1.0
+  - @wuefront/hooks@0.1.0
+  - @wuefront/shared@0.1.0
+  - @wuefront-configs/rollup@0.1.0
+  - @wuefront/utils@0.1.0
 
 ## 0.1.0-beta.0
 
@@ -72,7 +72,7 @@
 - Updated dependencies
 - Updated dependencies
 - Updated dependencies
-  - @q-front-npm/hooks@0.1.0-beta.0
-  - @q-front-npm/shared@0.1.0-beta.0
-  - @wuefront-config/rollup@0.1.0-beta.0
-  - @q-front-npm/utils@0.1.0-beta.0
+  - @wuefront/hooks@0.1.0-beta.0
+  - @wuefront/shared@0.1.0-beta.0
+  - @wuefront-configs/rollup@0.1.0-beta.0
+  - @wuefront/utils@0.1.0-beta.0

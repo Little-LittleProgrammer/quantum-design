@@ -1,9 +1,13 @@
 import { RollupOptions } from 'rollup';
 import type { BuildOptions, ProxyOptions } from 'vite';
 import { PluginOptions } from 'vite-plugin-dts';
+import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
+import type { VitePWAOptions } from 'vite-plugin-pwa';
 
 export interface ViteEnv {
     VITE_PORT: number; // 端口
+    VITE_GLOB_APP_PROJECT: string; // 项目名称
+    VITE_APP_RELEASE_VERSION: string; // 项目版本
     // VITE_USE_MOCK: boolean;
     VITE_USE_PWA: boolean; // 使用pwa
     VITE_PROXY: [string, string][];
@@ -14,7 +18,8 @@ export interface ViteEnv {
     VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none'; // 压缩
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
     VITE_USE_IMAGEMIN: boolean; // 图片资源压缩
-    VITE_USE_SENTRY: boolean
+    VITE_USE_SENTRY: boolean;
+    VITE_USE_SOURCEMAP: boolean;
     VITE_USE_VISUALIZER: boolean; // 资源分析
     VITE_GLOB_API_URL: string; // url
     // VITE_GENERATE_UI: string;
@@ -29,7 +34,7 @@ export type ProxyTargetList = Record<string, ProxyOptions & { rewrite: (path: st
 export const httpsRE = /^https:\/\//;
 
 export interface CommonOptions {
-    entry: string;
+    entry?: string;
     name?: string;
     target?: string;
     formats?: ('es' | 'cjs' | 'umd' | 'iife')[],
@@ -38,5 +43,11 @@ export interface CommonOptions {
     buildOptions?: Omit<BuildOptions, 'rollupOptions'>;
     isComponentsBuild?: boolean;
     customPlugins?: any[];
-    dtsOptions?: PluginOptions
+    dtsOptions?: PluginOptions;
+    pluginsOption?: IPluginsCommonOptions
+}
+
+export interface IPluginsCommonOptions {
+    sentry?:SentryVitePluginOptions;
+    pwa?:Partial<VitePWAOptions>
 }

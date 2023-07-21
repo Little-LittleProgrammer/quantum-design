@@ -1,22 +1,22 @@
 # rollup
 
 ## 简介
-npm包名称: `@q-front-npm/rollup`
+npm包名称: `@wuefront/rollup`
 
 当前版本: 1.0.0
 
 
 提供了公共的rollup配置, 包括
-1. `rollup-lib.config.js`, 对应基础eslint配置
+1. `rollup-lib.config.js`, 对应基础rollup配置
 
 ## 使用
 
 ```js
 // rollup.config.mjs
-import { rollup_commpn_lib_config } from '@wuefront-config/rollup';
+import { rollup_commpn_lib_config } from '@wuefrontnfigs/rollup';
 
 const result = rollup_commpn_lib_config('http', {
-    external: ['@q-front-npm/hooks', '@q-front-npm/hooks/vue', '@q-front-npm/shared', '@q-front-npm/shared/enums', '@q-front-npm/utils', 'axios', 'lodash-es', 'qs']
+    external: ['@wuefrontoks', '@wu@wuefront/vue', '@wuefr@wuefront '@wuefront@wuefronts', '@wuefront/ut@wuefront', 'lodash-es', 'qs']
 });
 
 export default [...Object.values(result)];

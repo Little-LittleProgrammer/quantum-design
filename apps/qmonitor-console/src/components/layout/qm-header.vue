@@ -27,12 +27,12 @@
 </template>
 
 <script lang='ts' setup>
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@wuefront/hooks/vue';
 import { onMounted, PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSysStore } from '@/store/modules/systemManage';
-import { propTypes } from '@q-front-npm/types/vue/types';
-import type { IMenuData } from '@q-front-npm/types/vue/router';
+import { propTypes } from '@wuefront/types/vue/types';
+import type { IMenuData } from '@wuefront/types/vue/router';
 
 const props = defineProps({
     menuData: { // 导航数据

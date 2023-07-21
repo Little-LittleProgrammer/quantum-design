@@ -1,4 +1,4 @@
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 const { createMessage, createErrorModal } = useMessage();
 const error = createMessage.error!;
 

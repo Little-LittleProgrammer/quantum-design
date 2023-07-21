@@ -1,4 +1,4 @@
-# @wuefront-config/eslint
+# @wuefront-configs/eslint
 
 ## 1.0.0
 

@@ -1,7 +1,6 @@
 import { ConfigEnv, UserConfig } from 'vite';
 import { loadEnv } from 'vite';
 import { outputDir, vite_utils_create_proxy, vite_utils_wrapper_env } from '../utils';
-import { vite_plugin_pwa } from '../plugins/pwa';
 import { vite_create_plugins } from '../plugins';
 import { CommonOptions } from '../types';
 
@@ -18,7 +17,6 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
     const viteEnv = vite_utils_wrapper_env(env);
     const isBuild = command === 'build';
     const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE, VITE_BASE_PATH, VITE_USE_PWA } = viteEnv;
-    vite_plugin_pwa(viteEnv);
     return {
         base: VITE_BASE_PATH,
         server: {
@@ -42,8 +40,9 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
             },
             reportCompressedSize: false,
             chunkSizeWarningLimit: 2000,
+            sourcemap: viteEnv.VITE_USE_SENTRY && viteEnv.VITE_USE_SOURCEMAP,
             ...getOptions.buildOptions
         },
-        plugins: vite_create_plugins(viteEnv, isBuild)
+        plugins: vite_create_plugins(viteEnv, isBuild, options?.pluginsOption)
     };
 }

@@ -1,0 +1,17 @@
+{
+    "extends": "@wuefront-configs/tsconfig/vue.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "isolatedModules": true,
+    },
+    "include": [
+        "src/**/*.ts", 
+        "src/**/*.d.ts", 
+        "src/**/*.tsx", 
+        "src/**/*.vue",
+        "node_modules/@wuefront/types/**/*.d.ts"
+    ],
+    "exclude": [
+        "dist"
+    ]
+}

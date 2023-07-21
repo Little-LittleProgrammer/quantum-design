@@ -1,4 +1,4 @@
-# @q-front-npm/shared
+# @wuefront/shared
 
 目的: 为所有项目提供除工具类外, 要共享的文件, 本意是不用额外再次打包
 

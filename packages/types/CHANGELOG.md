@@ -1,4 +1,4 @@
-# @q-front-npm/types
+# @wuefront/types
 
 ## 1.0.0
 

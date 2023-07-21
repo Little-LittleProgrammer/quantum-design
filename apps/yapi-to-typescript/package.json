@@ -1,0 +1,35 @@
+{
+  "name": "yapi-to-typescript",
+  "private": true,
+  "version": "0.0.3",
+  "description": "谷歌插件, yapi转ts类型, 方便开发者快速声明ts类型, 提高开发效率",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build"
+  },
+  "keywords": [
+    "浏览器插件",
+    "yapi",
+    "yapi转ts类型",
+    "自动添加注释"
+  ],
+  "author": "Evan Wu",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons-vue": "6.1.0",
+    "@wuefront/http": "workspace:*",
+    "@wuefront/shared": "workspace:*",
+    "@wuefront/utils": "workspace:*",
+    "ant-design-vue": "3.2.20",
+    "vue": "3.2.47",
+    "webextension-polyfill": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/webextension-polyfill": "^0.10.0",
+    "@crxjs/vite-plugin": "^1.0.14",
+    "@vitejs/plugin-vue": "3.2.0",
+    "highlight.js": "11.4.0",
+    "less": "4.1.3",
+    "sass": "1.63.3"
+  }
+}

@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, Canceler } from 'axios';
 import axios from 'axios';
-import { js_is_function } from '@q-front-npm/utils';
+import { js_is_function } from '@wuefront/utils';
 
 // Used to store the identification and cancellation function of each request
 let pendingMap = new Map<string, Canceler>();

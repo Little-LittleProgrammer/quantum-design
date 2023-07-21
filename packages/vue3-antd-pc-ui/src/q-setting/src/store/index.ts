@@ -1,4 +1,4 @@
-import { js_create_local_storage, js_utils_deep_merge } from '@q-front-npm/utils';
+import { js_create_local_storage, js_utils_deep_merge } from '@wuefront/utils';
 import { defineStore } from 'pinia';
 import { IProjectConfig } from '../type';
 

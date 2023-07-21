@@ -1,5 +1,5 @@
-import type { IMenuData } from '@q-front-npm/types/vue/router';
-import { js_utils_deep_copy } from '@q-front-npm/utils';
+import type { IMenuData } from '@wuefront/types/vue/router';
+import { js_utils_deep_copy } from '@wuefront/utils';
 
 export interface ICacheObj {
     path: string,

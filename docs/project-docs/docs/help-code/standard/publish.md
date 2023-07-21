@@ -42,7 +42,9 @@ pnpm changeset pre enter rc      # 发布 rc 版本
 10. 执行 `pnpm changeset publish` 发布 测试版本 
 11. 项目内测试完成后, 发布正式版本, 执行 `pnpm changeset pre exit` 退出 pre 模式
 12. 执行 `pnpm changeset version` 更改版本为正式版本号
-13. 执行 `pnpm changeset publish` 发布正式版本, 迭代结束
+13. 更新 docs项目, 版本信息, 以及 文档信息
+14. 执行 `pnpm run build --filter 你要发布的包` 打包
+15. 执行 `pnpm changeset publish` 发布正式版本, 迭代结束
 
 ## 修复流程
 1. 建立 hotfix 分支

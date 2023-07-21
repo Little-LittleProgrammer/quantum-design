@@ -28,9 +28,9 @@
 import { PropType, computed, toRaw } from 'vue';
 import { Divider, TooltipProps } from 'ant-design-vue';
 import { QIcon } from '@/q-icon';
-import { ActionItem } from './interface';
-import { js_is_boolean, js_is_function, js_is_string } from '@q-front-npm/utils';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { ActionItem } from '../interface';
+import { js_is_boolean, js_is_function, js_is_string } from '@wuefront/utils';
+import { propTypes } from '@wuefront/types/vue/types';
 import './style/index.scss';
 
 const props = defineProps({

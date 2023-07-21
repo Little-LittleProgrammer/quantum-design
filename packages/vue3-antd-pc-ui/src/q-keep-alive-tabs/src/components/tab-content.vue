@@ -19,7 +19,7 @@ import {QDropdown} from '@/q-dropdown';
 import { TableActionEnum, useTabs } from '../hooks/use-tabs';
 import { QIcon } from '@/q-icon';
 import { useTabsStore } from '../hooks/use-tabs-store';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { propTypes } from '@wuefront/types/vue/types';
 interface DataProps {
     current: Nullable<RouteLocationNormalized>,
     currentIndex: number

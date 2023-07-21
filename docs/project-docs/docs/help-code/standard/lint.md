@@ -179,9 +179,9 @@ declare interface UploadFileParams {
 ## ESLint规范
 **.eslintrc.js配置**
 ```js
-// equire.resolve('@wuefront//eslint/eslint-vue') 继承 packages下的规范
+// equire.resolve('@wuefront-configs//eslint/eslint-vue') 继承 packages下的规范
 module.exports = {
-    extends: [require.resolve('@wuefront-config/eslint/eslint-vue')],
+    extends: [require.resolve('@wuefrontnfigs/eslint/eslint-vue')],
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
@@ -193,7 +193,7 @@ module.exports = {
 ## tsconfig.json规范
 ```js
 {
-    "extends": "@wuefront-config/tsconfig/vue.json", // 继承 packages下的配置
+    "extends": "@wuefrontnfigs/tsconfig/vue.json", // 继承 packages下的配置
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
@@ -209,7 +209,7 @@ module.exports = {
         "types/*.d.ts",
         "build/**/*.ts",
         "build/**/*.d.ts",
-        "node_modules/@q-front-npm/types/**/*.d.ts" // 为了将packags下的公共规范也引入
+        "node_modules/@wuefront/types/**/*.d.ts" // 为了将packags下的公共规范也引入
     ],
     "exclude": [
         "dist"

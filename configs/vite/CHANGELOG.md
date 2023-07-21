@@ -1,4 +1,60 @@
-# @wuefront-config/vite
+# @wuefront-configs/vite
+
+## 1.0.9
+
+### Patch Changes
+
+- 增加 pwa 可配置化
+- Updated dependencies
+  - @wuefront/utils@1.0.4
+
+## 1.0.8
+
+### Patch Changes
+
+- 修复 sentry 缺陷
+
+## 1.0.7
+
+### Patch Changes
+
+- 修复缺陷
+
+## 1.0.6
+
+### Patch Changes
+
+- 去除 sentry 默认 release
+
+## 1.0.5
+
+### Patch Changes
+
+- 增加 plugin 自定义参数上传
+
+## 1.0.4
+
+### Patch Changes
+
+- 增加 sentry 支持
+
+## 1.0.3
+
+### Patch Changes
+
+- 增加移动端适配插件
+
+## 1.0.2
+
+### Patch Changes
+
+- 修复 ts 类型缺陷
+
+## 1.0.1
+
+### Patch Changes
+
+- 修复 sentry 接入的缺陷
 
 ## 1.0.0
 

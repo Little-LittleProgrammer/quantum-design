@@ -3,8 +3,8 @@
 
 ## 版本
  本目录主要是提供公共的http方法
-- npm包名称 `@q-front-npm/http`
-- 当前版本: 1.0.0
+- npm包名称 `@wuefront/http`
+- 当前版本: 1.0.6
 
 ## 方法
 

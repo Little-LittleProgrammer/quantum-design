@@ -1,33 +1,41 @@
 {
-  "name": "@q-front-npm/utils",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/utils.cjs.min.js",
-  "module": "dist/utils.esm.min.js",
-  "typings": "dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
-  },
-  "scripts": {
-    "build": "rollup -c --environment TYPES:true",
-    "test": "vitest run --coverage"
-  },
-  "keywords": [],
-  "author": "Evan Wu",
-  "license": "ISC",
-  "dependencies": {
-    "@q-front-npm/shared": "workspace:*",
-    "crypto-js": "4.1.1",
-    "dayjs": "1.11.7"
-  },
-  "devDependencies": {
-    "@q-front-npm/types": "workspace:*",
-    "@wuefront-config/rollup": "workspace:*",
-    "@types/crypto-js": "4.1.1",
-    "@types/lodash-es": "4.17.6",
-    "@types/qs": "6.9.7"
+    "name": "@wuefront/utils",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/utils.cjs.min.js",
+    "module": "dist/utils.esm.min.js",
+    "typings": "dist/types/index.d.ts",
+    "files": [
+      "dist"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmmirror.com/"
+    },
+    "scripts": {
+      "build": "rollup -c --environment TYPES:true",
+      "test": "vitest run",
+      "test:coverage": "vitest run --coverage"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+      "@wuefront/shared": "workspace:*",
+      "crypto-js": "4.1.1",
+      "dayjs": "1.11.7"
+    },
+    "devDependencies": {
+      "@wuefront/types": "workspace:*",
+      "@wuefront-configs/rollup": "workspace:*",
+      "@types/crypto-js": "4.1.1",
+      "@types/lodash-es": "4.17.6",
+      "@types/qs": "6.9.7",
+      "rollup": "2.79.1"
+    },
+    "peerDependencies": {
+      "@wuefront/shared": "workspace:*",
+      "crypto-js": "4.1.1",
+      "dayjs": "1.11.7"
+    }
   }
-}
+  

@@ -1,9 +1,9 @@
 # eslint
 
 ## 简介
-npm包名称: `@q-front-npm/eslint`
+npm包名称: `@wuefront/eslint`
 
-当前版本: 1.0.0
+当前版本: 1.0.3
 
 
 提供了公共的eslint配置, 包括
@@ -15,7 +15,7 @@ npm包名称: `@q-front-npm/eslint`
 
 ```js
 module.exports = {
-    extends: [require.resolve('@wuefront-config/eslint/eslint-vue')]
+    extends: [require.resolve('@wuefrontnfigs/eslint/eslint-vue')]
 };
 
 ```

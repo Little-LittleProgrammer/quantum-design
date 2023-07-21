@@ -1,4 +1,4 @@
-import { js_is_array } from '@q-front-npm/utils';
+import { js_is_array } from '@wuefront/utils';
 import { ComputedRef, onDeactivated, onUnmounted } from 'vue';
 
 interface IConfig {

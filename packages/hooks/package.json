@@ -1,5 +1,5 @@
 {
-  "name": "@q-front-npm/hooks",
+  "name": "@wuefront/hooks",
   "version": "1.0.0",
   "description": "",
   "exports": {
@@ -8,7 +8,7 @@
     "./vue": "./vue/index.ts"
   },
   "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+    "registry": "https://registry.npmmirror.com/"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,9 +22,9 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/icons-vue": "6.1.0",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@wuefront/shared": "workspace:*",
+    "@wuefront/utils": "workspace:*",
+    "@wuefront/types": "workspace:*",
     "ant-design-vue": "3.2.20",
     "echarts": "5.4.2",
     "sortablejs": "1.15.0",
@@ -32,7 +32,7 @@
     "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@q-front-npm/types": "workspace:*",
+    "@wuefront/types": "workspace:*",
     "@types/sortablejs": "1.15.0"
   }
 }

@@ -2,7 +2,7 @@
 import type {App} from 'vue';
 import {createPinia} from 'pinia';
 
-import { IMenuData } from '@q-front-npm/types/vue/router';
+import { IMenuData } from '@wuefront/types/vue/router';
 
 export interface IBreadcrumb {
     id: string;

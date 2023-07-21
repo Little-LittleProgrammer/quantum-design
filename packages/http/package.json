@@ -1,12 +1,12 @@
 {
-  "name": "@q-front-npm/http",
-  "version": "1.0.1",
+  "name": "@wuefront/http",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/http.cjs.min.js",
   "module": "dist/http.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+    "registry": "https://registry.npmmirror.com/"
   },
   "scripts": {
     "build": "rollup -c --environment TYPES:true",
@@ -19,16 +19,16 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/hooks": "workspace:*",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
+    "@wuefront/hooks": "workspace:*",
+    "@wuefront/shared": "workspace:*",
+    "@wuefront/utils": "workspace:*",
     "axios": "0.27.2",
     "lodash-es": "4.17.21",
     "qs": "6.11.0"
   },
   "devDependencies": {
-    "@wuefront-config/rollup": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@wuefront-configs/rollup": "workspace:*",
+    "@wuefront/types": "workspace:*",
     "@types/lodash-es": "4.17.6",
     "@types/qs": "6.9.7"
   },

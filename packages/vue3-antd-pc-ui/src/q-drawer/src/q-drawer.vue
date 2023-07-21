@@ -25,9 +25,9 @@
 <script lang='ts' setup>
 import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, CSSProperties, nextTick, watch, useSlots} from 'vue';
 import {Drawer} from 'ant-design-vue';
-import {QLoading} from '@q-front-npm/vue3-pc-ui';
+import {QLoading} from '@wuefront/vue3-pc-ui';
 import {basicProps} from './props';
-import { js_utils_deep_merge, js_is_function, js_is_number } from '@q-front-npm/utils';
+import { js_utils_deep_merge, js_is_function, js_is_number } from '@wuefrontils';
 import { DrawerInstance, DrawerProps } from './type';
 import DrawerHeader from './components/drawer-header.vue';
 import DrawerFooter from './components/drawer-footer.vue';

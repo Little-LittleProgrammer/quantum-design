@@ -2,7 +2,7 @@
 
 ## 版本
 - 本目录主要是提供公共的pc组件库
-- npm包名称 `@q-front-npm/vue3-pc-ui`
-- 当前版本: 1.0.0
+- npm包名称 `@wuefront/vue3-pc-ui`
+- 当前版本: 1.0.10
 
 ## 总览

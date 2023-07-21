@@ -1,6 +1,6 @@
 
-import { js_is_null_and_undef } from '@q-front-npm/utils';
-import { useSortable } from '@q-front-npm/hooks';
+import { js_is_null_or_undef } from '@wuefront/utils';
+import { useSortable } from '@wuefront/hooks';
 import { useTabsStore } from './use-tabs-store';
 import { nextTick } from 'vue';
 
@@ -21,7 +21,7 @@ export function useTabsDrag(affixTextList: string[]) {
 
                 const { oldIndex, newIndex } = evt;
 
-                if (js_is_null_and_undef(oldIndex) || js_is_null_and_undef(newIndex) || oldIndex === newIndex) {
+                if (js_is_null_or_undef(oldIndex) || js_is_null_or_undef(newIndex) || oldIndex === newIndex) {
                     return;
                 }
 

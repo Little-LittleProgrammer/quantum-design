@@ -5,7 +5,7 @@
 ### Usage
 
 ```js
-import { register_sentry_vue } from '@q-front-npm/shared/plugins';
+import { register_sentry_vue } from '@wuefront/shared/plugins';
 
 if (import.meta.env.VITE_USE_SENTRY === 'true') {
     register_sentry_vue(app, {

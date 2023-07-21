@@ -15,7 +15,7 @@
 <script lang='ts' setup>
 import { onMounted, PropType, computed} from 'vue';
 import { HandleEnum } from '../enums/enum';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { propTypes } from '@wuefront/types/vue/types';
 import { Switch } from 'ant-design-vue';
 import { set_handler } from '../tools/handler';
 const props = defineProps({

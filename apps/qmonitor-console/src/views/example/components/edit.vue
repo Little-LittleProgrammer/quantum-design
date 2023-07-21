@@ -7,9 +7,9 @@
 
 <script lang='ts' setup>
 import { computed, reactive } from 'vue';
-import { QDrawer, useDrawerInner, QForm, useForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import { QDrawer, useDrawerInner, QForm, useForm, FormSchema } from '@wuefront/vue3-antd-pc-ui';
 import { IExampleData } from '../interface';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@wuefrontoks/vue';
 
 const emits = defineEmits(['ok', 'register']);
 const {createMessage} = useMessage();

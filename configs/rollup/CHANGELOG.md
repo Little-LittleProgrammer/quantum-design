@@ -1,4 +1,4 @@
-# @wuefront-config/rollup
+# @wuefront-configs/rollup
 
 ## 1.0.0
 

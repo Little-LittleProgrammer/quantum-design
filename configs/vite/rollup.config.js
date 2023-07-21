@@ -17,7 +17,7 @@ function get_common() {
             footer: '/* join us */'
         },
         // 外部依赖，也是防止重复打包的配置
-        external: [ 'vite', 'vue'],
+        external: [ 'vite', 'vue', '@wuefront/utils'],
         plugins: [
             typescript({
                 tsconfig: './tsconfig.json',

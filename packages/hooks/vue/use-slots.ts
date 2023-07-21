@@ -1,4 +1,4 @@
-import { js_is_function } from '@q-front-npm/utils';
+import { js_is_function } from '@wuefront/utils';
 import type { Slots } from 'vue';
 
 export function useSlots() {

@@ -94,8 +94,8 @@ pnpm i
 首次运行需要打包本地依赖
 
 ```bash
-pnpm build --filter @q-front-npm/vue3-antd-pc-ui
-pnpm build --filter @q-front-npm/http
+pnpm build --filter @wuefront/vue3-antd-pc-ui
+pnpm build --filter @wuefronttp
 ```
 
 #### 项目运行命令

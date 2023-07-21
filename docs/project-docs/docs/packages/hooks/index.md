@@ -2,8 +2,8 @@
 
 ## 版本
 - 本目录主要是提供公共的hooks方法
-- npm包名称 `@q-front-npm/hooks`
-- 当前版本: 1.0.0
+- npm包名称 `@wuefront/hooks`
+- 当前版本: 1.0.6
 
 ## 总览
 

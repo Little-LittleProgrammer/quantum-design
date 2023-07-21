@@ -1,0 +1,23 @@
+{
+    "name": "yapi to typescript",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "src/popup/index.html"
+    },
+    "background": {
+        "service_worker": "src/background/index.ts"
+    },
+    "host_permissions": [
+        "http://yapi.km.com/", "https://yapi.km.com/*"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "src/content-script/index.ts"
+            ],
+            "matches": [ "http://yapi.km.com/*", "https://yapi.km.com/*" ]
+        }
+    ],
+    "permissions": ["storage", "contextMenus", "tabs"]
+}

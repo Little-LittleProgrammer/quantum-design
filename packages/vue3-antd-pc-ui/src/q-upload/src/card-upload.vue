@@ -56,9 +56,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useMessage } from '@q-front-npm/hooks/vue';
-import { propTypes } from '@q-front-npm/types/vue/types';
-import { js_is_function, js_is_string, js_is_image, js_is_video } from '@q-front-npm/utils';
+import { useMessage } from '@wuefront/hooks/vue';
+import { propTypes } from '@wuefront/types/vue/types';
+import { js_is_function, js_is_string, js_is_image, js_is_video } from '@wuefrontils';
 import { PropType, reactive, watch } from 'vue';
 import {QIcon} from '@/q-icon';
 import './style/index.scss';

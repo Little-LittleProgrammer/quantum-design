@@ -1,4 +1,4 @@
-import { IProjectConfig } from '@q-front-npm/vue3-antd-pc-ui';
+import { IProjectConfig } from '@wuefront/vue3-antd-pc-ui';
 
 const setting: IProjectConfig = {
     // 主题配置

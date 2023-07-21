@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { js_is_string, js_utils_deep_merge } from '@q-front-npm/utils';
+import { js_is_string, js_utils_deep_merge } from '@wuefront/utils';
 import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';

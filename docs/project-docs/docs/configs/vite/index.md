@@ -1,7 +1,7 @@
 # vite 
-npm包名称: `@q-front-npm/vite`
+npm包名称: `@wuefront/vite`
 
-当前版本: 1.0.0
+当前版本: 1.0.9
 
 
 提供了公共的vite配置
@@ -11,6 +11,7 @@ npm包名称: `@q-front-npm/vite`
 | -------- | ------------------------------------------------------------ | ---------------- |
 | vite_common_lib_config   | (options: CommonOptions):UserConfig | vue组件库lib vite公共配置   |
 | vite_common_vue_config  |  ({ command, mode }: ConfigEnv, options: CommonOptions): UserConfig   | vue项目, vite公共配置 |
+| vite_plugin_postcss_pxtorem  |  (rootValue: number): postcss.Plugin   | vue项目, m版样式适配 |
 
 ```js
 // type 类型
@@ -42,7 +43,13 @@ export interface CommonOptions {
     buildOptions?: Omit<BuildOptions, 'rollupOptions'>;
     isComponentsBuild?: boolean;
     customPlugins?: any[];
-    dtsOptions?: PluginOptions
+    dtsOptions?: PluginOptions;
+    pluginsOption?: IPluginsCommonOptions // 增加部分, 配置sentry
+}
+
+export interface IPluginsCommonOptions {
+    sentry?:SentryVitePluginOptions,
+    pwa?: Partial<VitePWAOptions>
 }
 
 ```
@@ -54,7 +61,7 @@ export interface CommonOptions {
 ```js
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@wuefront-config/vite';
+import {vite_common_lib_config} from '@wuefrontnfigs/vite';
 import {resolve} from 'path';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
@@ -65,7 +72,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', 'vue-router', '@q-front-npm/shared', '@q-front-npm/utils']
+            external: ['vue', 'vue-router', '@wuefrontared', '@wu@wuefront']
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -80,7 +87,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@wuefrontared/style/base/base.scss'; @import '@wu@wuefrontd/style/base/mixin.scss';"
                 }
             }
         }
@@ -92,11 +99,17 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 ### vue项目
 ```js
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config } from '@wuefront-config/vite';
+import { vite_common_vue_config } from '@wuefrontnfigs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
-    const _common = vite_common_vue_config();
+    const _common = vite_common_vue_config({ command, mode }, {
+        pluginsOption: {
+            sentry: {
+                authToken: 'xxxx'
+            }
+        }
+    });
     return {
         ..._common,
         css: {
@@ -114,3 +127,81 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 };
 
 ```
+
+### 移动端适配插件
+```js
+import { ConfigEnv, UserConfig, loadEnv } from 'vite';
+import { vite_common_vue_config, vite_plugin_postcss_pxtorem } from '@wuefrontnfigs/vite';
+import { antdCssData, baseScssFile } from './config/antd';
+
+export default ({ command, mode }: ConfigEnv):UserConfig => {
+    const _common = vite_common_vue_config();
+    return {
+        ..._common,
+        css: {
+            preprocessorOptions: {
+                less: {
+                    modifyVars: antdCssData,
+                    javascriptEnabled: true
+                },
+                scss: {
+                    additionalData: baseScssFile
+                }
+            },
+            postcss: {
+                plugins: [vite_plugin_postcss_pxtorem(75)]
+            }
+        }
+    };
+};
+
+```
+
+
+## 所拥有插件
+
+#### vite-plugin-compression
+
+1. 简介: 是否开启代码压缩
+2. 开启方式: `.env`文件中设置`VITE_BUILD_COMPRESS` 为true
+3. 补充属性: `VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE` 是否删除原始文件
+
+#### unplugin-vue-define-options
+1. 简介, vue3.3以下在setup语法糖中声明组件名称
+
+#### vite_plugin_html
+1. 简介: html代码压缩与注入
+2. 属性: `.env`文件中设置`VITE_GLOB_APP_TITLE` 
+
+#### vite-plugin-pwa
+1. 简介: 开启pwa
+2. 开启方式: `.env`文件中设置`VITE_USE_PWA`为true
+```js
+const _common = vite_common_vue_config({ command, mode }, {
+    pluginsOption: {
+        pwa: {
+            // ...
+        }
+    }
+});
+```
+
+#### @sentry/vite-plugin
+1. 简介: 开启sentry
+2. 开启方式: `.env`文件中设置`VITE_USE_SENTRY`为true 打开流水线环境自动识别
+3. 补充属性: `VITE_USE_SOURCEMAP` 是否开启sourcemap, (开启后需要设置: `VITE_GLOB_APP_PROJECT`, `VITE_APP_RELEASE_VERSION`)
+```js
+// 扩展属性自定义配置方式
+const _common = vite_common_vue_config({ command, mode }, {
+    pluginsOption: {
+        sentry: {
+            sourcemaps: {
+                ignore: ['node_modules'],
+                assets: ['./dist/assets/*']
+            },
+            authToken: '3a449fc41c1f48a78f59a69db5a4bee41707f7b5fbbd40abb5816a6a73f4d9de'
+        }
+    }
+});
+```
+

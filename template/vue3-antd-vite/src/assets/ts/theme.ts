@@ -1,11 +1,11 @@
 
 import { useGlobalStore } from '@/store/modules/global';
-import { gMemorialEnum } from '@q-front-npm/shared/enums';
-import { js_utils_dom_add_class, js_utils_dom_has_class, js_utils_dom_remove_class } from '@q-front-npm/utils';
+import { gMemorialEnum } from '@wuefront/shared/enums';
+import { js_utils_dom_add_class, js_utils_dom_has_class, js_utils_dom_remove_class } from '@wuefront/utils';
 import dark from 'ant-design-vue/dist/antd.dark.less?inline'; //?inline 参数来关闭 css注入
 import lighter from 'ant-design-vue/dist/antd.less?inline';
-import {gDateUtil} from '@q-front-npm/utils';
-import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
+import {gDateUtil} from '@wuefront/utils';
+import { useProjectSetting } from '@wuefront/vue3-antd-pc-ui';
 
 const themeCss:Recordable<string> = {
     light: lighter,

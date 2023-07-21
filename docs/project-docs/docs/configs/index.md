@@ -1,6 +1,6 @@
 # 总览
 
-`@wuefront/*`为 Web应用 及 Lib应用 抽离了大部分重复的基本配置
+`@wuefront-configs/*`为 Web应用 及 Lib应用 抽离了大部分重复的基本配置
 
 
 1. [齐全的eslint配置](/configs/eslint/)

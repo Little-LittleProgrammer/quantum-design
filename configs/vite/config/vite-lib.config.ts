@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 import { CommonOptions } from '../types';
 
 // 定义 build 和 plugin
-const vite_common_lib_config = (options: CommonOptions):UserConfig => {
+const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'entry', string>):UserConfig => {
     const {entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rollupOptions = {}, dtsOptions = {}} = options;
     let plugin = [
         vue(),

@@ -1,5 +1,5 @@
 {
-    "extends": "@wuefront-config/tsconfig/lib.json",
+    "extends": "@wuefront-configs/tsconfig/lib.json",
     "compilerOptions": {
         "declaration": false
     },

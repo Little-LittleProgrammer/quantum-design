@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
-import { register_sentry_vue } from '@q-front-npm/shared/plugins';
+import { register_sentry_vue } from '@wuefront/shared/plugins';
 import {setup_store} from '@/store';
 import { router, setup_router } from '@/router';
 import { register_glob_comp } from './antd';
 import { setup_outer_guard } from './router/setup-router';
 import App from './App.vue';
 import 'dayjs/locale/zh-cn';
-import { setup_project_conf } from '@q-front-npm/vue3-antd-pc-ui';
+import { setup_project_conf } from '@wuefront/vue3-antd-pc-ui';
 import setting from './enums/projectEnum';
 
 // 时间组件中文

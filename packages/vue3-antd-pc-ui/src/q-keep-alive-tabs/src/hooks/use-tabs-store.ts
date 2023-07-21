@@ -1,4 +1,4 @@
-import { useGo, useRedo } from '@q-front-npm/hooks/vue';
+import { useGo, useRedo } from '@wuefront/hooks/vue';
 import { defineStore } from 'pinia';
 import { toRaw, unref } from 'vue';
 import { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';

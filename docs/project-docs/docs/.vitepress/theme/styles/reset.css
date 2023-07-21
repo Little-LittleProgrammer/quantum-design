@@ -29,3 +29,16 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--vp-c-text-1) !important;
     font-weight: 500;
 }
+
+
+#app .VPDoc.has-aside .content-container {
+    max-width: none;
+    margin: 10px 0;
+}
+#app .aside {
+    max-width: 150px;
+    padding-left: 24px
+}
+#app .vp-doc th, .vp-doc td {
+    padding: 6px 8px;
+}

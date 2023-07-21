@@ -4,9 +4,9 @@ import type { AxiosResponseAgent, CreateAxiosOptions } from './axios-transform';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axios-cancel';
-import { js_is_function } from '@q-front-npm/utils';
+import { js_is_function } from '@wuefront/utils';
 import { cloneDeep, omit } from 'lodash-es';
-import { gRequestEnum, gContentTypeEnum} from '@q-front-npm/shared/enums';
+import { gRequestEnum, gContentTypeEnum} from '@wuefront/shared/enums';
 import { joinEnvToUrl } from './helper';
 
 export * from './axios-transform';

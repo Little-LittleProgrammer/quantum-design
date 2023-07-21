@@ -1,5 +1,5 @@
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config } from '@wuefront-config/vite';
+import { vite_common_vue_config } from '@wuefront-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 import { resolve } from 'path';
 

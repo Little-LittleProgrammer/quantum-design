@@ -16,9 +16,9 @@
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, ref, watch, nextTick, computed} from 'vue';
 import { watermarkProps } from './types/props';
-import { js_utils_css, js_utils_html_to_canvas } from '@q-front-npm/utils';
+import { js_utils_css, js_utils_html_to_canvas } from '@wuefront/utils';
 import './style/index.scss';
-import { js_utils_deep_merge } from '@q-front-npm/utils';
+import { js_utils_deep_merge } from '@wuefrontils';
 export default defineComponent({
     name: 'QWatermark',
     props: watermarkProps,

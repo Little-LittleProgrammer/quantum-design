@@ -13,6 +13,7 @@ dom操作方法
 | js_utils_dom_remove_class  | `(el: Element, cls: string) => void` | 删除class      |
 | on  | `(element: Element | HTMLElement | Document | Window, event: string, handler: EventListener | EventListenerObject)=>void` | 绑定事件      |
 | off  | `(element: Element | HTMLElement | Document | Window, event: string, handler: EventListener | EventListenerObject)=>void` | 移除事件      |
+| js_utils_copy_code  | `(text: string)=>void` | 字符串复制到剪切板      |
 
 ## 使用方法
 

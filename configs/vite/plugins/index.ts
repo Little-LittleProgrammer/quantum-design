@@ -1,5 +1,5 @@
 import type { PluginOption } from 'vite';
-import { ViteEnv } from '../types';
+import { IPluginsCommonOptions, ViteEnv } from '../types';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -7,8 +7,11 @@ import { vite_plugin_options } from './define-options';
 import { vite_plugin_html } from './html';
 import { vite_plugin_compress } from './compress';
 import { vite_plugin_pwa } from './pwa';
+import { vite_plugin_sentry } from './sentry';
 
-export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean) {
+export { vite_plugin_postcss_pxtorem } from './postcss-pxtorem';
+
+export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?: IPluginsCommonOptions) {
     const {
         VITE_BUILD_COMPRESS,
         VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
@@ -32,7 +35,9 @@ export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean) {
         _vitePlugins.push(vite_plugin_compress(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE));
 
         // vite-plugin-pwa
-        _vitePlugins.push(vite_plugin_pwa(viteEnv));
+        _vitePlugins.push(vite_plugin_pwa(viteEnv, options?.pwa));
+        // @sentry/vite-plugin
+        _vitePlugins.push(vite_plugin_sentry(viteEnv, options?.sentry));
     }
     return _vitePlugins;
 }

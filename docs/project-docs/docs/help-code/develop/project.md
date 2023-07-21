@@ -11,17 +11,17 @@
 #### 公共的组件库
 
 ##### 要用到的基本包
-> @q-front-npm 开头的包的版本 请按照 npm库版本进行更新
+> @wuefront 开头的包的版本 请按照 npm库版本进行更新
 ```json
 "dependencies": {
-    "@q-front-npm/shared": "1.0.0", 
-    "@q-front-npm/utils": "1.0.0",
-    "@wuefront-config/vite": "1.0.0",
+    "@wuefrontared": "1.0.0", 
+    "@wuefrontils": "1.0.0",
+    "@wuefrontnfigs/vite": "1.0.0",
     "vue": "3.2.47",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@q-front-npm/types": "1.0.0",
+    "@wuefront/types": "1.0.0",
     "sass": "1.63.3"
   }
 ```
@@ -47,15 +47,15 @@
 
 #### 公共的方法库
 ##### 要用到的基本包
-> @q-front-npm 开头的包的版本 请按照 npm库版本进行更新
+> @wuefront的包的版本 请按照 npm库版本进行更新
 ```json
 "dependencies": {
-    "@q-front-npm/shared": "1.0.0",
-    "@q-front-npm/utils": "1.0.0",
+    "@wuefrontared": "1.0.0",
+    "@wuefrontils": "1.0.0",
 },
 "devDependencies": {
-    "@q-front-npm/types": "1.0.0",
-    "@wuefront-config/rollup": "1.0.0",
+    "@wuefront/types": "1.0.0",
+    "@wuefrontnfigs/rollup": "1.0.0",
 }
 ```
 

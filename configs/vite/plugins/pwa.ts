@@ -3,15 +3,16 @@
  * https://github.com/antfu/vite-plugin-pwa
  */
 
-import { VitePWA } from 'vite-plugin-pwa';
+import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa';
 import { ViteEnv } from '../types';
+import {js_utils_deep_merge} from '@wuefront/utils';
 
-export function vite_plugin_pwa(env: ViteEnv) {
+export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>) {
     const { VITE_USE_PWA, VITE_GLOB_APP_TITLE } = env;
 
     if (VITE_USE_PWA) {
         // vite-plugin-pwa
-        const pwaPlugin = VitePWA({
+        const pwaPlugin = VitePWA(js_utils_deep_merge({
             registerType: 'prompt', // 手动更新
             injectRegister: 'auto', // 自动注册
             workbox: {
@@ -21,7 +22,7 @@ export function vite_plugin_pwa(env: ViteEnv) {
                 navigateFallback: null,
                 runtimeCaching: [ // 运行时缓存
                     {
-                        urlPattern: ({url}) => url.pathname.includes('/api') || url.pathname.includes('/backend'),
+                        urlPattern: ({url}:any) => url.pathname.includes('/api') || url.pathname.includes('/backend'),
                         handler: 'NetworkFirst', // 网络优先
                         options: {
                             cacheName: 'api-cache', // 缓存get请求
@@ -97,7 +98,7 @@ export function vite_plugin_pwa(env: ViteEnv) {
                     }
                 ]
             }
-        });
+        }, options));
         return pwaPlugin;
     }
     return [];

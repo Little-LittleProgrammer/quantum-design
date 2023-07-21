@@ -18,7 +18,7 @@
 
 ```js
 ...
-import { js_create_local_storage,  js_create_session_storage} from '@q-front-npm/utils';
+import { js_create_local_storage,  js_create_session_storage} from '@wuefront/utils';
 ...
 const ls = js_create_local_storage(); // createSessionStorage
 

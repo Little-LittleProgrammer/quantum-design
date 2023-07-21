@@ -1,3 +1,3 @@
-# @q-front-npm-config/tsconfig
+# @wuefront-configs/tsconfig
 
 提供公共的tsconfig配置

@@ -1,5 +1,5 @@
 
-import { IMenuData } from '@q-front-npm/types/vue/router';
+import { IMenuData } from '@wuefront/types/vue/router';
 const _menus:IMenuData[] = [
 ];
 

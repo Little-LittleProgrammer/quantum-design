@@ -1,4 +1,4 @@
-# @q-front-npm/shared
+# @wuefront/shared
 
 ## 1.0.0
 

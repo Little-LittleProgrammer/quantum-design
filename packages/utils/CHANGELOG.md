@@ -1,4 +1,4 @@
-# @q-front-npm/utils
+# @wuefront/utils
 
 ## 1.0.0
 
@@ -9,7 +9,7 @@
 ### Patch Changes
 
 - Updated dependencies [b768af8]
-  - @q-front-npm/shared@1.0.0
+  - @wuefront/shared@1.0.0
 
 ## 1.0.0-rc.0
 
@@ -20,7 +20,7 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @q-front-npm/shared@1.0.0-rc.0
+  - @wuefront/shared@1.0.0-rc.0
 
 ## 0.1.0
 
@@ -31,7 +31,7 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @q-front-npm/shared@0.1.0
+  - @wuefront/shared@0.1.0
 
 ## 0.1.0-beta.0
 
@@ -42,4 +42,4 @@
 ### Patch Changes
 
 - Updated dependencies
-  - @q-front-npm/shared@0.1.0-beta.0
+  - @wuefront/shared@0.1.0-beta.0
