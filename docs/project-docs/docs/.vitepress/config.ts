@@ -5,7 +5,7 @@ import path from 'path'
 const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@wuefront/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const _antdCssData = JSON.parse('{' + _antdCssStrTemp + '}');
 
-const _baseScssFile = "@import '@wuefront/shared/style/base/base.scss'; @import '@wu@wuefrontd/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
+const _baseScssFile = "@import '@wuefront/shared/style/base/base.scss'; @import '@wuefront/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
 
 
 export default defineConfig({
