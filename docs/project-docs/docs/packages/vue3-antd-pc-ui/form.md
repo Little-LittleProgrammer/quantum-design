@@ -22,7 +22,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { QForm, FormSchema } from '@wuefront/vue3-antd-pc-ui';
-  import { useMessage } from '@wuefrontoks';
+  import { useMessage } from '@wuefront/hooks';
   const schemas: FormSchema[] = [ 
     {
       field: 'field',
@@ -71,7 +71,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { QForm, FormSchema } from '@wuefront/vue3-antd-pc-ui';
-  import { useMessage } from '@wuefrontoks';
+  import { useMessage } from '@wuefront/hooks';
   const schemas: computed<FormSchema<interface>[]>(() => ([
     {
       field: 'field',

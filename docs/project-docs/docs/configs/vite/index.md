@@ -72,7 +72,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', 'vue-router', '@wuefrontared', '@wu@wuefront']
+            external: ['vue', 'vue-router', '@wuefront/shared', '@wu@wuefront']
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -87,7 +87,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@wuefrontared/style/base/base.scss'; @import '@wu@wuefrontd/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@wuefront/shared/style/base/base.scss'; @import '@wu@wuefrontd/style/base/mixin.scss';"
                 }
             }
         }

@@ -15,7 +15,7 @@ import { reactive, onMounted, computed, nextTick, watch, watchEffect } from 'vue
 import type { PropType } from 'vue';
 import { TableProps } from 'ant-design-vue/lib/table/Table';
 import { useSortable } from '@wuefront/hooks';
-import { js_utils_deep_copy } from '@wuefrontils';
+import { js_utils_deep_copy } from '@wuefront/utils';
 import { propTypes } from '@wuefront/types/vue/types';
 interface DataProps {
     expandKeysList: string[];

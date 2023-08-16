@@ -1,4 +1,4 @@
-import type { Component } from 'vue';
+import type { h, Component } from 'vue';
 import type { ComponentType } from './types/index';
 
 /**
@@ -29,6 +29,8 @@ import { QTransfer } from '@/q-transfer';
 
 const componentMap = new Map<ComponentType<string>, Component>();
 
+componentMap.set('Text', h('p'));
+componentMap.set('Link', h('a'));
 componentMap.set('Input', Input);
 componentMap.set('InputGroup', Input.Group);
 componentMap.set('InputPassword', Input.Password);

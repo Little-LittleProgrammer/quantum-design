@@ -42,7 +42,7 @@
 
 <script lang='ts' setup>
 import {gRegEnum} from '@wuefront/shared/enums';
-import { useMessage } from '@wuefrontoks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 import { IPersonEditData, ITableList } from '@/http/api/system-management/permission/person';
 import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';

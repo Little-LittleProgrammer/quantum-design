@@ -31,8 +31,8 @@ import { reactive, onMounted, watch} from 'vue';
 import {QDrawer, useDrawerInner} from '@wuefront/vue3-antd-pc-ui';
 import { api_manage_role_edit, api_manage_role_data, IRoleData } from '@/http/api/system-management/permission/role';
 import { api_manage_auth_list } from '@/http/api/system-management/permission/menu-config';
-import { useMessage } from '@wuefrontoks/vue';
-import { js_utils_deep_copy } from '@wuefrontils';
+import { useMessage } from '@wuefront/hooks/vue';
+import { js_utils_deep_copy } from '@wuefront/utils';
 import { IMenuData } from '@wuefront/types/vue/router';
 interface DataProps {
     pageType: string

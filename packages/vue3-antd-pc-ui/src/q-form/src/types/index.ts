@@ -74,4 +74,4 @@ export type ComponentType<T extends string> =
   | 'Slider'
   | 'Rate'
   | 'SelectAll'
-  | 'Divider' | T;
+  | 'Divider' | 'Text' | 'Link'| T;

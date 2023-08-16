@@ -72,7 +72,7 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
     }];
     return {
         build: {
-            target: options.target || 'es',
+            target: options.target || 'es2015',
             outDir: outDir,
             rollupOptions: {
                 external: rollupOptions?.external,

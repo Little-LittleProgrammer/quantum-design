@@ -14,8 +14,8 @@
 > @wuefront 开头的包的版本 请按照 npm库版本进行更新
 ```json
 "dependencies": {
-    "@wuefrontared": "1.0.0", 
-    "@wuefrontils": "1.0.0",
+    "@wuefront/shared": "1.0.0", 
+    "@wuefront/utils": "1.0.0",
     "@wuefrontnfigs/vite": "1.0.0",
     "vue": "3.2.47",
     "vue-router": "4.1.6"
@@ -50,8 +50,8 @@
 > @wuefront的包的版本 请按照 npm库版本进行更新
 ```json
 "dependencies": {
-    "@wuefrontared": "1.0.0",
-    "@wuefrontils": "1.0.0",
+    "@wuefront/shared": "1.0.0",
+    "@wuefront/utils": "1.0.0",
 },
 "devDependencies": {
     "@wuefront/types": "1.0.0",

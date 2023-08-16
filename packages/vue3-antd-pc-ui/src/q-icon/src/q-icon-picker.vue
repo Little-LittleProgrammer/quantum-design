@@ -56,7 +56,7 @@ export default {
 import { reactive, onMounted, watch, watchEffect, ref} from 'vue';
 import { icons } from '../data/icons-data';
 import { js_utils_throttle_event } from '@wuefront/utils';
-import { usePagination } from '@wuefrontoks/vue';
+import { usePagination } from '@wuefront/hooks/vue';
 import {Icon} from './icon';
 import {Empty} from 'ant-design-vue';
 import { iconPickProps } from './types';

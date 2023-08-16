@@ -86,7 +86,7 @@ export default defineComponent({
         };
         get_global_env();
 
-        const dynamicComponent = import.meta.env.VITE_USE_PWA ? defineAsyncComponent(() => {
+        const dynamicComponent = import.meta.env.VITE_USE_PWA === 'true' ? defineAsyncComponent(() => {
             return import ('@/components/layout/qm-reload-prompt.vue');
         }) : null;
 
@@ -113,8 +113,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@wuefrontared/style/antd/antd.scss';
-@import '@wuefrontared/style/base/index.scss';
+@import '@wuefront/shared/style/antd/antd.scss';
+@import '@wuefront/shared/style/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

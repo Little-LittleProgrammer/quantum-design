@@ -253,6 +253,7 @@ importers:
       axios: 0.27.2
       lodash-es: 4.17.21
       qs: 6.11.0
+      rollup: 2.79.1
     dependencies:
       '@wuefront/hooks': link:../hooks
       '@wuefront/shared': link:../shared
@@ -265,6 +266,7 @@ importers:
       '@types/qs': registry.npmmirror.com/@types/qs/6.9.7
       '@wuefront-configs/rollup': link:../../configs/rollup
       '@wuefront/types': link:../types
+      rollup: registry.npmmirror.com/rollup/2.79.1
 
   packages/shared:
     specifiers:

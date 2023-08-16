@@ -113,8 +113,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@wuefrontared/style/antd/antd.scss';
-@import '@wuefrontared/style/base/index.scss';
+@import '@wuefront/shared/style/antd/antd.scss';
+@import '@wuefront/shared/style/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

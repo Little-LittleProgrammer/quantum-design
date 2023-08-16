@@ -16,7 +16,7 @@ npm包名称: `@wuefront/rollup`
 import { rollup_commpn_lib_config } from '@wuefrontnfigs/rollup';
 
 const result = rollup_commpn_lib_config('http', {
-    external: ['@wuefrontoks', '@wu@wuefront/vue', '@wuefr@wuefront '@wuefront@wuefronts', '@wuefront/ut@wuefront', 'lodash-es', 'qs']
+    external: ['@wuefront/hooks', '@wu@wuefront/vue', '@wuefr@wuefront '@wuefront@wuefronts', '@wuefront/ut@wuefront', 'lodash-es', 'qs']
 });
 
 export default [...Object.values(result)];

@@ -230,14 +230,15 @@ export default defineComponent({
             const _on = {
                 [_eventKey]: (...args:Nullable<Record<string, any>>[]) => {
                     const [e] = args;
+                    const _target = e ? e.target : null;
+                    const _value = _target ? (_isCheck ? _target.checked : _target.value) : e;
+                    props.setFormModel(field, _value, props.schema);
+                    // 自定义 change 事件
                     if (_propsData[_eventKey]) { // 解决 如果 RadioButtonGroup 里也设置了change事件, 会于 emit(‘change’) 冲突, 造成执行2次
                         if (!(component === 'RadioButtonGroup' && e && e.target)) {
                             _propsData[_eventKey](...args);
                         }
                     }
-                    const _target = e ? e.target : null;
-                    const _value = _target ? (_isCheck ? _target.checked : _target.value) : e;
-                    props.setFormModel(field, _value, props.schema);
                 }
             };
             const Comp = componentMap.get(component) as ReturnType<typeof defineComponent>;
@@ -268,6 +269,16 @@ export default defineComponent({
                 ..._on,
                 ..._bindValue
             };
+
+            const _deafultAttr = {
+                ..._on,
+                href: props.formModel[field],
+                ...getComponentsProps.value
+            };
+
+            if (['Text', 'Link'].includes(component)) {
+                return <Comp {..._deafultAttr}>{props.formModel[field]}</Comp>;
+            }
 
             if (!renderComponentContent) {
                 return <Comp {..._compAttr}/>;

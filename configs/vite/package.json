@@ -1,6 +1,6 @@
 {
   "name": "@wuefront-configs/vite",
-  "version": "1.0.9",
+  "version": "1.0.0",
   "description": "代码样式统一文件",
   "main": "dist/vite.cjs.min.js",
   "types": "dist/types/index.d.ts",
@@ -8,7 +8,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+      "registry": "https://registry.npmmirror.com/"
   },
   "scripts": {
     "build": "rollup -c --environment TYPES:true"

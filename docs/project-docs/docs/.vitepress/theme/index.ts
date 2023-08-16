@@ -4,7 +4,7 @@ import CodeVoew from '../components/code-view.vue'
 import {createPinia} from 'pinia';
 
 import '@wuefront/shared/style/antd/antd.scss';
-import '@wuefrontared/style/base/index.scss';
+import '@wuefront/shared/style/base/index.scss';
 import './styles/var.css';
 import './styles/reset.css'
 import {dom_listen} from './antd/style'

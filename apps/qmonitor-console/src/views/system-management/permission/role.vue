@@ -29,7 +29,7 @@ import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-m
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
 import { js_utils_set_table_height } from '@wuefront/utils';
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
-import { useMessage } from '@wuefrontoks/vue';
+import { useMessage } from '@wuefront/hooks/vue';
 import { useAntdStore } from '@/store/modules/antd';
 import { useGlobalStore } from '@/store/modules/global';
 import EditRole from './components/edit-role.vue';

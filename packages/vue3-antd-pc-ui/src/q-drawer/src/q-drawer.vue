@@ -27,7 +27,7 @@ import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, C
 import {Drawer} from 'ant-design-vue';
 import {QLoading} from '@wuefront/vue3-pc-ui';
 import {basicProps} from './props';
-import { js_utils_deep_merge, js_is_function, js_is_number } from '@wuefrontils';
+import { js_utils_deep_merge, js_is_function, js_is_number } from '@wuefront/utils';
 import { DrawerInstance, DrawerProps } from './type';
 import DrawerHeader from './components/drawer-header.vue';
 import DrawerFooter from './components/drawer-footer.vue';

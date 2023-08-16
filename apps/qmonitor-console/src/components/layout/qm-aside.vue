@@ -108,7 +108,7 @@ export default defineComponent({
 import { QIcon } from '@wuefront/vue3-antd-pc-ui';
 import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useGo } from '@wuefrontoks/vue';
+import { useGo } from '@wuefront/hooks/vue';
 
 const props = defineProps({
     menuData: {

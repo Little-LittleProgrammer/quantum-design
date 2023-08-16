@@ -181,7 +181,7 @@ export default defineComponent({
 ### 方式
 
 ```ts
-import { useGo } from '@wuefrontoks/vue';
+import { useGo } from '@wuefront/hooks/vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {

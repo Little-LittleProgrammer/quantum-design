@@ -18,7 +18,7 @@ import { defineComponent, reactive, toRefs, ref, watch, nextTick, computed} from
 import { watermarkProps } from './types/props';
 import { js_utils_css, js_utils_html_to_canvas } from '@wuefront/utils';
 import './style/index.scss';
-import { js_utils_deep_merge } from '@wuefrontils';
+import { js_utils_deep_merge } from '@wuefront/utils';
 export default defineComponent({
     name: 'QWatermark',
     props: watermarkProps,

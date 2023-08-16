@@ -11,7 +11,7 @@
 <script lang='ts' setup>
 import { PropType, computed} from 'vue';
 import {PaginationProps} from '../interface';
-import './style/index.scss';
+import '../style/index.scss';
 
 const props = defineProps({
     pageOption: {
