@@ -52,4 +52,5 @@ export interface IPluginsCommonOptions {
     sentry?:SentryVitePluginOptions;
     pwa?:Partial<VitePWAOptions>;
     compress?: any; // pelease see；
+    resolvers?: any[]; // see https://github.com/unplugin/unplugin-vue-components
 }

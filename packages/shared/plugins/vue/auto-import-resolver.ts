@@ -7,7 +7,7 @@ export interface QResolverOptions {
     importStyle: boolean | 'css' | 'scss';
 
     prefix: string; // package 的默认开头
-
+    notPrefix?: string[]
     packageName: string // package名称
 
     moduleType: 'es' | 'lib'
@@ -50,10 +50,6 @@ const matchComponents: IMatcher[] = [
         styleDir: 'q-drawer'
     },
     {
-        pattern: /^QAntdDropdown/,
-        styleDir: 'q-dropdown'
-    },
-    {
         pattern: /^QAntdForm/,
         styleDir: 'q-form'
     },
@@ -64,10 +60,6 @@ const matchComponents: IMatcher[] = [
     {
         pattern: /^QAntdKeepAliveTabs/,
         styleDir: 'q-keep-alive-tabs'
-    },
-    {
-        pattern: /^QAntdSearch/,
-        styleDir: 'q-search'
     },
     {
         pattern: /^QAntdSetting/,
@@ -99,38 +91,34 @@ function get_style_dir(compName: string) {
         }
     }
     if (!_styleDir)
-        _styleDir = kebab_case(compName);
+        _styleDir = false;
 
     return _styleDir;
 }
 
 function get_side_effects(dirName: string, options: QResolverOptions) {
-    const { importStyle = true, packageName, moduleType = false } = options;
-    const _moduleType = moduleType ? 'lib' : 'es';
+    const { importStyle, packageName, moduleType} = options;
     if (!importStyle)
         return;
 
     const _styleDir = get_style_dir(dirName);
-    if (importStyle === 'scss') {
-        return `${packageName}/dist/${_moduleType}/style/${_styleDir}/scss`;
+    if (!_styleDir) {
+        return;
     }
-
-    if (importStyle === 'css') {
-        return `${packageName}/dist/${_moduleType}/style/${_styleDir}/index`;
-    }
-    return `${packageName}/${_moduleType}/style/${_styleDir}/index`;
+    return `${packageName}/dist/${moduleType}/style/${_styleDir}/index.${importStyle}`;
 }
 
 const defaultOptions: QResolverOptions[] = [{
     importStyle: 'css',
     prefix: 'Q',
+    notPrefix: ['QAntd', 'QEle'],
     packageName: '@q-front-npm/vue3-pc-ui',
-    moduleType: typeof window === 'undefined' ? 'lib' : 'es'
+    moduleType: 'es'
 }, {
     importStyle: 'css',
     prefix: 'QAntd',
     packageName: '@q-front-npm/vue3-antd-pc-ui',
-    moduleType: typeof window === 'undefined' ? 'lib' : 'es'
+    moduleType: 'es'
 }];
 
 export function QResolver(options: QResolverOptions[] = defaultOptions) {
@@ -139,13 +127,8 @@ export function QResolver(options: QResolverOptions[] = defaultOptions) {
         return {
             type: 'component',
             resolve: (name: string) => {
-                if (name.startsWith('Q') && !name.includes('Antd') && !name.includes('Ele')) {
-                    return {
-                        name: name,
-                        from: `@q-front-npm/vue3-pc-ui/${moduleType}`,
-                        sideEffects: get_side_effects(name, item)
-                    };
-                } else if (name.startsWith(prefix)) {
+                console.log(name);
+                if (name.startsWith(prefix) && (!item.notPrefix?.length || (item.notPrefix?.length && !item.notPrefix.some(e => name.startsWith(e))))) {
                     return {
                         name: name,
                         from: `${packageName}/${moduleType}`,

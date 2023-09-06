@@ -8,6 +8,7 @@ import { vite_plugin_html } from './html';
 import { vite_plugin_compress } from './compress';
 import { vite_plugin_pwa } from './pwa';
 import { vite_plugin_sentry } from './sentry';
+import { vite_plugin_component } from './component';
 
 export { vite_plugin_postcss_pxtorem } from './postcss-pxtorem';
 
@@ -29,6 +30,7 @@ export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?
     ];
     // vite-plugin-html
     _vitePlugins.push(vite_plugin_html(viteEnv));
+    _vitePlugins.push(vite_plugin_component(options?.resolvers));
 
     if (isBuild) {
         // _vitePlugins.push(vite_plugin_imagemin(viteEnv));
