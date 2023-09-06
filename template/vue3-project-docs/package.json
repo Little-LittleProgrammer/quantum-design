@@ -7,21 +7,21 @@
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
     "preview": "vitepress preview docs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wuefront/vue3-antd-pc-ui": "1.0.0",
-    "@wuefront/vue3-pc-ui": "1.0.0",
-    "vue": "^3.2.47"
+    "@q-front-npm/vue3-antd-pc-ui": "^1.1.0",
+    "@q-front-npm/vue3-pc-ui": "^1.1.0",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@wuefront-configs/vite": "1.0.0",
-    "@wuefront/types": "1.0.0",
-    "sass": "1.63.3",
-    "vitepress": "1.0.0-alpha.31"
+    "@q-front-npm-configs/vite": "1.1.0",
+    "@q-front-npm/types": "^1.1.0",
+    "sass": "^1.63.3",
+    "vitepress": "^1.0.0-rc.10"
   },
   "pnpm": {
     "peerDependencyRules": {

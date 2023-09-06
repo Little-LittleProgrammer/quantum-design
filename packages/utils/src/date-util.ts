@@ -2,7 +2,7 @@
  * Independent time operation tool to facilitate subsequent switch to dayjs
  */
 import dayjs, {Dayjs} from 'dayjs';
-import {gDateFormatEnum} from '@wuefront/shared/enums';
+import {gDateFormatEnum} from '@q-front-npm/shared/enums';
 
 const DATE_TIME_FORMAT = gDateFormatEnum.dateTime;
 const DATE_FORMAT = gDateFormatEnum.date;

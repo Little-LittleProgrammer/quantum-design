@@ -30,7 +30,7 @@
 
 <script lang='ts' setup>
 import { reactive,onMounted} from 'vue';
-import {QIcon} from '@wuefront/vue3-antd-pc-ui'
+import {QIcon} from '@q-front-npm/vue3-antd-pc-ui'
 const props = defineProps({
     title: {
         type: String,

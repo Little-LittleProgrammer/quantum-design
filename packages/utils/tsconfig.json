@@ -1,9 +1,9 @@
 {
-    "extends": "@wuefront-configs/tsconfig/lib.json",
+    "extends": "@q-front-npm-configs/tsconfig/lib.json",
     "compilerOptions": {
         "declaration": false
     },
-    "include": ["*.ts", "**/*.ts", "node_modules/@wuefront/types/**/*.d.ts"],
+    "include": ["*.ts", "**/*.ts", "node_modules/@q-front-npm/types/**/*.d.ts"],
     "exclude": ["dist"]
   }
   

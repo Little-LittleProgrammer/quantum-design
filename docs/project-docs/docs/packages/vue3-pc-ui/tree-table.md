@@ -27,7 +27,7 @@
 
 <script setup>
     import {reactive} from 'vue'
-    import {QTreeTable} from '@wuefront/vue3-pc-ui'
+    import {QTreeTable} from '@q-front-npm/vue3-pc-ui'
     const tags = ['title1', 'title2', 'title3', 'title7']
 
     const header = {
@@ -124,7 +124,7 @@
         
         <script setup>
 
-        import {QTreeTable} from '@wuefront/vue3-pc-ui';
+        import {QTreeTable} from '@q-front-npm/vue3-pc-ui';
         import {reactive} from 'vue'
              const header = {
                 title1: '标题1',

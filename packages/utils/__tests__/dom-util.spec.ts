@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { js_utils_dom_add_class, js_utils_dom_has_class, js_utils_dom_remove_class, js_utils_html_to_canvas } from '../src/dom-util';
+import { js_utils_dom_add_class, js_utils_dom_has_class, js_utils_dom_remove_class } from '../src/dom-util';
 
 describe('cipher.ts', () => {
     const $dom = document.createElement('div');

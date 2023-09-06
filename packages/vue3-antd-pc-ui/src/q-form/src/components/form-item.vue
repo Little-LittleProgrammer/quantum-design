@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
-import { js_is_array, js_is_boolean, js_is_function, js_is_null, js_is_number, js_is_object, js_is_string, js_utils_first_to_upper } from '@wuefront/utils';
+import { js_is_array, js_is_boolean, js_is_function, js_is_null, js_is_number, js_is_object, js_is_string, js_utils_first_to_upper } from '@q-front-npm/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
 import { computed, PropType, Ref, toRefs, unref } from 'vue';
@@ -8,7 +8,7 @@ import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
 import { FormProps, FormSchema } from '../types/form';
 import { FormActionType } from '../types/form';
-import { QIcon } from '@/q-icon';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import { Divider } from 'ant-design-vue';
 import { cloneDeep } from 'lodash-es';
 

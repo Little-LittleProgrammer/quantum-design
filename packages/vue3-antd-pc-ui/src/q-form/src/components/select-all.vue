@@ -13,6 +13,7 @@
 
 <script lang='ts'>
 export default defineComponent({
+    name: 'QAntdSelectAll',
     components: {
         VNodes: (_, { attrs }) => {
             return attrs.vnodes;

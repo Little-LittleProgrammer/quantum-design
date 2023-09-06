@@ -1,4 +1,4 @@
-# @wuefront-configs/tsconfig
+# @q-front-npm-configs/tsconfig
 
 ## 1.0.0
 

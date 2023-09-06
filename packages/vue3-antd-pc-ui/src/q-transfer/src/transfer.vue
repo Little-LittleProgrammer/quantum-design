@@ -33,11 +33,15 @@
 <script lang='ts' setup>
 
 import { reactive, PropType, computed, watch} from 'vue';
-import { js_utils_deep_copy, js_is_object } from '@wuefront/utils';
+import { js_utils_deep_copy, js_is_object } from '@q-front-npm/utils';
 import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
 import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
 import './style/index.scss';
-import { propTypes } from '@wuefront/types/vue/types';
+import { propTypes } from '@q-front-npm/types/vue/types';
+
+defineOptions({
+    name: 'QAntdTransfer'
+});
 
 interface DataProps {
     expandedKeys: string[];

@@ -1,4 +1,4 @@
-import { rollup_commpn_lib_config } from '@wuefront-configs/rollup';
+import { rollup_commpn_lib_config } from '@q-front-npm-configs/rollup';
 
 import { createRequire } from 'node:module';
 

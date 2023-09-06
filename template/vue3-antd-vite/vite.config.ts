@@ -1,6 +1,6 @@
-import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config } from '@wuefront-configs/vite';
-import { antdCssData, baseScssFile } from './config/antd';
+import { ConfigEnv, UserConfig } from 'vite';
+import { vite_common_vue_config } from '@q-front-npm-configs/vite';
+import { antdCssStrTemp, baseScssFile } from './config/antd';
 import { resolve } from 'path';
 
 function pathResolve(dir: string) {
@@ -9,14 +9,11 @@ function pathResolve(dir: string) {
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_vue_config({ command, mode });
+    import.meta.env.cssTemp = antdCssStrTemp;
     return {
         ..._common,
         css: {
             preprocessorOptions: {
-                less: {
-                    modifyVars: antdCssData,
-                    javascriptEnabled: true
-                },
                 scss: {
                     additionalData: baseScssFile
                 }

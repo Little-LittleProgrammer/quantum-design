@@ -16,6 +16,7 @@
 | encryptByAES      | `(cipherText: string) => CryptoJS.lib.CipherParams` | 加密     |
 | decryptByAES   |  `(cipherText: string) => CryptoJS.lib.CipherParams`   | 解密 |
 | encryptByMd5   |  `(cipherText: string) => CryptoJS.lib.CipherParams`   | md5加密 |
+| encryptBySha256   |  `(cipherText: string) => CryptoJS.lib.CipherParams`   | md5加密 |
 
 ## 使用方法
 
@@ -25,5 +26,8 @@ import { AesEncryption } from './cipher';
 const encryption = new AesEncryption()
 let a = encryption.encryptByAES('123345')
 let b = encryption.decryptByAES(a)
+
+let md5 = encryption.encryptByMd5('12345').toString()
+let sha256 = encryption.encryptBySha256('12345').toString()
 ...
 ```

@@ -28,7 +28,7 @@
 
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, watch, unref, computed, getCurrentInstance, onMounted} from 'vue';
-import { useGo } from '@wuefront/hooks/vue';
+import { useGo } from '@q-front-npm/hooks/vue';
 import TabContent from './components/tab-content.vue';
 import { init_affix_tabs } from './hooks/use-affix-tabs';
 import { useTabsDrag } from './hooks/use-sortable';
@@ -39,7 +39,7 @@ import { create_tab } from './hooks/use-router';
 import './style/index.scss';
 
 export default defineComponent({
-    name: 'KeepAliveTabs',
+    name: 'QAntdKeepAliveTabs',
     components: {TabContent},
     props: tabsProps,
     emits: ['cacheList', 'register'],
@@ -55,9 +55,11 @@ export default defineComponent({
         create_tab(router);
         const unClose = computed(() => unref(store.getTabList).length === 1);
         const go = useGo();
+        watch(() => store.cacheTabList, (val) => {
+            emit('cacheList', val);
+        }, { immediate: true });
         watch(router.currentRoute, (val) => {
             if (val) {
-                emit('cacheList', store.cacheTabList);
                 if (val.query) {
                     data.activeKey = ignore_t(val.fullPath) as string;
                 } else {

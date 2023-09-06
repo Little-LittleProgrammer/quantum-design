@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :locale="locale">
+    <a-config-provider :locale="locale" :theme="themePorxy">
         <div id="app" >
             <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
             <export-file></export-file>
@@ -9,19 +9,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent} from 'vue';
+import { defineComponent, defineAsyncComponent, computed} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { useMessage } from '@wuefront/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue';
 import { api_global_env } from '@/http/api/global';
 import { api_manage_user_auths } from './http/api/system-management/permission/person';
 import { router } from './router';
-import { get_net_router } from '@wuefront/vue3-antd-pc-ui';
+import { get_net_router } from '@q-front-npm/vue3-antd-pc-ui';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 import ExportFile from '@/components/export-file/export-modal.vue';
-import { useProjectSetting } from '@wuefront/vue3-antd-pc-ui';
-import { IMenuData } from '@wuefront/types/vue/router';
+import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
+import { IMenuData } from '@q-front-npm/types/vue/router';
+import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 
 export default defineComponent({
     name: 'App',
@@ -35,6 +36,7 @@ export default defineComponent({
         const globalStore = useGlobalStore();
         const {getSearchButton} = useProjectSetting();
         const sysStore = useSysStore();
+        const {getThemeMode} = useThemeSetting();
         let requestNum = 0;
         const get_global_env = () => { // 环境检测
             api_global_env().then(res => {
@@ -53,6 +55,9 @@ export default defineComponent({
                 get_global_env();
             }, 3 * 60 * 1000);
         };
+        const themePorxy = computed(() => {
+            return getThemeMode;
+        });
         const get_menus_data = async() => {
             if (globalStore.authorityManage) {
                 const _res = await api_manage_user_auths();
@@ -95,7 +100,8 @@ export default defineComponent({
             userStore,
             globalStore,
             sysStore,
-            dynamicComponent
+            dynamicComponent,
+            themePorxy
         };
     }
 });
@@ -113,8 +119,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@wuefront/shared/style/antd/antd.scss';
-@import '@wuefront/shared/style/base/index.scss';
+@import '@q-front-npm/shared/style/antd/antd.scss';
+@import '@q-front-npm/shared/style/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

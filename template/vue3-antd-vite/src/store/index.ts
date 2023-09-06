@@ -2,22 +2,15 @@
 import type {App} from 'vue';
 import {createPinia} from 'pinia';
 
-import { IMenuData } from '@wuefront/types/vue/router';
-
-export interface IBreadcrumb {
-    id: string;
-    name: string;
-    path: string;
-    pid: string;
-    title: string
-}
-
+import type { IMenuData } from '@q-front-npm/types/vue/router';
 export interface sysModuleState {
     mainMenuData: IMenuData[]; // 顶部主导航数据
     asideMenuData: IMenuData[]; // 侧边栏导航数据
     initMenuData: string; // 默认地址
     menuDataLoadingEnd: boolean; // 加载导航数据
-    formatRouteList: Record<string, IBreadcrumb>
+    formatPathRouteList: Record<string, IMenuData>
+    formatIdRouteList: Record<number, IMenuData>
+    permCodeList: string[]
 }
 
 const store = createPinia();

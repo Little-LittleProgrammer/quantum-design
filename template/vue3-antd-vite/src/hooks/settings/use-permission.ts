@@ -1,4 +1,4 @@
-import { js_is_array } from '@wuefront/utils';
+import { js_is_array } from '@q-front-npm/utils';
 import { useSysStore } from '@/store/modules/systemManage';
 
 export function usePermission() {

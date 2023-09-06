@@ -10,5 +10,6 @@ describe('cipher.ts', () => {
         const _testStr = '123456789';
         expect(cipherInstance.decryptByAES(cipherInstance.encryptByAES(_testStr))).equal(_testStr);
         expect(cipherInstance.encryptByMd5(_testStr).toString() === _testStr).toBeFalsy();
+        expect(cipherInstance.encryptBySha256(_testStr).toString() === _testStr).toBeFalsy();
     });
 });

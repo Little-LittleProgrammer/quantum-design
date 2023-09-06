@@ -22,6 +22,7 @@ export interface ViteEnv {
     VITE_USE_SOURCEMAP: boolean;
     VITE_USE_VISUALIZER: boolean; // 资源分析
     VITE_GLOB_API_URL: string; // url
+    VITE_GLOB_API_URL_PREFIX: string; // url前缀
     // VITE_GENERATE_UI: string;
 }
 
@@ -49,5 +50,6 @@ export interface CommonOptions {
 
 export interface IPluginsCommonOptions {
     sentry?:SentryVitePluginOptions;
-    pwa?:Partial<VitePWAOptions>
+    pwa?:Partial<VitePWAOptions>;
+    compress?: any; // pelease see；
 }

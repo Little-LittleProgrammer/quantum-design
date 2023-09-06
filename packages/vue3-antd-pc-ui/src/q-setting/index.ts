@@ -1,13 +1,16 @@
 import {useProjectSetting} from './src/hooks/use-project-setting';
 import {setup_project_conf} from './src/tools';
+import { component_with_install } from '@q-front-npm/utils';
 
-import QSetting from './src/index.vue';
+import Setting from './src/index.vue';
 
-import type {IProjectConfig} from './src/type/index';
+export type {IProjectConfig} from './src/type/index';
+
+const QAntdSetting = component_with_install(Setting);
 
 export {
     useProjectSetting,
-    QSetting,
-    IProjectConfig,
     setup_project_conf
 };
+
+export default QAntdSetting;

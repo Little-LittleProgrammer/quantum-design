@@ -6,11 +6,15 @@
   </template>
 <script lang="ts" setup>
 import settingDrawer from './components/setting-drawer.vue';
-import { QIcon } from '@/q-icon';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import { useDrawer } from '@/q-drawer';
 import { PropType } from 'vue';
 import { IProjectConfig } from './type';
 import './style/index.scss';
+
+defineOptions({
+    name: 'QAntdSetting'
+});
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,
@@ -21,4 +25,3 @@ const props = defineProps({
 const [register, { openDrawer }] = useDrawer();
 
 </script>
-

@@ -27,13 +27,13 @@
 <script lang='ts'>
 import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-management/permission/role';
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
-import { js_utils_set_table_height } from '@wuefront/utils';
+import { js_utils_set_table_height } from '@q-front-npm/utils';
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
-import { useMessage } from '@wuefront/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue';
 import { useAntdStore } from '@/store/modules/antd';
 import { useGlobalStore } from '@/store/modules/global';
 import EditRole from './components/edit-role.vue';
-import {useDrawer} from '@wuefront/vue3-antd-pc-ui';
+import {useDrawer} from '@q-front-npm/vue3-antd-pc-ui';
 interface DataProps {
     tableData: IRoleAuths[]
     tableHeight: unknown

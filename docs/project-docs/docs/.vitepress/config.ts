@@ -2,10 +2,10 @@ import { defineConfig, DefaultTheme } from 'vitepress';
 import fs from 'fs'
 import path from 'path'
 
-const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@wuefront/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
+const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@q-front-npm/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const _antdCssData = JSON.parse('{' + _antdCssStrTemp + '}');
 
-const _baseScssFile = "@import '@wuefront/shared/style/base/base.scss'; @import '@wuefront/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
+const _baseScssFile = "@import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
 
 
 export default defineConfig({
@@ -124,7 +124,7 @@ function createNav(): DefaultTheme.NavItem[] {
             }]
         },
         {
-            text: '项目指南',
+            text: 'vite项目指南',
             link: '/guide/introduction/',
             items: [
                 {
@@ -134,6 +134,20 @@ function createNav(): DefaultTheme.NavItem[] {
                 {
                     text: '深入',
                     link: '/guide/introduction/dep/dark',
+                }
+            ],
+        },
+        {
+            text: 'nuxt3指南',
+            link: '/nuxt3/',
+            items: [
+                {
+                    text: '指南',
+                    link: '/nuxt3/introduction/',
+                },
+                {
+                    text: '深入',
+                    link: '/nuxt3/dep/',
                 }
             ],
         }
@@ -233,6 +247,9 @@ function createSidebar(): DefaultTheme.Sidebar {
                 }, {
                     text: '插槽',
                     link: '/packages/hooks/use-slots'
+                }, {
+                    text: '刷新保存页面参数',
+                    link: '/packages/hooks/use-params-alive'
                 }],
             },
             {
@@ -412,6 +429,19 @@ function createSidebar(): DefaultTheme.Sidebar {
                 ],
             }
         ],
+        '/nuxt3/': [{
+            text: '指南',
+            items: [{
+                text: '介绍',
+                link: '/nuxt3/introduction/index.md'
+            }]
+        }, {
+            text: '深入',
+            items: [{
+                text: '介绍',
+                link: '/nuxt3/dep/index.md'
+            }]
+        }]
     }
 }
 

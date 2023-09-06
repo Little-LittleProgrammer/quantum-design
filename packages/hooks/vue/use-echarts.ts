@@ -54,7 +54,7 @@ echarts.use([
 ]);
 
 import type { EChartsOption } from 'echarts';
-import { js_create_local_storage } from '@wuefront/utils';
+import { js_create_local_storage } from '@q-front-npm/utils';
 import { computed, onUnmounted, ref, Ref, unref, watch, nextTick, ComputedRef } from 'vue';
 
 export type {EChartsOption};

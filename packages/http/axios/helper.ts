@@ -1,4 +1,4 @@
-import { js_create_local_storage, js_is_function } from '@wuefront/utils';
+import { js_create_local_storage, js_is_function } from '@q-front-npm/utils';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { CreateAxiosOptions } from './axios-transform';
 

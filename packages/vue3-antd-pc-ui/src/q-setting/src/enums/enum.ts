@@ -12,6 +12,7 @@ export enum HandleEnum {
     // cache
     cache_tabs_status,
     cache_alive_status,
+    cache_cache,
     cache_quick_status,
     cache_drag_status,
     // transition

@@ -1,16 +1,15 @@
 {
-  "name": "@wuefront/http",
-  "version": "1.0.0",
+  "name": "@q-front-npm/http",
+  "version": "1.1.0-beta.4",
   "description": "",
   "main": "dist/http.cjs.min.js",
   "module": "dist/http.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "publishConfig": {
-    "registry": "https://registry.npmmirror.com/"
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
   },
   "scripts": {
-    "build": "rollup -c --environment TYPES:true",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c --environment TYPES:true"
   },
   "files": [
     "dist"
@@ -19,26 +18,19 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@wuefront/hooks": "workspace:*",
-    "@wuefront/shared": "workspace:*",
-    "@wuefront/utils": "workspace:*",
+    "@q-front-npm/hooks": "workspace:*",
+    "@q-front-npm/shared": "workspace:*",
+    "@q-front-npm/utils": "workspace:*",
     "axios": "0.27.2",
     "lodash-es": "4.17.21",
     "qs": "6.11.0"
   },
   "devDependencies": {
-    "@wuefront-configs/rollup": "workspace:*",
-    "@wuefront/types": "workspace:*",
+    "@q-front-npm-configs/rollup": "workspace:*",
+    "@q-front-npm/types": "workspace:*",
     "@types/lodash-es": "4.17.6",
     "@types/qs": "6.9.7",
-    "rollup": "2.79.1"
+    "rollup": "3.28.1"
   },
-  "peerDependencies": {
-    "axios": ">=0.27.2",
-    "lodash-es": ">=4.17.21",
-    "qs": ">=6.11.0",
-    "@q-front-npm/hooks": "workspace:*",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*"
-  }
+  "peerDependencies": {}
 }

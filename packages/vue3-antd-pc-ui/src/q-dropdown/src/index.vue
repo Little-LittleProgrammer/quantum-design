@@ -19,12 +19,12 @@
                 <q-icon :type="item.popConfirm.icon" />
               </template>
               <div>
-                <q-icon :type="item.icon" v-if="item.icon" />
+                <q-icon :type="item.icon as 'default'" v-if="item.icon" />
                 <span class="ml-1">{{ item.text }}</span>
               </div>
             </a-popconfirm>
             <template v-else>
-              <q-icon :type="item.icon" v-if="item.icon" />
+              <q-icon :type="item.icon as 'default'" v-if="item.icon" />
               <span class="ml-1">{{ item.text }}</span>
             </template>
           </a-menu-item>
@@ -38,13 +38,15 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import type { DropMenu } from './types';
-import { Dropdown } from 'ant-design-vue';
-import { QIcon } from '@/q-icon';
+import { Dropdown as ADropdown } from 'ant-design-vue';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import { omit } from 'lodash-es';
-import { js_is_function } from '@wuefront/utils';
+import { js_is_function } from '@q-front-npm/utils';
 import { dropdownProps } from './types';
 
-const ADropdown = Dropdown;
+defineOptions({
+    name: 'QAntdDropdown'
+});
 
 const props = defineProps(dropdownProps);
 

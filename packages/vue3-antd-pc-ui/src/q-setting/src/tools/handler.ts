@@ -28,6 +28,12 @@ export function handler(event: HandleEnum, value: any): IProjectConfig {
                     show: value
                 }
             };
+        case HandleEnum.cache_cache:
+            return {
+                cacheTabsSetting: {
+                    cache: value
+                }
+            };
         case HandleEnum.func_aside_repeat_status: {
             return {
                 func: {

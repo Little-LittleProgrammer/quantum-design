@@ -12,16 +12,12 @@
 
 </template>
 
-<script lang="ts">
-export default {
-    name: 'QThemeModeButton'
-};
-</script>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { themeModeTypes } from './themeModeButtonTypes';
-
+defineOptions({
+    name: 'QThemeModeButton'
+});
 const props = defineProps(themeModeTypes);
 const emits = defineEmits(['update:mode']);
 

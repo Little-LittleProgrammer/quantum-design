@@ -1,5 +1,5 @@
 {
-    "extends": "@wuefront-configs/tsconfig/tsconfig-base.json",
+    "extends": "@q-front-npm-configs/tsconfig/tsconfig-base.json",
     "include": ["plugins", "utils", "index.ts", "config", "types"],
     "exclude": ["dist", "node_modules"],
     "compilerOptions": {

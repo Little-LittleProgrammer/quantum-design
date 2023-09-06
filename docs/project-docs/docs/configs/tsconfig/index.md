@@ -1,7 +1,7 @@
 # eslint
 
 ## 简介
-npm包名称: `@wuefront/tsconfig`
+npm包名称: `@q-front-npm/tsconfig`
 
 当前版本: 1.0.0
 
@@ -15,13 +15,13 @@ npm包名称: `@wuefront/tsconfig`
 
 ```json
 {
-    "extends": "@wuefrontnfigs/tsconfig/vue.json",
+    "extends": "@q-front-npm-configs/tsconfig/vue.json",
     "include": [
         "docs/**/*.ts",
         "docs/**/*.d.ts",
         "docs/**/*.tsx",
         "docs/**/*.vue",
-        "node_modules/@wuefront/types/**/*.d.ts"  ],
+        "node_modules/@q-front-npm/types/**/*.d.ts"  ],
     "exclude": [
         "dist"
     ]

@@ -11,8 +11,9 @@
 <script lang='ts' setup>
 import { PropType, computed} from 'vue';
 import {PaginationProps} from '../interface';
-import '../style/index.scss';
-
+defineOptions({
+    name: 'QAntdTablePagination'
+});
 const props = defineProps({
     pageOption: {
         type: Object as PropType<PaginationProps>

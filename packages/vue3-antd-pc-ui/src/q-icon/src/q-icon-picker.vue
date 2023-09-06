@@ -20,7 +20,7 @@
                                     @click="handle_click(icon)"
                                     :title="icon"
                                 >
-                                    <Icon :type="icon"/>
+                                    <Icon :type="icon as 'default'"/>
                                 </li>
                             </ul>
                         </div>
@@ -45,23 +45,20 @@
     </a-input>
 </template>
 
-<script lang="ts">
-
-export default {
-    name: 'QIconPicker'
-};
-</script>
-
 <script lang='ts' setup>
 import { reactive, onMounted, watch, watchEffect, ref} from 'vue';
 import { icons } from '../data/icons-data';
-import { js_utils_throttle_event } from '@wuefront/utils';
-import { usePagination } from '@wuefront/hooks/vue';
+import { js_utils_throttle_event } from '@q-front-npm/utils';
+import { usePagination } from '@q-front-npm/hooks/vue';
 import {Icon} from './icon';
 import {Empty} from 'ant-design-vue';
 import { iconPickProps } from './types';
 import {Input as AInput, Pagination as APagination, Popover as APopover} from 'ant-design-vue';
 import './style/index.scss';
+defineOptions({
+    name: 'QAntdIconPicker'
+});
+
 interface DataProps {
     currentSelect: string; // 当前选择的图标
     visible: boolean; // 图标选择可视

@@ -1,9 +1,8 @@
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from 'rollup-plugin-typescript2';
-import { terser } from 'rollup-plugin-terser';
-import cleanup from 'rollup-plugin-cleanup';
+import typescript from '@rollup/plugin-typescript';
+import terser from '@rollup/plugin-terser';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -40,21 +39,16 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
                     exclude: 'node_modules'
                 }),
                 json(),
-                cleanup({
-                    comments: 'some'
-                }),
                 typescript({
                     tsconfig: './tsconfig.json',
-                    useTsconfigDeclarationDir: true,
-                    tsconfigOverride: {
-                        compilerOptions: {
-                            declaration: isDeclaration,
-                            declarationMap: false,
-                            declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
-                            module: 'ES2015'
-                        }
+                    compilerOptions: {
+                        declaration: isDeclaration,
+                        declarationMap: false,
+                        declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
+                        module: 'ES2015'
                     },
                     include: ['*.ts+(|x)', '**/*.ts+(|x)', '../**/*.ts+(|x)']
+                    // exclude: ['**/*.spec.ts+(|x)']
                 }),
                 ...(rollupOptions.plugins || [])
             ]
@@ -67,7 +61,8 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
     const esmPackageMin = {
         ...common,
         output: {
-            file: `${packageDirDist}/${name}.esm.min.js`,
+            dir: `${packageDirDist}`,
+            entryFileNames: `${name}.esm.min.js`,
             format: FormatTypes.esm,
             sourcemap: false,
             ...common.output
@@ -81,7 +76,8 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
     const cjsPackageMin = {
         ...common,
         output: {
-            file: `${packageDirDist}/${name}.cjs.min.js`,
+            dir: `${packageDirDist}`,
+            entryFileNames: `${name}.cjs.min.js`,
             format: FormatTypes.cjs,
             sourcemap: false,
             minifyInternalExports: true,

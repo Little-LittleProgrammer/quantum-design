@@ -14,8 +14,8 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
-import { js_is_string } from '@wuefront/utils';
-import {QIcon} from '@/q-icon';
+import { js_is_string } from '@q-front-npm/utils';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import {Tooltip} from 'ant-design-vue';
 
 type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean; mark?: string };

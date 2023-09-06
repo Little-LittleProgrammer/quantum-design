@@ -1,4 +1,28 @@
-# @wuefront-configs/eslint
+# @q-front-npm-configs/eslint
+
+## 1.0.4
+
+### Patch Changes
+
+- 修复缺陷， 将 eslint 包提出
+
+## 1.0.3
+
+### Patch Changes
+
+- 修复缺陷
+
+## 1.0.2
+
+### Patch Changes
+
+- bug fix 修复依赖缺陷
+
+## 1.0.1
+
+### Patch Changes
+
+- bug fix 修复依赖缺陷
 
 ## 1.0.0
 

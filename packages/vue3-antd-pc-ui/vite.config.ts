@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@wuefront-configs/vite';
+import {vite_common_lib_config} from '@q-front-npm-configs/vite';
 import {resolve} from 'path';
 
 function path_resolve(dir: string) {
@@ -22,16 +22,16 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                 'ant-design-vue',
                 '@ant-design/icons-vue',
                 'vue-types',
-                '@wuefront/shared',
-                '@wuefront/utils',
-                '@wuefront/shared/enums',
-                '@wuefront/types',
-                '@wuefront/types/vue',
-                '@wuefront/types/vue/types',
-                '@wuefront/hooks',
-                '@wuefront/hooks/base',
-                '@wuefront/hooks/vue',
-                '@wuefront/vue3-pc-ui',
+                '@q-front-npm/shared',
+                '@q-front-npm/utils',
+                '@q-front-npm/shared/enums',
+                '@q-front-npm/types',
+                '@q-front-npm/types/vue',
+                '@q-front-npm/types/vue/types',
+                '@q-front-npm/hooks',
+                '@q-front-npm/hooks/base',
+                '@q-front-npm/hooks/vue',
+                '@q-front-npm/vue3-pc-ui',
                 'lodash-es',
                 'pinia'
             ]
@@ -49,7 +49,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@wuefront/shared/style/base/base.scss'; @import '@wuefront/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
                 }
             }
         },

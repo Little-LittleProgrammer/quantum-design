@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { sysModuleState } from '../index';
-import type { IMenuData } from '@wuefront/types/vue/router';
+import type { IMenuData } from '@q-front-npm/types/vue/router';
 
 // state
 const createState = () => {

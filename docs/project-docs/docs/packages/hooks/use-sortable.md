@@ -5,7 +5,7 @@ sortablejs的二次封装hooks
 ## Usage
 
 ```js
-import { useSortable } from '@wuefront/hooks';
+import { useSortable } from '@q-front-npm/hooks';
 const { initSortable } = useSortable(el, {
     // 过滤, 初始化页面不能移动
     filter: (e) => {

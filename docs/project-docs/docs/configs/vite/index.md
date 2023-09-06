@@ -1,7 +1,12 @@
 # vite 
-npm包名称: `@wuefront/vite`
+npm包名称: `@q-front-npm/vite`
 
-当前版本: 1.0.9
+当前版本: 1.1.0
+
+:::danger 提示
+重要重要重要
+- `1.1.0` 版本进行破坏性升级，`vue3.2.x`及`vite3.2.5`用户请使用 `1.0.x`版本
+:::
 
 
 提供了公共的vite配置
@@ -61,7 +66,7 @@ export interface IPluginsCommonOptions {
 ```js
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@wuefrontnfigs/vite';
+import {vite_common_lib_config} from '@q-front-npm-configs/vite';
 import {resolve} from 'path';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
@@ -72,7 +77,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', 'vue-router', '@wuefront/shared', '@wu@wuefront']
+            external: ['vue', 'vue-router', '@q-front-npm/shared', '@q-front-npm/utils']
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -87,7 +92,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@wuefront/shared/style/base/base.scss'; @import '@wuefront/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
                 }
             }
         }
@@ -99,7 +104,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 ### vue项目
 ```js
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config } from '@wuefrontnfigs/vite';
+import { vite_common_vue_config } from '@q-front-npm-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
@@ -131,7 +136,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 ### 移动端适配插件
 ```js
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config, vite_plugin_postcss_pxtorem } from '@wuefrontnfigs/vite';
+import { vite_common_vue_config, vite_plugin_postcss_pxtorem } from '@q-front-npm-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {

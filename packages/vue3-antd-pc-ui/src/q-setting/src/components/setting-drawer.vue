@@ -1,9 +1,9 @@
 <!--  -->
 <template>
-    <q-drawer v-bind="$attrs" @register="registerDrawer">
+    <q-antd-drawer v-bind="$attrs" @register="registerDrawer">
         <Divider>主题功能</Divider>
         <switch-item title="主题切换按钮" :event="HandleEnum.theme_mode_change" :default="getShowThemeSwitch"></switch-item>
-        <switch-item title="公祭日灰色模式" :event="HandleEnum.theme_gray_status" :default="getGraySwitch"></switch-item>
+        <switch-item title="公祭日灰色模式" tooltip="纪念日: 4月4日, 4月5日, 12月13日" :event="HandleEnum.theme_gray_status" :default="getGraySwitch"></switch-item>
         <Divider>功能配置</Divider>
         <switch-item title="菜单搜索" :event="HandleEnum.func_search_status" :default="getSearchButton"></switch-item>
         <switch-item title="回到顶部" :event="HandleEnum.func_top_status" :default="getBackTop"></switch-item>
@@ -12,7 +12,8 @@
         <switch-item title="刷新按钮" :event="HandleEnum.func_reload_status" :default="getShowReloadButton"></switch-item>
         <Divider>tab栏配置</Divider>
         <switch-item title="展示Tab栏" :event="HandleEnum.cache_tabs_status" :default="getShowCacheTabsSetting"></switch-item>
-        <switch-item title="tab栏缓存" :event="HandleEnum.cache_alive_status" :default="getOpenKeepAlive" :disabled="!getShowCacheTabsSetting"></switch-item>
+        <switch-item title="tab栏缓存" tooltip="切换tab及刷新页面时保存页面状态" :event="HandleEnum.cache_alive_status" :default="getOpenKeepAlive" :disabled="!getShowCacheTabsSetting"></switch-item>
+        <switch-item title="刷新时缓存" tooltip="刷新后仍保留已经打开的tab" :event="HandleEnum.cache_cache" :default="getCacheCanCache" :disabled="!getShowCacheTabsSetting"></switch-item>
         <switch-item title="tab栏拖拽" :event="HandleEnum.cache_drag_status" :default="getCacheCanDrag" :disabled="!getShowCacheTabsSetting"></switch-item>
         <switch-item title="tab栏快速操作" :event="HandleEnum.cache_quick_status" :default="getShowQuick" :disabled="!getShowCacheTabsSetting"></switch-item>
         <Divider>动画配置</Divider>
@@ -21,12 +22,13 @@
         <switch-item title="顶部进度条" :event="HandleEnum.transition_progress" :default="getShowNProgress"></switch-item>
         <Divider></Divider>
         <setting-footer :defaultSetting="props.defaultSetting"></setting-footer>
-    </q-drawer>
+    </q-antd-drawer>
 </template>
 
 <script lang='ts' setup>
 import { PropType, onMounted} from 'vue';
-import { QDrawer, useDrawerInner } from '@/q-drawer';
+import { useDrawerInner } from '@/q-drawer';
+import QAntdDrawer from '@/q-drawer';
 import { Divider } from 'ant-design-vue';
 import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
@@ -50,10 +52,10 @@ const {
     getBackTop,
     getBreadCrumb,
     getAsideRepeatClick,
-    getRemoveAllHttpPending,
     getShowReloadButton,
     getShowCacheTabsSetting,
     getOpenKeepAlive,
+    getCacheCanCache,
     getShowQuick
 } = useProjectSetting();
 const [registerDrawer, {setDrawerProps}] = useDrawerInner();
@@ -69,3 +71,4 @@ onMounted(() => {
 </script>
 <style lang='scss' scoped>
 </style>
+@/q-antd-drawer@/q-antd-drawer

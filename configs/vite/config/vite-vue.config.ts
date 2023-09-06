@@ -17,6 +17,10 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
     const viteEnv = vite_utils_wrapper_env(env);
     const isBuild = command === 'build';
     const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE, VITE_BASE_PATH, VITE_USE_PWA } = viteEnv;
+    let plugin = vite_create_plugins(viteEnv, isBuild, options?.pluginsOption);
+    if (options && options.customPlugins) {
+        plugin = plugin.concat(options.customPlugins);
+    }
     return {
         base: VITE_BASE_PATH,
         server: {
@@ -43,6 +47,6 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
             sourcemap: viteEnv.VITE_USE_SENTRY && viteEnv.VITE_USE_SOURCEMAP,
             ...getOptions.buildOptions
         },
-        plugins: vite_create_plugins(viteEnv, isBuild, options?.pluginsOption)
+        plugins: plugin
     };
 }

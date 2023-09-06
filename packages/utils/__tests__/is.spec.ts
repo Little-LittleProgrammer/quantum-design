@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { js_is_array, js_is_def, js_is_object, js_is_un_def, js_is_empty, js_is_function, js_is_date, js_is, js_is_null, js_is_null_or_undef, js_is_number, js_is_promise, js_is_string, js_is_reg_exp, js_is_video, js_is_image, js_is_url, js_is_client, js_is_server, js_is_base, js_is_boolean, js_is_window, js_is_element } from '../src/is';
+import { js_is_array, js_is_def, js_is_object, js_is_un_def, js_is_empty, js_is_function, js_is_date, js_is, js_is_null, js_is_null_or_undef, js_is_number, js_is_promise, js_is_string, js_is_reg_exp, js_is_video, js_is_image, js_is_url, js_is_client, js_is_server, js_is_base, js_is_boolean, js_is_element } from '../src/is';
 
 describe('is.ts', () => {
     it('判断必须正确', () => {

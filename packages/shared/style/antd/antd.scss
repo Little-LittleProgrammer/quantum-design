@@ -139,9 +139,11 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
         color: rgba(255,255,255,.5);
     }
     .ant-picker-cell-in-view,
-    .ant-picker-header button {
+    .ant-picker-header button,
+    .ant-descriptions-item>.ant-descriptions-item-container>.ant-descriptions-item-label {
         color: $dark-text-color;
     }
+
     .ant-picker-header button:hover,
     .ant-picker-header-view button:hover {
         color: $primary-color;

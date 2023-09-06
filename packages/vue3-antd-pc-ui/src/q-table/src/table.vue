@@ -5,8 +5,9 @@
 
 <script lang='ts' setup>
 import { reactive } from 'vue';
+import './style/index.scss';
 defineOptions({
-    name: 'QTable'
+    name: 'QAntdTable'
 });
 interface IDataProps {}
 const data: IDataProps = reactive({

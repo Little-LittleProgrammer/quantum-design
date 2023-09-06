@@ -1,22 +1,21 @@
 {
-    "name": "@wuefront-configs/tsconfig",
-    "version": "1.0.0",
-    "description": "代码tslint统一文件",
-    "main": "index.js",
-    "publishConfig": {
-        "registry": "https://registry.npmmirror.com/"
-    },
-    "scripts": {
-      
-    },
-    "author": "Evan Wu",
-    "files": [
-      "tsconfig-base.json",
-      "lib.json",
-      "vue.json"
-    ],
-    "license": "MIT",
-    "dependencies": {},
-    "devDependencies": {}
-  }
-  
+  "name": "@q-front-npm-configs/tsconfig",
+  "version": "1.0.0",
+  "description": "代码tslint统一文件",
+  "main": "index.js",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "scripts": {
+    
+  },
+  "author": "Evan Wu",
+  "files": [
+    "tsconfig-base.json",
+    "lib.json",
+    "vue.json"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

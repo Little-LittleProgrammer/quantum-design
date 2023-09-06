@@ -1,6 +1,9 @@
-import {gRegEnum} from '@wuefront/shared/enums';
+import {gRegEnum} from '@q-front-npm/shared/enums';
 
 const toString = Object.prototype.toString;
+function user_agent() {
+    return typeof window !== 'undefined' && window.navigator && window.navigator.userAgent || 'server';
+}
 
 export function js_is(val: unknown, type: string) {
     return toString.call(val) === `[object ${type}]`;
@@ -104,6 +107,34 @@ export function js_is_base(val: unknown): boolean {
     return _flag;
 }
 
+// 是否相等
+export function js_is_equal<T = unknown>(val1: T, val2: T): boolean {
+    // 如果其中有基本类型
+    if (js_is_base(val1) || js_is_base(val2)) {
+        return val1 === val2;
+    }
+    // 如果特意传的就是两个指向同一地址的对象
+    if (val1 === val2) {
+        return true;
+    }
+    // 两个都是对象或者数组，而且不相等
+    const _obj1_keys = Object.keys(val1 as object);
+    const _obj2_keys = Object.keys(val2 as object);
+    // 先判断长度进行过滤
+    if (_obj1_keys.length !== _obj2_keys.length) {
+        return false;
+    }
+    // 以val1为基准，和val2依次递归比较
+    for (const key in val1) {
+        const res = js_is_equal(val1[key], val2[key]);
+        // 如果出现不相等直接返回false
+        if (!res) {
+            return false;
+        }
+    }
+    return true;
+}
+
 export const js_is_server = typeof window === 'undefined';
 
 export const js_is_client = !js_is_server;
@@ -123,4 +154,41 @@ export function js_is_image(fileName: string): boolean {
 export function js_is_video(fileName: string): boolean {
     const _types = ['mp4', 'avi', 'wmv', 'mkv', 'mov', 'flv', 'webm'];
     return _types.some(item => fileName.toLowerCase().includes(item));
+}
+
+// 判断当前浏览器环境
+export function js_is_android(): boolean {
+    return /(android|adr|linux)/i.test(user_agent());
+}
+
+export function js_is_ios(): boolean {
+    return /(iphone|ipad|ipod)/i.test(user_agent());
+}
+
+export function js_is_mobile(): boolean {
+    return js_is_android() || js_is_ios();
+}
+
+export function js_is_iphone(): boolean {
+    return /iphone/i.test(user_agent());
+}
+
+export function js_is_ipad(): boolean {
+    return /ipad/i.test(user_agent());
+}
+
+export function js_is_wechat(): boolean {
+    return /MicroMessenger/i.test(user_agent());
+}
+
+export function js_is_ding_ding(): boolean {
+    return /DingTalk/i.test(user_agent());
+}
+
+export function js_is_safari_browser(): boolean {
+    return /^((?!chrome|android).)*safari/i.test(user_agent());
+}
+
+export function js_is_baidu_browser(): boolean {
+    return /Baidu/i.test(user_agent());
 }

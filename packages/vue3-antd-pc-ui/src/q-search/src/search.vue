@@ -18,22 +18,18 @@
         </q-loading>
     </a-modal>
 </template>
-
-<script lang="ts">
-
-export default {
-    name: 'QSearch'
-};
-</script>
-
 <script lang='ts' setup>
 import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
-import { QIcon } from '../../q-icon';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import { find_search_route, ICacheObj } from './search';
-import { js_utils_throttle_event } from '@wuefront/utils';
+import { js_utils_throttle_event } from '@q-front-npm/utils';
 import { useRouter } from 'vue-router';
-import { QLoading } from '@wuefront/vue3-pc-ui';
-import type { IMenuData } from '@wuefront/types/vue/router';
+import { QLoading } from '@q-front-npm/vue3-pc-ui';
+import type { IMenuData } from '@q-front-npm/types/vue/router';
+
+defineOptions({
+    name: 'QAntdSearch'
+});
 
 interface IData {
     searchText: string,

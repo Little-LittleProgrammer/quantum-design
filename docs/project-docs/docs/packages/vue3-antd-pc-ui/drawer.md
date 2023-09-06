@@ -14,7 +14,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { QDrawer } from '@wuefront/vue3-antd-pc-ui';
+  import { QDrawer } from '@q-front-npm/vue3-antd-pc-ui';
   export default defineComponent({
     components: { QDrawer },
   });
@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { useDrawer } from '@wuefront/vue3-antd-pc-ui';
+  import { useDrawer } from '@q-front-npm/vue3-antd-pc-ui';
   import Drawer from './Drawer.vue';
 
   export default defineComponent({
@@ -108,7 +108,7 @@ setDrawerProps(props);
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { QDrawer, useDrawerInner } from '@wuefront/vue3-antd-pc-ui';
+  import { QDrawer, useDrawerInner } from '@q-front-npm/vue3-antd-pc-ui';
   export default defineComponent({
     components: { QDrawer },
     setup() {

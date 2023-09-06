@@ -1,11 +1,12 @@
 import type { Plugin } from 'vite';
 
-import compressPlugin from 'vite-plugin-compression';
+import compressPlugin from 'vite-plugin-compression2';
 
 // 开启gzip、br压缩
 export function vite_plugin_compress(
     compress: 'gzip' | 'brotli' | 'none' = 'none',
-    deleteOriginFile = false
+    deleteOriginalAssets = false,
+    options: any
 ): Plugin | Plugin[] {
     const compressList = compress.split(',');
 
@@ -14,17 +15,20 @@ export function vite_plugin_compress(
     if (compressList.includes('gzip')) {
         plugins.push(
             compressPlugin({
-                ext: '.gz',
-                deleteOriginFile
+                exclude: [/\.(br)$/, /\.(gz)$/],
+                algorithm: 'gzip',
+                deleteOriginalAssets,
+                ...options
             })
         );
     }
     if (compressList.includes('brotli')) {
         plugins.push(
             compressPlugin({
-                ext: '.br',
+                exclude: [/\.(br)$/, /\.(gz)$/],
                 algorithm: 'brotliCompress',
-                deleteOriginFile
+                deleteOriginalAssets,
+                ...options
             })
         );
     }

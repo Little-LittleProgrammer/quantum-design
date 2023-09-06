@@ -1,4 +1,4 @@
-import { gDateUtil, js_is_number, js_is_object } from '@wuefront/utils';
+import { gDateUtil, js_is_number, js_is_object } from '@q-front-npm/utils';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
 import type { ComponentType } from './types/index';
 

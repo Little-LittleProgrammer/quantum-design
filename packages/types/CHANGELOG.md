@@ -1,4 +1,16 @@
-# @wuefront/types
+# @q-front-npm/types
+
+## 1.1.0-beta.1
+
+### Minor Changes
+
+- 去除 define-options
+
+## 1.0.1-beta.0
+
+### Patch Changes
+
+- 规范依赖 dependencies devDependencies peerDependencies 限制
 
 ## 1.0.0
 

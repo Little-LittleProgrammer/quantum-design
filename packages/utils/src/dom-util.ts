@@ -210,7 +210,7 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
         if (_str === '<img ') { // img标签特殊处理
             _flag = false;
             let base64Img = '';
-            if (element.src.length > 30000) { // 判断src属性是不是base64， 是的话不用处理，不是的话，转换base64
+            if (element.src.indexOf('base64')) { // 判断src属性是不是base64， 是的话不用处理，不是的话，转换base64
                 base64Img = element.src;
             } else {
                 base64Img = await get_base64_image(element.src);
@@ -243,10 +243,19 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
         let _style = '';
         Object.keys(_css).forEach(key => {
             // 排除无用样式
-            if (key === '-webkit-locale') {
-                _style += '';
+            if (!Number.isNaN(+key)) {
+                const _realKey = _css[key as unknown as number];
+                if (_realKey === '-webkit-locale') {
+                    _style += '';
+                } else {
+                    _style += `${_realKey}:${_css[_realKey as unknown as number]};`;
+                }
             } else {
-                _style += `${key}:${_css[key as unknown as number]};`;
+                if (key === '-webkit-locale') {
+                    _style += '';
+                } else {
+                    _style += `${key}:${_css[key as unknown as number]};`;
+                }
             }
         });
         // 将字符串里的双引号变成单引号，防止赋值style的时候造成混乱

@@ -1,4 +1,16 @@
-# @wuefront-configs/rollup
+# @q-front-npm-configs/rollup
+
+## 1.1.0-beta.1
+
+### Minor Changes
+
+- rollup 更新至 v3 版本
+
+## 1.0.1-beta.0
+
+### Patch Changes
+
+- 规范依赖 dependencies devDependencies peerDependencies 限制
 
 ## 1.0.0
 

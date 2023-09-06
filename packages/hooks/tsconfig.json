@@ -1,5 +1,5 @@
 {
-    "extends": "@wuefront-configs/tsconfig/lib.json",
-    "include": ["base", "vue", "node_modules/@wuefront/types/**/*.d.ts"]
+    "extends": "@q-front-npm-configs/tsconfig/lib.json",
+    "include": ["base", "vue", "node_modules/@q-front-npm/types/**/*.d.ts"]
 }
   

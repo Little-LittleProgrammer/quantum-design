@@ -15,7 +15,7 @@ import { api_get_detail } from '../utils/http';
 import { path_to_pascal_interface } from '../utils/tools';
 import { FactoryJson } from '../utils/factory-json-divide';
 import Code from './components/code.vue';
-import { js_utils_copy_code } from '@wuefront/utils';
+import { js_utils_copy_code } from '@q-front-npm/utils';
 
 const data = reactive({
     code: '',

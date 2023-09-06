@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { IBreadcrumb } from '@/utils/types';
+import { IBreadcrumb } from './types';
 
 export function flatten(list:RouteRecordRaw[]) {
     const formatObj: Record<string, IBreadcrumb> = {};

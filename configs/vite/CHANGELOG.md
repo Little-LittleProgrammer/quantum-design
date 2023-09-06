@@ -1,4 +1,51 @@
-# @wuefront-configs/vite
+# @q-front-npm-configs/vite
+
+## 1.1.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @q-front-npm/utils@1.1.0-beta.2
+
+## 1.1.0-beta.1
+
+### Minor Changes
+
+- 破坏性升级
+  1. vite 更新至最新版本
+  2. 打包方式完全变更
+
+### Patch Changes
+
+- @q-front-npm/utils@1.0.10-beta.1
+
+## 1.0.13-beta.0
+
+### Patch Changes
+
+- 规范依赖 dependencies devDependencies peerDependencies 限制
+- Updated dependencies
+  - @q-front-npm/utils@1.0.10-beta.0
+
+## 1.0.12
+
+### Patch Changes
+
+- 打包发布
+
+## 1.0.11
+
+### Patch Changes
+
+- lib 打包 target 配置修复
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [2437ce5]
+- Updated dependencies [b5b11c7]
+  - @q-front-npm/utils@1.0.5
 
 ## 1.0.9
 
@@ -6,7 +53,7 @@
 
 - 增加 pwa 可配置化
 - Updated dependencies
-  - @wuefront/utils@1.0.4
+  - @q-front-npm/utils@1.0.4
 
 ## 1.0.8
 

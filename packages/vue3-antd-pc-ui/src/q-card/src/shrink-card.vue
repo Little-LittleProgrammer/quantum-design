@@ -21,6 +21,10 @@ import { reactive, onMounted, computed, PropType, ref} from 'vue';
 import {CardProps} from 'ant-design-vue/lib/card/Card';
 import './style/index.scss';
 
+defineOptions({
+    name: 'QAntdShrinkCard'
+});
+
 const props = defineProps({
     componentProps: {
         type: Object as PropType<CardProps>,

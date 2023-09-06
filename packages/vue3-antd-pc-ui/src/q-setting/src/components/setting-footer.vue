@@ -7,7 +7,7 @@
 </template>
 
 <script lang='ts' setup>
-import { js_create_local_storage } from '@wuefront/utils';
+import { js_create_local_storage } from '@q-front-npm/utils';
 import { onMounted, PropType} from 'vue';
 import { IProjectConfig } from '../type';
 import { useProjectSetting } from '../hooks/use-project-setting';
@@ -23,7 +23,7 @@ function reset() {
     projectStore.setRootSetting(props.defaultSetting);
 }
 function log_out() {
-    ls.clear();
+    ls?.clear();
     location.reload();
 }
 onMounted(() => {

@@ -1,3 +1,6 @@
-import QCardUpload from './src/card-upload.vue';
+import { component_with_install } from '@q-front-npm/utils';
+import CardUpload from './src/card-upload.vue';
 
-export {QCardUpload};
+const QAntdCardUpload = component_with_install(CardUpload);
+
+export default QAntdCardUpload;

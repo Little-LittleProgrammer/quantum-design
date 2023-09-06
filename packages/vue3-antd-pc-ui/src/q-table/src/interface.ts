@@ -7,24 +7,24 @@ interface Fn<T = any, R = T> {
 }
 
 export interface ActionItem extends ButtonProps {
-  onClick?: Fn;
-  label?: string;
-  color?: 'success' | 'error' | 'warning';
-  icon?: string;
-  popConfirm?: PopConfirm;
-  disabled?: boolean;
-  divider?: boolean;
-  // 业务控制是否显示
-  ifShow?: boolean | ((action: ActionItem) => boolean);
-  tooltip?: string | TooltipProps;
+    onClick?: Fn;
+    label?: string;
+    color?: 'success' | 'error' | 'warning';
+    icon?: string;
+    popConfirm?: PopConfirm;
+    disabled?: boolean;
+    divider?: boolean;
+    // 业务控制是否显示
+    ifShow?: boolean | ((action: ActionItem) => boolean);
+    tooltip?: string | TooltipProps;
 }
 
 export interface PopConfirm {
-  title: string;
-  okText?: string;
-  cancelText?: string;
-  confirm: Fn;
-  cancel?: Fn;
-  icon?: string;
-  placement?:string
+    title: string;
+    okText?: string;
+    cancelText?: string;
+    confirm: Fn;
+    cancel?: Fn;
+    icon?: string;
+    placement?:string
 }

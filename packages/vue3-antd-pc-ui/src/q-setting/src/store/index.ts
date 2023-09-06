@@ -1,4 +1,4 @@
-import { js_create_local_storage, js_utils_deep_merge } from '@wuefront/utils';
+import { js_create_local_storage, js_is_client, js_utils_deep_merge } from '@q-front-npm/utils';
 import { defineStore } from 'pinia';
 import { IProjectConfig } from '../type';
 
@@ -9,12 +9,12 @@ export interface IFileExport {
     export_url: string
 }
 
-const ls = js_create_local_storage();
+const ls = js_is_client && js_create_local_storage();
 
 // state
 const createState = () => {
     const state = {
-        projectConfig: ls.get('project_config') || {} as IProjectConfig
+        projectConfig: ls && ls?.get('project_config') || {} as IProjectConfig
     };
     return state;
 };
@@ -34,7 +34,7 @@ export const useProjectSettingStore = defineStore('projectSetting', {
     actions: {
         set_project_config(config: IProjectConfig) {
             this.projectConfig = js_utils_deep_merge(this.projectConfig || {}, config);
-            ls.set('project_config', this.projectConfig);
+            ls && ls?.set('project_config', this.projectConfig);
         }
     }
 });

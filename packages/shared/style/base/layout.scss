@@ -40,7 +40,8 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 
 // 宽度
 @each $i in $gWidthArr {
-    .w-#{$i} {
+    .w-#{$i},
+    .g-w-#{$i} {
         width: unquote($i+'px') !important
     }
 }

@@ -4,6 +4,7 @@ import pkcs7 from 'crypto-js/pad-pkcs7';
 import ECB from 'crypto-js/mode-ecb';
 import UTF8 from 'crypto-js/enc-utf8';
 import md5 from 'crypto-js/md5';
+import sha256 from 'crypto-js/sha256';
 interface IOption {
     mode: typeof ECB,
     padding: typeof pkcs7,
@@ -19,7 +20,7 @@ export class Encryption {
     private key;
     private iv;
 
-    constructor(opt: EncryptionParams) {
+    constructor(opt: EncryptionParams = { key: '', iv: '' }) {
         const { key, iv } = opt;
         this.key = parse(key);
         this.iv = parse(iv);
@@ -43,5 +44,9 @@ export class Encryption {
 
     encryptByMd5(cipherText: string) {
         return md5(cipherText);
+    }
+
+    encryptBySha256(cipherText: string) {
+        return sha256(cipherText);
     }
 }

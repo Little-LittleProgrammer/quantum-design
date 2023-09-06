@@ -1,6 +1,9 @@
+import { component_with_install } from '@q-front-npm/utils';
 import breadcrumb from './src/breadcrumb.vue';
 
-export * from './src/types';
-export {
-    breadcrumb as QBreadcrumb
-};
+export type * from './src/types';
+
+const QAntdBreadcrumb = component_with_install(breadcrumb);
+
+export default QAntdBreadcrumb;
+

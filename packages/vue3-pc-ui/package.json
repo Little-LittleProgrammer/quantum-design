@@ -1,40 +1,61 @@
 {
-    "name": "@wuefront/vue3-pc-ui",
-    "version": "1.0.0",
-    "description": "vue3-pc端组件库",
-    "main": "dist/lib/index.js",
-    "module": "dist/es/index.js",
-    "typings": "dist/index.d.ts",
-    "publishConfig": {
-        "registry": "https://registry.npmmirror.com/"
+  "name": "@q-front-npm/vue3-pc-ui",
+  "version": "1.1.0-beta.3",
+  "description": "vue3-pc端组件库",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
     },
-    "files": [
-      "dist"
-    ],
-    "scripts": {
-      "build": "vite build",
-      "test": "vitest run",
-      "test:coverage": "vitest run --coverage"
+    "./es": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/index.js"
     },
-    "author": "Evan Wu",
-    "license": "MIT",
-    "dependencies": {
-      "@wuefront/shared": "workspace:*",
-      "@wuefront/utils": "workspace:*",
-      "vue": "3.2.47",
-      "vue-router": "4.1.6"
+    "./lib": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/lib/index.js"
     },
-    "devDependencies": {
-      "@wuefront-configs/vite": "workspace:*",
-      "@wuefront/types": "workspace:*",
-      "@vue/test-utils": "^2.4.0",
-      "sass": "1.63.3"
+    "./es/*": {
+      "types": "./dist/src/*.d.ts",
+      "import": "./dist/es/*.js"
     },
-    "peerDependencies": {
-      "@wuefront/shared": "workspace:*",
-      "@wuefront/utils": "workspace:*",
-      "vue": "3.2.47",
-      "vue-router": "4.1.6"
-    }
+    "./lib/*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/lib/*.js"
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "author": "Evan Wu",
+  "license": "MIT",
+  "dependencies": {
+    "@q-front-npm/shared": "workspace:*",
+    "@q-front-npm/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@q-front-npm-configs/vite": "workspace:*",
+    "@q-front-npm/types": "workspace:*",
+    "@vue/test-utils": "^2.4.0",
+    "sass": "^1.63.3",
+    "vue": "~3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "peerDependencies": {
+    "vue": "~3.3.4",
+    "vue-router": "^4.2.4"
   }
-  
+}

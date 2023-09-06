@@ -303,7 +303,7 @@ export function js_utils_edit_attr(path:string, value: any, obj:any) {
  * @param isFormat 是否要展示为千分位格式，如：20,000.10
  * @param digit 转化倍数，默认为100
  */
-export function js_utils_reg_fen_to_yuan(fen: number | string, isFormat = false, digit = 100): string {
+export function js_utils_fen_to_yuan(fen: number | string, isFormat = false, digit = 100): string {
     const _num = (Number(fen) / digit).toFixed(2);
     return isFormat ? js_utils_format_money_num(_num) : _num;
 }
@@ -313,7 +313,7 @@ export function js_utils_reg_fen_to_yuan(fen: number | string, isFormat = false,
  * @param yuan 要转化的金额
  * @param digit 转化倍数，默认为100
  */
-export function js_utils_reg_yuan_to_fen(yuan: number | string, digit = 100): number {
+export function js_utils_yuan_to_fen(yuan: number | string, digit = 100): number {
     let _dotSum = 0;
     const _amountStr = yuan.toString();
     const _digitStr = digit.toString();

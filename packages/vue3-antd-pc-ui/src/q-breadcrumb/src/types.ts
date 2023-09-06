@@ -8,3 +8,11 @@ export const breadcrumbProps = {
     }
 };
 export type BreadcrumbProps = ExtractPropTypes<typeof breadcrumbProps>
+
+export interface IBreadcrumb {
+    id: string | number;
+    name: string;
+    path: string;
+    pid: string | number;
+    title: string
+}

@@ -19,9 +19,9 @@
 </template>
 
 <script lang='ts' setup>
-import { propTypes } from '@wuefront/types/vue/types';
+import { propTypes } from '@q-front-npm/types/vue/types';
 import { onMounted, useSlots} from 'vue';
-import {QIcon} from '@/q-icon';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 const props = defineProps({
     isDetail: propTypes.bool,
     showDetailBack: propTypes.bool,

@@ -21,8 +21,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { QForm, FormSchema } from '@wuefront/vue3-antd-pc-ui';
-  import { useMessage } from '@wuefront/hooks';
+  import { QForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+  import { useMessage } from '@q-front-npm/hooks';
   const schemas: FormSchema[] = [ 
     {
       field: 'field',
@@ -70,8 +70,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { QForm, FormSchema } from '@wuefront/vue3-antd-pc-ui';
-  import { useMessage } from '@wuefront/hooks';
+  import { QForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+  import { useMessage } from '@q-front-npm/hooks';
   const schemas: computed<FormSchema<interface>[]>(() => ([
     {
       field: 'field',
@@ -420,7 +420,9 @@ export type ComponentType =
   | 'Render'
   | 'Slider'
   | 'Rate'
-  | 'Divider';  
+  | 'Divider'
+  | 'Text'
+  | 'Link'
 ```
 
 ### Divider schema说明
@@ -450,7 +452,7 @@ export type ComponentType = xxxx | 'componentName';
 这种写法只能在当前页使用，页面销毁之后会从 componentMap 删除相应的组件
 ::: 
 ```js
-import { useComponentRegister } from '@wuefront/vue3-antd-pc-ui';
+import { useComponentRegister } from '@q-front-npm/vue3-antd-pc-ui';
 
 import { StrengthMeter } from '@/components/strength-meter/index';
 
@@ -472,7 +474,7 @@ useComponentRegister('StrengthMeter', StrengthMeter);
 </template>
 <script lang="ts">
   import { defineComponent, h } from 'vue';
-  import { QForm, FormSchema, useForm } from '@wuefront/vue3-antd-pc-ui';
+  import { QForm, FormSchema, useForm } from '@q-front-npm/vue3-antd-pc-ui';
   import { useMessage } from '@/hooks';
   const schemas: FormSchema[] = [
     {
@@ -548,7 +550,7 @@ useComponentRegister('StrengthMeter', StrengthMeter);
 </template>
 <script lang="ts">
   import { defineComponent } from 'compatible-vue';
-  import { QForm, useForm } from '@wuefront/vue3-antd-pc-ui/index';
+  import { QForm, useForm } from '@q-front-npm/vue3-antd-pc-ui/index';
   import { BasicModal } from '@/components/modal/index';
   export default defineComponent({
     name: 'FormDemo',
@@ -586,7 +588,7 @@ useComponentRegister('StrengthMeter', StrengthMeter);
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { QForm, FormSchema, useForm } from '@wuefront/vue3-antd-pc-ui';
+  import { QForm, FormSchema, useForm } from '@q-front-npm/vue3-antd-pc-ui';
   const schemas: FormSchema[] = [
     {
       field: 'field1',

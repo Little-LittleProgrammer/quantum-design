@@ -1,4 +1,4 @@
-import type { h, Component } from 'vue';
+import { h, type Component } from 'vue';
 import type { ComponentType } from './types/index';
 
 /**
@@ -22,10 +22,10 @@ import {
 } from 'ant-design-vue';
 
 import RadioButtonGroup from './components/radio-button-group.vue';
-import { QIcon } from '@/q-icon';
+import {Icon as QIcon} from '@/q-icon/src/icon';
 import SelectAll from './components/select-all.vue';
-import { QCardUpload } from '@/q-upload';
-import { QTransfer } from '@/q-transfer';
+import QCardUpload from '@/q-upload';
+import QTransfer from '@/q-transfer';
 
 const componentMap = new Map<ComponentType<string>, Component>();
 

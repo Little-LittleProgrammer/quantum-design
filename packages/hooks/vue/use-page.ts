@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { js_is_string, js_utils_deep_merge } from '@wuefront/utils';
+import { js_is_string, js_utils_deep_merge, js_is_iphone, js_is_safari_browser, js_is_wechat, js_is_ding_ding, js_is_baidu_browser } from '@q-front-npm/utils';
 import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';
@@ -65,18 +65,43 @@ const useRedo = (_router?: Router) => {
 };
 
 /**
+ * @description: 打开一个新页签
+ */
+const useOpenPage = () => {
+    function open_page(url: string, target = '_blank') {
+        if (js_is_iphone() || js_is_safari_browser()) {
+            // safari和iphone内核浏览器会阻止异步请求后的open行为
+            setTimeout(() => {
+                // url是否为/开头的绝对路径
+                const _isAbsolutePath = url.startsWith('/');
+                const _newUrl = _isAbsolutePath ? window.location.origin + url : url;
+                window.open(_newUrl, target);
+            }, 100);
+        } else {
+            window.open(url, target);
+        }
+    }
+    return open_page;
+};
+
+/**
  * @description: 关闭当前页面
  */
 const useClosePage = () => {
     function close_page() {
-        const userAgent = navigator.userAgent;
-        if (userAgent.includes('Firefox') || userAgent.includes('Chrome')) {
+        const _ua = navigator.userAgent;
+        if (_ua.includes('Firefox') || _ua.includes('Chrome')) {
             window.location.replace('about:blank');
         } else {
             window.opener = null;
             window.open('', '_self');
         }
         window.close();
+        // 兼容部分浏览器无法关闭打开的页签，如微信、手百等
+        const _isNeedBack = js_is_wechat() || js_is_ding_ding() || js_is_baidu_browser();
+        if (_isNeedBack) {
+            window.history.back();
+        }
     }
     return close_page;
 };
@@ -145,6 +170,7 @@ const useFixStickyScrollBar = (className = 'js-layout-main') => {
 export {
     useRedo,
     useGo,
+    useOpenPage,
     useClosePage,
     useResizeObserver,
     useStickyContainer,

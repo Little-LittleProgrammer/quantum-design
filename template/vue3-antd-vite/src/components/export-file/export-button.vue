@@ -5,7 +5,7 @@
 
 <script lang='ts' setup>
 import { useGlobalStore } from '@/store/modules/global';
-import { js_is_funtion } from '@wuefront/utils';
+import { js_is_funtion } from '@q-front-npm/utils';
 import type { ButtonProps } from 'ant-design-vue';
 import { onMounted, PropType, ref} from 'vue';
 import { IExportOptions } from './types/interface';

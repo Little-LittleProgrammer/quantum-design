@@ -1,5 +1,6 @@
-import QKeepAliveTabs from './src/index.vue';
+import { component_with_install } from '@q-front-npm/utils';
+import KeepAliveTabs from './src/index.vue';
 
-export {
-    QKeepAliveTabs
-};
+const QAndtKeepAliveTabs = component_with_install(KeepAliveTabs);
+
+export default QAndtKeepAliveTabs;

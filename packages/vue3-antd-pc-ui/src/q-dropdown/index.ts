@@ -1,5 +1,7 @@
-import QDropdown from './src/index.vue';
+import { component_with_install } from '@q-front-npm/utils';
+import Dropdown from './src/index.vue';
+export type * from './src/types';
 
-export {QDropdown};
+const QAntdDropdown = component_with_install(Dropdown);
 
-export * from './src/types';
+export default QAntdDropdown;

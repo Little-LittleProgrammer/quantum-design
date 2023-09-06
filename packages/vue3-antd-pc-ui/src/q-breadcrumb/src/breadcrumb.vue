@@ -13,10 +13,12 @@
 <script lang='ts' setup>
 import { reactive, watch, getCurrentInstance} from 'vue';
 import { LocationQuery, Router } from 'vue-router';
-import { IBreadcrumb } from '@/utils/types';
-import { breadcrumbProps } from './types';
+import { IBreadcrumb, breadcrumbProps } from './types';
 import { flatten } from './utils';
 import './style/index.scss';
+defineOptions({
+    name: 'QAntdBreadcrumb'
+});
 
 interface IQueryCache {
     id: number,
@@ -52,7 +54,7 @@ const find_family = (obj: Record<string, IBreadcrumb>, pid: string) => {
     if (pid != '0') {
         const _cacheObj = obj[pid];
         parentList.push(_cacheObj);
-        find_family(obj, _cacheObj.pid);
+        find_family(obj, _cacheObj.pid as string);
     }
 };
 // 生成正确的顺序
@@ -81,10 +83,10 @@ const create_breadcrumb_list = () => {
         _arr.sort((a, b) => a.id - b.id);
         delete queryCache[_arr[0].path];
     }
-    _cacheObj = formatObj[_route.meta.id];
+    _cacheObj = formatObj[_route.meta.id as number];
     if (Object.keys(_cacheObj).length > 0) {
         parentList = [];
-        find_family(formatObj, _cacheObj.pid);
+        find_family(formatObj, _cacheObj.pid as string);
         data.breadcrumbList = [
             _cacheObj,
             ...parentList

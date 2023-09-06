@@ -10,19 +10,19 @@
   ],
   "scripts": {
     "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@wuefront/shared": "1.0.0",
-    "@wuefront/utils": "1.0.0",
-    "@wuefront-configs/vite": "1.0.0",
+    "@q-front-npm/shared": "1.0.0",
+    "@q-front-npm/utils": "1.0.0",
+    "@q-front-npm-configs/vite": "1.0.0",
     "vue": "3.2.47",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@wuefront/types": "1.0.0",
+    "@q-front-npm/types": "1.0.0",
     "sass": "1.63.3"
   }
 }

@@ -2,7 +2,7 @@ export declare interface IMenuData {
     /**
      * 权限名称
      */
-    auth_name?: string;
+    auth_name: string;
     /**
       * 子级
       */
@@ -14,19 +14,19 @@ export declare interface IMenuData {
     /**
       * id
       */
-    id?: number;
+    id: number;
     /**
       * 对应url
       */
-    path?: string;
+    path: string;
     /**
-      * 路径类型，1菜单，2接口
+      * 路径类型，1菜单，2接口, 3按钮
       */
-    path_type?: number;
+    path_type: number;
     /**
       * 父级id
       */
-    pid?: number;
+    pid: number;
     /**
       * 排序权重
       */

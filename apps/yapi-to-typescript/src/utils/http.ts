@@ -1,5 +1,5 @@
-import {js_is_number} from '@wuefront/utils';
-import {createAxios} from '@wuefront/http';
+import {js_is_number} from '@q-front-npm/utils';
+import {createAxios} from '@q-front-npm/http';
 import Browser from 'webextension-polyfill';
 
 interface IApiDetailInfo {

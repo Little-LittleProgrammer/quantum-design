@@ -3,14 +3,14 @@
     <template v-for="(action, index) in get_actions" :key="`${index}-${action.label}`">
       <a-tooltip v-if="action.tooltip" v-bind="get_tooltip(action.tooltip)">
         <a-popconfirm v-if="action.popConfirm" v-bind="get_pop_confirm(action.popConfirm)">
-          <q-icon :type="action.icon" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
+          <q-icon :type="action.icon as 'default'" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
           <a-button v-bind="action" v-if="action.label">{{ action.label }}</a-button>
         </a-popconfirm>
         <a-button v-else v-bind="action">{{ action.label }}</a-button>
       </a-tooltip>
       <template v-else>
         <a-popconfirm v-if="action.popConfirm" v-bind="get_pop_confirm(action.popConfirm)">
-          <QIcon :type="action.icon" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
+          <QIcon :type="action.icon as 'default'" :class="{ 'mr-1': !!action.label }" v-if="action.icon" />
           <a-button v-bind="action" v-if="action.label">{{ action.label }}</a-button>
         </a-popconfirm>
         <a-button v-else v-bind="action">{{ action.label }}</a-button>
@@ -27,12 +27,13 @@
 <script lang="ts" setup>
 import { PropType, computed, toRaw } from 'vue';
 import { Divider, TooltipProps } from 'ant-design-vue';
-import { QIcon } from '@/q-icon';
+import { Icon as QIcon } from '@/q-icon/src/icon';
 import { ActionItem } from '../interface';
-import { js_is_boolean, js_is_function, js_is_string } from '@wuefront/utils';
-import { propTypes } from '@wuefront/types/vue/types';
-import '../style/index.scss';
-
+import { js_is_boolean, js_is_function, js_is_string } from '@q-front-npm/utils';
+import { propTypes } from '@q-front-npm/types/vue/types';
+defineOptions({
+    name: 'QAntdTableAction'
+});
 const props = defineProps({
     actions: {
         type: Array as PropType<ActionItem[]>,

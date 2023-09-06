@@ -1,5 +1,4 @@
-import { update_theme } from '@/assets/ts/theme';
-import { js_create_local_storage } from '@wuefront/utils';
+import { js_create_local_storage } from '@q-front-npm/utils';
 import { message } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
@@ -52,7 +51,6 @@ export const useGlobalStore = defineStore('global', {
         set_theme_mode(mode: 'light' | 'dark') {
             this.theme = mode;
             ls.set('themeMode', mode);
-            update_theme(mode);
         },
         set_environment_data(data: SelectPartial<globalState['environmentData'], 'env'>) {
             if (this.environmentData.env != '' && parseInt(data.env) != parseInt(this.environmentData.env)){

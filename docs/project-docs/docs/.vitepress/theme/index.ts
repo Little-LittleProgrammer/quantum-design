@@ -3,11 +3,10 @@ import HighlightCode from '../components/highlight-code.vue'
 import CodeVoew from '../components/code-view.vue'
 import {createPinia} from 'pinia';
 
-import '@wuefront/shared/style/antd/antd.scss';
-import '@wuefront/shared/style/base/index.scss';
+import '@q-front-npm/shared/style/antd/antd.scss';
+import '@q-front-npm/shared/style/base/index.scss';
 import './styles/var.css';
 import './styles/reset.css'
-import {dom_listen} from './antd/style'
 
 
 export default {
@@ -24,11 +23,10 @@ export default {
                 ctx.app.use(module.Button)
                 ctx.app.use(module.Card)
             })
-            import("@wuefront/vue3-pc-ui").then(module => {
+            import("@q-front-npm/vue3-pc-ui").then(module => {
                 ctx.app.use(module.QLoading)
                 ctx.app.use(module.QTreeTable)
             })
-            dom_listen()
         }
       }
   };

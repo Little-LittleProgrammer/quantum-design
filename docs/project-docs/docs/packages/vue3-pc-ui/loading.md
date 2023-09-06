@@ -7,7 +7,7 @@
    <q-loading :loading="true" size="small" mode="wave" />
 </template>
 <script setup>
-    import {QLoading} from '@wuefront/vue3-pc-ui'
+    import {QLoading} from '@q-front-npm/vue3-pc-ui'
 \<\/script>
 `
 </script>

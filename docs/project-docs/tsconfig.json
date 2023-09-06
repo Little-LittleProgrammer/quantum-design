@@ -1,11 +1,11 @@
 {
-    "extends": "@wuefront-configs/tsconfig/vue.json",
+    "extends": "@q-front-npm-configs/tsconfig/vue.json",
     "include": [
         "docs/**/*.ts",
         "docs/**/*.d.ts",
         "docs/**/*.tsx",
         "docs/**/*.vue",
-        "node_modules/@wuefront/types/**/*.d.ts"  ],
+        "node_modules/@q-front-npm/types/**/*.d.ts"  ],
     "exclude": [
         "dist"
     ]

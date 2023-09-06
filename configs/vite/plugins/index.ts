@@ -3,7 +3,7 @@ import { IPluginsCommonOptions, ViteEnv } from '../types';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { vite_plugin_options } from './define-options';
+// import { vite_plugin_imagemin } from './imagemin';
 import { vite_plugin_html } from './html';
 import { vite_plugin_compress } from './compress';
 import { vite_plugin_pwa } from './pwa';
@@ -27,12 +27,12 @@ export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?
         //     customComponentResolvers: [AntDesignVueResolver()]
         // })
     ];
-    _vitePlugins.push(vite_plugin_options());
     // vite-plugin-html
-    _vitePlugins.push(vite_plugin_html(viteEnv, isBuild));
+    _vitePlugins.push(vite_plugin_html(viteEnv));
 
     if (isBuild) {
-        _vitePlugins.push(vite_plugin_compress(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE));
+        // _vitePlugins.push(vite_plugin_imagemin(viteEnv));
+        _vitePlugins.push(vite_plugin_compress(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE, options?.compress));
 
         // vite-plugin-pwa
         _vitePlugins.push(vite_plugin_pwa(viteEnv, options?.pwa));

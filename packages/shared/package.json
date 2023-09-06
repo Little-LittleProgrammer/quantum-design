@@ -1,27 +1,30 @@
 {
-  "name": "@wuefront/shared",
-  "version": "1.0.0",
+  "name": "@q-front-npm/shared",
+  "version": "1.1.0-beta.1",
   "description": "",
   "main": "index.ts",
   "publishConfig": {
-      "registry": "https://registry.npmmirror.com/"
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "files": [
     "enums",
     "style",
+    "style/antd/antd.scss",
+    "style/antd/base.scss",
+    "style/base/index.scss",
+    "style/element",
     "plugins",
+    "plugins/sentry.ts",
+    "plugins/auto-import-resolver.ts",
     "index"
   ],
   "author": "Evan Wu",
   "license": "MIT",
   "devDependencies": {
-    "sass": "1.63.3",
-    "vue": "3.2.47"
+    "@sentry/vue": "~7.66.0",
+    "sass": "^1.63.3",
+    "vue": "~3.3.4"
   },
-  "dependencies": {
-    "@sentry/vue": "7.46.0"
-  }
+  "dependencies": {}
 }

@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "vitepress dev docs",
@@ -13,18 +14,18 @@
   "author": "Evan Wu",
   "license": "ISC",
   "dependencies": {
-    "@ant-design/icons-vue": "6.1.0",
-    "@wuefront/shared": "workspace:*",
-    "@wuefront/vue3-pc-ui": "workspace:*",
-    "ant-design-vue": "3.2.20",
-    "pinia": "2.0.30",
-    "vue": "3.2.47"
+    "@ant-design/icons-vue": "^6.1.0",
+    "@q-front-npm/shared": "workspace:*",
+    "@q-front-npm/vue3-pc-ui": "workspace:*",
+    "ant-design-vue": "^4.0.2",
+    "pinia": "^2.1.6",
+    "vue": "~3.3.4"
   },
   "devDependencies": {
-    "@wuefront/types": "workspace:*",
-    "highlight.js": "11.4.0",
-    "vitepress": "1.0.0-alpha.30",
-    "less": "4.1.3",
-    "sass": "1.63.3"
+    "@q-front-npm/types": "workspace:*",
+    "highlight.js": "^11.4.0",
+    "vitepress": "^1.0.0-rc.10",
+    "less": "^4.1.3",
+    "sass": "^1.63.3"
   }
 }

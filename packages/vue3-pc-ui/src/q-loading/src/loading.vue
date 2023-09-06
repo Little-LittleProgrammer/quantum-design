@@ -34,15 +34,13 @@
     </div>
 </template>
 
-<script lang="ts">
-export default {
-    name: 'QLoading'
-};
-</script>
 <script lang='ts' setup>
 import { reactive, onBeforeMount, watch, onBeforeUnmount} from 'vue';
 import './style/index.scss';
 import { loadingProps } from './loadingTypes';
+defineOptions({
+    name: 'QLoading'
+});
 
 const props = defineProps(loadingProps);
 
