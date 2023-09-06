@@ -1,6 +1,6 @@
 {
   "name": "@q-front-npm/utils",
-  "version": "1.1.0-beta.2",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/utils.cjs.min.js",
   "module": "dist/utils.esm.min.js",
@@ -8,9 +8,6 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
-  },
   "scripts": {
     "build": "rollup -c --environment TYPES:true",
     "test": "vitest run",

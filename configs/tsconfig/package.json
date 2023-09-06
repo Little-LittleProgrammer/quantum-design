@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "代码tslint统一文件",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
-  },
   "scripts": {
     
   },

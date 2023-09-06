@@ -1,6 +1,6 @@
 {
   "name": "@q-front-npm/vue3-antd-pc-ui-nuxt",
-  "version": "1.0.1-beta.1",
+  "version": "1.0.0",
   "description": "vue3-antd-pc-ui module for Nuxt",
   "license": "MIT",
   "type": "module",
@@ -18,9 +18,6 @@
   "keywords": [
     "nuxt"
   ],
-  "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
-  },
   "scripts": {
     "build": "npm run dev:prepare && nuxt-module-build",
     "dev": "nuxi dev playground",
