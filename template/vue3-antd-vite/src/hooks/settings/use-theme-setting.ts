@@ -9,8 +9,9 @@ import { gMemorialEnum } from '@q-front-npm/shared/enums';
 // 写成hooks, 方便以后扩展, 扩展项目可视化配置
 export function useThemeSetting() {
     const globalStore = useGlobalStore();
-    const antdCssData = JSON.parse('{' + (import.meta.env.cssTemp || '') + '}');
+    const antdCssData = (window as any).cssData as any
     const getThemeMode = computed(() => {
+        console.log('antdCssData',antdCssData)
         if (antdCssData['primary-color']) {
             const _token = {
                 colorPrimary: antdCssData['primary-color'],
@@ -20,7 +21,7 @@ export function useThemeSetting() {
                 colorError: antdCssData['error-color'],
                 colorTextDisabled: antdCssData['disabled-color']
             };
-            if (globalStore.getThemeMode === 'dark') {
+            if (globalStore.theme === 'dark') {
                 return {
                     token: _token,
                     algorithm: antdTheme.darkAlgorithm

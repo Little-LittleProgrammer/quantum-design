@@ -18,10 +18,10 @@
                 <template v-if="second_level.children == undefined">
                     <a-menu-item :key="second_level.id" class="qm-aside-title">
                         <template #icon>
-                            <q-icon
+                            <q-antd-icon
                                 :type="second_level.icon as 'default'"
                                 v-if="second_level.icon != undefined && second_level.icon != ''"
-                            ></q-icon>
+                            ></q-antd-icon>
                         </template>
                         {{ second_level.auth_name }}
                     </a-menu-item>
@@ -29,10 +29,10 @@
                 <template v-else>
                     <a-sub-menu :key="second_level.id">
                         <template #icon>
-                            <q-icon
+                            <q-antd-icon
                                 :type="second_level.icon as 'default'"
                                 v-if="second_level.icon != undefined && second_level.icon != ''"
-                            ></q-icon>
+                            ></q-antd-icon>
                         </template>
                         <template #title>
                             <span class="qm-aside-title">{{ second_level.auth_name }}</span>
@@ -41,20 +41,20 @@
                             <template v-if="!!third_level.children">
                                 <a-sub-menu :key="third_level.id">
                                     <template #icon>
-                                        <q-icon
+                                        <q-antd-icon
                                             :type="third_level.icon as 'default'"
                                             v-if="third_level.icon != undefined && third_level.icon != ''"
-                                        ></q-icon>
+                                        ></q-antd-icon>
                                     </template>
                                     <template #title>
                                         <span class="qm-aside-title-sub">{{ third_level.auth_name }}</span>
                                     </template>
                                     <a-menu-item class="qm-aside-link" :key="four_level.id" v-for="four_level in third_level.children">
                                         <template #icon>
-                                            <q-icon
+                                            <q-antd-icon
                                                 :type="four_level.icon as 'default'"
                                                 v-if="four_level.icon != undefined && four_level.icon != ''"
-                                            ></q-icon>
+                                            ></q-antd-icon>
                                         </template>
                                         {{ four_level.auth_name }}
                                     </a-menu-item>
@@ -63,10 +63,10 @@
                             <template v-else>
                                 <a-menu-item class="qm-aside-link" :key="third_level.id">
                                     <template #icon>
-                                        <q-icon
+                                        <q-antd-icon
                                             :type="third_level.icon as 'default'"
                                             v-if="third_level.icon != undefined && third_level.icon != ''"
-                                        ></q-icon>
+                                        ></q-antd-icon>
                                     </template>
                                     {{ third_level.auth_name }}
                                 </a-menu-item>
@@ -78,8 +78,8 @@
         </a-menu>
         <div class="qm-aside-arrow-btn" :class="getClass" @click="show_hide_aside">
             <template v-if="getArrowBtnShow">
-                <q-icon :type="getArrow[0] as 'default'" v-if="data.isShow" class="arrow-btn" />
-                <q-icon :type="getArrow[1] as 'default'" v-else class="arrow-btn" />
+                <q-antd-icon :type="getArrow[0] as 'default'" v-if="data.isShow" class="arrow-btn" />
+                <q-antd-icon :type="getArrow[1] as 'default'" v-else class="arrow-btn" />
             </template>
         </div>
     </a-layout-sider>
@@ -105,7 +105,6 @@ export default defineComponent({
 </script>
 
 <script lang='ts' setup>
-import { QIcon } from '@q-front-npm/vue3-antd-pc-ui';
 import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGo } from '@q-front-npm/hooks/vue';

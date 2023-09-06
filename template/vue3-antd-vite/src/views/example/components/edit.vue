@@ -1,13 +1,13 @@
 <!--  -->
 <template>
-    <q-drawer v-bind="$attrs" @register="registerDrawer" @ok="edit_save" @close="edit_cancel">
-        <q-form @register="registerForm"></q-form>
+    <q-antd-drawer v-bind="$attrs" @register="registerDrawer" @ok="edit_save" @close="edit_cancel">
+        <q-antd-form @register="registerForm"></q-form>
     </q-drawer>
 </template>
 
 <script lang='ts' setup>
 import { computed, reactive } from 'vue';
-import { QDrawer, useDrawerInner, QForm, useForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
+import {  useDrawerInner,  useForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 import { IExampleData } from '../interface';
 import { useMessage } from '@q-front-npm/hooks/vue';
 

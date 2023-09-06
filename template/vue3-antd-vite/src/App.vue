@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :locale="locale" :theme="themePorxy">
+    <a-config-provider :locale="locale" :theme="getThemeMode">
         <div id="app" >
             <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
             <export-file></export-file>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, computed} from 'vue';
+import { defineComponent, defineAsyncComponent} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import { useMessage } from '@q-front-npm/hooks/vue';
 import { api_global_env } from '@/http/api/global';
@@ -55,9 +55,6 @@ export default defineComponent({
                 get_global_env();
             }, 3 * 60 * 1000);
         };
-        const themePorxy = computed(() => {
-            return getThemeMode;
-        });
         const get_menus_data = async() => {
             if (globalStore.authorityManage) {
                 const _res = await api_manage_user_auths();
@@ -97,11 +94,11 @@ export default defineComponent({
 
         return {
             locale,
+            getThemeMode,
             userStore,
             globalStore,
             sysStore,
-            dynamicComponent,
-            themePorxy
+            dynamicComponent
         };
     }
 });

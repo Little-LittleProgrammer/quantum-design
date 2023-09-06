@@ -7,7 +7,7 @@
                     <a-button type="primary" @click="add_first_level_menu">添加一级菜单</a-button>
                 </a-form-item>
             </a-form>
-            <q-table-tree-drag v-model:expandedRowKeys="expandedKeys" :table-options="tableOption" @refreshTable="handel_table_drag">
+            <q-antd-table-tree-drag v-model:expandedRowKeys="expandedKeys" :table-options="tableOption" @refreshTable="handel_table_drag">
                 <template #bodyCell="{ text, record, column }">
                     <template v-if="column.key === 'auth_name'">
                         <template v-if="record.edit && record.edit == 1">
@@ -45,10 +45,10 @@
                     </template>
                     <template v-if="column.key === 'icon'">
                         <template v-if="record.edit && record.edit == 1 && record.path_type == 1">
-                            <q-icon-picker v-model:value="record.icon"></q-icon-picker>
+                            <q-antd-icon-picker v-model:value="record.icon"></q-antd-icon-picker>
                         </template>
                         <template v-else-if="record.icon">
-                            <QIcon :type="record.icon"></QIcon>
+                            <QAntdIcon :type="record.icon"></QAntdIcon>
                             <span class="ml">{{text}}</span>
                         </template>
                     </template>
@@ -81,7 +81,7 @@
                         </template>
                     </template>
                 </template>
-            </q-table-tree-drag>
+            </q-antd-table-tree-drag>
         </a-card>
     </div>
 </template>
@@ -89,8 +89,7 @@
 <script lang='ts'>
 import { js_utils_deep_copy } from '@q-front-npm/utils';
 import { useMessage } from '@q-front-npm/hooks/vue';
-import { QIconPicker, QIcon } from '@q-front-npm/vue3-antd-pc-ui';
-import {QTableTreeDrag, TableProps} from '@q-front-npm/vue3-antd-pc-ui';
+import type { TableProps} from '@q-front-npm/vue3-antd-pc-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';
 import { useGlobalStore } from '@/store/modules/global';
@@ -108,7 +107,6 @@ interface DataProps {
 
 export default defineComponent({
     name: 'MenuConfig',
-    components: {QIconPicker, QIcon, QTableTreeDrag},
     setup() {
         const authNameWidth = 250;
         const store = useGlobalStore();

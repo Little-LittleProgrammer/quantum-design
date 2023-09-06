@@ -2,7 +2,7 @@
 <template>
     <!-- 异步导出文件提示窗 -->
     <a-modal
-        v-model:visible="globalStore.asyncExportNoticePop.visible"
+        v-model:open="globalStore.asyncExportNoticePop.visible"
         class="async-export-notice-pop"
         :centered="true"
         :show-close="false"

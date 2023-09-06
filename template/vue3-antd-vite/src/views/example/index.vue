@@ -2,19 +2,19 @@
 <template>
     <div>
         <a-card class="g-card" :size="antdStore.cardSize">
-            <q-form @register="register"></q-form>
+            <q-antd-form @register="register"></q-antd-form>
         </a-card>
         <a-card class="g-card mt" :size="antdStore.cardSize">
             <a-table rowKey="age" :size="antdStore.tableSize" :pagination="false" :columns="data.tableData.header" :dataSource="getPaginationList">
                 <template #bodyCell="{record, column, index}">
                     <template v-if="column.key==='action'">
-                        <q-table-action :actions="create_table_actions(record, index)"></q-table-action>
+                        <q-antd-table-action :actions="create_table_actions(record, index)"></q-antd-table-action>
                     </template>
                 </template>
             </a-table>
         </a-card>
         <a-card class="g-card mt" :size="antdStore.cardSize">
-            <q-table-pagination :pageOption="getPageOption"></q-table-pagination>
+            <q-antd-table-pagination :pageOption="getPageOption"></q-antd-table-pagination>
         </a-card>
         <edit @register="registerDrawer"></edit>
     </div>
@@ -23,7 +23,7 @@
 <script lang='ts' setup>
 import { computed, reactive } from 'vue';
 import { IExampleData, IExampleDataTableData } from './interface';
-import { FormSchema, QForm, useForm, QTableAction, ActionItem, useDrawer, QDrawer, QTablePagination, PaginationProps } from '@q-front-npm/vue3-antd-pc-ui';
+import { FormSchema,  useForm,  ActionItem, useDrawer,  PaginationProps } from '@q-front-npm/vue3-antd-pc-ui';
 import { usePagination } from '@q-front-npm/hooks/vue';
 import { useGlobalStore } from '@/store/modules/global';
 import { js_utils_get_table_header_columns } from '@q-front-npm/utils';

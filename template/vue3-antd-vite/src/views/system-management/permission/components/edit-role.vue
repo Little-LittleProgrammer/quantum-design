@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <q-drawer v-bind="$attrs" @register="register" @ok="role_save" @close="role_cancel">
+    <q-antd-drawer v-bind="$attrs" @register="register" @ok="role_save" @close="role_cancel">
         <a-form :model="data.roleFormData" class="qm-form t-120">
             <a-form-item label="角色名称">
                 <a-input v-model:value="data.roleFormData.role_name"></a-input>
@@ -23,12 +23,12 @@
                 <a-textarea :rows="4" v-model:value="data.roleFormData.remark" />
             </a-form-item>
         </a-form>
-    </q-drawer>
+    </q-antd-drawer>
 </template>
 
 <script lang='ts' setup>
 import { reactive, onMounted, watch} from 'vue';
-import {QDrawer, useDrawerInner} from '@q-front-npm/vue3-antd-pc-ui';
+import {useDrawerInner} from '@q-front-npm/vue3-antd-pc-ui';
 import { api_manage_role_edit, api_manage_role_data, IRoleData } from '@/http/api/system-management/permission/role';
 import { api_manage_auth_list } from '@/http/api/system-management/permission/menu-config';
 import { useMessage } from '@q-front-npm/hooks/vue';

@@ -2,11 +2,11 @@
 <template>
     <div>
         <a-card class="g-card" :size="antdStore.cardSize">
-            <q-form @register="register">
+            <q-antd-form @register="register">
                 <template #formFooter>
                     <a-button type="primary" @click="show_add_edit_pop('add')">添加</a-button>
                 </template>
-            </q-form>
+            </q-antd-form>
         </a-card>
         <a-card class="g-card mt" :size="antdStore.cardSize">
             <a-table
@@ -34,11 +34,11 @@
                 </template>
             </a-table>
         </a-card>
-        <a-modal :width="500" :size="antdStore.modelSize" :title="data.addEditUserDataPop.title" v-model:visible="data.addEditUserDataPop.visible" :centered="true" @cancel="user_cancel" @ok="user_submit">
-            <q-form @register="registerEdit"></q-form>
+        <a-modal :width="500" :size="antdStore.modelSize" :title="data.addEditUserDataPop.title" v-model:open="data.addEditUserDataPop.visible" :centered="true" @cancel="user_cancel" @ok="user_submit">
+            <q-antd-form @register="registerEdit"></q-antd-form>
         </a-modal>
     </div>
-    </template>
+</template>
 
 <script lang='ts' setup>
 import {gRegEnum} from '@q-front-npm/shared/enums';
@@ -48,7 +48,7 @@ import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit} fro
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';
 import { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { reactive, onMounted, computed, nextTick} from 'vue';
-import { FormSchema, QForm, useForm } from '@q-front-npm/vue3-antd-pc-ui';
+import { FormSchema, useForm } from '@q-front-npm/vue3-antd-pc-ui';
 import { useGlobalStore } from '@/store/modules/global';
 import { useAntdStore } from '@/store/modules/antd';
 
