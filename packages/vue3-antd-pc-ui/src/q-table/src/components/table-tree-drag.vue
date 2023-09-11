@@ -14,9 +14,9 @@
 import { reactive, onMounted, computed, nextTick, watch, watchEffect } from 'vue';
 import type { PropType } from 'vue';
 import { TableProps } from 'ant-design-vue/lib/table/Table';
-import { useSortable } from '@q-front-npm/hooks';
-import { js_utils_deep_copy } from '@q-front-npm/utils';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { useSortable } from '@quantum-design/hooks';
+import { js_utils_deep_copy } from '@quantum-design/utils';
+import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({
     name: 'QAntdTableTreeDrag'
 });

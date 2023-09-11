@@ -1,10 +1,10 @@
 import { useGlobalStore } from '@/store/modules/global';
 import { computed } from 'vue';
 import { theme as antdTheme } from 'ant-design-vue';
-import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
-import { js_utils_dom_add_class, js_utils_dom_has_class } from '@q-front-npm/utils';
-import {gDateUtil} from '@q-front-npm/utils';
-import { gMemorialEnum } from '@q-front-npm/shared/enums';
+import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { js_utils_dom_add_class, js_utils_dom_has_class } from '@quantum-design/utils';
+import {gDateUtil} from '@quantum-design/utils';
+import { gMemorialEnum } from '@quantum-design/shared/enums';
 
 // 写成hooks, 方便以后扩展, 扩展项目可视化配置
 export function useThemeSetting() {

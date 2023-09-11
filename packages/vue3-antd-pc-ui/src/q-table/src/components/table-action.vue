@@ -29,8 +29,8 @@ import { PropType, computed, toRaw } from 'vue';
 import { Divider, TooltipProps } from 'ant-design-vue';
 import { Icon as QIcon } from '@/q-icon/src/icon';
 import { ActionItem } from '../interface';
-import { js_is_boolean, js_is_function, js_is_string } from '@q-front-npm/utils';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { js_is_boolean, js_is_function, js_is_string } from '@quantum-design/utils';
+import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({
     name: 'QAntdTableAction'
 });

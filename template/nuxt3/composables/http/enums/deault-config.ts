@@ -1,8 +1,8 @@
-import { gContentTypeEnum, gResultEnum } from "@q-front-npm/shared";
+import { gContentTypeEnum, gResultEnum } from "@quantum-design/shared";
 import { IHttpOptions, RequestOptions } from "../types";
 import { UseFetchOptions } from "nuxt/app";
 import { check_status } from "../utils/check-status";
-import { js_is_function } from "@q-front-npm/utils";
+import { js_is_function } from "@quantum-design/utils";
 
 export const defaultRequestOptions: RequestOptions = {
     // 默认将prefix 添加到url

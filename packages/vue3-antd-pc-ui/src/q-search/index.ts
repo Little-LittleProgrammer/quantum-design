@@ -1,4 +1,4 @@
-import { component_with_install } from '@q-front-npm/utils';
+import { component_with_install } from '@quantum-design/utils';
 import Search from './src/search.vue';
 export { find_search_route, get_net_router} from './src/search';
 

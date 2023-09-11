@@ -1,12 +1,20 @@
 {
-  "name": "@q-front-npm-configs/tsconfig",
+  "name": "@quantum-design-configs/tsconfig",
   "version": "1.0.0",
-  "description": "代码tslint统一文件",
+  "description": "代码tsconfig统一文件",
   "main": "index.js",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
+  "keywords": [
+    "pixiu-configs",
+    "monorepo",
+    "tsconfig",
+    "turborepo"
+  ],
   "files": [
     "tsconfig-base.json",
     "lib.json",

@@ -1,7 +1,7 @@
 import { antdCssData } from './modules/components';
 import type {ThemeConfig} from 'ant-design-vue/es/config-provider/context.d.ts';
 import { INuxtConfig } from './modules/types';
-import type { ViteEnv } from '@q-front-npm-configs/vite';
+import type { ViteEnv } from '@quantum-design-configs/vite';
 import { theme as antdTheme } from 'ant-design-vue';
 export const globalThemeConfig: ThemeConfig = {
     algorithm: antdTheme.defaultAlgorithm,

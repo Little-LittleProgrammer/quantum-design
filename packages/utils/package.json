@@ -1,7 +1,7 @@
 {
-  "name": "@q-front-npm/utils",
+  "name": "@quantum-design/utils",
   "version": "1.0.0",
-  "description": "",
+  "description": "公共 `utils` 方法",
   "main": "dist/utils.cjs.min.js",
   "module": "dist/utils.esm.min.js",
   "typings": "dist/types/index.d.ts",
@@ -13,17 +13,26 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
-  "keywords": [],
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "utils",
+    "turborepo"
+  ],
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/shared": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
     "crypto-js": "4.1.1",
     "dayjs": "1.11.7"
   },
   "devDependencies": {
-    "@q-front-npm/types": "workspace:*",
-    "@q-front-npm-configs/rollup": "workspace:*",
+    "@quantum-design/types": "workspace:*",
+    "@quantum-design-configs/rollup": "workspace:*",
     "@types/crypto-js": "4.1.1",
     "rollup": "^3.28.1"
   }

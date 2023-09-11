@@ -1,5 +1,5 @@
 import { defHttp } from '@/http/axios';
-import type { IMenuData } from '@q-front-npm/types/vue/router';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 
 enum Api {
     authList = '/permission/auth/list',

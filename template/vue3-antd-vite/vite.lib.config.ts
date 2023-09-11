@@ -1,5 +1,5 @@
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_lib_config, wrapperEnv } from '@q-front-npm-configs/vite';
+import { vite_common_lib_config, wrapperEnv } from '@quantum-design-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 import { resolve } from 'path';
 
@@ -17,7 +17,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         name: 'components-lib',
         outDir: 'dist-components',
         rollupOptions: {
-            external: ['vue', 'ant-design-vue', '@q-front-npm/vue3-antd-ui', '@q-front-npm/vue3-ui', '@q-front-npm/utils', '@q-front-npm/shared', '@ant-design/icons-vue', 'pinia']
+            external: ['vue', 'ant-design-vue', '@quantum-design/vue3-antd-ui', '@quantum-design/vue3-ui', '@quantum-design/utils', '@quantum-design/shared', '@ant-design/icons-vue', 'pinia']
         }
     });
     return {

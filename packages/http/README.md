@@ -1,4 +1,4 @@
-# @q-front-npm/shared
+# @quantum-design/shared
 
 目的: 为所有项目提供通讯工具
 
@@ -6,7 +6,7 @@
 ## 使用方法
 
 ```js
-import {createAxios} from '@q-front-npm/http';
+import {createAxios} from '@quantum-design/http';
 
 export const defHttp = createAxios(option: CreateAxiosOptions);
 ```

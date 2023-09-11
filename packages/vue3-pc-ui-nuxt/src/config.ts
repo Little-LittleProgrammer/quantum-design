@@ -1,6 +1,6 @@
 import { Options } from './types';
 
-export const libraryName = '@q-front-npm/vue3-pc-ui';
+export const libraryName = '@quantum-design/vue3-pc-ui';
 
 const allComponents: string[] = [
     'QLoading', 

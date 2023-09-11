@@ -1,7 +1,7 @@
 # rollup
 
 ## 简介
-npm包名称: `@q-front-npm/rollup`
+npm包名称: `@quantum-design/rollup`
 
 当前版本: 1.1.0
 
@@ -17,10 +17,10 @@ npm包名称: `@q-front-npm/rollup`
 
 ```js
 // rollup.config.mjs
-import { rollup_commpn_lib_config } from '@q-front-npm-configs/rollup';
+import { rollup_commpn_lib_config } from '@quantum-design-configs/rollup';
 
 const result = rollup_commpn_lib_config('http', {
-    external: ['@q-front-npm/hooks', '@q-front-npm/hooks/vue', '@q-front-npm/shared', '@q-front-npm/shared/enums', '@q-front-npm/utils', 'axios', 'lodash-es', 'qs']
+    external: ['@quantum-design/hooks', '@quantum-design/hooks/vue', '@quantum-design/shared', '@quantum-design/shared/enums', '@quantum-design/utils', 'axios', 'lodash-es', 'qs']
 });
 
 export default [...Object.values(result)];

@@ -1,9 +1,9 @@
 import Components from 'unplugin-vue-components/vite';
-import { QResolver } from '@q-front-npm/shared/plugins';
+import { PixiuResolver } from '@quantum-design/shared/plugins';
 
 export function vite_plugin_component(resolvers: any[] = []) {
     const componentPlugin = Components({
-        resolvers: [QResolver(), ...resolvers]
+        resolvers: [PixiuResolver(), ...resolvers]
     });
     return componentPlugin;
 }

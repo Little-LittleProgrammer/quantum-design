@@ -1,4 +1,4 @@
-import { js_create_session_storage, js_is_client } from '@q-front-npm/utils';
+import { js_create_session_storage, js_is_client } from '@quantum-design/utils';
 import { Ref, getCurrentInstance, unref, watch } from 'vue';
 
 class Subscribe {

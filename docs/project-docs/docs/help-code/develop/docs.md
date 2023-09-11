@@ -69,7 +69,7 @@ if (!import.meta.env.SSR) { // ssr不支持浏览器的API
         ctx.app.use(module.Button)
         ctx.app.use(module.Card)
     })
-    import("@q-front-npm/vue3-pc-ui").then(module => {
+    import("@quantum-design/vue3-pc-ui").then(module => {
         ctx.app.use(module.QLoading)
         ctx.app.use(module.QTreeTable)
     })

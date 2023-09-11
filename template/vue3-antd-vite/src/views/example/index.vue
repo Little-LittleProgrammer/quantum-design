@@ -23,10 +23,10 @@
 <script lang='ts' setup>
 import { computed, reactive } from 'vue';
 import { IExampleData, IExampleDataTableData } from './interface';
-import { FormSchema,  useForm,  ActionItem, useDrawer,  PaginationProps } from '@q-front-npm/vue3-antd-pc-ui';
-import { usePagination } from '@q-front-npm/hooks/vue';
+import { FormSchema,  useForm,  ActionItem, useDrawer,  PaginationProps } from '@quantum-design/vue3-antd-pc-ui';
+import { usePagination } from '@quantum-design/hooks/vue';
 import { useGlobalStore } from '@/store/modules/global';
-import { js_utils_get_table_header_columns } from '@q-front-npm/utils';
+import { js_utils_get_table_header_columns } from '@quantum-design/utils';
 import { useAntdStore } from '@/store/modules/antd';
 import { useDrawerClose } from '@/hooks/web/use-drawer-close';
 import edit from './components/edit.vue';

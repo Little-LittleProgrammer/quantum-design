@@ -11,17 +11,17 @@
 <script lang="ts">
 import { defineComponent, defineAsyncComponent} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@quantum-design/hooks/vue';
 import { api_global_env } from '@/http/api/global';
 import { api_manage_user_auths } from './http/api/system-management/permission/person';
 import { router } from './router';
-import { get_net_router } from '@q-front-npm/vue3-antd-pc-ui';
+import { get_net_router } from '@quantum-design/vue3-antd-pc-ui';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 import ExportFile from '@/components/export-file/export-modal.vue';
-import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
-import { IMenuData } from '@q-front-npm/types/vue/router';
+import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 
 export default defineComponent({
@@ -116,8 +116,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@q-front-npm/shared/style/antd/antd.scss';
-@import '@q-front-npm/shared/style/base/index.scss';
+@import '@quantum-design/shared/style/antd/antd.scss';
+@import '@quantum-design/shared/style/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

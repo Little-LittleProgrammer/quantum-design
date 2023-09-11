@@ -5,7 +5,7 @@
 
 import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa';
 import { ViteEnv } from '../types';
-import {js_utils_deep_merge} from '@q-front-npm/utils';
+import {js_utils_deep_merge} from '@quantum-design/utils';
 
 export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>) {
     const { VITE_USE_PWA, VITE_GLOB_APP_TITLE } = env;

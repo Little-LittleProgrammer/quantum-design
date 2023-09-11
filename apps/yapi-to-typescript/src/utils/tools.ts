@@ -1,4 +1,4 @@
-import { js_utils_first_to_upper } from '@q-front-npm/utils';
+import { js_utils_first_to_upper } from '@quantum-design/utils';
 
 export function path_to_pascal_interface(path: string) {
     const _pathArr = path.split('/').filter(i => i);

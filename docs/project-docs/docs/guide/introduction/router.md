@@ -138,7 +138,7 @@ const IFrame = () => import('/@/views/sys/iframe/FrameBlank.vue');
 ### 实现
 
 ```ts
-import { useRedo } from '@q-front-npm/hooks/vue';
+import { useRedo } from '@quantum-design/hooks/vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
@@ -181,7 +181,7 @@ export default defineComponent({
 ### 方式
 
 ```ts
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@quantum-design/hooks/vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {

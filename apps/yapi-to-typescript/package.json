@@ -17,9 +17,9 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons-vue": "6.1.0",
-    "@q-front-npm/http": "workspace:*",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
+    "@quantum-design/http": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
     "ant-design-vue": "^4.0.2",
     "vue": "~3.3.4",
     "webextension-polyfill": "^0.10.0"

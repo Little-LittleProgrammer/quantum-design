@@ -1,7 +1,7 @@
 {
-  "name": "@q-front-npm/shared",
+  "name": "@quantum-design/shared",
   "version": "1.0.0",
-  "description": "",
+  "description": "`样式、插件、enums` 公共",
   "main": "index.ts",
   "scripts": {},
   "files": [
@@ -16,7 +16,17 @@
     "plugins/auto-import-resolver.ts",
     "index"
   ],
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "shared",
+    "turborepo"
+  ],
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "MIT",
   "devDependencies": {
     "@sentry/vue": "~7.66.0",

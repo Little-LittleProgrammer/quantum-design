@@ -66,12 +66,12 @@
 
 <script lang='ts' setup>
 import { reactive, computed, ref, watch, nextTick } from 'vue';
-import { useProjectSetting} from '@q-front-npm/vue3-antd-pc-ui';
+import { useProjectSetting} from '@quantum-design/vue3-antd-pc-ui';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
 import { useRouter } from 'vue-router';
-import {QLoading, QThemeModeButton} from '@q-front-npm/vue3-pc-ui';
+import {QLoading, QThemeModeButton} from '@quantum-design/vue3-pc-ui';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
 import { routerData } from '@/router';

@@ -1,4 +1,4 @@
-import {gRegEnum} from '@q-front-npm/shared/enums';
+import {gRegEnum} from '@quantum-design/shared/enums';
 
 const toString = Object.prototype.toString;
 function user_agent() {

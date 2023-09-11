@@ -2,7 +2,7 @@
 
 ## 版本
 - 本目录主要是提供公共的工具类方法
-- npm包名称 `@q-front-npm/utils`
+- npm包名称 `@quantum-design/utils`
 - 当前版本: 1.1.0
 
 ## 总览

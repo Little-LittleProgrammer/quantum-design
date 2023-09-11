@@ -1,9 +1,19 @@
 {
-  "name": "@q-front-npm/types",
+  "name": "@quantum-design/types",
   "version": "1.0.0",
   "description": "ts公共type类",
   "scripts": {},
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "types",
+    "turborepo"
+  ],
   "files": [
     "global",
     "vue",

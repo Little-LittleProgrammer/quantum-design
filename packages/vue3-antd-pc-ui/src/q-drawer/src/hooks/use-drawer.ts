@@ -1,4 +1,4 @@
-import { js_is_function } from '@q-front-npm/utils';
+import { js_is_function } from '@quantum-design/utils';
 import { isEqual } from 'lodash-es';
 import { computed, getCurrentInstance, nextTick, onUnmounted, reactive, ref, toRaw, unref, watchEffect } from 'vue';
 import { DrawerInstance, DrawerProps, ReturnMethods, UseDrawerInnerReturnType, UseDrawerReturnType } from '../type';

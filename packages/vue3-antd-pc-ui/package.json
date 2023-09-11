@@ -1,5 +1,5 @@
 {
-  "name": "@q-front-npm/vue3-antd-pc-ui",
+  "name": "@quantum-design/vue3-antd-pc-ui",
   "version": "1.0.0",
   "description": "vue3,antd组件库",
   "main": "dist/lib/index.js",
@@ -12,6 +12,13 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "vue3",
+    "antd",
+    "turborepo"
   ],
   "exports": {
     ".": {
@@ -38,17 +45,21 @@
     "./*": "./*"
   },
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/hooks": "workspace:*",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
-    "@q-front-npm/vue3-pc-ui": "workspace:*",
+    "@quantum-design/hooks": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
+    "@quantum-design/vue3-pc-ui": "workspace:*",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@q-front-npm-configs/vite": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@quantum-design-configs/vite": "workspace:*",
+    "@quantum-design/types": "workspace:*",
     "@types/lodash-es": "^4.17.6",
     "sass": "^1.63.3",
     "vue": "~3.3.4",

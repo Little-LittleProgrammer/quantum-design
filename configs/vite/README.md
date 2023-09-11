@@ -1,4 +1,4 @@
-# @q-front-npm-config/vite
+# @quantum-design-config/vite
 提供基本的  vite 配置 以及 vite 插件
 ## config
 1. vite-lib.config.ts 库模式专用

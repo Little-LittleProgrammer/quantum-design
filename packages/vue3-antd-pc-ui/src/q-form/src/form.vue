@@ -39,7 +39,7 @@
 </template>
 
 <script lang='ts'>
-import { gDateUtil, js_utils_deep_merge, js_is_array, js_is_function } from '@q-front-npm/utils';
+import { gDateUtil, js_utils_deep_merge, js_is_array, js_is_function } from '@quantum-design/utils';
 import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';

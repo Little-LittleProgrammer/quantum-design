@@ -7,7 +7,7 @@
 ### layout
 请在 `layout` 中使用 `useParamsAliveRoot` 注册hooks
 ```js
-import { useParamsAliveRoot } from '@q-front-npm/hooks/vue';
+import { useParamsAliveRoot } from '@quantum-design/hooks/vue';
 
 const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanCache, getCacheCanDrag, getShowQuick} = useProjectSetting(); // 项目全局动态配置, 如没有, 直接使用 enums/project-enum.ts 也可
 
@@ -35,7 +35,7 @@ useParamsAlive(params: Fn) => {
 在需要保存参数的页面使用 `useParamsAlive`
 ```js
 
-import { useParamsAlive } from '@q-front-npm/hooks/vue';
+import { useParamsAlive } from '@quantum-design/hooks/vue';
 
 function getFieldsValue() {
     return {

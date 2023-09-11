@@ -14,9 +14,9 @@
   "devDependencies": {
     "@ant-design-vue/nuxt": "^1.1.1",
     "@nuxt/devtools": "latest",
-    "@q-front-npm-configs/eslint": "1.0.4",
-    "@q-front-npm-configs/vite": "^1.1.0-beta.2",
-    "@q-front-npm/types": "^1.1.0-beta.1",
+    "@quantum-design-configs/eslint": "1.0.4",
+    "@quantum-design-configs/vite": "^1.1.0-beta.2",
+    "@quantum-design/types": "^1.1.0-beta.1",
     "@types/fs-extra": "^11.0.1",
     "@vite-pwa/nuxt": "^0.1.0",
     "ant-design-vue": "4.0.1",
@@ -31,10 +31,10 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
-    "@q-front-npm/shared": "^1.1.0-beta.1",
-    "@q-front-npm/utils": "^1.1.0-beta.2",
-    "@q-front-npm/vue3-antd-pc-ui-nuxt": "^1.0.1-beta.1",
-    "@q-front-npm/vue3-pc-ui-nuxt": "^1.0.1-beta.1",
+    "@quantum-design/shared": "^1.1.0-beta.1",
+    "@quantum-design/utils": "^1.1.0-beta.2",
+    "@quantum-design/vue3-antd-pc-ui-nuxt": "^1.0.1-beta.1",
+    "@quantum-design/vue3-pc-ui-nuxt": "^1.0.1-beta.1",
     "@sentry/vue": "^7.66.0",
     "pinia": "^2.1.6"
   }

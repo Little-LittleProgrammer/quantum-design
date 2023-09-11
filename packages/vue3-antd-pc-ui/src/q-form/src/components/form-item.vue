@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
-import { js_is_array, js_is_boolean, js_is_function, js_is_null, js_is_number, js_is_object, js_is_string, js_utils_first_to_upper } from '@q-front-npm/utils';
+import { js_is_array, js_is_boolean, js_is_function, js_is_null, js_is_number, js_is_object, js_is_string, js_utils_first_to_upper } from '@quantum-design/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
 import { computed, PropType, Ref, toRefs, unref } from 'vue';

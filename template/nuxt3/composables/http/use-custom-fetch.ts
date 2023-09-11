@@ -1,8 +1,8 @@
-import { js_is_function, js_utils_deep_merge } from "@q-front-npm/utils";
+import { js_is_function, js_utils_deep_merge } from "@quantum-design/utils";
 import type { UseFetchOptions } from "nuxt/app";
 import type { IFetchRequest, IHttpOptions, IUseCustomFetch, RequestOptions } from "./types";
 import { defaultHttp, transform } from "./enums/deault-config";
-import { gContentTypeEnum } from "@q-front-npm/shared";
+import { gContentTypeEnum } from "@quantum-design/shared";
 
 
 

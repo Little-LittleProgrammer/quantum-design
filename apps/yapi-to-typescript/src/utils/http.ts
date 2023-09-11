@@ -1,5 +1,5 @@
-import {js_is_number} from '@q-front-npm/utils';
-import {createAxios} from '@q-front-npm/http';
+import {js_is_number} from '@quantum-design/utils';
+import {createAxios} from '@quantum-design/http';
 import Browser from 'webextension-polyfill';
 
 interface IApiDetailInfo {

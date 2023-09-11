@@ -28,7 +28,7 @@
 
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, watch, unref, computed, getCurrentInstance, onMounted} from 'vue';
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@quantum-design/hooks/vue';
 import TabContent from './components/tab-content.vue';
 import { init_affix_tabs } from './hooks/use-affix-tabs';
 import { useTabsDrag } from './hooks/use-sortable';

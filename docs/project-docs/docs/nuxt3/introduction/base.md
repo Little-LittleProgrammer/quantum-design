@@ -41,7 +41,7 @@ NUXT_APP_CDN_URL = ''
 ```
 
 ## 模块配置
-已经预制 6 个模块：`pwa`, `pinia`, `dev-proxy`，`dev-tools`, `ant-design-vue3`, `'@q-front-npm/vue3-pc-ui-nuxt'`, `'@q-front-npm/vue3-antd-pc-ui-nuxt'`
+已经预制 6 个模块：`pwa`, `pinia`, `dev-proxy`，`dev-tools`, `ant-design-vue3`, `'@quantum-design/vue3-pc-ui-nuxt'`, `'@quantum-design/vue3-antd-pc-ui-nuxt'`
 
 扩展模块请在`config/modules/index.ts`下扩展
 

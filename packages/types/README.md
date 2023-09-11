@@ -1,3 +1,3 @@
-# @q-front-npm/types
+# @quantum-design/types
 
 目的: 为所有项目提供全局公共声明

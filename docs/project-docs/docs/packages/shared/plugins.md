@@ -5,7 +5,7 @@
 ### Usage
 
 ```js
-import { register_sentry_vue } from '@q-front-npm/shared/plugins';
+import { register_sentry_vue } from '@quantum-design/shared/plugins';
 
 if (import.meta.env.VITE_USE_SENTRY === 'true') {
     register_sentry_vue(app, {
@@ -37,7 +37,7 @@ if (import.meta.env.VITE_USE_SENTRY === 'true') {
 
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { QResolver } from '@q-front-npm/shared/plugins/vue/auto-import-resolver.ts';
+import { QResolver } from '@quantum-design/shared/plugins/vue/auto-import-resolver.ts';
 export default defineConfig({
     plugins: [
         // ...

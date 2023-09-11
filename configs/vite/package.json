@@ -1,7 +1,7 @@
 {
-  "name": "@q-front-npm-configs/vite",
+  "name": "@quantum-design-configs/vite",
   "version": "1.0.0",
-  "description": "代码样式统一文件",
+  "description": "`vite` 插件以及公共打包方法",
   "main": "dist/vite.cjs.min.js",
   "module": "dist/vite.esm.min.js",
   "types": "dist/types/index.d.ts",
@@ -12,9 +12,20 @@
     "build": "rollup -c --environment TYPES:true"
   },
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
+  "keywords": [
+    "pixiu-configs",
+    "monorepo",
+    "vite",
+    "turborepo"
+  ],
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/utils": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
     "@sentry/vite-plugin": "^2.4.0",
     "@vitejs/plugin-vue": "^4.3.4",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
@@ -25,7 +36,7 @@
     "vite-plugin-pwa": "^0.16.4"
   },
   "devDependencies": {
-    "@q-front-npm-configs/rollup": "workspace:*",
+    "@quantum-design-configs/rollup": "workspace:*",
     "@types/postcss-pxtorem": "^6.0.0",
     "rollup": "3.28.1"
   },

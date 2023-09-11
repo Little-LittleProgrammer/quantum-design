@@ -1,5 +1,5 @@
 {
-    "extends": "@q-front-npm-configs/tsconfig/lib.json",
-    "include": ["base", "vue", "node_modules/@q-front-npm/types/**/*.d.ts"]
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
+    "include": ["base", "vue", "node_modules/@quantum-design/types/**/*.d.ts"]
 }
   

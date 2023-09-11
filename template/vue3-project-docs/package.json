@@ -13,13 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/vue3-antd-pc-ui": "^1.1.0",
-    "@q-front-npm/vue3-pc-ui": "^1.1.0",
+    "@quantum-design/vue3-antd-pc-ui": "^1.1.0",
+    "@quantum-design/vue3-pc-ui": "^1.1.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@q-front-npm-configs/vite": "1.1.0",
-    "@q-front-npm/types": "^1.1.0",
+    "@quantum-design-configs/vite": "1.1.0",
+    "@quantum-design/types": "^1.1.0",
     "sass": "^1.63.3",
     "vitepress": "^1.0.0-rc.10"
   },

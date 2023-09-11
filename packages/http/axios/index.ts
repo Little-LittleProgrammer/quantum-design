@@ -5,8 +5,8 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axios-transform';
 import { VAxios } from './axios';
 import { check_status } from './check-status';
-import { gContentTypeEnum, gRequestEnum, gResultEnum } from '@q-front-npm/shared/enums';
-import { js_utils_deep_merge, js_is_string } from '@q-front-npm/utils';
+import { gContentTypeEnum, gRequestEnum, gResultEnum } from '@quantum-design/shared/enums';
+import { js_utils_deep_merge, js_is_string } from '@quantum-design/utils';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
 
 const {setTokenToHeader, setTokenToLs} = dealToken();

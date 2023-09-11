@@ -14,7 +14,7 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
-import { js_is_string } from '@q-front-npm/utils';
+import { js_is_string } from '@quantum-design/utils';
 import {Icon as QIcon} from '@/q-icon/src/icon';
 import {Tooltip} from 'ant-design-vue';
 

@@ -1,5 +1,5 @@
 
-import { IMenuData } from '@q-front-npm/types/vue/router';
+import { IMenuData } from '@quantum-design/types/vue/router';
 const _menus:IMenuData[] = [
 ];
 

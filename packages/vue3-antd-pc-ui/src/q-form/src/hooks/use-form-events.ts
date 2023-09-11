@@ -1,4 +1,4 @@
-import { js_is_array, js_is_function, js_is_object, js_is_string, gDateUtil, js_utils_deep_merge } from '@q-front-npm/utils';
+import { js_is_array, js_is_function, js_is_object, js_is_string, gDateUtil, js_utils_deep_merge } from '@quantum-design/utils';
 import { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ComputedRef, Ref, toRaw, unref } from 'vue';
 import { dateItemType, handle_input_number_value } from '../helper';

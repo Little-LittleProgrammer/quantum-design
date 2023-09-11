@@ -1,5 +1,5 @@
 {
-  "extends": "@q-front-npm-configs/tsconfig/vue.json",
+  "extends": "@quantum-design-configs/tsconfig/vue.json",
   "compilerOptions": {
     "isolatedModules": true,
     "noEmit": true,
@@ -8,6 +8,6 @@
         "@/*": ["src/*"]
     }
   },
-  "include": ["src", "index.ts", "types", "node_modules/@q-front-npm/types/**/*.d.ts"],
+  "include": ["src", "index.ts", "types", "node_modules/@quantum-design/types/**/*.d.ts"],
   "exclude": ["dist"]
 }

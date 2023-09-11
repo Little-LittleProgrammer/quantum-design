@@ -1,5 +1,5 @@
 # vite 
-npm包名称: `@q-front-npm/vite`
+npm包名称: `@quantum-design/vite`
 
 当前版本: 1.1.0
 
@@ -66,18 +66,18 @@ export interface IPluginsCommonOptions {
 ```js
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@q-front-npm-configs/vite';
+import {vite_common_lib_config} from '@quantum-design-configs/vite';
 import {resolve} from 'path';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_lib_config({
         entry: './index.ts',
-        name: 'qmComponents',
+        name: 'qComponents',
         outDir: 'dist',
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', 'vue-router', '@q-front-npm/shared', '@q-front-npm/utils']
+            external: ['vue', 'vue-router', '@quantum-design/shared', '@quantum-design/utils']
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -92,7 +92,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';"
                 }
             }
         }
@@ -104,7 +104,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 ### vue项目
 ```js
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config } from '@q-front-npm-configs/vite';
+import { vite_common_vue_config } from '@quantum-design-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
@@ -136,7 +136,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
 ### 移动端适配插件
 ```js
 import { ConfigEnv, UserConfig, loadEnv } from 'vite';
-import { vite_common_vue_config, vite_plugin_postcss_pxtorem } from '@q-front-npm-configs/vite';
+import { vite_common_vue_config, vite_plugin_postcss_pxtorem } from '@quantum-design-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {

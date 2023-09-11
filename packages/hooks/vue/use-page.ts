@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { js_is_string, js_utils_deep_merge, js_is_iphone, js_is_safari_browser, js_is_wechat, js_is_ding_ding, js_is_baidu_browser } from '@q-front-npm/utils';
+import { js_is_string, js_utils_deep_merge, js_is_iphone, js_is_safari_browser, js_is_wechat, js_is_ding_ding, js_is_baidu_browser } from '@quantum-design/utils';
 import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';

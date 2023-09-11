@@ -1,5 +1,5 @@
 {
-  "name": "@q-front-npm/vue3-antd-pc-ui-nuxt",
+  "name": "@quantum-design/vue3-antd-pc-ui-nuxt",
   "version": "1.0.0",
   "description": "vue3-antd-pc-ui module for Nuxt",
   "license": "MIT",
@@ -12,14 +12,24 @@
   },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "vue3",
+    "antd",
+    "turborepo",
+    "nuxt"
+  ],
   "files": [
     "dist"
   ],
-  "keywords": [
-    "nuxt"
-  ],
+  "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "scripts": {
-    "build": "npm run dev:prepare && nuxt-module-build",
+    "build": "npm run dev:prepare && nuxt-module-build --stub",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:start": "node playground/.output/server/index.mjs",
@@ -31,7 +41,7 @@
     "@nuxt/kit": "^3.7.0",
     "magic-string": "^0.27.0",
     "unplugin": "^1.0.1",
-    "@q-front-npm/vue3-antd-pc-ui": "workspace:*"
+    "@quantum-design/vue3-antd-pc-ui": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.2.1",

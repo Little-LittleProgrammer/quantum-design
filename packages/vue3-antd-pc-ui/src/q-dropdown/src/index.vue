@@ -41,7 +41,7 @@ import type { DropMenu } from './types';
 import { Dropdown as ADropdown } from 'ant-design-vue';
 import {Icon as QIcon} from '@/q-icon/src/icon';
 import { omit } from 'lodash-es';
-import { js_is_function } from '@q-front-npm/utils';
+import { js_is_function } from '@quantum-design/utils';
 import { dropdownProps } from './types';
 
 defineOptions({

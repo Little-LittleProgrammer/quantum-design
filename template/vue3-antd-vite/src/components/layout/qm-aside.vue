@@ -89,8 +89,8 @@
 import { Layout, Menu as AMenu } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 import { useSysStore } from '@/store/modules/systemManage';
-import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
-import type { IMenuData } from '@q-front-npm/types/vue/router';
+import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 interface DataProps {
     openKeys: number[];
     selectedKeys: number[];
@@ -107,7 +107,7 @@ export default defineComponent({
 <script lang='ts' setup>
 import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@quantum-design/hooks/vue';
 
 const props = defineProps({
     menuData: {

@@ -1,10 +1,20 @@
 {
-  "name": "@q-front-npm-configs/eslint",
+  "name": "@quantum-design-configs/eslint",
   "version": "1.0.0",
   "description": "代码eslint统一文件",
   "main": "index.js",
   "scripts": {},
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
+  "keywords": [
+    "pixiu-configs",
+    "monorepo",
+    "eslint",
+    "turborepo"
+  ],
   "files": [
     "eslint-base.js",
     "eslint-vue.js",

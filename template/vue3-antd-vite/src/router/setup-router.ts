@@ -1,9 +1,9 @@
 import setting from '@/enums/projectEnum';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress'; // Progress 进度条
-import { AxiosCanceler } from '@q-front-npm/http';
+import { AxiosCanceler } from '@quantum-design/http';
 import { useGlobalStore } from '@/store/modules/global';
-import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
 
 export function setup_outer_guard(router: Router) {
     set_progress(router);

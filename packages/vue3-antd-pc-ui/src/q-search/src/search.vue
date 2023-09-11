@@ -22,10 +22,10 @@
 import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
 import {Icon as QIcon} from '@/q-icon/src/icon';
 import { find_search_route, ICacheObj } from './search';
-import { js_utils_throttle_event } from '@q-front-npm/utils';
+import { js_utils_throttle_event } from '@quantum-design/utils';
 import { useRouter } from 'vue-router';
-import { QLoading } from '@q-front-npm/vue3-pc-ui';
-import type { IMenuData } from '@q-front-npm/types/vue/router';
+import { QLoading } from '@quantum-design/vue3-pc-ui';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 
 defineOptions({
     name: 'QAntdSearch'

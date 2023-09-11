@@ -1,5 +1,5 @@
 import Drawer from './src/q-drawer.vue';
-import { component_with_install } from '@q-front-npm/utils';
+import { component_with_install } from '@quantum-design/utils';
 
 export type * from './src/type';
 export { useDrawer, useDrawerInner } from './src/hooks/use-drawer';

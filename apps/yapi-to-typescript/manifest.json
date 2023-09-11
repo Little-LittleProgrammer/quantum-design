@@ -1,6 +1,6 @@
 {
     "name": "yapi to typescript",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "manifest_version": 3,
     "action": {
         "default_popup": "src/popup/index.html"

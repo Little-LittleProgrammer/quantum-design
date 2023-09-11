@@ -15,14 +15,14 @@
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/shared": "1.0.0",
-    "@q-front-npm/utils": "1.0.0",
-    "@q-front-npm-configs/vite": "1.0.0",
+    "@quantum-design/shared": "1.0.0",
+    "@quantum-design/utils": "1.0.0",
+    "@quantum-design-configs/vite": "1.0.0",
     "vue": "3.2.47",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
-    "@q-front-npm/types": "1.0.0",
+    "@quantum-design/types": "1.0.0",
     "sass": "1.63.3"
   }
 }

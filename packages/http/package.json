@@ -1,7 +1,7 @@
 {
-  "name": "@q-front-npm/http",
+  "name": "@quantum-design/http",
   "version": "1.0.0",
-  "description": "",
+  "description": " `http` 通讯 方法封装",
   "main": "dist/http.cjs.min.js",
   "module": "dist/http.esm.min.js",
   "typings": "dist/types/index.d.ts",
@@ -11,20 +11,29 @@
   "files": [
     "dist"
   ],
-  "keywords": [],
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "http",
+    "turborepo"
+  ],
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "ISC",
   "dependencies": {
-    "@q-front-npm/hooks": "workspace:*",
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
+    "@quantum-design/hooks": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
     "axios": "0.27.2",
     "lodash-es": "4.17.21",
     "qs": "6.11.0"
   },
   "devDependencies": {
-    "@q-front-npm-configs/rollup": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@quantum-design-configs/rollup": "workspace:*",
+    "@quantum-design/types": "workspace:*",
     "@types/lodash-es": "4.17.6",
     "@types/qs": "6.9.7",
     "rollup": "3.28.1"

@@ -20,7 +20,7 @@
 <script lang='ts' setup>
 import { onMounted, PropType, computed} from 'vue';
 import { HandleEnum } from '../enums/enum';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { propTypes } from '@quantum-design/types/vue/types';
 import { Switch } from 'ant-design-vue';
 import { set_handler } from '../tools/handler';
 import {Icon as QIcon} from '@/q-icon/src/icon';

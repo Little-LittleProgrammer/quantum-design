@@ -112,16 +112,16 @@ const defaultOptions: QResolverOptions[] = [{
     importStyle: 'css',
     prefix: 'Q',
     notPrefix: ['QAntd', 'QEle'],
-    packageName: '@q-front-npm/vue3-pc-ui',
+    packageName: '@quantum-design/vue3-pc-ui',
     moduleType: 'es'
 }, {
     importStyle: 'css',
     prefix: 'QAntd',
-    packageName: '@q-front-npm/vue3-antd-pc-ui',
+    packageName: '@quantum-design/vue3-antd-pc-ui',
     moduleType: 'es'
 }];
 
-export function QResolver(options: QResolverOptions[] = defaultOptions) {
+export function PixiuResolver(options: QResolverOptions[] = defaultOptions) {
     const _resolver = options.map(item => {
         const { prefix, moduleType, packageName } = item;
         return {

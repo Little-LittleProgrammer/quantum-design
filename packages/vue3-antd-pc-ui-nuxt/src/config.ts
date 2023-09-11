@@ -1,6 +1,6 @@
 import { Options } from './types';
 
-export const libraryName = '@q-front-npm/vue3-antd-pc-ui';
+export const libraryName = '@quantum-design/vue3-antd-pc-ui';
 
 const allComponents: string[] = [
     'QAntdTable', 'QAntdTableAction', 'QAntdTablePagination', 'QAntdTableTreeDrag',

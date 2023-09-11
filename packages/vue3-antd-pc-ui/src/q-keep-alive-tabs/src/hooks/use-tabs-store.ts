@@ -1,8 +1,8 @@
-import { useGo, useRedo } from '@q-front-npm/hooks/vue';
+import { useGo, useRedo } from '@quantum-design/hooks/vue';
 import { defineStore } from 'pinia';
 import { toRaw, unref } from 'vue';
 import { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';
-import { js_create_local_storage, js_create_session_storage, js_is_client, js_is_window } from '@q-front-npm/utils';
+import { js_create_local_storage, js_create_session_storage, js_is_client, js_is_window } from '@quantum-design/utils';
 import { TabKeys } from '../enums/cacheEnum';
 
 export interface TabState {

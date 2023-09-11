@@ -7,7 +7,7 @@
 ## 已有模块
 > 以下模块以及里面包含的所有组件已经完成按需导入，项目中直接使用即可
 ### 组件模块
-`ant-design-vue``@q-front-npm/vue3-pc-ui-nuxt`, `@q-front-npm/vue3-antd-pc-ui-nuxt`
+`ant-design-vue``@quantum-design/vue3-pc-ui-nuxt`, `@quantum-design/vue3-antd-pc-ui-nuxt`
 
 ### 功能模块
 `vue`、`pinia`、`pwa`

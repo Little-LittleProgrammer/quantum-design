@@ -28,12 +28,12 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, watch} from 'vue';
-import {useDrawerInner} from '@q-front-npm/vue3-antd-pc-ui';
+import {useDrawerInner} from '@quantum-design/vue3-antd-pc-ui';
 import { api_manage_role_edit, api_manage_role_data, IRoleData } from '@/http/api/system-management/permission/role';
 import { api_manage_auth_list } from '@/http/api/system-management/permission/menu-config';
-import { useMessage } from '@q-front-npm/hooks/vue';
-import { js_utils_deep_copy } from '@q-front-npm/utils';
-import { IMenuData } from '@q-front-npm/types/vue/router';
+import { useMessage } from '@quantum-design/hooks/vue';
+import { js_utils_deep_copy } from '@quantum-design/utils';
+import { IMenuData } from '@quantum-design/types/vue/router';
 interface DataProps {
     pageType: string
     roleFormData: Omit<IRoleData, 'init_auth_id'> & Record<'init_auth_id', number[]>,

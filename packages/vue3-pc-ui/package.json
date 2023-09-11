@@ -1,5 +1,5 @@
 {
-  "name": "@q-front-npm/vue3-pc-ui",
+  "name": "@quantum-design/vue3-pc-ui",
   "version": "1.0.0",
   "description": "vue3-pc端组件库",
   "main": "dist/lib/index.js",
@@ -38,14 +38,24 @@
     "test:coverage": "vitest run --coverage"
   },
   "author": "Evan Wu",
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "vue3",
+    "turborepo"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*"
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*"
   },
   "devDependencies": {
-    "@q-front-npm-configs/vite": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@quantum-design-configs/vite": "workspace:*",
+    "@quantum-design/types": "workspace:*",
     "@vue/test-utils": "^2.4.0",
     "sass": "^1.63.3",
     "vue": "~3.3.4",

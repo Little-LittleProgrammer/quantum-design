@@ -1,7 +1,7 @@
 {
-  "name": "@q-front-npm/hooks",
+  "name": "@quantum-design/hooks",
   "version": "1.0.0",
-  "description": "",
+  "description": "公共 `hooks` 方法",
   "exports": {
     ".": "./index.ts",
     "./base": "./base/index.ts",
@@ -13,17 +13,27 @@
     "vue",
     "index.ts"
   ],
+  "keywords": [
+    "pixiu",
+    "monorepo",
+    "hooks",
+    "turborepo"
+  ],
   "author": "Evan Wu",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
+    "@quantum-design/types": "workspace:*",
     "echarts": "~5.4.2",
     "sortablejs": "~1.15.0"
   },
   "devDependencies": {
-    "@q-front-npm/types": "workspace:*",
+    "@quantum-design/types": "workspace:*",
     "@types/sortablejs": "~1.15.0",
     "ant-design-vue": "^4.0.2",
     "@ant-design/icons-vue": "^6.1.0",

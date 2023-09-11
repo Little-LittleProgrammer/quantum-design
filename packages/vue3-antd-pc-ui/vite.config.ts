@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@q-front-npm-configs/vite';
+import {vite_common_lib_config} from '@quantum-design-configs/vite';
 import {resolve} from 'path';
 
 function path_resolve(dir: string) {
@@ -11,7 +11,7 @@ function path_resolve(dir: string) {
 export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_lib_config({
         entry: './index.ts',
-        name: 'qmComponents',
+        name: 'qComponents',
         outDir: 'dist',
         isComponentsBuild: true,
         target: 'modules',
@@ -22,16 +22,16 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                 'ant-design-vue',
                 '@ant-design/icons-vue',
                 'vue-types',
-                '@q-front-npm/shared',
-                '@q-front-npm/utils',
-                '@q-front-npm/shared/enums',
-                '@q-front-npm/types',
-                '@q-front-npm/types/vue',
-                '@q-front-npm/types/vue/types',
-                '@q-front-npm/hooks',
-                '@q-front-npm/hooks/base',
-                '@q-front-npm/hooks/vue',
-                '@q-front-npm/vue3-pc-ui',
+                '@quantum-design/shared',
+                '@quantum-design/utils',
+                '@quantum-design/shared/enums',
+                '@quantum-design/types',
+                '@quantum-design/types/vue',
+                '@quantum-design/types/vue/types',
+                '@quantum-design/hooks',
+                '@quantum-design/hooks/base',
+                '@quantum-design/hooks/vue',
+                '@quantum-design/vue3-pc-ui',
                 'lodash-es',
                 'pinia'
             ]
@@ -49,7 +49,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';"
                 }
             }
         },

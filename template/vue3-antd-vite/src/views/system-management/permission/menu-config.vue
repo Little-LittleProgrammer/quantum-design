@@ -87,15 +87,15 @@
 </template>
 
 <script lang='ts'>
-import { js_utils_deep_copy } from '@q-front-npm/utils';
-import { useMessage } from '@q-front-npm/hooks/vue';
-import type { TableProps} from '@q-front-npm/vue3-antd-pc-ui';
+import { js_utils_deep_copy } from '@quantum-design/utils';
+import { useMessage } from '@quantum-design/hooks/vue';
+import type { TableProps} from '@quantum-design/vue3-antd-pc-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';
 import { useGlobalStore } from '@/store/modules/global';
-import { js_utils_get_table_header_columns } from '@q-front-npm/utils';
+import { js_utils_get_table_header_columns } from '@quantum-design/utils';
 import { useAntdStore } from '@/store/modules/antd';
-import type { IMenuData } from '@q-front-npm/types/vue/router';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 interface DataProps {
     sonIds: number[];
     tableData: IMenuData[];

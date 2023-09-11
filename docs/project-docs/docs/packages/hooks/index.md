@@ -2,7 +2,7 @@
 
 ## 版本
 - 本目录主要是提供公共的hooks方法
-- npm包名称 `@q-front-npm/hooks`
+- npm包名称 `@quantum-design/hooks`
 - 当前版本: 1.0.7
 
 :::danger 提示
