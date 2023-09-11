@@ -14,7 +14,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "keywords": [
-    "pixiu",
+    "quantum",
     "monorepo",
     "utils",
     "turborepo"

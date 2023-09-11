@@ -17,7 +17,7 @@
     "access": "public"
   },
   "keywords": [
-    "pixiu-configs",
+    "quantum-configs",
     "monorepo",
     "vite",
     "turborepo"

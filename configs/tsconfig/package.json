@@ -10,7 +10,7 @@
     "access": "public"
   },
   "keywords": [
-    "pixiu-configs",
+    "quantum-configs",
     "monorepo",
     "tsconfig",
     "turborepo"

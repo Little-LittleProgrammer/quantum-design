@@ -13,7 +13,7 @@
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "keywords": [
-    "pixiu",
+    "quantum",
     "monorepo",
     "vue3",
     "antd",
