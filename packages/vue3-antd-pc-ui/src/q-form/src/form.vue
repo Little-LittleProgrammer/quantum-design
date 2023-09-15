@@ -49,7 +49,8 @@ import formAction from './components/form-action.vue';
 import { use_form_values } from './hooks/use-form-values';
 import { EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
-import './style/index.scss';
+import { Form as AForm, Row as ARow } from 'ant-design-vue';
+import './style/form.scss';
 
 export default defineComponent({
     name: 'QAntdForm',

@@ -36,7 +36,8 @@ import { reactive, PropType, computed, watch} from 'vue';
 import { js_utils_deep_copy, js_is_object } from '@quantum-design/utils';
 import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
 import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
-import './style/index.scss';
+import './style/transfer.scss';
+import { Transfer as ATransfer, Tree as ATree, InputSearch as AInputSearch} from 'ant-design-vue';
 import { propTypes } from '@quantum-design/types/vue/types';
 
 defineOptions({

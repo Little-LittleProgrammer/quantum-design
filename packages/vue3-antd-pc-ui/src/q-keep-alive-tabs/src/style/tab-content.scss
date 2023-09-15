@@ -1,0 +1,28 @@
+.q-keep-alive-tabs-drop-down {
+    &-extra-quick {
+        display: inline-block;
+        width: 36px;
+        height: $multiple-height;
+        line-height: $multiple-height;
+        @include text-color(text-color-secondary);
+        text-align: center;
+        cursor: pointer;
+        border-left: 1px solid;
+        @include border-color(border-color, 'left');
+
+        &:hover {
+            @include text-color(text-color);
+        }
+    }
+
+    &-info {
+        display: inline-block;
+        width: 100%;
+        height: $multiple-height - 2;
+        padding-left: 0;
+        margin-left: -10px;
+        font-size: 12px;
+        cursor: pointer;
+        user-select: none;
+    }
+}

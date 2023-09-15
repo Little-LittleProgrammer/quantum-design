@@ -1,0 +1,53 @@
+.#{$prefixCls}-setting {
+    & > * {
+        margin-right: 12px;
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+    &-column {
+        width: 400px;
+        
+        &-popover-title {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: space-between;
+        }
+      
+        &-check-item {
+            display: flex;
+            align-items: center;
+            min-width: 100%;
+            padding: 4px 16px 8px 0;
+      
+            .ant-checkbox-wrapper {
+                width: 100%;
+        
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+        }
+        &-fixed-left,
+        &-fixed-right {
+            color: rgb(0 0 0 / 45%);
+            cursor: pointer;
+
+            &.active,
+            &:hover {
+                color: $primary-color;
+            }
+
+            &.disabled {
+                color: $disabled-color;
+                cursor: not-allowed;
+            }
+        }
+
+        &-fixed-right {
+            transform: rotate(180deg);
+        }
+    }
+}

@@ -366,6 +366,9 @@ importers:
       '@nuxtjs/eslint-config-typescript':
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.49.0)(typescript@5.1.3)
+      '@quantum-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       nuxt:
         specifier: ^3.7.0
         version: 3.7.0(@types/node@20.2.5)(eslint@8.49.0)(rollup@3.28.1)(typescript@5.1.3)
@@ -425,6 +428,9 @@ importers:
       '@nuxtjs/eslint-config-typescript':
         specifier: ^12.0.0
         version: 12.0.0(eslint@8.49.0)(typescript@5.1.3)
+      '@quantum-design/shared':
+        specifier: workspace:*
+        version: link:../shared
       nuxt:
         specifier: ^3.7.0
         version: 3.7.0(@types/node@20.2.5)(eslint@8.49.0)(rollup@3.28.1)(typescript@5.1.3)

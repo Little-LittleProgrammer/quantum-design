@@ -11,6 +11,7 @@ import { FormActionType } from '../types/form';
 import {Icon as QIcon} from '@/q-icon/src/icon';
 import { Divider } from 'ant-design-vue';
 import { cloneDeep } from 'lodash-es';
+import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
 
 export default defineComponent({
     name: 'QAntFormItem',

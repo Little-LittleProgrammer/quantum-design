@@ -11,6 +11,8 @@ import { js_create_local_storage } from '@quantum-design/utils';
 import { onMounted, PropType} from 'vue';
 import { IProjectConfig } from '../type';
 import { useProjectSetting } from '../hooks/use-project-setting';
+import {Button as AButton} from 'ant-design-vue';
+
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,

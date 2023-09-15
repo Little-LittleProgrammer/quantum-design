@@ -1,14 +1,24 @@
 import { Options } from '../types';
 import { libraryName } from '../config';
 import { kebab_case } from '../utils';
+import {matchComponents} from '@quantum-design/shared/enums';
 
 export function get_style_dir(config: Options, name: string) {
     if (config.importStyle === false) {
         return undefined;
     }
-    const _dir = kebab_case(name);
+    let _styleDir;
+    const _total = matchComponents.length;
+    for (let i = 0; i < _total; i++) {
+        const matcher = matchComponents[i];
+        if (name.match(matcher.pattern)) {
+            _styleDir = matcher.styleDir;
+            break;
+        }
+    }
+    const _name = kebab_case(name.slice(1))
     const type = config.importStyle === 'scss' ? 'scss' : 'css';
-    return `${libraryName}/dist/es/style/${_dir}/index.${type}`;
+    return `${libraryName}/dist/es/style/${_styleDir}/${_name}.${type}`;
 }
 
 // 获取当前组件样式目录

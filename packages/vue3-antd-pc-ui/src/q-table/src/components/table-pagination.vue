@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <div class="table-pagination">
+    <div class="q-table-pagination">
         <div class="pagination-button">
             <slot></slot>
         </div>
@@ -10,7 +10,8 @@
 
 <script lang='ts' setup>
 import { PropType, computed} from 'vue';
-import {PaginationProps} from '../interface';
+import {PaginationProps} from '../types/pagination';
+import { Pagination as APagination } from 'ant-design-vue';
 defineOptions({
     name: 'QAntdTablePagination'
 });
@@ -31,3 +32,11 @@ const getPageOption = computed(() => {
     };
 });
 </script>
+<style lang="scss">
+.q-table-pagination {
+    display: flex;
+    .pagination-button {
+        flex: 1;
+    }
+}
+</style>

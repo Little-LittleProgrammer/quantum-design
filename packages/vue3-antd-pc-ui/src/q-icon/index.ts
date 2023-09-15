@@ -1,6 +1,6 @@
 import { App, Plugin } from 'vue';
 import {Icon as QAntdIcon, addIcon} from './src/icon';
-import IconPicker from './src/q-icon-picker.vue';
+import IconPicker from './src/icon-picker.vue';
 
 export type * from './src/types';
 

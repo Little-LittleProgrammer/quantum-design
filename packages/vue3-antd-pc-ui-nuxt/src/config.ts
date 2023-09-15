@@ -3,10 +3,9 @@ import { Options } from './types';
 export const libraryName = '@quantum-design/vue3-antd-pc-ui';
 
 const allComponents: string[] = [
-    'QAntdTable', 'QAntdTableAction', 'QAntdTablePagination', 'QAntdTableTreeDrag',
+    'QAntdTable', 'QAntdTableAction', 'QAntdTablePagination', 'QAntdTableImg', 'QAntdTableTreeDrag',
     'QAntdIcon', 'QAntdIconPicker',
     'QAntdForm', 'QAntdSelectAll',
-    'QAntdBreadcrumb',
     'QAntdDropdown',
     'QAntdDrawer',
     'QAntdTransfer',
@@ -14,7 +13,10 @@ const allComponents: string[] = [
 ];
 
 const allNoStylesComponents: string[] = [
-    'QAntdDropdown'
+    'QAntdTableTreeDrag',
+    'QAntdDropdown',
+    'QAntdSelectAll',
+    'QAntdIcon'
 ];
 
 const defaultInclude: RegExp[] = [

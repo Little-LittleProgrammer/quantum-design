@@ -24,7 +24,7 @@ export default defineComponent({
 
 <script lang='ts' setup>
 import { reactive, useAttrs, computed, watchEffect, PropType, getCurrentInstance, nextTick, defineComponent} from 'vue';
-import { Divider } from 'ant-design-vue';
+import { Divider, Select as ASelect, Checkbox as ACheckbox } from 'ant-design-vue';
 
 type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean; };
 type SelectOption = OptionsItem;

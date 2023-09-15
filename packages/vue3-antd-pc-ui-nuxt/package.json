@@ -48,6 +48,7 @@
     "@nuxt/schema": "^3.7.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "vue": "^3.3.4",
-    "nuxt": "^3.7.0"
+    "nuxt": "^3.7.0",
+    "@quantum-design/shared": "workspace:*"
   }
 }

@@ -55,8 +55,15 @@ export function js_utils_dom_offset(dom: Element & HTMLElement) {
         result.top += dom.offsetTop + dom.clientTop;
         // 兼容性考虑 navigator.userAgent
     }
+
+    const clientWidth = window.document.documentElement.clientWidth;
+    const clientHeight = window.document.documentElement.clientHeight;
     // 返回结果
-    return result;
+    return {
+        ...result,
+        rightIncludeBody: clientWidth - result.left,
+        bottomIncludeBody: clientHeight - result.top
+    };
 }
 
 export function js_utils_trim(string: string) {

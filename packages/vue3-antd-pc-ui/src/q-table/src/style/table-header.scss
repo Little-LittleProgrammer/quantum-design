@@ -1,0 +1,31 @@
+.#{$prefixCls}-basic-header {
+    &-top {
+        margin: 5px
+    }
+    &-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        span:first-child {
+            margin-right: 8px;
+        }
+    }
+    &-context {
+        display: flex;
+        align-items: center;
+    }
+    width: 100%;
+    &-toolbar {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: flex-end;
+  
+        > * {
+          margin-right: 8px;
+        }
+    }
+}

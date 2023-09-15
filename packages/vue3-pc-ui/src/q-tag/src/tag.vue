@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <span class="qm-tag" v-if="value && value != ''"><em :title="value">{{ value }}</em></span>
+    <span class="q-tag" v-if="value && value != ''"><em :title="value">{{ value }}</em></span>
 </template>
 
 <script lang="ts">
@@ -18,7 +18,8 @@ defineProps(tagProps);
 </script>
 
 <style lang="scss">
-.qm-tag{
+
+.q-tag{
     display: inline-block;
     vertical-align: top;
     // padding: math.div($space, 2) $space math.div($space, 2) 0;

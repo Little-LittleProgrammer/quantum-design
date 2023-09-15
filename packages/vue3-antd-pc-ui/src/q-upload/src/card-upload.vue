@@ -60,8 +60,9 @@ import { useMessage } from '@quantum-design/hooks/vue';
 import { propTypes } from '@quantum-design/types/vue/types';
 import { js_is_function, js_is_string, js_is_image, js_is_video } from '@quantum-design/utils';
 import { PropType, reactive, watch } from 'vue';
+import {Upload as AUpload, Modal as AModal, Button as AButton} from 'ant-design-vue';
 import {Icon as QIcon} from '@/q-icon/src/icon';
-import './style/index.scss';
+import './style/card-upload.scss';
 defineOptions({
     name: 'QAntdCardUpload'
 });

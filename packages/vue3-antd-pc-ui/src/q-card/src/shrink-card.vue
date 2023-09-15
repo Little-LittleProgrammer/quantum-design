@@ -19,7 +19,8 @@
 <script lang='ts' setup>
 import { reactive, onMounted, computed, PropType, ref} from 'vue';
 import {CardProps} from 'ant-design-vue/lib/card/Card';
-import './style/index.scss';
+import {Card as ACard} from 'ant-design-vue';
+import './style/shrink-card.scss';
 
 defineOptions({
     name: 'QAntdShrinkCard'

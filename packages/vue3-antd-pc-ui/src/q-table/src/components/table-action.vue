@@ -26,9 +26,9 @@
 
 <script lang="ts" setup>
 import { PropType, computed, toRaw } from 'vue';
-import { Divider, TooltipProps } from 'ant-design-vue';
+import { Divider, TooltipProps, Button as AButton, Tooltip as ATooltip, Popconfirm as APopconfirm } from 'ant-design-vue';
 import { Icon as QIcon } from '@/q-icon/src/icon';
-import { ActionItem } from '../interface';
+import { ActionItem } from '../types/table-action';
 import { js_is_boolean, js_is_function, js_is_string } from '@quantum-design/utils';
 import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({
@@ -98,3 +98,49 @@ function on_cell_click(e: MouseEvent) {
     isInButton && e.stopPropagation();
 }
 </script>
+<style lang="scss">
+#basicTableAction.basic-table-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .mr-1 {
+      margin-left: 1px;
+    }
+    .ant-btn {
+      margin-left: 0px;
+    }
+
+    .action-divider {
+      display: table;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: 0 !important;
+      }
+    }
+
+    button.ant-btn-circle {
+      span {
+        margin: auto !important;
+      }
+    }
+
+    .ant-divider,
+    .ant-divider-vertical {
+      margin: 0 2px;
+    }
+
+    .icon-more {
+      transform: rotate(90deg);
+
+      svg {
+        font-size: 1.1em;
+        font-weight: 700;
+      }
+    }
+  }
+</style>

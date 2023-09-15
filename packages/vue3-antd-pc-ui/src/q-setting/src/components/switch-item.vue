@@ -21,7 +21,7 @@
 import { onMounted, PropType, computed} from 'vue';
 import { HandleEnum } from '../enums/enum';
 import { propTypes } from '@quantum-design/types/vue/types';
-import { Switch } from 'ant-design-vue';
+import { Switch, Tooltip as ATooltip } from 'ant-design-vue';
 import { set_handler } from '../tools/handler';
 import {Icon as QIcon} from '@/q-icon/src/icon';
 const props = defineProps({

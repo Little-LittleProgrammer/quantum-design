@@ -2,7 +2,7 @@ import {useProjectSetting} from './src/hooks/use-project-setting';
 import {setup_project_conf} from './src/tools';
 import { component_with_install } from '@quantum-design/utils';
 
-import Setting from './src/index.vue';
+import Setting from './src/setting.vue';
 
 export type {IProjectConfig} from './src/type/index';
 

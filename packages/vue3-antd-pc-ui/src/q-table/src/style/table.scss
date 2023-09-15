@@ -1,0 +1,112 @@
+$prefixCls: 'q-table';
+@import './table-editable.scss';
+@import './table-header.scss';
+@import './table-setting.scss';
+
+[data-theme='dark'] {
+    .ant-table-tbody > tr:hover.ant-table-row-selected > td,
+    .ant-table-tbody > tr.ant-table-row-selected td {
+      background-color: #262626;
+    }
+    .#{$prefixCls} {
+        &-card-container {
+            padding: 10px;
+            background-color: #262626;
+        }
+        &-table-container {
+            padding: 10px;
+            background-color: #262626;
+        }
+    }
+}
+
+.#{$prefixCls} {
+    max-width: 100%;
+    height: 100%;
+
+    &-card-container {
+        padding: 10px;
+        background-color: #fff;
+    }
+    &-table-container {
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    &-row-striped {
+        td {
+            @include bg-color(body-bg)
+        }
+    }
+
+    .ant-table-cell {
+        .ant-tag {
+          margin-right: 0;
+        }
+    }
+
+    .ant-table-wrapper {
+        padding: 6px;
+        border-radius: 2px;
+  
+        .ant-table-title {
+            min-height: 40px;
+            padding: 0 0 8px !important;
+        }
+  
+        .ant-table.ant-table-bordered .ant-table-title {
+            border: none !important;
+        }
+    }
+
+    .ant-table {
+        width: 100%;
+        overflow-x: hidden;
+  
+        &-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 6px;
+            border-bottom: none;
+        }
+  
+        //.ant-table-tbody > tr.ant-table-row-selected td {
+        //background-color: fade(@primary-color, 8%) !important;
+        //}
+    }
+    .ant-pagination {
+        margin: 10px 0 0;
+    }
+  
+    .ant-table-footer {
+        padding: 0;
+
+        .ant-table-wrapper {
+            padding: 0;
+        }
+
+        table {
+            border: none !important;
+        }
+
+        .ant-table-body {
+            overflow-x: hidden !important;
+            //  overflow-y: scroll !important;
+        }
+
+        td {
+            padding: 12px 8px;
+        }
+    }
+  
+    &--inset {
+        .ant-table-wrapper {
+            padding: 0;
+        }
+    }
+    .table-column-drag-icon {
+        margin: 0 5px;
+        cursor: move;
+    }
+}

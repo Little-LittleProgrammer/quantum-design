@@ -1,5 +1,5 @@
 
-import ThemeModeButton from './src/themeModeButton.vue';
+import ThemeModeButton from './src/theme-mode-button.vue';
 import type {ThemeModeTypes} from './src/themeModeButtonTypes';
 
 export type {ThemeModeTypes};

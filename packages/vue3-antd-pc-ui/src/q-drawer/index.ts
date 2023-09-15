@@ -1,4 +1,4 @@
-import Drawer from './src/q-drawer.vue';
+import Drawer from './src/drawer.vue';
 import { component_with_install } from '@quantum-design/utils';
 
 export type * from './src/type';

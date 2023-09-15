@@ -21,7 +21,6 @@
 </template>
 
 <script lang='ts' setup>
-import './style/index.scss';
 import { reactive, watch } from 'vue';
 import TreeTableCell from './components/cell.vue';
 import { TreeTableData } from './type/tree-table';
@@ -93,3 +92,54 @@ watch(() => props.header, () => {
 }, {immediate: true});
 
 </script>
+<style lang="scss">
+.qm-tree-table {
+    // 边框颜色
+    $border-color: #eee;
+    @include border-color(border-color);
+
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $border-color;
+    @include border-color(border-color);
+    &-cell {
+        display: flex;
+        flex: 1;
+        &-content {
+            display: flex;
+            padding: 10px;
+            justify-content: center;
+            box-sizing: border-box;
+            &-span {
+                display: inline-block;
+                width: 100%;
+            }
+        }
+        &-border-l {
+            border-left: 1px solid $border-color;
+            @include border-color(border-color, 'left');
+        }
+        &-border-r {
+            align-items: center;
+            border-right: 1px solid $border-color;
+            @include border-color(border-color, 'right');
+        }
+        &-border-b {
+            border-bottom: 1px solid $border-color;
+            @include border-color(border-color, 'bottom');
+        }
+    }
+    &-header {
+        background: #fafafa;
+        color: #000;
+        @include text-color(text-color);
+        @include bg-color(body-bg);
+        .qm-tree-table-cell-content {
+            &-span {
+                text-align: center;
+            }
+
+        }
+    }
+}
+</style>

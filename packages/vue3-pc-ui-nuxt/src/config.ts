@@ -7,7 +7,7 @@ const allComponents: string[] = [
     'QTag', 
     'QThemeModeButton',
     'QTreeTable',
-    'QWatemark',
+    'QWatemark'
 ];
 
 const allNoStylesComponents: string[] = [
