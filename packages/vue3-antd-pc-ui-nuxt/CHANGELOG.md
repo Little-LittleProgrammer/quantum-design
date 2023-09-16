@@ -1,5 +1,14 @@
 # @quantum-design/vue3-antd-pc-ui-nuxt
 
+## 1.0.1
+
+### Patch Changes
+
+- 1. @quantum-design/vue3-antd-pc-ui 增加 q-table 组件
+  2. 更改打包方式
+- Updated dependencies
+  - @quantum-design/vue3-antd-pc-ui@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
