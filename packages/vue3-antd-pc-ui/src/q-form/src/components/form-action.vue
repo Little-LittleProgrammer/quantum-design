@@ -29,7 +29,7 @@ import { propTypes } from '@quantum-design/types/vue/types';
 import { ColEx } from '../types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import { use_form_context } from '../hooks/use-form-context';
-import { Col as ACol, FormItem, Button as AButton } from 'ant-design-vue';
+import { Col as ACol, FormItem as AFormItem, Button as AButton } from 'ant-design-vue';
 
 const props = defineProps({
     showActionButtonGroup: propTypes.bool.def(true), // 是否展示操作栏

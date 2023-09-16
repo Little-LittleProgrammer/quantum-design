@@ -60,7 +60,7 @@ export default defineComponent({
     },
     // 提交给父组件的, reset, 清空
     emits: ['reset', 'submit', 'register'],
-    components: {formItem, formAction},
+    components: {formItem, formAction, AForm, ARow},
     setup(props, { emit, attrs }) {
         const formModel = reactive<Record<string, any>>({});
         const schemaRef = ref<Nullable<FormSchema[]>>(null);

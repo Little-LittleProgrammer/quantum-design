@@ -20,7 +20,7 @@
             </template>
             <template #rightExtra v-if="showQuick">
                 <slot name="rightExtra"></slot>
-                <TabContent isExtra :tabItem="$route" v-if="showQuick" />
+                <tab-content isExtra :tabItem="$route" v-if="showQuick" />
             </template>
         </a-tabs>
     </div>

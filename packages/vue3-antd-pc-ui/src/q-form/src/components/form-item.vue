@@ -9,7 +9,6 @@ import { create_placeholder_message, set_component_rule_type } from '../helper';
 import { FormProps, FormSchema } from '../types/form';
 import { FormActionType } from '../types/form';
 import {Icon as QIcon} from '@/q-icon/src/icon';
-import { Divider } from 'ant-design-vue';
 import { cloneDeep } from 'lodash-es';
 import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
 
@@ -319,14 +318,14 @@ export default defineComponent({
             }
             return (
                 <span>
-                    <a-tooltip
+                    <Tooltip
                         placement="top"
                         class="mr"
                         title={<div style={getTooltipStyle}>{getHelpMessage}</div>}
                         overlayStyle={getOverlayStyle}
                     >
                         <QIcon type="QuestionCircleOutlined"></QIcon>
-                    </a-tooltip>
+                    </Tooltip>
                     {_renderLabel}
                 </span>
             );
@@ -337,9 +336,9 @@ export default defineComponent({
             const { colon } = props.formProps;
             if (component === 'Divider') {
                 return (
-                    <a-col span={24}>
+                    <Col span={24}>
                         <Divider {...unref(getComponentsProps)}>{render_label_help_message()}</Divider>
-                    </a-col>
+                    </Col>
                 );
             } else {
                 const get_content = () => {
@@ -350,7 +349,7 @@ export default defineComponent({
                 const _getSuffix = js_is_function(suffix) ? suffix(unref(getValues)) : suffix;
                 const _getPrefix = js_is_function(prefix) ? prefix(unref(getValues)) : prefix;
                 return (
-                    <a-form-item
+                    <Form.Item
                         name={field}
                         colon={colon}
                         class={{ 'suffix-item': _showSuffix || _showPrefix }}
@@ -365,7 +364,7 @@ export default defineComponent({
                             <div style="flex:1; max-width: 100%">{get_content()}</div>
                             {_showSuffix && <span class="suffix">{_getSuffix}</span>}
                         </div>
-                    </a-form-item>
+                    </Form.Item>
                 );
             }
         }
@@ -387,9 +386,9 @@ export default defineComponent({
             };
             return (
                 isIfShow && (
-                    <a-col {...realColProps} v-show={isShow}>
+                    <Col {...realColProps} v-show={isShow}>
                         {getContent()}
-                    </a-col>
+                    </Col>
                 )
             );
         };

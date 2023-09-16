@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <template v-else>
-                        <Empty></Empty>
+                        <a-empty></a-empty>
                     </template>
                 </template>
                 <Icon :type="(data.currentSelect || 'AppstoreOutlined') as 'AppstoreOutlined'" class="qm-cursor-style-point"></Icon>
@@ -51,9 +51,8 @@ import { icons } from '../data/icons-data';
 import { js_utils_throttle_event } from '@quantum-design/utils';
 import { usePagination } from '@quantum-design/hooks/vue';
 import {Icon} from './icon';
-import {Empty} from 'ant-design-vue';
 import { iconPickProps } from './types';
-import {Input as AInput, Pagination as APagination, Popover as APopover} from 'ant-design-vue';
+import {Input as AInput, Pagination as APagination, Popover as APopover, Empty as AEmpty} from 'ant-design-vue';
 import './style/icon-picker.scss';
 defineOptions({
     name: 'QAntdIconPicker'
