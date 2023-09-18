@@ -24,7 +24,9 @@ import { js_is_string } from '@quantum-design/utils';
 export default defineComponent({
     name: 'TableHeaderCell',
     components: {
-        headerEditIcon
+        headerEditIcon,
+        InfoCircleOutlined,
+        Tooltip
         // BasicHelp
     },
     props: {
