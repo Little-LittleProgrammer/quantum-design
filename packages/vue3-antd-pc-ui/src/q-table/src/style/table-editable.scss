@@ -26,10 +26,13 @@
     }
 
     &-rule-popover {
-        .ant-popover-inner-content {
-            padding: 4px 8px;
-            border-radius: 2px;
-            color: $error-color;
+        .ant-popover-inner {
+            padding: 0;
+            &-content {
+                padding: 4px 8px;
+                border-radius: 2px;
+                color: $error-color;
+            }
         }
     }
 

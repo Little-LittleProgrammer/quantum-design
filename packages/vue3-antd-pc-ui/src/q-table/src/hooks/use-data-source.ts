@@ -67,7 +67,7 @@ export function useDataSource(
         filters: Partial<Recordable>,
         sorter: SorterResult
     ) {
-        const { clearSelectOnPageChange, sortFn, filterFn, fetchSetting } = unref(propsRef);
+        const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
         if (clearSelectOnPageChange) {
             clearSelectedRowKeys();
         }
@@ -75,23 +75,8 @@ export function useDataSource(
 
         const params: Recordable = {};
 
-        const { sort } = merge(
-            {},
-            FETCH_SETTING, // 默认映射关系
-            fetchSetting // 自定义映射关系
-        );
-
-        if (sorter) {
-            let _sortInfo = sorter;
-            if (js_is_function(sortFn)) {
-                _sortInfo = sortFn(sorter);
-            } else {
-                _sortInfo = {
-                    ..._sortInfo,
-                    [sort.order]: sort.type === 'number' ? _sortInfo.order === 'ascend' ? 1 : 2 : _sortInfo.order,
-                    [sort.field]: _sortInfo.field
-                };
-            }
+        if (sorter && js_is_function(sortFn)) {
+            const _sortInfo = sortFn(sorter);
             searchState.sortInfo = _sortInfo;
             params.sortInfo = _sortInfo;
         }

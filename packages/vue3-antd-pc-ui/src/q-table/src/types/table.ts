@@ -123,11 +123,6 @@ export interface TableActionType {
     setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
     setCacheColumns?: (columns: BasicColumn[]) => void;
 }
-export interface FetchSorter {
-    order: string,
-    type: 'number' | 'string',
-    field: string
-}
 
 // table api Mapping field, support 'a.b.c'
 export interface FetchSetting {
@@ -141,7 +136,6 @@ export interface FetchSetting {
     totalField: string;
     summaryField: string; // default: 'total'
     actionField: string; // default 'action'
-    sort: FetchSorter
 }
 
 // table setting set table base conf

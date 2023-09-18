@@ -2,7 +2,7 @@
 
 对 `antv` 的 table 组件进行封装
 
-> 如果文档内没有，可以尝试在在线示例内寻找
+> 如果文档内没有，可以尝试在示例内寻找
 
 ## Usage
 
@@ -648,6 +648,8 @@ setProps({
 
 用于表格右侧操作列渲染
 
+地址: [TableAction](./table-sec-comp.md)
+
 #### Props
 
 | 属性                  | 类型           | 默认值  | 可选值       | 说明                            | 版本  |
@@ -717,4 +719,4 @@ export interface PopConfirm {
 
 ## 全局配置
 
-在[componentsSettings](https://github.com/vbenjs/vue-vben-admin/tree/main/src/settings/componentSetting.ts) 可以配置全局参数。用于统一整个项目的风格。可以通过 props 传值覆盖
+在[componentsSettings](packages/vue3-antd-pc-ui/src/q-table/src/enums/settings.ts) 可以配置全局参数。用于统一整个项目的风格。可以通过 props 传值覆盖

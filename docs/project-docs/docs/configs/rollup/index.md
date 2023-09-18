@@ -3,12 +3,7 @@
 ## 简介
 npm包名称: `@quantum-design/rollup`
 
-当前版本: 1.1.0
-
-:::danger 提示
-重要重要重要
-- `1.1.0` 版本进行破坏性升级，`vue3.2.x`｜`vite3.2.5`｜`rollup2`用户请使用 `1.0.x`版本
-:::
+当前版本: 1.0.2
 
 提供了公共的rollup配置, 包括
 1. `rollup-lib.config.js`, 对应基础rollup配置

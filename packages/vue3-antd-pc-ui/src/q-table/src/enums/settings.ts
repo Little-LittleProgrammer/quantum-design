@@ -21,12 +21,7 @@ export default {
             totalField: 'count',
             headerField: 'header',
             summaryField: 'total',
-            actionField: 'action',
-            sort: {
-                order: 'sort_type',
-                type: 'number',
-                field: 'sort_field'
-            }
+            actionField: 'action'
         },
         // Number of pages that can be selected
         pageSizeOptions: ['10', '50', '80', '100'],

@@ -7,7 +7,7 @@ export function useSortable(el: HTMLElement | Ref<HTMLElement>, options?: Option
         nextTick(async() => {
             if (!el) return;
             const _sortable = (await import('sortablejs')).default;
-            _sortable.create(unref(el), {
+            return _sortable.create(unref(el), {
                 animation: 500,
                 delay: 400,
                 delayOnTouchOnly: true,

@@ -3,7 +3,7 @@
 ## 简介
 npm包名称: `@quantum-design/eslint`
 
-当前版本: 1.0.3
+当前版本: 1.0.2
 
 
 提供了公共的eslint配置, 包括
