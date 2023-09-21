@@ -6,3 +6,4 @@ export * from './src/is';
 export * from './src/storage';
 export * from './src/utils';
 export * from './src/antd-util';
+export * from './src/indexed-db';

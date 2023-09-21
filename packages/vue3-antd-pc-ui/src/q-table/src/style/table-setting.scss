@@ -15,6 +15,12 @@
             align-items: center;
             justify-content: space-between;
         }
+
+        .ant-checkbox-group {
+            max-height: 500px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
       
         &-check-item {
             display: flex;
