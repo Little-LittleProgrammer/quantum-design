@@ -14,7 +14,7 @@ import type {
 import type { FormProps } from '@/q-form';
 
 import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './enums/const';
-import { propTypes } from '@quantum-design/types/vue/types';
+import { propTypes } from '@q-front-npm/types/vue/types';
 
 export const basicProps = {
     clickToRowSelect: { type: Boolean, default: true },
@@ -103,6 +103,7 @@ export const basicProps = {
         default: null
     },
     ellipsis: { type: Boolean, default: true },
+    resizable: { type: Boolean, default: true },
     isCanResizeParent: { type: Boolean, default: false },
     canResize: { type: Boolean, default: true },
     clearSelectOnPageChange: propTypes.bool,
@@ -127,7 +128,7 @@ export const basicProps = {
         type: [String, Function] as PropType<string | ((record: Recordable) => string)>,
         default: ''
     },
-    bordered: propTypes.bool,
+    bordered: propTypes.bool.def(true),
     pagination: {
         type: [Object, Boolean] as PropType<PaginationProps | boolean>,
         default: null

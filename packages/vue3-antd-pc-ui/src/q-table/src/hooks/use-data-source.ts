@@ -67,7 +67,7 @@ export function useDataSource(
         filters: Partial<Recordable>,
         sorter: SorterResult
     ) {
-        const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
+        const { clearSelectOnPageChange, sortFn, filterFn, fetchSetting } = unref(propsRef);
         if (clearSelectOnPageChange) {
             clearSelectedRowKeys();
         }

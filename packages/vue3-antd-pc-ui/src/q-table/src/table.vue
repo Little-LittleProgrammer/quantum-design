@@ -22,6 +22,7 @@
                 :rowClassName="getRowClassName"
                 v-show="getEmptyDataIsShowTable"
                 @change="handle_table_change"
+                @resizeColumn="handle_resize_change"
             >
                 <template #headerCell="{ column }">
                     <header-cell :column="column" />
@@ -187,6 +188,10 @@ function handle_table_change(...args: any) {
     // 解决通过useTable注册onChange时不起作用的问题
     const { onChange } = unref(getProps);
     onChange && js_is_function(onChange) && onChange.call(undefined, ...args);
+}
+
+function handle_resize_change(w: number, col: any) {
+    col.width = w
 }
 
 const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } = useTableForm(getProps, slots, fetch, getLoading);

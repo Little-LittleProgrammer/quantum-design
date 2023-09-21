@@ -123,7 +123,6 @@ export interface TableActionType {
     setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
     setCacheColumns?: (columns: BasicColumn[]) => void;
 }
-
 // table api Mapping field, support 'a.b.c'
 export interface FetchSetting {
     // page key, default: 'page'
@@ -204,6 +203,8 @@ export interface BasicTableProps<T = any> {
     actionColumn?: BasicColumn;
     // 文本超过宽度是否显示。。。
     ellipsis?: boolean;
+    // 列表是否可拖拽
+    resizable?: boolean;
     // 是否继承父级高度（父级高度-表单高度-padding高度）
     isCanResizeParent?: boolean;
     // 是否可以自适应高度
@@ -492,5 +493,6 @@ export type IOptionsTable<C extends string | number | symbol> = {
     fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>,
     sortData?: (C | 'all' | undefined)[] | Partial<Record<(C | 'all'), Fn>>;
     customTitle?: (C | 'all')[],
-    customCell?:Partial< Record<(C | 'all'), any>>
+    customCell?:Partial< Record<(C | 'all'), any>>,
+    resizableData?: Partial<Record<C | 'all', boolean>> // 是否可拖拽
 }

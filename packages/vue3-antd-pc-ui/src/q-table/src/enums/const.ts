@@ -34,3 +34,5 @@ export const DEFAULT_FILTER_FN = defaultFilterFn;
 export const DEFAULT_ALIGN = 'center';
 
 export const INDEX_COLUMN_FLAG = 'INDEX'; // 序号列
+
+export const DEFAULT_NORMAL_WIDTH = 150;

@@ -1,8 +1,8 @@
 import { ComputedRef, Ref, computed, reactive, ref, toRaw, unref, watch } from 'vue';
 import { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
-import { FETCH_SETTING, DEFAULT_ALIGN } from '../enums/const';
-import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_string, js_utils_format_date } from '@quantum-design/utils';
+import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
+import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_number, js_is_string, js_utils_format_date } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 
 interface ActionType {
@@ -32,9 +32,10 @@ function deep_merge_by_key(arr1: BasicColumn[], arr2: BasicColumn[]): BasicColum
     return Object.values(_cacheObj);
 }
 
-// ellipsis 统一设置进去
-function handle_item(item: BasicColumn, ellipsis: boolean) {
+// ellipsis, resizable 统一设置进去
+function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>) {
     const { key, dataIndex, children } = item;
+    const {ellipsis, resizable} = options;
     item.align = item.align || DEFAULT_ALIGN;
     if (ellipsis) {
         if (!key) {
@@ -46,18 +47,33 @@ function handle_item(item: BasicColumn, ellipsis: boolean) {
             });
         }
     }
+    if (resizable) {
+        if (!key) {
+            item.key = dataIndex as any;
+        }
+        if (!js_is_boolean(item.resizable)) {
+            const _obj: any = {
+                resizable
+            };
+            if (!js_is_number(item.width)) {
+                console.info(`当 resizable 为 ture 时，请保证 width 属性设置，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
+                _obj.width = DEFAULT_NORMAL_WIDTH;
+            }
+            Object.assign(item, _obj);
+        }
+    }
     if (children && children.length) {
-        handle_children(children, !!ellipsis);
+        handle_children(children, options);
     }
 }
 
 // 处理 treetable
-function handle_children(children: BasicColumn[] | undefined, ellipsis: boolean) {
+function handle_children(children: BasicColumn[] | undefined, options: Record<'resizable' | 'ellipsis', boolean>) {
     if (!children) return;
     children.forEach((item) => {
         const { children } = item;
-        handle_item(item, ellipsis);
-        handle_children(children, ellipsis);
+        handle_item(item, options);
+        handle_children(children, options);
     });
 }
 
@@ -68,6 +84,7 @@ function handle_action_column(propsRef: ComputedRef<BasicTableProps>, columns: B
         fixed: 'right',
         title: '操作',
         key: actionField,
+        align: DEFAULT_ALIGN,
         dataIndex: actionField,
         ...actionColumn
     });
@@ -143,15 +160,22 @@ export function useColumns(
         if (!_columns) {
             return [];
         }
-        const { ellipsis } = unref(propsRef);
+        const { ellipsis, resizable } = unref(propsRef);
 
         _columns.forEach((item) => {
-            const { customRender, slots } = item;
+            const { customRender, slots, dataIndex } = item;
 
-            handle_item(
-                item,
-                Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots
-            );
+            const _options = {
+                ellipsis: Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
+                resizable: Reflect.has(item, 'resizable') && item.resizable !== undefined ? !!item.resizable : !!resizable && !customRender && !slots
+            };
+
+            if (dataIndex !== actionField) {
+                handle_item(
+                    item,
+                    _options
+                );
+            }
         });
         return _columns;
     });

@@ -6,7 +6,7 @@
                 <div :class="`${prefixCls}-popover-title`">
                     <Checkbox v-model:checked="state.checkAll" :indeterminate="indeterminate" @change="on_check_all_change">列展示</Checkbox>
                     <Checkbox v-model:checked="checkSelect" :disabled="!defaultRowSelection" @change="handle_select_check_Change">勾选列</Checkbox>
-
+                    <Checkbox v-model:checked="checkResizable" @change="handle_resizable_check_change">列拖拽</Checkbox>
                     <a-button size="small" type="link" @click="reset">重置</a-button>
                 </div>
             </template>
@@ -113,6 +113,7 @@ const state = reactive<State>({
 let cacheTableProps: Partial<BasicTableProps<any>> = {};
 const checkIndex = ref(false);
 const checkSelect = ref(false);
+const checkResizable = ref(false);
 
 const getValues = computed(() => {
     return unref(table?.getBindValues) || {};
@@ -138,6 +139,7 @@ watchEffect(() => {
     }
     checkIndex.value = !!_values.showIndexColumn;
     checkSelect.value = !!_values.rowSelection;
+    checkResizable.value = !!_values.resizable;
 });
 
 // 获取列
@@ -232,9 +234,11 @@ function reset() {
     init(true);
     checkIndex.value = !!cacheTableProps.showIndexColumn;
     checkSelect.value = !!cacheTableProps.rowSelection;
+    checkResizable.value = !!cacheTableProps.resizable;
     table.setProps({
         showIndexColumn: checkIndex.value,
-        rowSelection: checkSelect.value ? defaultRowSelection : undefined
+        rowSelection: checkSelect.value ? defaultRowSelection : undefined,
+        resizable: checkResizable.value
     });
     sortable?.sort(sortableOrder);
 }
@@ -281,6 +285,15 @@ function handle_select_check_Change(e: CheckboxChangeEvent) {
     isSetColumnsFromThis = true;
     table.setProps({
         rowSelection: e.target.checked ? defaultRowSelection : undefined
+    });
+}
+
+// 控制是否显示筛选列
+function handle_resizable_check_change(e: CheckboxChangeEvent) {
+    isSetPropsFromThis = true;
+    isSetColumnsFromThis = true;
+    table.setProps({
+        resizable: e.target.checked
     });
 }
 

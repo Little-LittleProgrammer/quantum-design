@@ -3,6 +3,7 @@ import { BasicTableProps, BasicColumn, TableRowSelection } from '../types/table'
 import type {Recordable} from '../types/table';
 import { js_utils_dom_offset, js_utils_throttle_event } from '@quantum-design/utils';
 import { isBoolean } from 'lodash-es';
+import { DEFAULT_NORMAL_WIDTH } from '../enums/const';
 
 export function useTableScroll(
     propsRef: ComputedRef<BasicTableProps>,
@@ -218,7 +219,6 @@ export function useTableScroll(
         }
 
         // TODO props ?? 0;
-        const NORMAL_WIDTH = 150;
 
         const columns = unref(columnsRef).filter((item) => !item.defaultHidden);
         columns.forEach((item) => {
@@ -228,7 +228,7 @@ export function useTableScroll(
 
         const len = unsetWidthColumns.length;
         if (len !== 0) {
-            width += len * NORMAL_WIDTH;
+            width += len * DEFAULT_NORMAL_WIDTH;
         }
 
         const table = unref(tableElRef);

@@ -7,7 +7,8 @@ type IOptionsTable<C extends string | number | symbol> = {
     fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>,
     sortData?: (C | 'all' | undefined)[] | Partial<Record<(C | 'all'), Fn>>;
     customTitle?: (C | 'all')[],
-    customCell?:Partial< Record<(C | 'all'), any>>
+    customCell?:Partial< Record<(C | 'all'), any>>,
+    resizableData?: Partial<Record<C | 'all', boolean>> // 是否可拖拽
 }
 /**
  * 设置表格头
@@ -30,7 +31,7 @@ type IOptionsTable<C extends string | number | symbol> = {
  * ```
  */
 export function js_utils_get_table_header_columns<T extends Record<string, any>>(headerObj: T, options: IOptionsTable<keyof T> = {}, list?: any) {
-    const { alignData, widthData, sortData = [], customTitle = [], customCell} = options;
+    const { alignData, widthData, sortData = [], customTitle = [], customCell, resizableData} = options;
     const fixedData:Record<string, 'left' | 'right'> = {
         action: 'right',
         ...options.fixedData
@@ -55,6 +56,7 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
                     key: _key,
                     dataIndex: _key,
                     width: widthData ? widthData[_key] ?? (widthData.all ?? '') : '',
+                    resizable: resizableData ? resizableData[_key] ?? (resizableData.all ?? undefined) : undefined,
                     align: alignData ? alignData[_key] ?? (alignData.all ?? 'center') : 'center',
                     fixed: fixedData[_key] ?? '',
                     sorter: js_is_object(sortData) ? (sortData as Record<string, Fn>)[_key] : (sortData as string[]).indexOf(_key) > -1,
