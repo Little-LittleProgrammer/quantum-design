@@ -240,7 +240,7 @@ export function useColumns(
             columnsRef.value = _header;
             cacheColumns = _header?.filter(item => item.dataIndex !== actionField) ?? [];
         },
-        {deep: true}
+        {immediate: true}
     );
 
     function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
