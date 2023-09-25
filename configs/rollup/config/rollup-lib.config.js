@@ -27,9 +27,13 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
         const common = {
             input: rollupOptions.input ? rollupOptions.input : `./index.ts`,
             output: {
-                banner: `/*! utils version: ${version || masterVersion} \n author: ${author} */`,
+                banner: `/*! ${name} version: ${version || masterVersion} \n author: ${author} */`,
                 footer: '/*! join us */',
+                generatedCode: 'es2015',
                 ...rollupOptions.output
+            },
+            treeshake: {
+                moduleSideEffects: false
             },
             // 外部依赖，也是防止重复打包的配置
             external: [...(rollupOptions.external || [])],
@@ -47,8 +51,9 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
                         declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
                         module: 'ES2015'
                     },
-                    include: ['*.ts+(|x)', '**/*.ts+(|x)', '../**/*.ts+(|x)']
-                    // exclude: ['**/*.spec.ts+(|x)']
+                    sourceMap: false,
+                    include: ['*.ts+(|x)', '**/*.ts+(|x)', '../**/*.ts+(|x)'],
+                    exclude: ['**/*.spec.ts+(|x)']
                 }),
                 ...(rollupOptions.plugins || [])
             ]
@@ -68,8 +73,7 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
             ...common.output
         },
         plugins: [
-            ...common.plugins,
-            terser()
+            ...common.plugins, terser()
         ]
     };
 
