@@ -263,6 +263,7 @@ export default defineComponent({
                 }
             }
             set(record, _dataKey, _value);
+            defaultValueRef.value = _value;
             needEmit && table.emit?.('edit-end', { record, index, key: _dataKey, value: _value });
             isEdit.value = false;
         }

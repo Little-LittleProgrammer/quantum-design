@@ -86,6 +86,8 @@ function handle_action_column(propsRef: ComputedRef<BasicTableProps>, columns: B
         key: actionField,
         align: DEFAULT_ALIGN,
         dataIndex: actionField,
+        minWidth: 100,
+        width: DEFAULT_NORMAL_WIDTH,
         ...actionColumn
     });
 }

@@ -62,7 +62,7 @@ export default defineComponent({
         const getWrapStyle = computed((): CSSProperties => {
             const { size } = props;
             const s = `${size}px`;
-            return { height: s, width: s };
+            return { width: s };
         });
 
         const prefixCls = 'q-table-cell-img';
