@@ -62,7 +62,8 @@ export function render_edit_cell(column: BasicColumn) {
             value,
             record,
             column,
-            index
+            index,
+            key: record.onSubmitEdit ? 1 : 2 // 为了修复com.uid不重新刷新时, 部分方法没挂载上的问题
         });
     };
 }

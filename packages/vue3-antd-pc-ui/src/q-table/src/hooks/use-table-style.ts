@@ -7,7 +7,7 @@ export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls:
         const {striped, rowClassName} = unref(propsRef);
         const classNames: string[] = [];
         if (striped) {
-            classNames.push((index || 0) % 2 === 1 ? `${prefixCls}-row__striped` : '');
+            classNames.push((index || 0) % 2 === 1 ? `${prefixCls}-row-striped` : '');
         }
         if (rowClassName && js_is_function(rowClassName)) {
             classNames.push(rowClassName(record, index));

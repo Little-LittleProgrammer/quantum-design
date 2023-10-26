@@ -22,6 +22,24 @@ interface SearchState {
     filterInfo: Record<string, string[]>;
 }
 
+function header_equal(oldHeader: any[], newHeader: any[]):boolean {
+    if (!oldHeader || oldHeader.length === 0) {
+        return false;
+    }
+    let _isEqu = true;
+    for (let i = 0; i < newHeader.length; i++) {
+        const _oldObj = oldHeader[i];
+        const _newObj = newHeader[i];
+        for (const key in _newObj) {
+            if (_newObj[key] !== _oldObj[key]) {
+                _isEqu = false;
+            }
+        }
+    }
+    console.log(_isEqu);
+    return _isEqu;
+}
+
 export function useDataSource(
     propsRef: ComputedRef<BasicTableProps>,
     {
@@ -326,7 +344,11 @@ export function useDataSource(
             dataSourceRef.value = _resultItems;
             if (!_isArrayResult && get(_res, headerField)) {
                 const _header = get(_res, headerField);
-                columnsRef.value = js_is_array(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
+                const _finHeader = js_is_array(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
+                const _isEqu = header_equal(unref(columnsRef), _finHeader);
+                if (!_isEqu) {
+                    columnsRef.value = _finHeader;
+                }
             }
 
             if (!_isArrayResult && get(_res, summaryField)) {

@@ -280,7 +280,6 @@ export default defineComponent({
         }
 
         function handle_cancel() {
-            isEdit.value = false;
             currentValueRef.value = defaultValueRef.value;
             const { column, index, record } = props;
             const { key, dataIndex } = column;
@@ -289,6 +288,9 @@ export default defineComponent({
                 index,
                 key: dataIndex || key,
                 value: unref(currentValueRef)
+            });
+            nextTick(() => {
+                isEdit.value = false;
             });
         }
 
