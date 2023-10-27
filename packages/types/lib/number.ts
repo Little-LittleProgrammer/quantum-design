@@ -102,9 +102,10 @@ export {
     // IntIncrease,
     // IntAddSimple,
     // IntMinusSingleAbs,
-    Compare
+    Compare,
     // GetHalf,
     // ToNumber,
     // Add,
     // ParseFloat
+    IntAddSingle
 };
