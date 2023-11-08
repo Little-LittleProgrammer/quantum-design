@@ -24,7 +24,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@quantum-design/hooks": "workspace:*",
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
     "axios": "0.27.2",
@@ -32,6 +31,7 @@
     "qs": "6.11.0"
   },
   "devDependencies": {
+    "@quantum-design/hooks": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
     "@quantum-design/types": "workspace:*",
     "@types/lodash-es": "4.17.6",
