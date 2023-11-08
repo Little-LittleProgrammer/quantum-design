@@ -26,14 +26,14 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@quantum-design/shared": "workspace:*",
-    "dayjs": "1.11.7"
+    "@quantum-design/shared": "workspace:*"
   },
   "devDependencies": {
     "@quantum-design/types": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
     "@types/crypto-js": "4.1.1",
     "rollup": "^3.28.1",
-    "crypto-js": "4.1.1"
+    "crypto-js": "4.1.1",
+    "dayjs": "1.11.7"
   }
 }
