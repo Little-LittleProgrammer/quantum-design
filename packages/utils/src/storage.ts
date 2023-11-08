@@ -1,4 +1,4 @@
-import { Encryption } from './cipher';
+import { use_cryptojs_module } from './cipher';
 import { js_is_null_or_undef } from './is';
 
 interface IStorageParams {
@@ -15,11 +15,11 @@ const defaultCacheTime = 60 * 60 * 24 * 7;
 class WebStorage {
     storage: Storage;
     hasEncrypt: boolean;
-    encryption: Encryption;
+    encryption: UnwrapPromise<ReturnType<typeof use_cryptojs_module>>;
     prefixKey: string;
     timeout:number | null
 
-    constructor(storage:Storage, prefixKey:string, hasEncrypt: boolean, encryption:Encryption, timeout:number | null) {
+    constructor(storage:Storage, prefixKey:string, hasEncrypt: boolean, encryption:UnwrapPromise<ReturnType<typeof use_cryptojs_module>>, timeout:number | null) {
         this.storage = storage;
         this.prefixKey = prefixKey;
         this.hasEncrypt = hasEncrypt;
@@ -69,13 +69,13 @@ class WebStorage {
 
 export { WebStorage};
 
-export const js_create_storage = ({
+export const js_create_storage = async({
     prefixKey = '',
     storage = localStorage,
     timeout = null,
     hasEncrypt = false
 }: Options) => {
-    const encryption = new Encryption({
+    const encryption = await use_cryptojs_module({
         key: '1F1F1F1E1E1E1D1D',
         iv: '1A1A1A1B1B1B1C1C'
     });

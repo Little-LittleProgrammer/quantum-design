@@ -315,7 +315,8 @@ export function useDataSource(
             if (beforeFetch && js_is_function(beforeFetch)) {
                 params = (await beforeFetch(params)) || params;
             }
-
+            // 请求前重置
+            dataSourceRef.value = [];
             let _res = await api(params);
             if (_res.code) {
                 _res = _res.data;

@@ -1,6 +1,6 @@
-import { Push } from './array';
+import { Join, Push } from './array';
 import { IsEqual, Compare, IntAddSingle } from './number';
-import { Or } from './common';
+import { And3, Or } from './common';
 
 // 将类型转为字符串有一定的限制，仅支持下面的类型
 type CanStringified = string | number | bigint | boolean | null | undefined
@@ -211,6 +211,91 @@ type PadHelper<
         : PadHelper<`${IsStart extends true ? FillS : ''}${S}${IsStart extends false ? FillS : ''}`, N, FillS, IsStart, Len, IntAddSingle<Offset, 1>>
     : S
 
+/**
+ * 去掉字符串类型左侧的空格
+ * @example
+ * type Result = PadStart<'   0123'> // '0123'
+ */
+type TrimLeft<S extends string> = S extends`${
+    | ' '
+    | '\t'
+    | '\n'}${infer RightRest}`
+    ? TrimLeft<RightRest>
+    : S
+
+/**
+ * 去掉字符串类型右侧的空格
+ * @example
+ * type Result = PadStart<'0123   '> // '0123'
+ */
+type TrimRight<S extends string> = S extends `${infer LeftRest}${
+    | ' '
+    | '\t'
+    | '\n'}`
+    ? TrimRight<LeftRest>
+    : S
+
+/**
+ * 去掉字符串类型两侧的空格
+ * @example
+ * type Result = PadStart<'   0123   '> // '0123'
+ */
+type Trim<S extends string> = TrimLeft<TrimRight<S>>
+
+/**
+ * 字符串转大写
+ * @example
+ * type Result = ToUpperCase<'abc'> // 'ABC'
+ */
+type ToUpperCase<S extends string> = Uppercase<S>
+
+/**
+ * 字符串转小写
+ * @example
+ * type Result = ToUpperCase<'ABC'> // 'abc'
+ */
+type ToLowerCase<S extends string> = Lowercase<S>
+
+/**
+ * 截取字符串 [start, end)
+ *  @example
+ * type Result = SubString<'123', 0, 1> // '1'
+ */
+type SubString<S extends string, Start extends number, End extends number> = SubStringHelper<S, Start, End>
+
+/**
+ * 在字符串中抽取从 开始 下标开始的指定数目的字符
+ * @example
+ * type Result = SubStr<'123', 1, 2> // '23'
+ */
+type SubStr<
+    S extends string,
+    Start extends number,
+    Len extends number
+> = SubStringHelper<S, Start, IntAddSingle<Start, Len>>
+
+type SubStringHelper<
+    S extends string,
+    Start extends number,
+    End extends number,
+    Offset extends number = 0,
+    Cache extends string[] = []
+> = IsEqual<Offset, End> extends true
+    ? Join<Cache, ''>
+    : SubStringHelper<
+    S,
+    Start,
+    End,
+    IntAddSingle<Offset, 1>,
+    And3<
+    Or<Compare<Offset, Start>, IsEqual<Offset, Start>>,
+    Or<Compare<End, Offset>, IsEqual<Offset, End>>,
+    CharAt<S, Offset> extends string ? true : false
+    > extends true
+        ? Push<Cache, CharAt<S, Offset>>
+        : Cache
+    >
+
 export type {
     CanStringified,
     Stringify,
@@ -218,5 +303,22 @@ export type {
     Split,
     GetStringLength,
     CharAt,
-    Concat
+    Concat,
+    Includes,
+    StartsWith,
+    EndsWith,
+    IndexOf,
+    LastIndexOf,
+    Replace,
+    ReplaceAll,
+    Repeat,
+    PadStart,
+    PadEnd,
+    TrimLeft,
+    TrimRight,
+    Trim,
+    ToUpperCase,
+    ToLowerCase,
+    SubString,
+    SubStr
 };

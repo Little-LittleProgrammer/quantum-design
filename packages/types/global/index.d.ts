@@ -59,3 +59,4 @@ declare interface WheelEvent {
 
 declare type TimeoutHandle = ReturnType<typeof setTimeout>;
 declare type IntervalHandle = ReturnType<typeof setInterval>;
+declare type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;

@@ -14,7 +14,7 @@ import type {
 import type { FormProps } from '@/q-form';
 
 import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './enums/const';
-import { propTypes } from '@q-front-npm/types/vue/types';
+import { propTypes } from '@quantum-design/types/vue/types';
 
 export const basicProps = {
     clickToRowSelect: { type: Boolean, default: true },
