@@ -2,16 +2,10 @@
   "name": "@quantum-design/hooks",
   "version": "1.0.1",
   "description": "公共 `hooks` 方法",
-  "exports": {
-    ".": "./index.ts",
-    "./base": "./base/index.ts",
-    "./vue": "./vue/index.ts"
-  },
   "scripts": {},
   "files": [
     "base",
-    "vue",
-    "index.ts"
+    "vue"
   ],
   "keywords": [
     "quantum",

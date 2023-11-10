@@ -22,4 +22,4 @@ const result = rollup_commpn_lib_config('vite', {
     ]
 }, pkg.version);
 
-export default [...Object.values(result)];
+export default result;

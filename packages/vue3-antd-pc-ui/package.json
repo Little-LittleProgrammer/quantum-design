@@ -55,7 +55,9 @@
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "sortablejs": "~1.15.0",
+    "dayjs": "~1.10.7"
   },
   "devDependencies": {
     "@quantum-design-configs/vite": "workspace:*",

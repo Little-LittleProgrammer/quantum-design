@@ -4,7 +4,7 @@
   "description": "`vite` 插件以及公共打包方法",
   "main": "dist/vite.cjs.min.js",
   "module": "dist/vite.esm.min.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/configs/vite/index.d.ts",
   "files": [
     "dist"
   ],

@@ -1,5 +1,6 @@
-export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
-export async function check_status(status:string, msg: string, errorMessageMode: ErrorMessageMode = 'message') {
+import { js_is_function } from "@quantum-design/utils";
+
+export async function check_status(status:string, msg: string, cb?: Fn) {
     let errMessage = '';
     switch (status) {
         case '400':
@@ -45,16 +46,10 @@ export async function check_status(status:string, msg: string, errorMessageMode:
             errMessage = '连接错误';
     }
     if (errMessage) {
-        if (errorMessageMode !== 'none') {
-            const {useMessage} = await import('@quantum-design/hooks/vue')
-            const { createMessage, createErrorModal } = useMessage();
-            const error = createMessage.error!;
-            if (errorMessageMode === 'modal') {
-                createErrorModal({ title: '错误提示', content: errMessage });
-            } else if (errorMessageMode === 'message') {
-                error({ content: errMessage, key: `global_error_message_status_${status}` });
-            }
+        if (cb && js_is_function(cb)) {
+            cb(status, errMessage)
         }
+        
         
     }
 }

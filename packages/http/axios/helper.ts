@@ -1,4 +1,5 @@
-import { js_create_local_storage, js_is_function } from '@quantum-design/utils';
+import { js_is_function } from '@quantum-design/utils';
+import { js_create_local_storage } from '@quantum-design/utils/extra';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { CreateAxiosOptions } from './axios-transform';
 

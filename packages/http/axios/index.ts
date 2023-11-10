@@ -85,9 +85,9 @@ export const defaultTransform: AxiosTransform = {
             options.customTransform.customRequestError(error);
         }
         if (error && error.response) {
-            check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageMode || 'message');
+            check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageCb);
         } else {
-            check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageMode || 'message');
+            check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageCb);
         }
         return Promise.reject(error.response);
     },
@@ -103,16 +103,16 @@ export const defaultTransform: AxiosTransform = {
         if (res.data.code == gResultEnum.NOTFOUND){
             location.replace('/backend/error');
         } else if (res.data.code == gResultEnum.ERROR){
-            check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageCb);
         } else if (res.data.code == gResultEnum.SERVERERROR){
-            check_status('400', res.data.msg, options.requestOptions?.errorMessageMode || 'message');
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageCb);
         } else if (res.data.code == gResultEnum.RELOAD){
             setTokenToLs(options.requestOptions?.withToken || true, res);
             window.location.reload();
         } else if (res.data.code == gResultEnum.LOGIN){
             window.location.href = res.data.data?.url;
         } else if (res.data.code == gResultEnum.TIMEOUT) {
-            check_status('408', '', options.requestOptions?.errorMessageMode || 'message');
+            check_status('408', '', options.requestOptions?.errorMessageCb);
         }
         return res;
     },
@@ -126,13 +126,13 @@ export const defaultTransform: AxiosTransform = {
             options.customTransform.customResponseError(error);
         }
         if (error && error.response) {
-            check_status(error.response?.status, '连接错误', options.requestOptions?.errorMessageMode || 'message');
+            check_status(error.response?.status, '连接错误', options.requestOptions?.errorMessageCb);
         } else if (error.code === 'ERR_CANCELED') {
             // 如果手动取消, 不予受理
             console.log('请求重复, 手动取消请求');
             return Promise.resolve(error);
         } else {
-            check_status('400', '连接到服务器失败', options.requestOptions?.errorMessageMode || 'message');
+            check_status('400', '连接到服务器失败', options.requestOptions?.errorMessageCb);
         }
         return Promise.reject(error.response ? error.response : error);
     }
@@ -167,7 +167,7 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     // 是否携带token
                     withToken: true,
                     // 消息提示类型
-                    errorMessageMode: 'message',
+                    errorMessageCb: 'message',
                     // 接口地址
                     apiUrl: '',
                     uploadUrl: '',

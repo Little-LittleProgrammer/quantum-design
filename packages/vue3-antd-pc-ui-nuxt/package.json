@@ -11,6 +11,7 @@
     }
   },
   "main": "./dist/module.cjs",
+  "module": "dist/module.mjs",
   "types": "./dist/types.d.ts",
   "keywords": [
     "quantum",
@@ -29,7 +30,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run dev:prepare && nuxt-module-build --stub",
+    "build": "npm run dev:prepare && nuxt-module-build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:start": "node playground/.output/server/index.mjs",

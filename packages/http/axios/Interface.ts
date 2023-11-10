@@ -1,4 +1,3 @@
-export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
 export interface RequestOptions {
     // 是否返回原生的response
@@ -9,7 +8,7 @@ export interface RequestOptions {
     apiUrl?: string;
     urlPrefix?: string;
     // 错误提示方式 default: 'message'
-    errorMessageMode?: ErrorMessageMode;
+    errorMessageCb?: (errCode: number, errMes: string) => void;
     // 是否携带时间戳
     joinTime?: boolean;
     cancelToken?: boolean;

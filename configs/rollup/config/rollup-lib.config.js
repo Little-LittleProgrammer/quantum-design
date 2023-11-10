@@ -5,8 +5,8 @@ import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import { createRequire } from 'node:module';
 
-const require = createRequire(import.meta.url);
-const pkg = require('../package.json');
+const required = createRequire(import.meta.url);
+const pkg = required('../package.json');
 
 const masterVersion = pkg.version;
 const author = pkg.author;
@@ -22,12 +22,23 @@ const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
 const isDeclaration = process.env.TYPES !== 'false' &&
     !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
 
-export function rollup_commpn_lib_config(name, rollupOptions, version) {
+function isString(val){
+    return toString.call(val) === `[object String]`;
+}
+
+function isObject(val) {
+    return val !== null && typeof val === 'object';
+}
+
+function isArray(val) {
+    return val !== null && Array.isArray(val);
+}
+
+export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
+    const finPkgList = [];
     function get_common() {
         const common = {
-            input: rollupOptions.input ? rollupOptions.input : `./index.ts`,
             output: {
-                banner: `/*! ${name} version: ${version || masterVersion} \n author: ${author} */`,
                 footer: '/*! join us */',
                 generatedCode: 'es2015',
                 ...rollupOptions.output
@@ -44,56 +55,80 @@ export function rollup_commpn_lib_config(name, rollupOptions, version) {
                 }),
                 json(),
                 typescript({
+                    outputToFilesystem: false,
                     tsconfig: './tsconfig.json',
                     compilerOptions: {
                         declaration: isDeclaration,
                         declarationMap: false,
                         declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
-                        module: 'ES2015'
+                        module: 'ES2020'
                     },
                     sourceMap: false,
-                    include: ['*.ts+(|x)', '**/*.ts+(|x)', '../**/*.ts+(|x)'],
-                    exclude: ['**/*.spec.ts+(|x)']
+                    include: ['*.ts+(|x)', '**/*.ts+(|x)'],
+                    exclude: ['**/*.spec.ts+(|x)', 'node_modules']
+                }),
+                terser({
+                    compress: {drop_console: true}
                 }),
                 ...(rollupOptions.plugins || [])
             ]
         };
         return common;
     }
+    const result = [];
 
     const common = get_common();
+    function package_file(pkgList) {
+        if (isString(pkgList)) {
+            finPkgList.push({
+                name: pkgList,
+                input: `./index.ts`
+            });
+        } else if (isArray(pkgList)) {
+            for (const item of pkgList) {
+                finPkgList.push({
+                    name: item.name,
+                    input: item.input || `./index.ts`
+                });
+            }
+        } else if (isObject(pkgList)) {
+            finPkgList.push({
+                name: pkgList.name,
+                input: pkgList.input || `./index.ts`
+            });
+        }
 
-    const esmPackageMin = {
-        ...common,
-        output: {
-            dir: `${packageDirDist}`,
-            entryFileNames: `${name}.esm.min.js`,
-            format: FormatTypes.esm,
-            sourcemap: false,
-            ...common.output
-        },
-        plugins: [
-            ...common.plugins, terser()
-        ]
-    };
+        console.log(finPkgList);
 
-    const cjsPackageMin = {
-        ...common,
-        output: {
-            dir: `${packageDirDist}`,
-            entryFileNames: `${name}.cjs.min.js`,
-            format: FormatTypes.cjs,
-            sourcemap: false,
-            minifyInternalExports: true,
-            ...common.output
-        },
-        plugins: [...common.plugins, terser()]
-    };
+        for (const item of finPkgList) {
+            result.push({
+                ...common,
+                input: item.input,
+                output: {
+                    dir: `${packageDirDist}`,
+                    entryFileNames: `${item.name}.esm.min.js`,
+                    format: FormatTypes.esm,
+                    sourcemap: false,
+                    banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
+                    ...common.output
+                }
+            }, {
+                ...common,
+                input: item.input,
+                output: {
+                    dir: `${packageDirDist}`,
+                    entryFileNames: `${item.name}.cjs.min.js`,
+                    format: FormatTypes.cjs,
+                    sourcemap: false,
+                    minifyInternalExports: true,
+                    banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
+                    ...common.output
+                }
+            });
+        }
+    }
 
-    const total = {
-        esmPackageMin,
-        cjsPackageMin
-    };
-    return total;
+    package_file(pkgList);
+    return result;
 }
 

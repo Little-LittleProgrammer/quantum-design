@@ -17,7 +17,8 @@
   "files": [
     "global",
     "vue",
-    "lib"
+    "lib",
+    "vue/types"
   ],
   "license": "MIT",
   "dependencies": {},
