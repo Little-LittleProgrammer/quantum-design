@@ -7,11 +7,13 @@
   "typings": "dist/types/utils/index.d.ts",
   "exports": {
     ".": {
+        "default":  "./dist/utils.cjs.min.js",
       "import": "./dist/utils.esm.min.js",
       "require": "./dist/utils.cjs.min.js",
       "types": "./dist/types/utils/index.d.ts"
     },
     "./extra": {
+        "default":  "./dist/extra.cjs.min.js",
       "import": "./dist/extra.esm.min.js",
       "require": "./dist/extra.cjs.min.js",
       "types": "./dist/types/utils/extra.d.ts"
