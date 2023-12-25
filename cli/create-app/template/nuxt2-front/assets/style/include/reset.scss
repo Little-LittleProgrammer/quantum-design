@@ -1,0 +1,114 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+    font-family: \9ED1\4F53;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a, button {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+input,button,select,textarea{
+    outline:medium;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #b3b3b3;
+    font-size: 28px;
+    font-weight: normal;
+    word-break: break-all;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+    color:#b3b3b3;
+    font-size: 28px;
+    font-weight: normal;
+    word-break: break-all;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color:#b3b3b3;
+    font-size: 28px;
+    font-weight: normal;
+    word-break: break-all;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color:#b3b3b3;
+    font-size: 28px;
+    font-weight: normal;
+    word-break: break-all;
+}
+input[type=search]::-webkit-search-cancel-button{
+    -webkit-appearance: none;//此处只是去掉默认的小×
+}
+
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+input, textarea {
+    -webkit-touch-callout: auto;
+    -webkit-user-select: auto; /*webkit浏览器*/
+    user-select: auto;
+}
+
+a {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+input,textarea {
+    caret-color: $brand_color;
+}
+
+// @supports (-webkit-mask: none) and (not (cater-color: $brand_color)) {
+//     input::first-line { color: $brand_color; }
+//     textarea::first-line { color: $brand_color; }
+// }

@@ -1,0 +1,68 @@
+.qm-mod{
+    margin-top: $space * 2;
+    &:first-child{
+        margin-top: 0;
+    }
+    &.mt0{
+        margin-top: 0;
+    }
+    &-th{
+        span{
+            display: inline-block;
+            vertical-align: top;
+            &.s-tit,&.s-tit-s{
+                font-size: 18px;
+                font-weight: bold;
+                color: $heading-color;
+                line-height: 48px;
+            }
+            &.s-tit-s{
+                font-size: 14px;
+            }
+            &.s-tips{
+                font-size: 14px;
+                padding-left: $space;
+                line-height: 48px;
+            }
+        }
+        .filter{
+            padding-top: 8px;
+            padding-left: $space * 2;
+            .el-form-item{
+                margin-bottom: 8px;
+                margin-right: $space * 2;
+                &:last-child{
+                    margin-right: 0;
+                }
+            }
+        }
+        .fun{
+            display: block;
+            padding-top: 8px;
+            padding-left: $space;
+            a,.el-btn{
+                margin-left: $space;
+                &:first-child{
+                    margin-left: 0;
+                }
+                &.el-btn-link{
+                    padding: 0;
+                }
+            }
+            a{
+                line-height: 32px;
+            }
+        }
+        &.flex{
+            @include flexbox();
+            span{
+                display: block;
+            }
+            .filter{
+                display: block;
+                width: 100%;
+                @include flexboxChild();
+            }
+        }
+    }
+}

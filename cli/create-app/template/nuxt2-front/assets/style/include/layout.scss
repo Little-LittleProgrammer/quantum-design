@@ -1,0 +1,33 @@
+@import 'base.scss';
+
+body,html{
+    width: 100%;
+}
+
+.mt{
+    margin-top: $spacing_num;
+}
+
+.mb{
+    margin-bottom: $spacing_num;
+}
+
+.pt{
+    padding-top: $spacing_num;
+}
+
+.pl{
+    padding-left: $spacing_num;
+}
+
+.pr{
+    padding-right: $spacing_num;
+}
+
+.pb{
+    padding-bottom: $spacing_num;
+}
+
+.pb0{
+    padding-bottom: 0;
+}

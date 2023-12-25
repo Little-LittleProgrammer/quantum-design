@@ -1,0 +1,24 @@
+{
+    "extends": "@q-front-npm-configs/tsconfig/vue.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "isolatedModules": true,
+        "paths": {
+            "@/*": ["src/*"],
+            "#/*": ["types/*"]
+        }
+    },
+    "include": [
+        "src/**/*.ts", 
+        "src/**/*.d.ts", 
+        "src/**/*.tsx", 
+        "src/**/*.vue",
+        "types/*.d.ts",
+        "build/**/*.ts", 
+        "build/**/*.d.ts",
+        "node_modules/@q-front-npm/types/**/*.d.ts"
+    ],
+    "exclude": [
+        "dist"
+    ]
+}

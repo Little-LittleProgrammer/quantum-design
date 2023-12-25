@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="JsHtmlRoot">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://cdn-front.qimao.com/global/static/images/favicon2022.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <div id="app">
+      <style>
+        @keyframes rotate{
+              0%{
+                  transform: rotate(0deg);
+              }
+              50%{
+                  transform: rotate(180deg);
+              }
+              100%{
+                  transform: rotate(360deg);
+              }
+          }
+          .app-loading {
+              display: flex;
+              width: 100%;
+              height: 100%;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              background-color: #f4f7f9;
+          }
+          .app-loading .app-loading-container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              display: flex;
+              transform: translate3d(-50%, -50%, 0);
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+          }
+          .app-loading .app-loading-content {
+              border-radius: 10px;
+              position: relative;
+              text-align: center;
+              height: 80px;
+              width: 80px;
+              z-index: 888;
+          }
+          .app-loading .app-loading-rotate {
+              height: 100%;
+              width: 100%;
+              border-radius: 10px;
+              font-size: 0;
+              background-color: #FCC800;
+              animation: rotate 1.5s infinite ;
+          }
+          .app-loading .app-img-container {
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              height: 100%;
+              background-image: url('/img/loading.png');
+              transform-origin: bottom;
+              background-size: 100%;
+              z-index: 999;
+              background-position: bottom;
+          }
+          .app-loading .app-loading-title {
+              display: flex;
+              margin-top: 30px;
+              font-size: 30px;
+              color: rgb(0 0 0 / 85%);
+              justify-content: center;
+              align-items: center;
+          }
+      </style>
+      <div class="app-loading">
+          <div class="app-loading-container">
+              <div class="app-loading-content">
+                  <div class="app-loading-rotate"></div>
+                  <div class="app-img-container"></div>
+              </div>
+              <div class="app-loading-title"><%= title %></div>
+          </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+

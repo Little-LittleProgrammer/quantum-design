@@ -1,0 +1,25 @@
+{
+  "name": "qm-npm-docs",
+  "version": "1.0.0",
+  "description": "qm-components-docs",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "highlight.js": "^9.12.0",
+    "less": "^3.0.2",
+    "vue-highlight.js": "^2.2.0",
+    "vuepress": "^1.8.2"
+  },
+  "dependencies": {
+    "less-loader": "^4.1.0",
+    "node-sass": "^4.14.1",
+    "sass": "^1.35.2",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.14",
+    "vuepress-theme-copy-antdocs": "^1.0.1"
+  }
+}

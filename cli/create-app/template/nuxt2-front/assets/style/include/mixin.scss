@@ -1,0 +1,282 @@
+/*
+  sass混合
+*/
+@mixin bg-image($url) {
+    background: url($url) no-repeat;
+    background-size: 100% 100%;
+}
+
+@mixin bg-dpi-image($url) {
+    background: url(#{$url}-2x.png) no-repeat;
+    background-size: 100% 100%;
+    @media (min-device-pixel-ratio: 3) {
+        background: url(#{$url}-3x.png) no-repeat;
+    }
+}
+
+@mixin vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+@mixin horizontal-center {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+@mixin all-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//线性渐变
+@mixin gra($begin,$end) {
+    background-image: -webkit-gradient(linear, to right bottom, to right top, from($begin), to($end));
+    background-image: -webkit-linear-gradient(to bottom, $begin, $end);
+    background-image: -moz-linear-gradient(to bottom, $begin, $end);
+    background-image: -o-linear-gradient(to bottom, $begin, $end);
+    background-image: linear-gradient(to bottom, $begin, $end);
+}
+
+@mixin graDeg($deg,$begin,$end){
+    background-image: -webkit-gradient($deg, from($begin), to($end));
+    background-image: -webkit-linear-gradient($deg, $begin, $end);
+    background-image:    -moz-linear-gradient($deg, $begin, $end);
+    background-image:      -o-linear-gradient($deg, $begin, $end);
+    background-image:         linear-gradient($deg, $begin, $end);
+}
+
+@mixin flexboxColumn() {
+    -webkit-box-direction: normal;
+    -moz-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -webkit-flex-direction: column; /* column, row-reverse, column-reverse */
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+@mixin flex-center($justify: center, $align: center, $dir: row) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin flex-box($justify: center, $align: center, $dir: row, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+
+ //两端对齐
+@mixin flex-justify(){
+    @include hack(box-pack, justify);
+    @include hack(flex-pack, justify);
+    @include hack(justify-content, space-between);
+}
+
+//垂直居中
+@mixin vertical-center{
+    @include hack(box-align, center);
+    @include hack(align-items,center);
+}
+
+@mixin pxScale($direction: Y) {
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+        transform: scale#{$direction}(0.7);
+    }
+    @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+        transform: scale#{$direction}(0.5);
+    }
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+        transform: scale#{$direction}(0.33);
+    }
+}
+
+@mixin text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+@mixin calc-min-height($rem) {
+    min-height: calc(100% - #{$rem});
+}
+
+@mixin calc-width($rem) {
+    width: calc(100% - #{$rem});
+}
+
+@mixin multiline-clamp($lines: 2) {
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+}
+
+@mixin hack($name, $value) {
+    -moz-#{$name}: $value;
+    -webkit-#{$name}: $value;
+    #{$name}: $value;
+}
+
+@mixin borderRadius($param) {
+    @include hack(border-radius, $param);
+}
+
+@mixin scale($x, $y) {
+    @include hack(transform, scale($x, $y));
+}
+
+@mixin border1pxbg($direction, $color) {
+    @media screen and (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+        border: 0 none;
+        @if ($direction == top) {
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, transparent), color-stop(50%, $color));
+            background-position: left top;
+            background-repeat: repeat-x;
+            background-size: 100% 1px; /*no*/
+        }
+        @if ($direction == bottom) {
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, transparent), color-stop(50%, $color));
+            background-position: left bottom;
+            background-repeat: repeat-x;
+            background-size: 100% 1px; /*no*/
+        }
+        @if ($direction == left) {
+            background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, transparent), color-stop(50%, $color));
+            background-position: left top;
+            background-size: 1px 100%; /*no*/
+            background-repeat: repeat-y;
+        }
+        @if ($direction == right) {
+            background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, transparent), color-stop(50%, $color));
+            background-position: right top;
+            background-size: 1px 100%; /*no*/
+            background-repeat: repeat-y;
+        }
+        @if ($direction == tb) {
+            background: -webkit-gradient(linear, left bottom, left top, color-stop(50%, transparent), color-stop(50%, $color)) repeat-x left top, -webkit-gradient(linear, left top, left bottom, color-stop(50%, transparent), color-stop(50%, $color)) repeat-x left bottom;
+            background-size: 100% 1px; /*no*/
+            background-color: #fff;
+        }
+    }
+}
+
+@mixin border1px($position, $color, $w, $width:100%, $height:0,$xypos:left, $parentPosition: relative) {
+    position: #{$parentPosition};
+    &:#{$w} {
+        border-#{$position}: 1px solid $color; /*no*/
+        content: ' ';
+        display: block;
+        width: $width;
+        height: $height;
+        padding-#{$position}: 1px; /*no*/
+        position: absolute;
+        #{$xypos} : 0;
+        #{$position}: 0;
+    }
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+        & {
+            &:#{$w} {
+                @if ($position == bottom) {
+                    #{$position}: -.7px; /*no*/
+                }
+                @if ($position == right) {
+                    @include scale(.7, 1);
+                } @else {
+                    @include scale(1, .7);
+                }
+                @include hack(transform-origin, 0 0);
+            }
+        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) , (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+        & {
+            &:#{$w} {
+                @if ($position == bottom) {
+                    #{$position} : -.5px; /*no*/
+                }
+                @if ($position == right) {
+                    @include scale(.5, 1);
+                } @else {
+                    @include scale(1, .5);
+                }
+                @include hack(transform-origin, 0 0);
+            }
+        }
+    }
+    // @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    //     & {
+    //         &:#{$w} {
+    //             @if ($position == bottom) {
+    //                 #{$position} : -.33px; /*no*/
+    //             }
+    //             @if ($position == right) {
+    //                 @include scale(.33, 1);
+    //             } @else {
+    //                 @include scale(1, .33);
+    //             }
+    //             @include hack(transform-origin, 0 0);
+    //         }
+    //     }
+    // }
+}
+
+@mixin border1px-full($w,$color,$radius:false, $parentPosition: relative) {
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+        position: #{$parentPosition};
+        border: 0 none;
+        &:#{$w} {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid $color; /*no*/
+            @include hack(transform-origin, 0 0);
+            padding: 1px;  /*no*/
+            @include hack(box-sizing, border-box);
+            z-index: 2;
+            pointer-events: none;
+        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+        &:#{$w} {
+            width: 150%;
+            height: 150%;
+            @include scale(.75, .75);
+            @if ($radius) {
+                @include borderRadius($radius/.75);
+            }
+        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+        &:#{$w} {
+            width: 200%;
+            height: 200%;
+            @include scale(.5, .5);
+            @if ($radius) {
+                @include borderRadius($radius/.5);
+            }
+        }
+    }
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+        &:#{$w} {
+            width: 400%;
+            height: 400%;
+            @include scale(.25, .25);
+            @if ($radius) {
+                @include borderRadius($radius/.25);
+            }
+        }
+    }
+
+}

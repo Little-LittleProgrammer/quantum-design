@@ -1,0 +1,74 @@
+@import './base.scss';
+html,body{
+	height: 100%;
+}
+
+#app{
+	height: 100%;
+}
+
+.wrapper{
+	min-height: 100%;
+	background: $body_bg_color;
+	.main{
+		box-sizing: border-box;
+		&.padding{
+			padding-bottom: 96px;
+		}
+	}
+}
+
+.row{
+	background: #fff;
+	margin-bottom: 16px;
+	width: 100%;
+	&:last-child{
+		margin-bottom: 0;
+	}
+	&.gray{
+		background: $body_bg_color;
+	}
+	&.mb0{
+		margin-bottom: 0;
+	}
+}
+
+.top-fixed-box,.bottom-fixed-box{
+	position: fixed;
+	left: 0;
+	width: 100%;
+	z-index: $fixed_index;
+}
+
+.top-fixed-box{
+	top: 0;
+}
+
+.bottom-fixed-box{
+	bottom: 0;
+}
+
+.bottom-fixed-space-box{
+	// padding-bottom: 20px;
+}
+
+.qm-layout {
+
+  @each $position, $value, $single in (top, 10, mt), (top, 20, mt), (top, 30, mt), (top, 40, mt),
+    (bottom, 10, mb), (bottom, 20, mb), (bottom, 30, mb), (bottom, 40, mb),
+    (left, 10, ml), (left, 20, ml), (left, 30, ml), (left, 40, ml),
+    (right, 10, mr), (right, 20, mr), (right, 30, mr), (right, 40, mr) {
+    &-#{$single}-#{$value} {
+      margin-#{$position}: #{$value}px
+    }
+  }
+
+  @each $position, $value, $single in (top, 10, pt), (top, 20, pt), (top, 30, pt), (top, 40, pt),
+    (bottom, 10, pb), (bottom, 20, pb), (bottom, 30, pb), (bottom, 40, pb),
+    (left, 10, pl), (left, 20, pl), (left, 30, pl), (left, 40, pl),
+    (right, 10, pr), (right, 20, pr), (right, 30, pr), (right, 40, pr) {
+    &-#{$single}-#{$value} {
+      padding-#{$position}: #{$value}px
+    }
+  }
+}

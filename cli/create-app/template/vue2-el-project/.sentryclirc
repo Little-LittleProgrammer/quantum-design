@@ -1,0 +1,7 @@
+[defaults]
+url = https://qm-front-sentry.wtzw.com/
+org = sentry
+project = 
+
+[auth]
+token = 

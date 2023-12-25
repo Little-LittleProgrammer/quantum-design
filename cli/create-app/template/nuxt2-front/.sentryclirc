@@ -1,0 +1,7 @@
+[defaults]
+url = https://qm-front-sentry.wtzw.com/
+org = sentry
+project = m-qimao-com
+
+[auth]
+token = 30ff006434424229a932462f1d54dc860237b971f3914f00bd15003889f247ca

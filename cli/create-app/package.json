@@ -1,0 +1,35 @@
+{
+  "name": "create-qm-app",
+  "version": "1.0.8",
+  "type": "module",
+  "description": "",
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild"
+  },
+  "bin": {
+    "create-qm-app": "index.js",
+    "qmcap": "index.js"
+  },
+  "files": [
+    "index.js",
+    "template",
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "keywords": [],
+  "author": "Evan Wu",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.2",
+    "@types/minimist": "^1.2.3",
+    "@types/prompts": "^2.4.6",
+    "fs-extra": "^10.0.0",
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.5",
+    "prompts": "^2.4.2",
+    "unbuild": "^2.0.0"
+  }
+}

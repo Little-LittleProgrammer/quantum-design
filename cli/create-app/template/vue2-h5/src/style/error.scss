@@ -1,0 +1,44 @@
+.km-error{
+    text-align: center;
+    padding: 100px 30px;
+    width: 100%;
+    box-sizing: border-box;
+    .error-icon{
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: 556px 280px;
+        margin: 0 auto;
+        display: block;
+        width: 556px;
+        height: 280px;
+    }
+    .s-tips{
+        font-size: 28px;
+        line-height: 48px;
+        color: $second_color;
+        display: block;
+        padding-top: 6px;
+    }
+    .a-btn{
+        padding: 0 30px;
+        margin: 30px auto 0;
+        display: inline-block;
+    }
+    &.error-404{
+        .error-icon{
+            background-image: url(#{$global_img_url}/images/error-404-pic.png);
+        }
+    }
+    &.error-no-data{
+        .error-icon{
+            background-image: url(#{$global_img_url}/images/no-data-pic.png);
+        }
+    }
+    &.fixed{
+        position: fixed;
+        top: 50%;
+        left: 0;
+        transform: translate(0,-70%);
+        padding: 0 30px;
+    }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production run-s gen:css build:nuxt",
+    "build:nuxt": "nuxt build --dotenv .env.production",
+    "dev": "run-s gen:css dev:nuxt",
+    "dev:nuxt": "nuxt dev --dotenv .env.development",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "gen:css": "esno scripts/gen-antd-style.ts"
+  },
+  "devDependencies": {
+    "@ant-design-vue/nuxt": "^1.2.0",
+    "ant-design-vue": "^4.0.7",
+    "cross-env": "^7.0.3",
+    "esno": "^0.17.0",
+    "@vite-pwa/nuxt": "^0.3.4",
+    "@nuxt/devtools": "latest",
+    "nuxt": "^3.8.2",
+    "vue": "^3.3.10",
+    "sass": "^1.63.3",
+    "npm-run-all": "^4.1.5",
+    "vue-router": "^4.2.5",
+    "@q-front-npm/types": "^1.2.1",
+    "@q-front-npm-configs/vite": "1.2.1"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@q-front-npm/shared": "^1.2.1",
+    "@q-front-npm/utils": "^1.2.1",
+    "@q-front-npm/vue3-antd-pc-ui-nuxt": "^1.2.1",
+    "@q-front-npm/vue3-pc-ui-nuxt": "^1.2.1",
+    "crypto-js": "^4.2.0",
+    "pinia": "^2.1.6"
+  }
+}

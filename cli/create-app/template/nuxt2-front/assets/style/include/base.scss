@@ -1,0 +1,103 @@
+// $global_img_url:"https://cdn.wtzw.com/front/static/qm-npm-m/images";
+
+// $global_img_url: "/static/images";
+
+$brand_color: #FFDA33; // 品牌色
+
+$first_color: #222;
+$second_color: #666;
+$third_color: #999;
+$fourth_color: #bbb;
+$important_color: #fca000; 
+
+$orange_color: #fca000;
+$orange_press_color: rgba(255, 141, 0, 0.7);
+$orange_active_color: rgba(255, 162, 0, 0.7);
+
+$btn_border_color: #fca000;
+$bg_fill_color: #FCC800;
+
+$body_bg_color: #f2f2f2;
+$important_bg_color: #fca000;
+$border_color: #ebebeb;
+
+$skeleton_screen_color: #fafafa;
+
+$spacing_num: 40px;
+
+%set_padding{
+  padding-left: $spacing_num;
+  padding-right: $spacing_num;
+}
+
+%set_borderRadius{
+    border-radius: 24px;
+}
+
+// 层级列表
+$main_index: 100;
+$empty_index: 150;
+$header_footer_index: 200;
+$rightScroll_idnex: 300;
+$pop_index: 1000;
+$toast_index: 1100;
+$guide_index: 1200;
+$fixed_index: 250;
+
+
+$header_height: 104px;
+
+%cf,%clearfix {
+    &:before {
+        content: "";
+        display: table;
+    }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+%defaultLogoBg{
+    background: $body_bg_color url('~@/assets/images/common/default-logo.png') center center no-repeat;
+    background-size: 60% auto;
+}
+
+@mixin linearGradientBg {
+    @include graDeg(90deg,#FFE040 0%,#FCC800 100%);
+    color: $first_color;
+}
+
+%activityPicShadowBg{
+    position: relative;
+    z-index: 10;
+    .img,img{
+        position: relative;
+        z-index: 5;
+        border-radius: 4px;
+        @extend %defaultLogoBg;
+    }
+    // &:before{
+    //     content: '';
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     height: 100%;
+    //     width: 7%;
+    //     z-index: 10;
+    //     background: url('~@/assets/images/qm-common/g-book-left-spine.png') 0 0 no-repeat;
+    //     background-size: 100% 100%;
+    // }
+    &:after{
+        content: '';
+        position: absolute;
+        bottom: -10%;
+        left: 0;
+        z-index: 1;
+        background: url('~@/assets/images/common/book-bottom-shadow.png') center bottom no-repeat;
+        background-size: 100% 100%;
+        height: 10%;
+        width: 100%;
+    }
+}
