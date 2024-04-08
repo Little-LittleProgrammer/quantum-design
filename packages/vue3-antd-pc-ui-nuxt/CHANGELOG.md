@@ -1,5 +1,16 @@
 # @quantum-design/vue3-antd-pc-ui-nuxt
 
+## 1.1.0
+
+### Minor Changes
+
+- 代码重构
+
+### Patch Changes
+
+- Updated dependencies
+  - @quantum-design/vue3-antd-pc-ui@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

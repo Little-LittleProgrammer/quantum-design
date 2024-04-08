@@ -1,5 +1,19 @@
 # @quantum-design/vue3-antd-pc-ui
 
+## 1.1.0
+
+### Minor Changes
+
+- 代码重构
+
+### Patch Changes
+
+- Updated dependencies
+  - @quantum-design/hooks@1.1.0
+  - @quantum-design/shared@1.1.0
+  - @quantum-design/utils@1.1.0
+  - @quantum-design/vue3-pc-ui@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

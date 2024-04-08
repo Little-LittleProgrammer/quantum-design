@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/shared",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "`样式、插件、enums` 公共",
   "main": "index.ts",
   "scripts": {},

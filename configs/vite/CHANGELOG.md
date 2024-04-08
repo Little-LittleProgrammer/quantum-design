@@ -1,5 +1,17 @@
 # @quantum-design-configs/vite
 
+## 1.1.0
+
+### Minor Changes
+
+- 代码重构
+
+### Patch Changes
+
+- Updated dependencies
+  - @quantum-design/shared@1.1.0
+  - @quantum-design/utils@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

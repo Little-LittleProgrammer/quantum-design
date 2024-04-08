@@ -1,5 +1,11 @@
 # @quantum-design/types
 
+## 1.1.0
+
+### Minor Changes
+
+- 代码重构
+
 ## 1.0.1
 
 ### Patch Changes

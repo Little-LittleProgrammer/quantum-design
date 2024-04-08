@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design-configs/tsconfig",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "代码tsconfig统一文件",
   "main": "index.js",
   "scripts": {},
