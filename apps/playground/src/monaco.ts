@@ -22,7 +22,7 @@ export function install_monaco() {
                 return new TsWorker();
             }
             return new EditorWorker();
-        },
+        }
     };
 
     monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
