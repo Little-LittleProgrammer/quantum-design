@@ -114,7 +114,7 @@ const data = reactive({
         ]
     },
     sectionOneList: [
-        {src: new URL('../../assets/image/reason_one.png', import.meta.url), title: '海量用户规模', desc: '七猫免费小说累计服务用户3.5亿，月活用户5000万，位列免费阅读行业第一梯队'},
+        {src: new URL('../../assets/image/reason_one.png', import.meta.url), title: '海量用户规模', desc: '量子免费小说累计服务用户3.5亿，月活用户5000万，位列免费阅读行业第一梯队'},
         {src: new URL('../../assets/image/reason_two.png', import.meta.url), title: '多样化广告资源', desc: '多种广告资源位、多样广告场景，助力广告效果'},
         {src: new URL('../../assets/image/reason_three.png', import.meta.url), title: '数据透明，多维分析', desc: '全链路数据透明，出价、转化一目了然'}
     ],

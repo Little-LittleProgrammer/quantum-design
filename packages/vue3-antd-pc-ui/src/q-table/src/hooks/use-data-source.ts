@@ -22,24 +22,6 @@ interface SearchState {
     filterInfo: Record<string, string[]>;
 }
 
-function header_equal(oldHeader: any[], newHeader: any[]):boolean {
-    if (!oldHeader || oldHeader.length === 0) {
-        return false;
-    }
-    let _isEqu = true;
-    for (let i = 0; i < newHeader.length; i++) {
-        const _oldObj = oldHeader[i];
-        const _newObj = newHeader[i];
-        for (const key in _newObj) {
-            if (_newObj[key] !== _oldObj[key]) {
-                _isEqu = false;
-            }
-        }
-    }
-    console.log(_isEqu);
-    return _isEqu;
-}
-
 export function useDataSource(
     propsRef: ComputedRef<BasicTableProps>,
     {
@@ -223,6 +205,8 @@ export function useDataSource(
         if (!rowKeyName) return;
         const _rowKeys = !Array.isArray(rowKey) ? [rowKey] : rowKey;
 
+        const { childrenColumnName = 'children' } = unref(propsRef);
+
         function deleteRow(data:any, key:string | number) {
             const row: { index: number; data: [] } = findRow(data, key);
             if (row === null || row.index === -1) {
@@ -243,8 +227,8 @@ export function useDataSource(
                     if (row[targetKeyName] === key) {
                         return { index: i, data };
                     }
-                    if (row.children?.length > 0) {
-                        const result = findRow(row.children, key);
+                    if (row[childrenColumnName]?.length > 0) {
+                        const result = findRow(row[childrenColumnName], key);
                         if (result != null) {
                             return result;
                         }
@@ -315,8 +299,7 @@ export function useDataSource(
             if (beforeFetch && js_is_function(beforeFetch)) {
                 params = (await beforeFetch(params)) || params;
             }
-            // 请求前重置
-            dataSourceRef.value = [];
+
             let _res = await api(params);
             if (_res.code) {
                 _res = _res.data;
@@ -345,11 +328,7 @@ export function useDataSource(
             dataSourceRef.value = _resultItems;
             if (!_isArrayResult && get(_res, headerField)) {
                 const _header = get(_res, headerField);
-                const _finHeader = js_is_array(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
-                const _isEqu = header_equal(unref(columnsRef), _finHeader);
-                if (!_isEqu) {
-                    columnsRef.value = _finHeader;
-                }
+                columnsRef.value = js_is_array(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
             }
 
             if (!_isArrayResult && get(_res, summaryField)) {

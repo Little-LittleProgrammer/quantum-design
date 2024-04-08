@@ -48,31 +48,31 @@ import dayjs from 'dayjs';
 import { gDateFormatEnum } from '@quantum-design/shared/enums';
 export default defineComponent({
     name: 'FormTable',
-    components: { Alert, edit, QAntdTable, QAntdTableAction, },
+    components: { Alert, edit, QAntdTable, QAntdTableAction },
     setup() {
-        const { createMessage, } = useMessage();
+        const { createMessage } = useMessage();
         function onChange() {
             console.log('onChange', arguments);
         }
         const data = reactive({
-            selectObj: {}, });
+            selectObj: {} });
         const schemas = computed(() => {
             return [{field: `key_word`,
                 label: `Slot示例`,
                 component: 'Input',
-                slot: 'slot',
+                slot: 'slot'
             }, {
                 label: '日期',
                 field: 'duration',
                 component: 'RangePicker',
-                defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')],
+                defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')]
             }, {
                 label: '接入模式',
                 field: 'access_mode',
                 component: 'Select',
                 componentProps: {
-                    options: data.selectObj.access_mode_list,
-                },
+                    options: data.selectObj.access_mode_list
+                }
             }];
         });
         const [
@@ -89,7 +89,7 @@ export default defineComponent({
                 getSelectRows,
                 getSelectRowKeys,
                 setSelectedRowKeys,
-                clearSelectedRowKeys,
+                clearSelectedRowKeys
             }
         ] = useTable({
             canResize: true,
@@ -101,41 +101,41 @@ export default defineComponent({
             formConfig: {
                 layout: 'inline',
                 schemas,
-                fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]],
+                fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]]
             },
-            scroll: {x: 2000, },
+            scroll: {x: 2000 },
             // columns: getBasicColumns(),
             // dataSource: getBasicData(),
             autoCreateKey: true,
             summaryConfig: {
-                fixed: 'top',
+                fixed: 'top'
             },
             columnsConfig: {
                 sortData: ['partner_id'],
                 widthData: {
-                    name: 200,
-                },
+                    name: 200
+                }
             },
             columns: [{
                 title: '你好',
                 key: 'helper',
-                helpMessage: '你好',
+                helpMessage: '你好'
             }],
             fetchSetting: {
-                totalField: 'pagination.count',
+                totalField: 'pagination.count'
             },
             showTableSetting: true,
             onChange,
             rowSelection: {
-                type: 'checkbox',
+                type: 'checkbox'
             },
             onColumnsChange: (data: ColumnChangeParam[]) => {
                 console.log('ColumnsChanged', data);
-            },
+            }
 
         });
 
-        const [registerDrawer, {openDrawer, }] = useDrawer();
+        const [registerDrawer, {openDrawer }] = useDrawer();
 
         async function init_select() {
             const _res = await api_partner_select();
@@ -175,7 +175,7 @@ export default defineComponent({
                             'fixed': '',
                             'sorter': false,
                             'customCell': null,
-                            'ellipsis': true,
+                            'ellipsis': true
                         },
                         {
                             'title': '合作平台名称',
@@ -191,12 +191,12 @@ export default defineComponent({
                             'helpMessage': '你好',
                             'editRow': true,
                             'editComponent': 'Input',
-                            'ellipsis': true,
-                        } ],
+                            'ellipsis': true
+                        } ]
                 }
             ];
             setProps({
-                columns: _column,
+                columns: _column
             });
         }
         function reloadTable() {
@@ -208,7 +208,7 @@ export default defineComponent({
             //     showIndexColumn: true
             // });
             reload({
-                page: 1,
+                page: 1
             });
         }
         function getColumn() {
@@ -233,7 +233,7 @@ export default defineComponent({
 
         function setPaginationInfo() {
             setPagination({
-                current: 2,
+                current: 2
             });
             reload();
         }
@@ -263,12 +263,12 @@ export default defineComponent({
                         onClick: () => {
                             record.onEdit();
                             console.log('编辑');
-                        },
+                        }
                     }, {
                         label: '编辑2',
                         onClick: () => {
                             openDrawer();
-                        },
+                        }
                     }
                 ];
             }
@@ -278,7 +278,7 @@ export default defineComponent({
                     onClick: () => {
                         record.onSubmit();
                         console.log('保存');
-                    },
+                    }
                 },
                 {
                     label: '取消',
@@ -287,15 +287,15 @@ export default defineComponent({
                         confirm: () => {
                             record.onCancel();
                             console.log('取消');
-                        },
-                    },
+                        }
+                    }
                 }
             ];
         }
 
         function collapseAll() {
             setProps({
-                ellipsis: false,
+                ellipsis: false
             });
         }
 
@@ -317,9 +317,9 @@ export default defineComponent({
             onChange,
             collapseAll,
             createActions,
-            registerDrawer,
+            registerDrawer
         };
-    },
+    }
 });
 </script>
 

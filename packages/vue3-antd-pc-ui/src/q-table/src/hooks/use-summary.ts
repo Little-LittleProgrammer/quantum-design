@@ -25,8 +25,8 @@ export function useSummary(
         if (js_is_function(summaryFunc)) {
             return summaryFunc(getDataSourceRef.value);
         }
-        if (js_is_array(globalSummaryData) && globalSummaryData.length > 0) {
-            return globalSummaryData;
+        if (js_is_array(unref(globalSummaryData)) && unref(globalSummaryData).length > 0) {
+            return unref(globalSummaryData);
         }
         return [];
     });

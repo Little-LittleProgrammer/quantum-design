@@ -31,7 +31,7 @@ type IOptionsTable<C extends string | number | symbol> = {
  * ```
  */
 export function js_utils_get_table_header_columns<T extends Record<string, any>>(headerObj: T, options: IOptionsTable<keyof T> = {}, list?: any) {
-    const { alignData, widthData, sortData = [], customTitle = [], customCell, resizableData} = options;
+    const { alignData, widthData, sortData = [], customTitle = [], customCell, resizableData } = options;
     const fixedData:Record<string, 'left' | 'right'> = {
         action: 'right',
         ...options.fixedData
@@ -47,6 +47,8 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
             if (headerObj[_key].children) {
                 _temObj = {
                     title: customTitle.indexOf(_key) > 1 ? undefined : headerObj[_key].title,
+                    dataIndex: _key,
+                    key: _key,
                     children: dfs(headerObj[_key].children)
                 };
             } else {

@@ -2,7 +2,7 @@
 layout: home
 hero: 
     name: Q-front-npm 
-    text: 七猫公共框架文档
+    text: 量子公共框架文档
     tagline: 基于Vue3, monorepo, pnpm
     image:
         src: /logo.png

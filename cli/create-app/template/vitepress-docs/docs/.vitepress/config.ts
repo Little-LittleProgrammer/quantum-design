@@ -7,7 +7,7 @@ export default defineConfig({
   description: '一个开箱即用的前端框架',
   themeConfig: {
     logo: '/logo.png',
-    siteTitle: '七猫',
+    siteTitle: '量子',
     nav: createNav(),
     sidebar: createSidebar(),
     footer: {

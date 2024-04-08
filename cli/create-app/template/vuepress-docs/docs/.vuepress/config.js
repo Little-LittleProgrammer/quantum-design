@@ -1,6 +1,6 @@
 module.exports = {
-    title: '七猫组件库',
-    description: '七猫组件库，富含了七猫前端组集体对前端组件库的钻研与封装',
+    title: '量子组件库',
+    description: '量子组件库，富含了量子前端组集体对前端组件库的钻研与封装',
     host: '172.16.70.132',
     theme: 'copy-antdocs',
     themeConfig: {

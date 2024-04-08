@@ -12,28 +12,28 @@ import { IExampleData } from '../interface';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 
 const emits = defineEmits(['ok', 'register']);
-const {createMessage, } = useMessage();
-const [registerDrawer, {closeDrawer, changeOkLoading, changeLoading, setDrawerProps, }] = useDrawerInner((obj: IExampleData) => {
+const {createMessage } = useMessage();
+const [registerDrawer, {closeDrawer, changeOkLoading, changeLoading, setDrawerProps }] = useDrawerInner((obj: IExampleData) => {
     setFieldsValue({
-        ...obj,
+        ...obj
     });
 });
 const schemas = computed<FormSchema<IExampleData>[]>(() => [{
     label: '名字',
     field: 'name',
     required: true,
-    component: 'Input',
+    component: 'Input'
 }, {
     label: '年龄',
     field: 'age',
     required: true,
-    component: 'InputNumber',
+    component: 'InputNumber'
 }]);
-const [registerForm, {setFieldsValue, validate, resetFields, }] = useForm({
+const [registerForm, {setFieldsValue, validate, resetFields }] = useForm({
     schemas,
     labelWidth: 110,
-    baseColProps: { span: 20, },
-    showActionButtonGroup: false,
+    baseColProps: { span: 20 },
+    showActionButtonGroup: false
 });
 
 function edit_save() {

@@ -23,7 +23,7 @@ export default defineConfig({
     },
     themeConfig: {
         logo: '/logo.png',
-        siteTitle: '七猫',
+        siteTitle: '量子',
         nav: createNav(),
         sidebar: createSidebar(),
         lastUpdatedText: '最后更新时间',

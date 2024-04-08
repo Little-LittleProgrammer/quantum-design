@@ -9,7 +9,7 @@ export function pwa_module(env: ViteEnv):INuxtConfig {
                 registerType: 'autoUpdate',
                 manifest: {
                     name: VITE_GLOB_APP_TITLE,
-                    short_name: '七猫',
+                    short_name: '量子',
                     description: VITE_GLOB_APP_TITLE,
                     theme_color: '#E6A817',
                     icons: [

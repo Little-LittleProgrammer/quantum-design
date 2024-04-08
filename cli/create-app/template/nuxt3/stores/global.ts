@@ -13,7 +13,7 @@ export interface IFileExport {
 // state
 const createState = () => {
     const state = {
-        systemName: '七猫广告',
+        systemName: '量子Demo',
         // theme: ls.get('themeMode') || 'light' as 'light' | 'dark',
         date: new Date(),
         dataLoading: false,

@@ -4,12 +4,49 @@ import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
 import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_number, js_is_string } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
-import dayjs from 'dayjs';
 
 interface ActionType {
     columns: Ref<Recordable[]>
 }
 
+function set_cache(arr: BasicColumn[], cacheObj:Recordable) {
+    for (const item of arr) {
+        const _key = item.key || item.dataIndex as string;
+        // if (item.children) {
+        //     set_cache(item.children, cacheObj);
+        // }
+        if (cacheObj[_key]) {
+            Object.assign(cacheObj[_key], item);
+        } else {
+            cacheObj[_key] = item;
+        }
+    }
+}
+
+function merge_data(arr: BasicColumn[], cacheObj: Recordable, isChild = false) {
+    for (const item of arr) {
+        const _key = item.key || item.dataIndex as string;
+        if (item.children) {
+            merge_data(item.children, cacheObj, true);
+        }
+        if (cacheObj[_key]) {
+            if (isChild) {
+                Reflect.deleteProperty(cacheObj, _key);
+            } else {
+                Object.assign(cacheObj[_key], item);
+            }
+        } else {
+            cacheObj[_key] = item;
+        }
+    }
+}
+
+/**
+ *
+ * @param arr1 props传入的
+ * @param arr2 api返回的
+ * @returns
+ */
 function deep_merge_by_key(arr1: BasicColumn[], arr2: BasicColumn[]): BasicColumn[] {
     if (!arr1 || arr1.length == 0) {
         return arr2 || [];
@@ -18,25 +55,15 @@ function deep_merge_by_key(arr1: BasicColumn[], arr2: BasicColumn[]): BasicColum
         return arr1 || [];
     }
     const _cacheObj: Recordable = {};
-    for (const item of arr2) {
-        const _key = item.key || item.dataIndex as string;
-        _cacheObj[_key] = item;
-    }
-    for (const item of arr1) {
-        const _key = item.key || item.dataIndex as string;
-        if (_cacheObj[_key]) {
-            Object.assign(_cacheObj[_key], item);
-        } else {
-            _cacheObj[_key] = item;
-        }
-    }
+    set_cache(arr2, _cacheObj);
+    merge_data(arr1, _cacheObj);
     return Object.values(_cacheObj);
 }
 
 // ellipsis, resizable 统一设置进去
 function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>) {
     const { key, dataIndex, children } = item;
-    const {ellipsis, resizable} = options;
+    const {ellipsis, resizable } = options;
     item.align = item.align || DEFAULT_ALIGN;
     if (ellipsis) {
         if (!key) {
@@ -85,7 +112,7 @@ function handle_action_column(propsRef: ComputedRef<BasicTableProps>, columns: B
         fixed: 'right',
         title: '操作',
         key: actionField,
-        align: DEFAULT_ALIGN,
+        align: 'center',
         dataIndex: actionField,
         minWidth: 100,
         width: DEFAULT_NORMAL_WIDTH,
@@ -169,8 +196,8 @@ export function useColumns(
             const { customRender, slots, dataIndex } = item;
 
             const _options = {
-                ellipsis: Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
-                resizable: Reflect.has(item, 'resizable') && item.resizable !== undefined ? !!item.resizable : !!resizable && !customRender && !slots
+                ellipsis: js_is_boolean(item.ellipsis) ? item.ellipsis : !!ellipsis && !customRender && !slots,
+                resizable: js_is_boolean(item.resizable) ? item.resizable : !!resizable && !customRender && !slots
             };
 
             if (dataIndex !== actionField) {
@@ -236,14 +263,28 @@ export function useColumns(
             });
     });
 
+    const getFlatColumns = computed(() => {
+        const _columns: BasicColumn[] = [];
+        function dfs(arr: BasicColumn[]) {
+            for (const item of arr) {
+                if (item.children) {
+                    dfs(item.children);
+                } else {
+                    _columns.push(item);
+                }
+            }
+        }
+        dfs(unref(getViewColumns));
+        return _columns;
+    });
+
     watch(
-        [() => unref(propsRef).columns, () => columns],
-        ([columnsProp, columnRef]) => {
-            const _header = deep_merge_by_key((columnsProp || []), (columnRef.value || []));
+        [() => unref(propsRef).columns, () => unref(columns)],
+        ([columnsProp, column]) => {
+            const _header = deep_merge_by_key((columnsProp || []), (unref(column) || []));
             columnsRef.value = _header;
             cacheColumns = _header?.filter(item => item.dataIndex !== actionField) ?? [];
-        },
-        {immediate: true}
+        }, {immediate: true }
     );
 
     function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
@@ -299,7 +340,7 @@ export function useColumns(
     }
 
     function getColumns(opt?: GetColumnsParams) {
-        const {ignoreAction, sort} = opt || {};
+        const {ignoreAction, sort } = opt || {};
         let _columns = toRaw(unref(getColumnsRef));
         if (ignoreAction) {
             _columns = _columns.filter((item) => item.dataIndex !== actionField);
@@ -323,6 +364,7 @@ export function useColumns(
         setColumns,
         getViewColumns,
         setCacheColumnsByField,
-        setCacheColumns
+        setCacheColumns,
+        getFlatColumns
     };
 }
