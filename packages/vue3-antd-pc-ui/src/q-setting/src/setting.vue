@@ -6,8 +6,8 @@
   </template>
 <script lang="ts" setup>
 import settingDrawer from './components/setting-drawer.vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
-import { useDrawer } from '@/q-drawer';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
+import { useDrawer } from '@vue3-antd/q-drawer';
 import { PropType } from 'vue';
 import { IProjectConfig } from './type';
 import './style/setting.scss';

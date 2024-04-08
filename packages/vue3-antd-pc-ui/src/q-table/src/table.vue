@@ -43,7 +43,7 @@
 <script lang='ts' setup>
 import { computed, ref, toRaw, unref, useAttrs, useSlots } from 'vue';
 import { basicProps } from './props';
-import QAntdForm, { useForm } from '@/q-form';
+import QAntdForm, { useForm } from '@vue3-antd/q-form';
 import { Card, Table, TableSummaryRow, TableSummaryCell } from 'ant-design-vue';
 import { BasicTableProps, ColumnChangeParam, InnerHandlers, SizeType, TableActionType } from './types/table';
 

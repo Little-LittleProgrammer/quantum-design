@@ -1,6 +1,6 @@
 import { defineNuxtModule } from '@nuxt/kit';
 import { defaults, libraryName } from './config';
-import { Options } from './types';
+import type { Options } from './types';
 import { resolve_components, resolve_options, resolve_styles } from './core';
 import { transformPlugin } from './core/transform-plugin';
 

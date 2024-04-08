@@ -22,17 +22,21 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                 navigateFallback: null,
                 runtimeCaching: [ // 运行时缓存
                     {
-                        urlPattern: ({url}:any) => url.pathname.includes('/api') || url.pathname.includes('/backend'),
+                        urlPattern: ({url, }:any) => url.pathname.includes('/api'),
                         handler: 'NetworkFirst', // 网络优先
                         options: {
                             cacheName: 'api-cache', // 缓存get请求
                             cacheableResponse: {
-                                statuses: [200]
+                                statuses: [200],
                             },
                             matchOptions: {
-                                ignoreSearch: true
-                            }
-                        }
+                                ignoreSearch: true,
+                            },
+                            expiration: {
+                                // 最多30个
+                                maxEntries: 30,
+                            },
+                        },
                     },
                     {
                         urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
@@ -41,9 +45,9 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheName: 'assets-images-cache',
                             expiration: {
                                 // 最多30个图
-                                maxEntries: 30
-                            }
-                        }
+                                maxEntries: 30,
+                            },
+                        },
                     },
                     {
                         urlPattern: /.*\.js.*/,
@@ -52,12 +56,12 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheName: 'project-js-cache',
                             expiration: {
                                 maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
-                                maxAgeSeconds: 7 * 24 * 60 * 60
+                                maxAgeSeconds: 7 * 24 * 60 * 60,
                             },
                             cacheableResponse: {
-                                statuses: [200]
-                            }
-                        }
+                                statuses: [200],
+                            },
+                        },
                     },
                     {
                         urlPattern: /.*\.css.*/,
@@ -66,24 +70,27 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheName: 'project-css-cache',
                             expiration: {
                                 maxEntries: 20,
-                                maxAgeSeconds: 7 * 24 * 60 * 60
+                                maxAgeSeconds: 7 * 24 * 60 * 60,
                             },
                             cacheableResponse: {
-                                statuses: [200]
-                            }
-                        }
+                                statuses: [200],
+                            },
+                        },
                     },
                     {
-                        urlPattern: /.*\.html.*/,
+                        urlPattern: /.*/,
                         handler: 'NetworkFirst', // 网络优先
                         options: {
-                            cacheName: 'main-html-cache',
+                            cacheName: 'project-html-cache',
                             cacheableResponse: {
-                                statuses: [200]
-                            }
-                        }
+                                statuses: [200],
+                                headers: {
+                                    'Content-Type': 'text/html; charset=UTF-8',
+                                },
+                            },
+                        },
                     }
-                ]
+                ],
             },
             manifest: {
                 name: VITE_GLOB_APP_TITLE,

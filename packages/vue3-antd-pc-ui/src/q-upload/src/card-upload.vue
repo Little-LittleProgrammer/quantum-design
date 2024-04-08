@@ -48,7 +48,7 @@
                 </template>
             </div>
         </slot>
-        <a-modal class="preview" :visible="data.modalVisible" :footer="null" @cancel="close_modal">
+        <a-modal class="preview" :open="data.modalVisible" :footer="null" @cancel="close_modal">
             <video style="width: 100%; height: 100%;" controls muted :src="data.modalImageUrl" v-if="data.fileType === 'video'"></video>
             <img style="width: 100%; height: 100%;" v-else :src="data.modalImageUrl" alt="">
         </a-modal>
@@ -56,12 +56,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useMessage } from '@quantum-design/hooks/vue';
+import { useMessage } from '@quantum-design/hooks/vue/use-message';
 import { propTypes } from '@quantum-design/types/vue/types';
 import { js_is_function, js_is_string, js_is_image, js_is_video } from '@quantum-design/utils';
 import { PropType, reactive, watch } from 'vue';
 import {Upload as AUpload, Modal as AModal, Button as AButton} from 'ant-design-vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import './style/card-upload.scss';
 defineOptions({
     name: 'QAntdCardUpload'

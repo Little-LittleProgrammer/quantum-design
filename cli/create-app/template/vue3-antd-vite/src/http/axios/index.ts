@@ -1,8 +1,8 @@
-import {createAxios} from '@q-front-npm/http';
+import {createAxios} from '@quantum-design/http';
 import { router } from '@/router';
 import { useViteEnv } from '@/hooks/settings/use-vite-env';
 import { useGlobalStore } from '@/store/modules/global';
-import { gContentTypeEnum } from '@q-front-npm/shared/enums';
+import { gContentTypeEnum } from '@quantum-design/shared/enums';
 
 let _requestNum = 0; // 请求数量
 let _requestPageUrl = ''; // 请求地址所在页面

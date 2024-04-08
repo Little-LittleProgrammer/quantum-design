@@ -39,7 +39,7 @@
 import { computed } from 'vue';
 import type { DropMenu } from './types';
 import { Dropdown as ADropdown, Menu as AMenu, MenuItem as AMenuItem, Popconfirm as APopconfirm, MenuDivider as AMenuDivider } from 'ant-design-vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { omit } from 'lodash-es';
 import { js_is_function } from '@quantum-design/utils';
 import { dropdownProps } from './types';

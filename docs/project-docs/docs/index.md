@@ -5,7 +5,7 @@ hero:
     text: 七猫公共框架文档
     tagline: 基于Vue3, monorepo, pnpm
     image:
-        src: /loading.png
+        src: /logo.png
     actions:
         - text: 快速开始 →
           link: /help-code/standard/

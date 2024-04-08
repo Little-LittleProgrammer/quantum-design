@@ -1,9 +1,10 @@
-import { js_is_array, js_is_function, js_is_object, js_is_string, js_is_null_or_undef, gDateUtil } from '@quantum-design/utils';
+import { js_is_array, js_is_function, js_is_object, js_is_string, js_is_null_or_undef } from '@quantum-design/utils';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
 import { gDateFormatEnum } from '@quantum-design/shared/enums';
 import { cloneDeep } from 'lodash-es';
+import dayjs from 'dayjs'
 
 interface UseFormValuesContext {
     defaultValueRef: Ref<any>;
@@ -62,8 +63,8 @@ export function use_form_values({
 
             const [startTime, endTime]: string[] = values[field];
 
-            values[startTimeKey] = gDateUtil(startTime).format(format);
-            values[endTimeKey] = gDateUtil(endTime).format(format);
+            values[startTimeKey] = dayjs(startTime).format(format);
+            values[endTimeKey] = dayjs(endTime).format(format);
             Reflect.deleteProperty(values, field);
 
             values[field] = {

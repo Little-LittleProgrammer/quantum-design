@@ -1,7 +1,7 @@
 import { ColumnProps } from 'ant-design-vue/lib/table';
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
 import { PaginationProps } from './pagination';
-import { FormProps } from '@/q-form';
+import { FormProps } from '@vue3-antd/q-form';
 import { VNodeChild } from 'vue';
 import { ComponentType } from './component-type';
 

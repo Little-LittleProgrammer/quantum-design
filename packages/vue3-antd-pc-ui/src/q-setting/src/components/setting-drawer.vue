@@ -27,8 +27,8 @@
 
 <script lang='ts' setup>
 import { PropType, onMounted} from 'vue';
-import { useDrawerInner } from '@/q-drawer';
-import QAntdDrawer from '@/q-drawer';
+import { useDrawerInner } from '@vue3-antd/q-drawer';
+import QAntdDrawer from '@vue3-antd/q-drawer';
 import { Divider } from 'ant-design-vue';
 import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
@@ -71,4 +71,3 @@ onMounted(() => {
 </script>
 <style lang='scss' scoped>
 </style>
-@/q-antd-drawer@/q-antd-drawer

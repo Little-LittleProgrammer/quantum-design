@@ -11,8 +11,8 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "typescript": "^5.3.2",
-    "@q-front-npm-configs/eslint": "~1.0.8",
-    "@q-front-npm-configs/tsconfig": "~1.0.0",
+    "@quantum-design-configs/eslint": "~1.0.8",
+    "@quantum-design-configs/tsconfig": "~1.0.0",
     "turbo": "1.10.13",
     "vite": "^4.5.1",
     "tslib": "^2.5.3",

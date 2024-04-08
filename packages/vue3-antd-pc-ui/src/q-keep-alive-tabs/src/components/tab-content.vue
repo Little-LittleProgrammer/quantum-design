@@ -1,23 +1,23 @@
 <!--  -->
 <template>
-    <q-dropdown class="tabs-drop-down" :dropMenuList="getDropDownList" :trigger="getTrigger" @menuEvent="handle_menu_event">
+    <Dropdown class="tabs-drop-down" :dropMenuList="getDropDownList" :trigger="getTrigger" @menuEvent="handle_menu_event">
         <div class="tabs-drop-down-info" @contextmenu="handle_context" v-if="getIsTabs">
             <span class="ml-1">{{ getTitle }}</span>
         </div>
         <span class="tabs-drop-down-extra-quick" v-else @click="handle_context">
-            <q-icon type="DownOutlined" />
+            <Icon type="DownOutlined" />
         </span>
-    </q-dropdown>
+    </Dropdown>
 </template>
 
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, onMounted, PropType, computed, unref} from 'vue';
 import { RouteLocationNormalized, useRouter } from 'vue-router';
-import type { DropMenu } from '@/q-dropdown';
+import type { DropMenu } from '@vue3-antd/q-dropdown';
 
-import QDropdown from '@/q-dropdown';
+import Dropdown from '@vue3-antd/q-dropdown';
 import { TableActionEnum, useTabs } from '../hooks/use-tabs';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon } from '@vue3-antd/q-icon/src/icon';
 import { useTabsStore } from '../hooks/use-tabs-store';
 import { propTypes } from '@quantum-design/types/vue/types';
 interface DataProps {
@@ -34,7 +34,7 @@ export default defineComponent({
         isExtra: Boolean,
         initPath: propTypes.string.def('home')
     },
-    components: {QDropdown, QIcon},
+    components: {Dropdown, Icon},
     setup(props) {
         const tabsStore = useTabsStore();
         const { currentRoute } = useRouter();

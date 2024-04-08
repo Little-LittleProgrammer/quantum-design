@@ -6,7 +6,7 @@
 </template>
 
 <script lang='ts' setup>
-import { useForm } from '@q-front-npm/vue3-antd-pc-ui';
+import { useForm } from '@quantum-design/vue3-antd-pc-ui';
 
 const schemas = computed(() => {
     return [{

@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/vue3-pc-ui-nuxt",
-    "version": "1.2.0-beta.2",
+    "version": "1.0.1",
     "description": "vue3-pc-ui module for Nuxt",
     "license": "MIT",
     "type": "module",
@@ -23,26 +23,26 @@
       "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
     },
     "scripts": {
-      "build": "nuxt-module-build",
-      "dev": "nuxi dev playground",
-      "dev:build": "nuxi build playground",
-      "dev:start": "node playground/.output/server/index.mjs",
-      "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-      "lint": "eslint . --fix --ext .ts,.vue,.js",
-      "lint:test": "eslint . --ext .ts,.vue,.js --max-warnings 0"
+        "build": "npm run dev:prepare && nuxt-module-build",
+        "dev": "nuxi dev playground",
+        "dev:build": "nuxi build playground",
+        "dev:start": "node playground/.output/server/index.mjs",
+        "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+        "lint": "eslint . --fix --ext .ts,.vue,.js",
+        "lint:test": "eslint . --ext .ts,.vue,.js --max-warnings 0"
     },
     "dependencies": {
-      "@nuxt/kit": "^3.7.0",
+      "@nuxt/kit": "~3.8.2",
       "magic-string": "^0.27.0",
       "unplugin": "^1.0.1",
       "@quantum-design/vue3-pc-ui": "workspace:*"
     },
     "devDependencies": {
       "@nuxt/module-builder": "^0.2.1",
-      "@nuxt/schema": "^3.7.0",
+      "@nuxt/schema": "~3.8.2",
       "@nuxtjs/eslint-config-typescript": "^12.0.0",
-      "vue": "^3.3.4",
-      "nuxt": "^3.7.0",
+      "vue": "^3.3.10",
+      "nuxt": "~3.8.2",
       "@quantum-design/shared": "workspace:*",
       "@quantum-design/types": "workspace:*"
     }

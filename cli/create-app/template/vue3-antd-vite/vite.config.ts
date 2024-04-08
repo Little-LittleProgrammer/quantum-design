@@ -1,5 +1,5 @@
 import { ConfigEnv, UserConfig } from 'vite';
-import { vite_common_vue_config } from '@q-front-npm-configs/vite';
+import { vite_common_vue_config } from '@quantum-design-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 import { resolve } from 'path';
 

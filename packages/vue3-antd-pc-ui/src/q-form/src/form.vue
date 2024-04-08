@@ -19,6 +19,7 @@
                     :allDefaultValues="defaultValueRef"
                     :formModel="formModel"
                     :setFormModel="set_form_model"
+                    :tableAction="tableAction"
                 >
                     <template #[item]="data" v-for="item in Object.keys($slots)">
                         <slot :name="item" v-bind="data || {}"></slot>
@@ -39,7 +40,7 @@
 </template>
 
 <script lang='ts'>
-import { gDateUtil, js_utils_deep_merge, js_is_array, js_is_function } from '@quantum-design/utils';
+import { js_utils_deep_merge, js_is_array, js_is_function } from '@quantum-design/utils';
 import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
@@ -51,6 +52,7 @@ import { EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
 import { Form as AForm, Row as ARow } from 'ant-design-vue';
 import './style/form.scss';
+import dayjs from 'dayjs';
 
 export default defineComponent({
     name: 'QAntdForm',
@@ -98,11 +100,11 @@ export default defineComponent({
                 // handle date type
                 if (defaultValue && dateItemType.includes(component)) {
                     if (!Array.isArray(defaultValue)) {
-                        schema.defaultValue = gDateUtil(defaultValue);
+                        schema.defaultValue = dayjs(defaultValue);
                     } else {
                         const def: any[] = [];
                         defaultValue.forEach((item) => {
-                            def.push(gDateUtil(item));
+                            def.push(dayjs(item));
                         });
                         schema.defaultValue = def;
                     }

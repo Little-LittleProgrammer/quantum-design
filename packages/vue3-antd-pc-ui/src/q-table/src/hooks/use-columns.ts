@@ -2,8 +2,9 @@ import { ComputedRef, Ref, computed, reactive, ref, toRaw, unref, watch } from '
 import { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_number, js_is_string, js_utils_format_date } from '@quantum-design/utils';
+import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_number, js_is_string } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
+import dayjs from 'dayjs';
 
 interface ActionType {
     columns: Ref<Recordable[]>
@@ -132,7 +133,7 @@ export function format_cell(text: string, format: CellFormat, record: Recordable
             if (!_dateFormat) {
                 return text;
             }
-            return js_utils_format_date(text, _dateFormat as any);
+            return dayjs(text).format(_dateFormat);
         }
 
         // Map

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <a-modal :visible="visible" :width="600" :closable="false" :footer="null" @cancel="commit_cancel">
+    <a-modal :open="visible" :width="600" :closable="false" :footer="null" @cancel="commit_cancel">
         <a-input class="search-input" v-model:value="data.searchText" size="large" allow-clear placeholder="搜索" @change="search_route">
             <template #prefix>
                 <q-icon type="SearchOutlined"></q-icon>
@@ -20,7 +20,7 @@
 </template>
 <script lang='ts' setup>
 import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { find_search_route, ICacheObj } from './search';
 import { js_utils_throttle_event } from '@quantum-design/utils';
 import { useRouter } from 'vue-router';

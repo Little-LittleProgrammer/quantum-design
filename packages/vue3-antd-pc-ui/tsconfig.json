@@ -5,7 +5,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-        "@/*": ["src/*"],
+        "@vue3-antd/*": ["src/*"],
         "vue-types": ["node_modules/vue-types"],
         "csstype": ["node_modules/csstype"]
     },

@@ -29,5 +29,8 @@
   },
   "devDependencies": {
     "eslint": "7.32.0"
+  },
+  "peerDependencies": {
+    "eslint": "^7.32.0 || ^8.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import { Options } from '../types';
+import type { Options } from '../types';
 import { libraryName } from '../config';
 import { kebab_case } from '../utils';
 import {matchComponents} from '@quantum-design/shared/enums';

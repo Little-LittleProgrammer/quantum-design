@@ -8,6 +8,7 @@ import { check_status } from './check-status';
 import { gContentTypeEnum, gRequestEnum, gResultEnum } from '@quantum-design/shared/enums';
 import { js_utils_deep_merge, js_is_string } from '@quantum-design/utils';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
+import { AxiosRetry } from './axios-retry';
 
 const {setTokenToHeader, setTokenToLs} = dealToken();
 
@@ -80,7 +81,7 @@ export const defaultTransform: AxiosTransform = {
      * @description: 请求拦截器错误处理
      * @param error
      */
-    requestInterceptorsCatch: (error: any, options) => {
+    requestInterceptorsCatch: (error: any, options, axiosInstance) => {
         if (options.customTransform && options.customTransform.customRequestError) {
             options.customTransform.customRequestError(error);
         }
@@ -88,6 +89,12 @@ export const defaultTransform: AxiosTransform = {
             check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageCb);
         } else {
             check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageCb);
+        }
+        // 添加自动重试机制
+        const retry = new AxiosRetry();
+        const {isOpenRetry} = options.requestOptions.retryRequest;
+        if (error && error.config?.method && error.config?.method?.toUpperCase() === gRequestEnum.GET) {
+            isOpenRetry && retry.retry(axiosInstance, error)
         }
         return Promise.reject(error.response);
     },
@@ -166,8 +173,6 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     cancelToken: true,
                     // 是否携带token
                     withToken: true,
-                    // 消息提示类型
-                    errorMessageCb: 'message',
                     // 接口地址
                     apiUrl: '',
                     uploadUrl: '',

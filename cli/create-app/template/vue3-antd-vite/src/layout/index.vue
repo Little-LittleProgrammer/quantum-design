@@ -66,7 +66,7 @@
 
 <script lang='ts' setup>
 import { reactive, computed, ref, watch, nextTick } from 'vue';
-import { useProjectSetting} from '@q-front-npm/vue3-antd-pc-ui';
+import { useProjectSetting} from '@quantum-design/vue3-antd-pc-ui';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
@@ -77,7 +77,7 @@ import { routerData } from '@/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import setting from '@/enums/projectEnum';
 import { BackTop } from 'ant-design-vue';
-import { useParamsAliveRoot } from '@q-front-npm/hooks/vue/use-params-alive';
+import { useParamsAliveRoot } from '@quantum-design/hooks/vue/use-params-alive';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();

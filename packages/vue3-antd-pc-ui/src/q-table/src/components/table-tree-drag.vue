@@ -15,7 +15,7 @@ import { reactive, onMounted, computed, nextTick, watch, watchEffect } from 'vue
 import type { PropType } from 'vue';
 import {Table as ATable} from 'ant-design-vue';
 import { TableProps } from 'ant-design-vue/lib/table/Table';
-import { useSortable } from '@quantum-design/hooks';
+import { useSortable } from '@quantum-design/hooks/base/use-sortable';
 import { js_utils_deep_copy } from '@quantum-design/utils';
 import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({

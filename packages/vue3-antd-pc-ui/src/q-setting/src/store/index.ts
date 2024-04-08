@@ -1,6 +1,7 @@
-import { js_create_local_storage, js_is_client, js_utils_deep_merge } from '@quantum-design/utils';
 import { defineStore } from 'pinia';
 import { IProjectConfig } from '../type';
+import { js_create_local_storage } from '@quantum-design/utils/extra';
+import { js_is_client, js_utils_deep_merge } from '@quantum-design/utils';
 
 export interface IFileExport {
     title?: string;

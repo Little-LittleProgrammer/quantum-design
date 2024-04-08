@@ -39,17 +39,17 @@
     "lint:test": "eslint . --ext .ts,.vue,.js --max-warnings 0"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.7.0",
+    "@nuxt/kit": "~3.8.2",
     "magic-string": "^0.27.0",
     "unplugin": "^1.0.1",
     "@quantum-design/vue3-antd-pc-ui": "workspace:*"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.2.1",
-    "@nuxt/schema": "^3.7.0",
-    "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "vue": "^3.3.4",
-    "nuxt": "^3.7.0",
+    "@nuxt/schema": "~3.8.2",
+    "@nuxtjs/eslint-config-typescript": "~12.0.0",
+    "vue": "^3.3.10",
+    "nuxt": "~3.8.2",
     "@quantum-design/shared": "workspace:*"
   }
 }

@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@q-front-npm-configs/vite';
+import {vite_common_lib_config} from '@quantum-design-configs/vite';
 import {resolve} from 'path';
 
 export default ({ command, mode }: ConfigEnv):UserConfig => {
@@ -12,7 +12,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         isComponentsBuild: true,
         target: 'modules',
         rollupOptions: {
-            external: ['vue', 'vue-router', '@q-front-npm/shared', '@q-front-npm/utils']
+            external: ['vue', 'vue-router', '@quantum-design/shared', '@quantum-design/utils']
         },
         buildOptions: {
             cssCodeSplit: true,
@@ -27,7 +27,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@q-front-npm/shared/style/base/base.scss'; @import '@q-front-npm/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';"
                 }
             }
         },

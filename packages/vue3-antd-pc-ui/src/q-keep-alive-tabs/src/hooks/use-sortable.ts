@@ -1,6 +1,6 @@
 
 import { js_is_null_or_undef } from '@quantum-design/utils';
-import { useSortable } from '@quantum-design/hooks';
+import { useSortable } from '@quantum-design/hooks/base/use-sortable';
 import { useTabsStore } from './use-tabs-store';
 import { nextTick } from 'vue';
 

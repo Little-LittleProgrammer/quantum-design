@@ -12,8 +12,8 @@ import {
     Button
 } from 'ant-design-vue';
 import type { ComponentType } from './types/component-type';
-import QSelectAll from '@/q-form/src/components/select-all.vue';
-import RadioButtonGroup from '@/q-form/src/components/radio-button-group.vue';
+import QSelectAll from '@vue3-antd/q-form/src/components/select-all.vue';
+import RadioButtonGroup from '@vue3-antd/q-form/src/components/radio-button-group.vue';
 
 const componentMap = new Map<ComponentType, Component>();
 

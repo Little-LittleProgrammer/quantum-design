@@ -1,4 +1,4 @@
-import { useEcharts as globalUseEcharts } from '@q-front-npm/hooks/vue/use-echarts';
+import { useEcharts as globalUseEcharts } from '@quantum-design/hooks/vue/use-echarts';
 import { Ref } from 'vue';
 import { useThemeSetting } from '../settings/use-theme-setting';
 

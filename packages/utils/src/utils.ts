@@ -369,3 +369,43 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
         };
     });
 }
+
+export function serializeToString<T>(value: T): string {
+    if (js_is_string(value)) {
+        return value;
+    }
+    function deal_special(val: any): string {
+        // 压缩方法
+        return val.toString().replace(/\n/g, ';');
+    }
+    // 判断引用类型的temp
+    function check_temp(target:any) {
+        const _c = target.constructor;
+        return new _c();
+    }
+    let serializeObj: Record<string, any> = {};
+    function dfs(target: any, map = new Map()) {
+        if (js_is_base(target)) {
+            return target;
+        }
+        if (js_is_function(target)) {
+            return deal_special(target);
+        }
+        if (js_is_reg_exp(target)) return deal_special(target);
+
+        const _temp = check_temp(target);
+        // 防止循环引用
+        if (map.get(target)) {
+            return map.get(target);
+        }
+        map.set(target, _temp);
+        // 处理数组和对象
+        for (const key in target) {
+        // 递归
+            _temp[key] = dfs(target[key], map);
+        }
+        return _temp;
+    }
+    serializeObj = dfs(value);
+    return JSON.stringify(serializeObj, null, 4);
+}

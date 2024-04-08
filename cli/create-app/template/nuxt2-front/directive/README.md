@@ -1,3 +1,0 @@
-# directive
-
-指令

@@ -5,7 +5,7 @@ hero:
     text: 七猫中后台框架文档
     tagline: 基于Vue3, turborepo, pnpm
     image:
-        src: /loading.png
+        src: /logo.png
     actions:
         - text: 快速开始 →
           link: /guide/introduction

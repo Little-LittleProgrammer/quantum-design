@@ -23,9 +23,7 @@ export const frameQuestion: PromptObject = {
             ] 
         }
         return [
-            { title: magenta('Vue2'), value: 'vue2' },
             { title: blue('Vue3') , value: 'vue3'},
-            { title: cyan('Nuxt2'), value: 'nuxt2'},
             { title: yellow('Nuxt3'), value: 'nuxt3'}
         ]
     }

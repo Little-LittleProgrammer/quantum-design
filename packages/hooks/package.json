@@ -27,7 +27,7 @@
   "devDependencies": {
     "@quantum-design/types": "workspace:*",
     "@types/sortablejs": "~1.15.0",
-    "ant-design-vue": "^4.0.2",
+    "ant-design-vue": "~4.0.8",
     "@ant-design/icons-vue": "^6.1.0",
     "vue": "~3.3.4",
     "vue-router": "~4.2.4",
@@ -35,7 +35,7 @@
     "sortablejs": "~1.15.0"
   },
   "peerDependencies": {
-    "ant-design-vue": "^4.0.2",
+    "ant-design-vue": "^4.0.6",
     "@ant-design/icons-vue": "^6.1.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"

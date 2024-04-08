@@ -51,6 +51,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
             entryRoot: resolve(__dirname)
         }
     });
+    _common.plugins?.splice(2, 1);
     return {
         ..._common,
         css: {
@@ -62,7 +63,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         },
         resolve: {
             alias: {
-                '@/': path_resolve('src') + '/'
+                '@vue3-antd/': path_resolve('src') + '/'
             }
         },
         test: {

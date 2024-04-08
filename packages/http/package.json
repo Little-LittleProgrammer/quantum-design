@@ -24,6 +24,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
     "axios": "0.27.2",
@@ -31,12 +32,11 @@
     "qs": "6.11.0"
   },
   "devDependencies": {
-    "@quantum-design/hooks": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
     "@quantum-design/types": "workspace:*",
-    "@types/lodash-es": "4.17.6",
+    "@types/lodash-es": "^4.17.12",
     "@types/qs": "6.9.7",
-    "rollup": "3.28.1"
+    "rollup": "^3.29.4"
   },
   "peerDependencies": {}
 }

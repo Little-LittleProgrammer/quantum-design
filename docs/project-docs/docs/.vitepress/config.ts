@@ -312,9 +312,6 @@ function createSidebar(): DefaultTheme.Sidebar {
                     text: 'utils工具类',
                     link: '/packages/utils/utils'
                 }, {
-                    text: 'date-util',
-                    link: '/packages/utils/date-util'
-                }, {
                     text: 'install组件安装',
                     link: '/packages/utils/install'
                 }],

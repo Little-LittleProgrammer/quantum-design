@@ -10,13 +10,14 @@ export function vite_plugin_html(env: ViteEnv) {
 
     const htmlPlugin:PluginOption[] = [{
         name: 'html-transform',
-        enforce: 'pre',
-        transformIndexHtml(html) {
-            for (const [key, val] of Object.entries(_replaceObj)) {
-                const _reg = new RegExp(`/<%=${key}%>/g`);
-                html.replace(_reg, val);
+        transformIndexHtml: {
+            enforce: 'pre',
+            transform(html) {
+                return html.replace(
+                    /<%=\s*(\w+)\s*%>/gi,
+                    (match, p1) => _replaceObj[p1] || ''
+                );
             }
-            return html;
         }
     }];
     return htmlPlugin;

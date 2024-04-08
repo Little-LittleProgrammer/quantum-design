@@ -57,8 +57,10 @@
     "@quantum-design-configs/vite": "workspace:*",
     "@quantum-design/types": "workspace:*",
     "@vue/test-utils": "^2.4.0",
+    "monaco-editor": "^0.44.0",
     "sass": "^1.63.3",
-    "vue": "~3.3.4",
+    "tinymce": "^5.10.9",
+    "vue": "~3.3.10",
     "vue-router": "^4.2.4"
   },
   "peerDependencies": {

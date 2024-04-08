@@ -8,8 +8,9 @@ import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
 import { FormProps, FormSchema } from '../types/form';
 import { FormActionType } from '../types/form';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { cloneDeep } from 'lodash-es';
+import { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
 
 export default defineComponent({
@@ -35,6 +36,9 @@ export default defineComponent({
         setFormModel: {
             type: Function as PropType<(key: string, value: any, schema:FormSchema) => void>,
             default: null
+        },
+        tableAction: {
+            type: Object as PropType<TableActionType>
         },
         formActionType: {
             type: Object as PropType<FormActionType>
@@ -89,10 +93,10 @@ export default defineComponent({
             };
         });
         const getComponentsProps = computed(() => {
-            const { schema, formModel, formActionType } = props;
+            const { schema, formModel, formActionType, tableAction } = props;
             let { componentProps = {}} = schema;
             if (js_is_function(componentProps)) {
-                componentProps = componentProps({schema, formModel, formActionType}) ?? {};
+                componentProps = componentProps({schema, formModel, formActionType, tableAction}) ?? {};
             }
             if (schema.component === 'Divider') {
                 componentProps = Object.assign({ type: 'horizontal' }, componentProps, {

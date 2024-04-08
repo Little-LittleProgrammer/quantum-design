@@ -1,5 +1,5 @@
 {
-    "extends": "@q-front-npm-configs/tsconfig/lib.json",
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
     "compilerOptions": {
         "target": "ES2022",
         "module": "ES2020",

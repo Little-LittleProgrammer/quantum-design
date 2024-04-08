@@ -1,6 +1,7 @@
-import { gDateUtil, js_is_number, js_is_object } from '@quantum-design/utils';
+import { js_is_number, js_is_object } from '@quantum-design/utils';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
 import type { ComponentType } from './types/index';
+import dayjs from 'dayjs';
 
 /**
  * @description: 生成placeholder
@@ -49,9 +50,9 @@ export function set_component_rule_type(
 export function process_date_value(attr: Record<string, any>, component: string) {
     const { valueFormat, value } = attr;
     if (valueFormat) {
-        attr.value = js_is_object(value) ? gDateUtil(value as any).format(valueFormat) : value;
+        attr.value = js_is_object(value) ? dayjs(value as any).format(valueFormat) : value;
     } else if (DATE_TYPE.includes(component) && value) {
-        attr.value = gDateUtil(attr.value);
+        attr.value = dayjs(attr.value);
     }
 }
 

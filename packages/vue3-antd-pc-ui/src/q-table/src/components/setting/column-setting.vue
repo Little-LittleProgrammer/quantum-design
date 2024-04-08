@@ -69,7 +69,7 @@ import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface'
 import { useTableContext } from '../../hooks/use-table-context';
 import { cloneDeep, omit } from 'lodash-es';
 import { BasicColumn, BasicTableProps, ColumnChangeParam } from '../../types/table';
-import {useSortable} from '@quantum-design/hooks';
+import {useSortable} from '@quantum-design/hooks/base/use-sortable';
 import { js_is_function, js_is_null_or_undef } from '@quantum-design/utils';
 import { SettingOutlined, DragOutlined, VerticalRightOutlined } from '@ant-design/icons-vue';
 interface State {

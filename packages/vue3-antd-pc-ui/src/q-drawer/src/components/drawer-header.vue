@@ -21,7 +21,7 @@
 <script lang='ts' setup>
 import { propTypes } from '@quantum-design/types/vue/types';
 import { onMounted, useSlots} from 'vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 const props = defineProps({
     isDetail: propTypes.bool,
     showDetailBack: propTypes.bool,

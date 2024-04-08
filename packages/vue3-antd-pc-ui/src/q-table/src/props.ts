@@ -11,7 +11,7 @@ import type {
     Recordable,
     IOptionsTable
 } from './types/table';
-import type { FormProps } from '@/q-form';
+import type { FormProps } from '@vue3-antd/q-form';
 
 import { DEFAULT_FILTER_FN, DEFAULT_SORT_FN, FETCH_SETTING, DEFAULT_SIZE } from './enums/const';
 import { propTypes } from '@quantum-design/types/vue/types';

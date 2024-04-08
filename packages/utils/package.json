@@ -2,25 +2,35 @@
   "name": "@quantum-design/utils",
   "version": "1.0.1",
   "description": "公共 `utils` 方法",
-  "main": "dist/utils.cjs.min.js",
+  "main": "index.js",
   "module": "dist/utils.esm.min.js",
   "typings": "dist/types/utils/index.d.ts",
   "exports": {
     ".": {
-        "default":  "./dist/utils.cjs.min.js",
-      "import": "./dist/utils.esm.min.js",
-      "require": "./dist/utils.cjs.min.js",
-      "types": "./dist/types/utils/index.d.ts"
-    },
-    "./extra": {
-        "default":  "./dist/extra.cjs.min.js",
-      "import": "./dist/extra.esm.min.js",
-      "require": "./dist/extra.cjs.min.js",
-      "types": "./dist/types/utils/extra.d.ts"
-    }
+        "import": {
+          "node": "./index.mjs",
+          "default": "./dist/utils.esm.min.js"
+        },
+        "require": "./index.js",
+        "types": "./dist/types/utils/index.d.ts"
+      },
+      "./extra": {
+        "import": {
+          "node": "./extra.mjs",
+          "default": "./dist/extra.esm.min.js"
+        },
+        "require": "./extra.js",
+        "types": "./dist/types/utils/extra.d.ts"
+      },
+      "./dist/*": "./dist/*",
+      "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.js",
+    "index.mjs",
+    "extra.js",
+    "extra.mjs"
   ],
   "scripts": {
     "build": "rollup -c --environment TYPES:true",
@@ -43,11 +53,10 @@
     "@quantum-design/shared": "workspace:*"
   },
   "devDependencies": {
+    "crypto-js": "^4.2.0",
     "@quantum-design/types": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
-    "@types/crypto-js": "4.1.1",
-    "rollup": "^3.28.1",
-    "crypto-js": "4.1.1",
-    "dayjs": "1.11.7"
+    "@types/crypto-js": "^4.2.0",
+    "rollup": "^3.29.4"
   }
 }

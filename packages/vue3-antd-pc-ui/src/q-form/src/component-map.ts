@@ -22,10 +22,10 @@ import {
 } from 'ant-design-vue';
 
 import RadioButtonGroup from './components/radio-button-group.vue';
-import {Icon as QIcon} from '@/q-icon/src/icon';
+import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import SelectAll from './components/select-all.vue';
-import QCardUpload from '@/q-upload';
-import QTransfer from '@/q-transfer';
+import QCardUpload from '@vue3-antd/q-upload';
+import QTransfer from '@vue3-antd/q-transfer';
 
 const componentMap = new Map<ComponentType<string>, Component>();
 

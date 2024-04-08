@@ -3,7 +3,7 @@
 -->
 <script lang="ts">
 import { usePermission } from '@/hooks/settings/use-permission';
-import { useSlots } from '@q-front-npm/hooks/vue/use-slots';
+import { useSlots } from '@quantum-design/hooks/vue/use-slots';
 import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 

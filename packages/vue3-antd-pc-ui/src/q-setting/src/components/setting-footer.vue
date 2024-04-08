@@ -7,7 +7,7 @@
 </template>
 
 <script lang='ts' setup>
-import { js_create_local_storage } from '@quantum-design/utils';
+import { js_create_local_storage } from '@quantum-design/utils/extra';
 import { onMounted, PropType} from 'vue';
 import { IProjectConfig } from '../type';
 import { useProjectSetting } from '../hooks/use-project-setting';

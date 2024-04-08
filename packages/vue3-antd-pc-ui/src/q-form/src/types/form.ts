@@ -3,6 +3,7 @@ import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import type { NamePath, RuleObject } from 'ant-design-vue/lib/form/interface';
 import { ColEx, ComponentType } from './index';
 import { FormItem } from './form-item';
+import { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { ButtonProps } from 'ant-design-vue/lib/button';
 
 export type FieldMapToTime = [string, [string, string], string?][];
@@ -66,6 +67,7 @@ export interface FormSchema<T extends object = Record<string, any>, C extends st
     componentProps?:
     | ((opt: {
         schema: FormSchema<T>;
+        tableAction: TableActionType;
         formActionType: FormActionType;
         formModel: T;
     }) => Record<string, any>)

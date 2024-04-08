@@ -1,0 +1,25 @@
+{
+    "extends": "@quantum-design-configs/tsconfig/vue.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "isolatedModules": true,
+        "paths": {
+            "@/*": ["src/*"],
+            "#/*": ["types/*"],
+            "@quantum-design/*": ["../../packages/*"]
+        }
+    },
+    "include": [
+        "src/**/*.ts", 
+        "src/**/*.d.ts", 
+        "src/**/*.tsx", 
+        "src/**/*.vue",
+        "types/*.d.ts",
+        "build/**/*.ts", 
+        "build/**/*.d.ts",
+        "node_modules/@quantum-design/types/**/*.ts"
+    ],
+    "exclude": [
+        "dist"
+    ]
+}

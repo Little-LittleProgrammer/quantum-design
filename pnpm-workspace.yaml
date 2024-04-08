@@ -2,3 +2,5 @@ packages:
   - "configs/*"
   - "packages/*"
   - "docs/*"
+  - "cli/*"
+  - "apps/playground"

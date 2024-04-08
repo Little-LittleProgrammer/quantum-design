@@ -1,4 +1,4 @@
-import type { ViteEnv } from '@q-front-npm-configs/vite';
+import type { ViteEnv } from '@quantum-design-configs/vite';
 import type { INuxtConfig } from './types';
 
 export function pwa_module(env: ViteEnv):INuxtConfig {

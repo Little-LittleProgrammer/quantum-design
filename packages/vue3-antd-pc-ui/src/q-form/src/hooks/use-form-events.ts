@@ -1,9 +1,10 @@
-import { js_is_array, js_is_function, js_is_object, js_is_string, gDateUtil, js_utils_deep_merge } from '@quantum-design/utils';
+import { js_is_array, js_is_function, js_is_object, js_is_string, js_utils_deep_merge } from '@quantum-design/utils';
 import { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ComputedRef, Ref, toRaw, unref } from 'vue';
 import { dateItemType, handle_input_number_value } from '../helper';
 import { FormActionType, FormProps, FormSchema } from '../types/form';
 import { cloneDeep, uniqBy } from 'lodash-es';
+import dayjs from 'dayjs';
 
 export type EmitType = (event: string, ...args: any[]) => void;
 
@@ -86,7 +87,7 @@ export function use_form_events({
                     if (js_is_array(_value)) {
                         const arr:any[] = [];
                         for (const ele of _value) {
-                            arr.push(ele ? gDateUtil(ele) : null);
+                            arr.push(ele ? dayjs(ele) : null);
                         }
                         formModel[key] = arr;
                     } else if (js_is_object(_value)){
@@ -100,7 +101,7 @@ export function use_form_events({
                                 }
                                 if (key === field) {
                                     if (_value[startTimeKey] && _value[endTimeKey]) {
-                                        formModel[key] = [gDateUtil(_value[startTimeKey]), gDateUtil(_value[endTimeKey])];
+                                        formModel[key] = [dayjs(_value[startTimeKey]), dayjs(_value[endTimeKey])];
                                     }
                                     break;
                                 }
@@ -112,7 +113,7 @@ export function use_form_events({
                         if (js_is_function(componentProps)) {
                             _props = _props({formModel});
                         }
-                        formModel[key] = _value ? (_props?.valueFormat ? _value : gDateUtil(_value)) : null;
+                        formModel[key] = _value ? (_props?.valueFormat ? _value : dayjs(_value)) : null;
                     }
                 } else {
                     formModel[key] = _value;
