@@ -1,0 +1,39 @@
+name: Build Playground
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/playground/**'
+      - 'configs/**'
+      - 'packages/**'
+      - 'turbo.json'
+      - 'package.json'
+      - 'yarn.lock'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # 使用适合你项目的Node.js版本
+
+    - name: Cache Dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          **/node_modules
+          ~/.cache/turbo
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+    - name: Install Dependencies
+      run: pnpm install
+
+    - name: Build Playground
+      run: pnpm build --filter=playground
