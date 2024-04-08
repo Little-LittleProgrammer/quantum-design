@@ -41,8 +41,19 @@ jobs:
     - name: Build Playground
       run: pnpm build --filter=playground
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        branch: gh-pages  # GitHub Pages部署分支
-        folder: apps/playground/dist     # 构建产物所在目录，根据实际情况调整（如React通常是'build'，Vue可能是'dist'）
+        path: ./apps/playground/dist
+
+# Deployment job
+  deploy:
+    environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
