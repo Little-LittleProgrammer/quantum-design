@@ -23,6 +23,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '18' # 使用适合你项目的Node.js版本
+        Cache: 'pnpm'
+    
+    - name: Install pnpm
+      run: npm install -g pnpm
 
     - name: Cache Dependencies
       uses: actions/cache@v2
