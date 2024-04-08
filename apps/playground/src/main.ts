@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 import { install_monaco } from './monaco';
 
 // 时间组件中文
-// dayjs.locale('zh-cn');
+dayjs.locale('zh-cn');
 
 const app = createApp(App);
 install_monaco();
@@ -35,7 +35,7 @@ if (import.meta.env.VITE_USE_SENTRY === 'true') {
             'ResizeObserver loop limit exceeded', // ant 官方建议
             'validate error'
         ],
-        environment: import.meta.env.VITE_GLOB_ENV,
+        environment: import.meta.env.VITE_GLOB_ENV
     });
 }
 
