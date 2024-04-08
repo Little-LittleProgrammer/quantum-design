@@ -40,3 +40,9 @@ jobs:
 
     - name: Build Playground
       run: pnpm build --filter=playground
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # GitHub Pages部署分支
+        folder: apps/playground/dist     # 构建产物所在目录，根据实际情况调整（如React通常是'build'，Vue可能是'dist'）
