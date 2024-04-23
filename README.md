@@ -2,6 +2,10 @@
 
 This is an official starter Turborepo.
 
+## example
+[playground](https://little-littleprogrammer.github.io/monorepo/playground)
+[docs](https://little-littleprogrammer.github.io/monorepo/docs)
+
 ## Using this example
 
 Run the following command:
