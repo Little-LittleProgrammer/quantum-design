@@ -28,7 +28,7 @@ jobs:
         node-version: '18' # 使用适合你项目的Node.js版本
         cache: 'pnpm'
 
-    - run: pnpm bootstrap
+    - run: pnpm i
 
     - name: Build Playground
       run: pnpm build --filter=playground
