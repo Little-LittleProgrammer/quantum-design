@@ -8,9 +8,10 @@ on:
       - 'apps/playground/**'
       - 'configs/**'
       - 'packages/**'
+      - 'docs/**'
       - 'turbo.json'
       - 'package.json'
-      - 'yarn.lock'
+      - '.github/workflows/playground.yml'
 
 jobs:
   build:
