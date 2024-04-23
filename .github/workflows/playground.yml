@@ -34,14 +34,16 @@ jobs:
     - name: Build Playground
       run: pnpm build --filter=playground
 
-    - name: Build docs
-      run: pnpm build --filter=project-docs
+    # - name: Build docs
+    #   run: pnpm build --filter=project-docs
 
     - name: mkdir dist
-      run: mkdir dist && mkdir dist/docs && mkdir dist/playground
+      run: mkdir dist && mkdir dist/playground
+    #   run: mkdir dist && mkdir dist/docs && mkdir dist/playground
     
     - name: move to dist
-      run: mv docs/project-docs/dist/* dist/docs && mv apps/playground/dist/* dist/playground
+      run: mv apps/playground/dist/* dist/playground
+    #   run: mv docs/project-docs/dist/* dist/docs && mv apps/playground/dist/* dist/playground
 
     - name: Deploy to GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2

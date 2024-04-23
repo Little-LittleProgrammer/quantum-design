@@ -3,7 +3,6 @@ import { ComputedRef, computed, ref, unref, watch } from 'vue';
 import { BasicTableProps } from '../types/table';
 import { PaginationProps } from '../types/pagination';
 import { isBoolean } from '@quantum-design/utils';
-import { isBoolean } from 'lodash-es';
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../enums/const';
 
 interface ItemRender {
