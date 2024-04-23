@@ -5,24 +5,24 @@ function user_agent() {
     return typeof window !== 'undefined' && window.navigator && window.navigator.userAgent || 'server';
 }
 
-export function js_is(val: unknown, type: string) {
+export function jsIs(val: unknown, type: string) {
     return toString.call(val) === `[object ${type}]`;
 }
 
-export function js_is_def<T = unknown>(val?: T): val is T {
+export function isDef<T = unknown>(val?: T): val is T {
     return typeof val !== 'undefined';
 }
 
-export function js_is_un_def<T = unknown>(val?: T): val is T {
-    return !js_is_def(val);
+export function isUnDef<T = unknown>(val?: T): val is T {
+    return !isDef(val);
 }
 
-export function js_is_object(val: any): val is Record<any, any> {
-    return val !== null && js_is(val, 'Object');
+export function isObject(val: any): val is Record<any, any> {
+    return val !== null && jsIs(val, 'Object');
 }
 
-export function js_is_empty<T = unknown>(val: T): val is T {
-    if (js_is_array(val) || js_is_string(val)) {
+export function isEmpty<T = unknown>(val: T): val is T {
+    if (isArray(val) || isString(val)) {
         return val.length === 0;
     }
 
@@ -30,87 +30,87 @@ export function js_is_empty<T = unknown>(val: T): val is T {
         return val.size === 0;
     }
 
-    if (js_is_object(val)) {
+    if (isObject(val)) {
         return Object.keys(val).length === 0;
     }
 
     return false;
 }
 
-export function js_is_date(val: unknown): val is Date {
-    return js_is(val, 'Date');
+export function isDate(val: unknown): val is Date {
+    return jsIs(val, 'Date');
 }
 
-export function js_is_null(val: unknown): val is null {
+export function isNull(val: unknown): val is null {
     return val === null;
 }
 
-export function js_is_null_or_undef(val: unknown): val is null | undefined {
-    return js_is_un_def(val) || js_is_null(val);
+export function isNullOrUndef(val: unknown): val is null | undefined {
+    return isUnDef(val) || isNull(val);
 }
 
-export function js_is_number(val: unknown): val is number {
-    return js_is(val, 'Number');
+export function isNumber(val: unknown): val is number {
+    return jsIs(val, 'Number');
 }
 
-export function js_is_promise<T = any>(val: unknown): val is Promise<T> {
-    return js_is(val, 'Promise') && js_is_object(val) && js_is_function(val.then) && js_is_function(val.catch);
+export function isPromise<T = any>(val: unknown): val is Promise<T> {
+    return jsIs(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
-export function js_is_string(val: unknown): val is string {
-    return js_is(val, 'String');
+export function isString(val: unknown): val is string {
+    return jsIs(val, 'String');
 }
 
-export function js_is_function(val: unknown): val is Fn {
+export function isFunction(val: unknown): val is Fn {
     return typeof val === 'function';
 }
 
-export function js_is_boolean(val: unknown): val is boolean {
-    return js_is(val, 'Boolean');
+export function isBoolean(val: unknown): val is boolean {
+    return jsIs(val, 'Boolean');
 }
 
-export function js_is_reg_exp(val: unknown): val is RegExp {
-    return js_is(val, 'RegExp');
+export function isRegExp(val: unknown): val is RegExp {
+    return jsIs(val, 'RegExp');
 }
 
-export function js_is_symbol(val: unknown): val is symbol {
-    return js_is(val, 'Symbol');
+export function isSymbol(val: unknown): val is symbol {
+    return jsIs(val, 'Symbol');
 }
 
-export function js_is_array(val: any): val is Array<any> {
+export function isArray(val: any): val is Array<any> {
     return val && Array.isArray(val);
 }
 
-export function js_is_window(val: any): val is Window {
-    return typeof window !== 'undefined' && js_is(val, 'Window');
+export function isWindow(val: any): val is Window {
+    return typeof window !== 'undefined' && jsIs(val, 'Window');
 }
 
-export function js_is_element(val: unknown): val is Element {
-    return js_is_object(val) && !!val.tagName;
+export function isElement(val: unknown): val is Element {
+    return isObject(val) && !!val.tagName;
 }
 
-export function js_is_map(val: unknown): val is Map<any, any> {
-    return js_is(val, 'Map');
+export function isMap(val: unknown): val is Map<any, any> {
+    return jsIs(val, 'Map');
 }
 
-export function js_is_set(val: unknown): val is Set<any> {
-    return js_is(val, 'Set');
+export function isSet(val: unknown): val is Set<any> {
+    return jsIs(val, 'Set');
 }
 
 // 是否是基本数据类型
-export function js_is_base(val: unknown): boolean {
+export function isBase(val: unknown): boolean {
     // 可遍历的引用类型
-    let _flag = !(js_is_map(val) || js_is_set(val) || js_is_array(val) || js_is_object(val));
+    let _flag = !(isMap(val) || isSet(val) || isArray(val) || isObject(val));
     // 不可遍历的引用类型
-    _flag = _flag && !(js_is_symbol(val) || js_is_reg_exp(val) || js_is_function(val));
+    _flag = _flag && !(isSymbol(val) || isRegExp(val) || isFunction(val));
 
     return _flag;
 }
 
 // 是否相等
-export function js_is_equal<T = unknown>(val1: T, val2: T): boolean {
+export function isEqual<T = unknown>(val1: T, val2: T): boolean {
     // 如果其中有基本类型
-    if (js_is_base(val1) || js_is_base(val2)) {
+    if (isBase(val1) || isBase(val2)) {
         return val1 === val2;
     }
     // 如果特意传的就是两个指向同一地址的对象
@@ -126,7 +126,7 @@ export function js_is_equal<T = unknown>(val1: T, val2: T): boolean {
     }
     // 以val1为基准，和val2依次递归比较
     for (const key in val1) {
-        const res = js_is_equal(val1[key], val2[key]);
+        const res = isEqual(val1[key], val2[key]);
         // 如果出现不相等直接返回false
         if (!res) {
             return false;
@@ -135,60 +135,60 @@ export function js_is_equal<T = unknown>(val1: T, val2: T): boolean {
     return true;
 }
 
-export const js_is_server = typeof window === 'undefined';
+export const isService = typeof window === 'undefined';
 
-export const js_is_client = !js_is_server;
+export const isClient = !isService;
 
-export function js_is_url(path: string): boolean {
+export function isUrl(path: string): boolean {
     const reg = gRegEnum.urlReg;
     return reg.test(path);
 }
 
 // 判断文件后缀是否为图片
-export function js_is_image(fileName: string): boolean {
+export function isImage(fileName: string): boolean {
     const _types = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'];
     return _types.some(item => fileName.toLowerCase().includes(item));
 }
 
 // 判断文件后缀是否为视频
-export function js_is_video(fileName: string): boolean {
+export function isVideo(fileName: string): boolean {
     const _types = ['mp4', 'avi', 'wmv', 'mkv', 'mov', 'flv', 'webm'];
     return _types.some(item => fileName.toLowerCase().includes(item));
 }
 
 // 判断当前浏览器环境
-export function js_is_android(): boolean {
+export function isAndroid(): boolean {
     return /(android|adr|linux)/i.test(user_agent());
 }
 
-export function js_is_ios(): boolean {
+export function isIos(): boolean {
     return /(iphone|ipad|ipod)/i.test(user_agent());
 }
 
 export function js_is_mobile(): boolean {
-    return js_is_android() || js_is_ios();
+    return isAndroid() || isIos();
 }
 
-export function js_is_iphone(): boolean {
+export function isIPhone(): boolean {
     return /iphone/i.test(user_agent());
 }
 
-export function js_is_ipad(): boolean {
+export function isIpad(): boolean {
     return /ipad/i.test(user_agent());
 }
 
-export function js_is_wechat(): boolean {
+export function isWechat(): boolean {
     return /MicroMessenger/i.test(user_agent());
 }
 
-export function js_is_ding_ding(): boolean {
+export function isDingDing(): boolean {
     return /DingTalk/i.test(user_agent());
 }
 
-export function js_is_safari_browser(): boolean {
+export function isSafariBrowser(): boolean {
     return /^((?!chrome|android).)*safari/i.test(user_agent());
 }
 
-export function js_is_baidu_browser(): boolean {
+export function isBaiduBrowser(): boolean {
     return /Baidu/i.test(user_agent());
 }

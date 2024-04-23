@@ -29,7 +29,7 @@ import { PropType, computed, toRaw } from 'vue';
 import { Divider, TooltipProps, Button as AButton, Tooltip as ATooltip, Popconfirm as APopconfirm } from 'ant-design-vue';
 import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 import { ActionItem } from '../types/table-action';
-import { js_is_boolean, js_is_function, js_is_string } from '@quantum-design/utils';
+import { isBoolean, isFunction, isString } from '@quantum-design/utils';
 import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({
     name: 'QAntdTableAction'
@@ -49,10 +49,10 @@ function is_if_show(action: ActionItem): boolean {
 
     let is_if_show = true;
 
-    if (js_is_boolean(_ifShow)) {
+    if (isBoolean(_ifShow)) {
         is_if_show = _ifShow;
     }
-    if (js_is_function(_ifShow)) {
+    if (isFunction(_ifShow)) {
         is_if_show = _ifShow(action);
     }
     return is_if_show;
@@ -84,7 +84,7 @@ const get_pop_confirm = (data: any) => {
 function get_tooltip(data: string | TooltipProps): TooltipProps {
     return {
         placement: 'bottom',
-        ...(js_is_string(data) ? { title: data } : data)
+        ...(isString(data) ? { title: data } : data)
     };
 }
 

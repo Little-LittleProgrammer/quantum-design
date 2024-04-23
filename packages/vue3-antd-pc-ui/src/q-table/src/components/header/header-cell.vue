@@ -20,7 +20,7 @@ import { defineComponent, computed } from 'vue';
 import headerEditIcon from './header-edit-icon.vue';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { Tooltip } from 'ant-design-vue';
-import { js_is_string } from '@quantum-design/utils';
+import { isString } from '@quantum-design/utils';
 export default defineComponent({
     name: 'TableHeaderCell',
     components: {
@@ -41,7 +41,7 @@ export default defineComponent({
         const getIsEdit = computed(() => !!props.column?.edit);
         const getTitle = computed(() => props.column?.customTitle || props.column?.title);
         const getHelpMessage = computed(() => {
-            if (js_is_string(props.column?.helpMessage)) {
+            if (isString(props.column?.helpMessage)) {
                 return [props.column?.helpMessage];
             }
             return props.column?.helpMessage;

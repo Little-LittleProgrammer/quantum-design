@@ -2,7 +2,7 @@ import { useGo, useRedo } from '@quantum-design/hooks/vue';
 import { defineStore } from 'pinia';
 import { toRaw, unref } from 'vue';
 import { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';
-import { js_is_client } from '@quantum-design/utils';
+import { isClient } from '@quantum-design/utils';
 import { js_create_local_storage, js_create_session_storage } from '@quantum-design/utils/extra';
 import { TabKeys } from '../enums/cacheEnum';
 
@@ -37,8 +37,8 @@ const get_to_target = (tabItem: RouteLocationNormalized) => {
     };
 };
 
-const ls = js_is_client && js_create_local_storage();
-const ss = js_is_client && js_create_session_storage();
+const ls = isClient && js_create_local_storage();
+const ss = isClient && js_create_session_storage();
 const cacheTab = ls && ls.get('project_config')?.cacheTabsSetting?.cache || false;
 
 // state

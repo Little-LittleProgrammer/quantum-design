@@ -1,4 +1,4 @@
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import type { Slots } from 'vue';
 
 export function useSlots() {
@@ -9,7 +9,7 @@ export function useSlots() {
         if (!slots || !Reflect.has(slots, slot)) {
             return null;
         }
-        if (!js_is_function(slots[slot])) {
+        if (!isFunction(slots[slot])) {
             console.error(`${slot} is not a function!`);
             return null;
         }

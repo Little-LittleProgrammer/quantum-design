@@ -1,4 +1,4 @@
-import { js_is_client } from '@quantum-design/utils';
+import { isClient } from '@quantum-design/utils';
 import { js_create_session_storage } from '@quantum-design/utils/extra';
 import { Ref, getCurrentInstance, unref, watch } from 'vue';
 
@@ -6,7 +6,7 @@ class Subscribe {
     cache: Fn[]= []
     constructor() {
         this.cache = [];
-        if (js_is_client) {
+        if (isClient) {
             window.addEventListener('beforeunload', this.notify.bind(this));
         }
     }
@@ -18,7 +18,7 @@ class Subscribe {
         this.cache.forEach(fn => {
             fn();
         });
-        if (js_is_client) {
+        if (isClient) {
             window.removeEventListener('beforeunload', this.notify);
         }
     }

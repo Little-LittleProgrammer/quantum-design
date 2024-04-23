@@ -1,4 +1,4 @@
-import { js_is_function, js_utils_deep_merge } from "@quantum-design/utils";
+import { isFunction, js_utils_deep_merge } from "@quantum-design/utils";
 import { useRuntimeConfig } from "nuxt/app";
 import type { UseFetchOptions } from "nuxt/app";
 import type { IFetchRequest, IHttpOptions, IUseCustomFetch, RequestOptions } from "./types";
@@ -68,7 +68,7 @@ export const useCustomFetch: IUseCustomFetch = (options?: IHttpOptions<any>) => 
 
             const uploadUrl = _requestOptions?.uploadUrl ? _requestOptions?.uploadUrl : '';
             let url = uploadUrl + '' + config.url ;
-            if (_requestOptions?.env && js_is_function(_requestOptions.env)) {
+            if (_requestOptions?.env && isFunction(_requestOptions.env)) {
                 url  += '?' + _requestOptions.env()
             }
             const opt: RequestOptions = Object.assign({}, _requestOptions || {}, {

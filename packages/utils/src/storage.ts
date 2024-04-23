@@ -1,5 +1,5 @@
 import { Encryption } from './cipher';
-import { js_is_null_or_undef } from './is';
+import { isNullOrUndef } from './is';
 
 interface IStorageParams {
     prefixKey: string;
@@ -35,7 +35,7 @@ class WebStorage {
         const stringData = JSON.stringify({
             value,
             time: Date.now(),
-            expire: !js_is_null_or_undef(expire) ? new Date().getTime() + expire * 1000 : null
+            expire: !isNullOrUndef(expire) ? new Date().getTime() + expire * 1000 : null
         });
         const storageData = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData;
         this.storage.setItem(this.getKey(key), storageData);
@@ -49,7 +49,7 @@ class WebStorage {
 
             const data = JSON.parse(decVal);
             const { value, expire } = data;
-            if (js_is_null_or_undef(expire) || expire >= new Date().getTime()) {
+            if (isNullOrUndef(expire) || expire >= new Date().getTime()) {
                 return value;
             }
             this.remove(key);

@@ -1,4 +1,4 @@
-import { js_is_array } from '@quantum-design/utils';
+import { isArray } from '@quantum-design/utils';
 import { ComputedRef, onDeactivated, onUnmounted } from 'vue';
 
 interface IConfig {
@@ -8,7 +8,7 @@ interface IConfig {
 
 export function useDrawerClose(config: IConfig | IConfig[]) {
     function close() {
-        if (js_is_array(config)) {
+        if (isArray(config)) {
             for (const conf of config) {
                 const {getVisible, closeDrawer} = conf;
                 if (getVisible?.value) {

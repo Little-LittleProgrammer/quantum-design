@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
-import { js_is_array, js_is_boolean, js_is_function, js_is_null, js_is_number, js_is_object, js_is_string, js_utils_first_to_upper } from '@quantum-design/utils';
+import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, js_utils_first_to_upper } from '@quantum-design/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
 import { computed, PropType, Ref, toRefs, unref } from 'vue';
@@ -70,7 +70,7 @@ export default defineComponent({
             const _col = {...globalLabelCol, ...labelCol};
             const wrapCol = { ...globWrapperCol, ...wrapperCol };
             if (_width) {
-                _width = js_is_number(_width) ? `${_width}px` : _width;
+                _width = isNumber(_width) ? `${_width}px` : _width;
             }
             return {
                 labelCol: { style: { width: _width }, ..._col },
@@ -95,7 +95,7 @@ export default defineComponent({
         const getComponentsProps = computed(() => {
             const { schema, formModel, formActionType, tableAction } = props;
             let { componentProps = {}} = schema;
-            if (js_is_function(componentProps)) {
+            if (isFunction(componentProps)) {
                 componentProps = componentProps({schema, formModel, formActionType, tableAction}) ?? {};
             }
             if (schema.component === 'Divider') {
@@ -111,10 +111,10 @@ export default defineComponent({
             const { dynamicDisabled } = props.schema;
             const { disabled: itemDisabled = false } = unref(getComponentsProps);
             let disabled = !!globDisabled || itemDisabled;
-            if (js_is_boolean(dynamicDisabled)) {
+            if (isBoolean(dynamicDisabled)) {
                 disabled = dynamicDisabled;
             }
-            if (js_is_function(dynamicDisabled)) {
+            if (isFunction(dynamicDisabled)) {
                 disabled = dynamicDisabled(unref(getValues));
             }
             return disabled;
@@ -123,7 +123,7 @@ export default defineComponent({
             if (!slots || !Reflect.has(slots, slot)) {
                 return null;
             }
-            if (!js_is_function(slots[slot])) {
+            if (!isFunction(slots[slot])) {
                 console.error(`${slot} is not a function!`);
                 return null;
             }
@@ -137,16 +137,16 @@ export default defineComponent({
             let _isShow = true;
             let _isIfShow = true;
 
-            if (js_is_boolean(show)) {
+            if (isBoolean(show)) {
                 _isShow = show;
             }
-            if (js_is_boolean(ifShow)) {
+            if (isBoolean(ifShow)) {
                 _isIfShow = ifShow;
             }
-            if (js_is_function(show)) {
+            if (isFunction(show)) {
                 _isShow = show(unref(getValues));
             }
-            if (js_is_function(ifShow)) {
+            if (isFunction(ifShow)) {
                 _isIfShow = ifShow(unref(getValues));
             }
             return { isShow: _isShow, isIfShow: _isIfShow };
@@ -160,7 +160,7 @@ export default defineComponent({
                 dynamicRules,
                 required
             } = props.schema;
-            if (js_is_function(dynamicRules)) {
+            if (isFunction(dynamicRules)) {
                 return dynamicRules(unref(getValues)) as Rule[];
             }
             let _rules: Rule[] = cloneDeep(defRules) as Rule[];
@@ -169,24 +169,24 @@ export default defineComponent({
             const _defaultMsg = create_placeholder_message(component) + `${_joinLabel ? label : ''}`;
             function validator(rule: any, value: any) {
                 const _msg = rule.message || _defaultMsg;
-                if (value === undefined || js_is_null(value)) {
+                if (value === undefined || isNull(value)) {
                     // 空值
                     return Promise.reject(_msg);
-                } else if (js_is_array(value) && value.length === 0) {
+                } else if (isArray(value) && value.length === 0) {
                     // 数组类型
                     return Promise.reject(_msg);
-                } else if (js_is_string(value) && value.trim() === '') {
+                } else if (isString(value) && value.trim() === '') {
                     // 空字符串
                     return Promise.reject(_msg);
                 } else if (
-                    js_is_object(value) && Reflect.has(value, 'checked') && Reflect.has(value, 'halfChecked') && js_is_array(value.checked) && js_is_array(value.halfChecked) && value.checked.length === 0 && value.halfChecked.length === 0
+                    isObject(value) && Reflect.has(value, 'checked') && Reflect.has(value, 'halfChecked') && isArray(value.checked) && isArray(value.halfChecked) && value.checked.length === 0 && value.halfChecked.length === 0
                 ) {
                     // 非关联选择的tree组件
                     return Promise.reject(_msg);
                 }
                 return Promise.resolve();
             }
-            const _getRequired = js_is_function(required) ? required(unref(getValues)) : required;
+            const _getRequired = isFunction(required) ? required(unref(getValues)) : required;
             if ((!_rules || _rules.length === 0) && _getRequired) {
                 _rules = [{ required: _getRequired, validator }];
             }
@@ -287,7 +287,7 @@ export default defineComponent({
             if (!renderComponentContent) {
                 return <Comp {..._compAttr}/>;
             }
-            const compSlot = js_is_function(renderComponentContent)
+            const compSlot = isFunction(renderComponentContent)
                 ? { ...renderComponentContent(unref(getValues)) }
                 : {
                     default: () => renderComponentContent
@@ -304,7 +304,7 @@ export default defineComponent({
             ) : (
                 label
             );
-            const getHelpMessage = js_is_function(helpMessage)
+            const getHelpMessage = isFunction(helpMessage)
                 ? helpMessage(unref(getValues))
                 : helpMessage;
             if (!getHelpMessage || (Array.isArray(getHelpMessage) && getHelpMessage.length === 0)) {
@@ -350,8 +350,8 @@ export default defineComponent({
                 };
                 const _showSuffix = !!suffix;
                 const _showPrefix = !!prefix;
-                const _getSuffix = js_is_function(suffix) ? suffix(unref(getValues)) : suffix;
-                const _getPrefix = js_is_function(prefix) ? prefix(unref(getValues)) : prefix;
+                const _getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
+                const _getPrefix = isFunction(prefix) ? prefix(unref(getValues)) : prefix;
                 return (
                     <Form.Item
                         name={field}

@@ -1,4 +1,4 @@
-import {js_is_number} from '@quantum-design/utils';
+import {isNumber} from '@quantum-design/utils';
 import {createAxios} from '@quantum-design/http';
 import Browser from 'webextension-polyfill';
 
@@ -58,7 +58,7 @@ export async function api_get_detail() {
     const _id = _ids[1];
     const _projectId = _ids[0];
     const _token = (await Browser.storage.local.get()).token?.[_projectId];
-    if (js_is_number(+(_id || ''))) {
+    if (isNumber(+(_id || ''))) {
         const _value = await yapiApi.get<IApiDetailInfo>({
             url: '/interface/get',
             params: {

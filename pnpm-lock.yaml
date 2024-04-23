@@ -130,8 +130,8 @@ importers:
         specifier: 0.2.0
         version: 0.2.0
       sass:
-        specifier: 1.63.3
-        version: 1.63.3
+        specifier: ^1.63.3
+        version: 1.74.1
       unplugin-vue-components:
         specifier: ^0.25.2
         version: 0.25.2(vue@3.3.13)
@@ -361,6 +361,22 @@ importers:
       '@types/qs':
         specifier: 6.9.7
         version: 6.9.7
+      rollup:
+        specifier: ^3.29.4
+        version: 3.29.4
+
+  packages/polyfill:
+    dependencies:
+      '@quantum-design/utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@quantum-design-configs/rollup':
+        specifier: workspace:*
+        version: link:../../configs/rollup
+      '@quantum-design/types':
+        specifier: workspace:*
+        version: link:../types
       rollup:
         specifier: ^3.29.4
         version: 3.29.4
@@ -11931,16 +11947,6 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-
-  /sass@1.63.3:
-    resolution: {integrity: sha512-ySdXN+DVpfwq49jG1+hmtDslYqpS7SkOR5GpF6o2bmb1RL/xS+wvPmegMvMywyfsmAV6p7TgwXYGrCZIFFbAHg==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      chokidar: 3.6.0
-      immutable: 4.3.5
-      source-map-js: 1.2.0
-    dev: true
 
   /sass@1.74.1:
     resolution: {integrity: sha512-w0Z9p/rWZWelb88ISOLyvqTWGmtmu2QJICqDBGyNnfG4OUnPX9BBjjYIXUpXCMOOg5MQWNpqzt876la1fsTvUA==}

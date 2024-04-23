@@ -70,7 +70,7 @@ import { useTableContext } from '../../hooks/use-table-context';
 import { cloneDeep, omit } from 'lodash-es';
 import { BasicColumn, BasicTableProps, ColumnChangeParam } from '../../types/table';
 import {useSortable} from '@quantum-design/hooks/base/use-sortable';
-import { js_is_function, js_is_null_or_undef } from '@quantum-design/utils';
+import { isFunction, isNullOrUndef } from '@quantum-design/utils';
 import { SettingOutlined, DragOutlined, VerticalRightOutlined } from '@ant-design/icons-vue';
 interface State {
     checkAll: boolean;
@@ -254,7 +254,7 @@ function handle_visible_change() {
             handle: '.table-column-drag-icon',
             onEnd: (evt) => {
                 const { oldIndex, newIndex } = evt;
-                if (js_is_null_or_undef(oldIndex) || js_is_null_or_undef(newIndex) || oldIndex === newIndex) {
+                if (isNullOrUndef(oldIndex) || isNullOrUndef(newIndex) || oldIndex === newIndex) {
                     return;
                 }
                 // Sort column
@@ -337,7 +337,7 @@ function set_columns(columns: BasicColumn[] | string[]) {
 const attrs = useAttrs();
 
 function get_popup_container() {
-    return js_is_function(attrs.getPopupContainer)
+    return isFunction(attrs.getPopupContainer)
         ? attrs.getPopupContainer()
         : 'body';
 }

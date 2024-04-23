@@ -1,5 +1,5 @@
 import { js_utils_dom_offset } from './dom-util';
-import { js_is_array, js_is_null, js_is_object } from './is';
+import { isArray, isNull, isObject } from './is';
 
 type IOptionsTable<C extends string | number | symbol> = {
     alignData?: Partial<Record<C | 'all', 'left' | 'right' | 'center'>>;
@@ -39,7 +39,7 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
     function dfs<T extends Record<string, any>>(headerObj: T) {
         const _resObj = [];
         let _rowSpan:any = {};
-        if (js_is_array(list)) {
+        if (isArray(list)) {
             _rowSpan = js_utils_get_custom_cell(headerObj, list);
         }
         for (const _key in headerObj) {
@@ -61,12 +61,12 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
                     resizable: resizableData ? resizableData[_key] ?? (resizableData.all ?? undefined) : undefined,
                     align: alignData ? alignData[_key] ?? (alignData.all ?? 'center') : 'center',
                     fixed: fixedData[_key] ?? '',
-                    sorter: js_is_object(sortData) ? (sortData as Record<string, Fn>)[_key] : (sortData as string[]).indexOf(_key) > -1,
+                    sorter: isObject(sortData) ? (sortData as Record<string, Fn>)[_key] : (sortData as string[]).indexOf(_key) > -1,
                     customCell: customCell ? customCell[_key]
                         ? customCell[_key]
                         : Object.keys(_rowSpan).length > 0
                             ? (_: any, index: number) => ({
-                                rowSpan: !js_is_null(_rowSpan) ? _rowSpan[_key][index as number] : 1
+                                rowSpan: !isNull(_rowSpan) ? _rowSpan[_key][index as number] : 1
                             })
                             : null
                         : null

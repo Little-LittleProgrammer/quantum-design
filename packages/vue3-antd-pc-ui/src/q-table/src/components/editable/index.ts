@@ -1,6 +1,6 @@
 import { Ref, h, toRaw } from 'vue';
 import type { BasicColumn, Recordable } from '../../types/table';
-import { js_is_array } from '@quantum-design/utils';
+import { isArray } from '@quantum-design/utils';
 import EditableCell from './editable-cell.vue';
 
 interface Params {
@@ -26,7 +26,7 @@ export type EditRecordRow<T = Recordable> = Partial<
 export function render_edit_cell(column: BasicColumn) {
     return ({text: value, record, index}: Params) => {
         toRaw(record).onValid = async() => {
-            if (js_is_array(record?.validCbs)) {
+            if (isArray(record?.validCbs)) {
                 const _validFns = (record?.validCbs || []).map((fn) => fn());
                 const _res = await Promise.all(_validFns);
                 return _res.every(item => !!item);
@@ -35,7 +35,7 @@ export function render_edit_cell(column: BasicColumn) {
             }
         };
 
-        async function on_edit(edit:boolean = true, submit = false) {
+        async function on_edit(edit = true, submit = false) {
             if (!submit) {
                 record.editable = edit;
             }

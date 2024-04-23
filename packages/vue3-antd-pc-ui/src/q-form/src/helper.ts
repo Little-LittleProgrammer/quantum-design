@@ -1,4 +1,4 @@
-import { js_is_number, js_is_object } from '@quantum-design/utils';
+import { isNumber, isObject } from '@quantum-design/utils';
 import type { Rule } from 'ant-design-vue/lib/form/interface';
 import type { ComponentType } from './types/index';
 import dayjs from 'dayjs';
@@ -50,7 +50,7 @@ export function set_component_rule_type(
 export function process_date_value(attr: Record<string, any>, component: string) {
     const { valueFormat, value } = attr;
     if (valueFormat) {
-        attr.value = js_is_object(value) ? dayjs(value as any).format(valueFormat) : value;
+        attr.value = isObject(value) ? dayjs(value as any).format(valueFormat) : value;
     } else if (DATE_TYPE.includes(component) && value) {
         attr.value = dayjs(attr.value);
     }
@@ -60,7 +60,7 @@ export function process_date_value(attr: Record<string, any>, component: string)
 export function handle_input_number_value(component?: ComponentType<''>, val?: any) {
     if (!component) return val;
     if (['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(component)) {
-        return val && js_is_number(val) ? `${val}` : val;
+        return val && isNumber(val) ? `${val}` : val;
     }
     return val;
 }

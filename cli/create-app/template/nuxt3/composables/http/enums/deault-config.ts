@@ -2,7 +2,7 @@ import { gContentTypeEnum, gResultEnum } from "@quantum-design/shared";
 import { IHttpOptions, RequestOptions } from "../types";
 import { UseFetchOptions } from "nuxt/app";
 import { check_status } from "../utils/check-status";
-import { js_is_function } from "@quantum-design/utils";
+import { isFunction } from "@quantum-design/utils";
 
 export const defaultRequestOptions: RequestOptions = {
     // 默认将prefix 添加到url
@@ -39,7 +39,7 @@ export const transform = (data?: any): UseFetchOptions<any>=> {
             if (_options.requestOptions?.joinTime) {
                 params.t = new Date().getTime()
             }
-            if (_options.requestOptions?.env && js_is_function(_options.requestOptions.env)) {
+            if (_options.requestOptions?.env && isFunction(_options.requestOptions.env)) {
                 params.env = _options.requestOptions.env()
             }
             if (options.method === 'POST') {

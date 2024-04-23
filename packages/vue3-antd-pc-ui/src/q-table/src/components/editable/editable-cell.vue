@@ -3,7 +3,7 @@ import type {CSSProperties, PropType} from 'vue';
 import {computed, defineComponent, nextTick, ref, toRaw, unref, watchEffect} from 'vue';
 import type { BasicColumn } from '../../types/table';
 import {propTypes} from '@quantum-design/types/vue/types';
-import {js_is_array, js_is_boolean, js_is_function, js_is_number, js_is_string} from '@quantum-design/utils';
+import {isArray, isBoolean, isFunction, isNumber, isString} from '@quantum-design/utils';
 import {useTableContext} from '../../hooks/use-table-context';
 import { create_placeholder_message } from './helper';
 import { pick, set } from 'lodash-es';
@@ -57,12 +57,12 @@ export default defineComponent({
             const _valueField = _isCheckVal ? 'checked' : 'value';
 
             const _val = unref(currentValueRef);
-            const _value = _isCheckVal ? (js_is_number(_val) && js_is_boolean(_val) ? _val : !!_val) : _val;
+            const _value = _isCheckVal ? (isNumber(_val) && isBoolean(_val) ? _val : !!_val) : _val;
 
             let _compProps = props.column?.editComponentProps ?? ({} as any);
             const {record, column, index} = props;
 
-            if (js_is_function(_compProps)) {
+            if (isFunction(_compProps)) {
                 _compProps = _compProps({ text: _val, record, column, index }) ?? {};
             }
 
@@ -92,10 +92,10 @@ export default defineComponent({
         const getDisable = computed(() => {
             const { editDynamicDisabled } = props.column;
             let disabled = false;
-            if (js_is_boolean(editDynamicDisabled)) {
+            if (isBoolean(editDynamicDisabled)) {
                 disabled = editDynamicDisabled;
             }
-            if (js_is_function(editDynamicDisabled)) {
+            if (isFunction(editDynamicDisabled)) {
                 const { record } = props;
                 disabled = editDynamicDisabled({ record });
             }
@@ -107,7 +107,7 @@ export default defineComponent({
 
             const _value = unref(currentValueRef);
 
-            if (editValueMap && js_is_function(editValueMap)) {
+            if (editValueMap && isFunction(editValueMap)) {
                 return editValueMap(_value);
             }
 
@@ -148,7 +148,7 @@ export default defineComponent({
 
         watchEffect(() => {
             const { editable } = props.column;
-            if (js_is_boolean(editable) || js_is_boolean(unref(getRowEditable))) {
+            if (isBoolean(editable) || isBoolean(unref(getRowEditable))) {
                 isEdit.value = !!editable || unref(getRowEditable);
             }
         });
@@ -174,12 +174,12 @@ export default defineComponent({
                 currentValueRef.value = e;
             } else if (e?.target && Reflect.has(e.target, 'value')) {
                 currentValueRef.value = e.target.value;
-            } else if (js_is_boolean(e) || js_is_string(e) || js_is_number(e) || js_is_array(e)) {
+            } else if (isBoolean(e) || isString(e) || isNumber(e) || isArray(e)) {
                 currentValueRef.value = e;
             }
 
             const _onChange = unref(getComponentProps)?.onChangeTemp;
-            if (_onChange && js_is_function(_onChange)) {
+            if (_onChange && isFunction(_onChange)) {
                 _onChange(...arguments);
             }
             table.emit?.('edit-change', {
@@ -197,13 +197,13 @@ export default defineComponent({
             const _currentValue = unref(currentValueRef);
 
             if (editRule) {
-                if (js_is_boolean(editRule) && !_currentValue && !js_is_number(_currentValue)) {
+                if (isBoolean(editRule) && !_currentValue && !isNumber(_currentValue)) {
                     ruleVisible.value = true;
                     const _component = unref(getComponent);
                     ruleMessage.value = create_placeholder_message(_component);
                     return false;
                 }
-                if (js_is_function(editRule)) {
+                if (isFunction(editRule)) {
                     const _res = await editRule(_currentValue, record);
                     if (_res) {
                         ruleMessage.value = _res;
@@ -239,7 +239,7 @@ export default defineComponent({
 
                 const { beforeEditSubmit, columns } = unref(getBindValues);
 
-                if (beforeEditSubmit && js_is_function(beforeEditSubmit)) {
+                if (beforeEditSubmit && isFunction(beforeEditSubmit)) {
                     spinning.value = true;
                     const _keys: string[] = columns
                         .map((_column) => _column.dataIndex)
@@ -297,7 +297,7 @@ export default defineComponent({
         function init_cbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
             if (props.record) {
                 /* eslint-disable  */
-                js_is_array(props.record[cbs])
+                isArray(props.record[cbs])
                     ? props.record[cbs]?.push(handle)
                     : (props.record[cbs] = [handle]);
             }
@@ -314,10 +314,10 @@ export default defineComponent({
                 props.record.editValueRefs[props.column.dataIndex as any] = currentValueRef;
             }
             props.record.onCancelEdit = () => {
-                js_is_array(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn:Fn) => fn());
+                isArray(props.record?.cancelCbs) && props.record?.cancelCbs.forEach((fn:Fn) => fn());
             };
             props.record.onSubmitEdit = async() => {
-                if (js_is_array(props.record?.submitCbs)) {
+                if (isArray(props.record?.submitCbs)) {
                     if (!props.record?.onValid?.()) return;
                     const submitFns = props.record?.submitCbs || [];
                     submitFns.forEach((fn: Fn) => fn(false, false));

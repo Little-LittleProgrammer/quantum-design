@@ -14,7 +14,7 @@
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
-import { js_is_string } from '@quantum-design/utils';
+import { isString } from '@quantum-design/utils';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import {Tooltip as ATooltip, RadioGroup as ARadioGroup, RadioButton as ARadioButton} from 'ant-design-vue';
 
@@ -57,7 +57,7 @@ const getOptions = computed((): OptionsItem[] => {
     const { options } = props;
     if (!options || options?.length === 0) return [];
 
-    const isStringArr = options.some((item) => js_is_string(item));
+    const isStringArr = options.some((item) => isString(item));
     if (!isStringArr) return options as OptionsItem[];
 
     return options.map((item) => ({ label: item, value: item })) as OptionsItem[];

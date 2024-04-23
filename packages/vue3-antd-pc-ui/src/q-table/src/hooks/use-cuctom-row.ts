@@ -1,7 +1,7 @@
 import { unref, type ComputedRef } from 'vue';
 import type { BasicTableProps, Recordable } from '../types/table';
 import { ROW_KEY } from '../enums/const';
-import { js_is_function, js_is_string } from '@quantum-design/utils';
+import { isFunction, isString } from '@quantum-design/utils';
 
 interface Options {
     setSelectedRowKeys: (_keys: string[]) => void;
@@ -19,10 +19,10 @@ function get_key(
     if (!rowKey || autoCreateKey) {
         return record[ROW_KEY];
     }
-    if (js_is_string(rowKey)) {
+    if (isString(rowKey)) {
         return record[rowKey];
     }
-    if (js_is_function(rowKey)) {
+    if (isFunction(rowKey)) {
         return record[rowKey(record)];
     }
     return null;

@@ -41,7 +41,7 @@ import type { DropMenu } from './types';
 import { Dropdown as ADropdown, Menu as AMenu, MenuItem as AMenuItem, Popconfirm as APopconfirm, MenuDivider as AMenuDivider } from 'ant-design-vue';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { omit } from 'lodash-es';
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import { dropdownProps } from './types';
 
 defineOptions({
@@ -62,9 +62,9 @@ function handle_click_menu(item: DropMenu) {
 const getPopConfirmAttrs = computed(() => {
     return (attrs: any) => {
         const originAttrs = omit(attrs, ['confirm', 'cancel', 'icon']);
-        if (!attrs.onConfirm && attrs.confirm && js_is_function(attrs.confirm))
+        if (!attrs.onConfirm && attrs.confirm && isFunction(attrs.confirm))
             originAttrs['onConfirm'] = attrs.confirm;
-        if (!attrs.onCancel && attrs.cancel && js_is_function(attrs.cancel))
+        if (!attrs.onCancel && attrs.cancel && isFunction(attrs.cancel))
             originAttrs['onCancel'] = attrs.cancel;
         return originAttrs;
     };

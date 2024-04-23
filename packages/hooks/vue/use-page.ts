@@ -1,6 +1,6 @@
 import type { RouteLocationRaw, Router } from 'vue-router';
 
-import { js_is_string, js_utils_deep_merge, js_is_iphone, js_is_safari_browser, js_is_wechat, js_is_ding_ding, js_is_baidu_browser } from '@quantum-design/utils';
+import { isString, js_utils_deep_merge, isIPhone, isSafariBrowser, isWechat, isDingDing, isBaiduBrowser } from '@quantum-design/utils';
 import { unref, onMounted, ref } from 'vue';
 
 import { useRouter } from 'vue-router';
@@ -23,7 +23,7 @@ function useGo(router?: Router) {
             return;
         }
 
-        if (js_is_string(opt)) {
+        if (isString(opt)) {
             isReplace ? replace(opt).catch(handleError) : push(opt).catch(handleError);
         } else {
             if (joinTime) {
@@ -69,7 +69,7 @@ const useRedo = (_router?: Router) => {
  */
 const useOpenPage = () => {
     function open_page(url: string, target = '_blank') {
-        if (js_is_iphone() || js_is_safari_browser()) {
+        if (isIPhone() || isSafariBrowser()) {
             // safari和iphone内核浏览器会阻止异步请求后的open行为
             setTimeout(() => {
                 // url是否为/开头的绝对路径
@@ -98,7 +98,7 @@ const useClosePage = () => {
         }
         window.close();
         // 兼容部分浏览器无法关闭打开的页签，如微信、手百等
-        const _isNeedBack = js_is_wechat() || js_is_ding_ding() || js_is_baidu_browser();
+        const _isNeedBack = isWechat() || isDingDing() || isBaiduBrowser();
         if (_isNeedBack) {
             window.history.back();
         }

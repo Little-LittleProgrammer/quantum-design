@@ -1,10 +1,10 @@
-import { js_is_array, js_is_function, js_is_object, js_is_string, js_is_null_or_undef } from '@quantum-design/utils';
+import { isArray, isFunction, isObject, isString, isNullOrUndef, isEmpty, js_utils_edit_attr, js_utils_find_attr } from '@quantum-design/utils';
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
 import type { FormProps, FormSchema } from '../types/form';
 import { gDateFormatEnum } from '@quantum-design/shared/enums';
-import { cloneDeep } from 'lodash-es';
-import dayjs from 'dayjs'
+import { cloneDeep, unset } from 'lodash-es';
+import dayjs from 'dayjs';
 
 interface UseFormValuesContext {
     defaultValueRef: Ref<any>;
@@ -18,30 +18,49 @@ export function use_form_values({
     formModel,
     getProps
 }: UseFormValuesContext) {
+    // TODO: formModel 值 与 暴露出去的值 不同步的问题
+    function handle_fin_form_values(obj: Record<string, any>, result: Record<string, any> = {}, parentKey = '') {
+        if (!isObject(obj)) {
+            return {};
+        }
+        for (const key in obj) {
+            if (!isNullOrUndef(obj[key])) {
+                const propName = parentKey ? parentKey + '.' + key : key;
+                if (isObject(obj[key])) {
+                    handle_fin_form_values(obj[key], result, propName);
+                } else {
+                    result[propName] = obj[key];
+                }
+            }
+        }
+        return result;
+    }
+
     // 处理表单值
     function handle_form_values(values: Record<string, any>) {
-        if (!js_is_object(values)) {
+        if (!isObject(values)) {
             return {};
         }
         const res: Record<string, any> = {};
         for (const item of Object.entries(values)) {
             let [, value] = item;
             const [key] = item;
-            if (!key || (js_is_array(value) && value.length === 0) || js_is_function(value)) {
+            if (!key || (isArray(value) && value.length === 0) || isFunction(value)) {
                 continue;
             }
             const transformDateFunc = unref(getProps).transformDateFunc;
-            if (js_is_object(value) && value?.format) {
+            if (isObject(value) && value?.format) {
                 value = transformDateFunc?.(value);
             }
-            if (js_is_array(value) && value[0]?.format && value[1]?.format) {
+            if (isArray(value) && value[0]?.format && value[1]?.format) {
                 value = value.map((item) => transformDateFunc?.(item));
             }
             // 删除前后空格
-            if (js_is_string(value)) {
+            if (isString(value)) {
                 value = value.trim();
             }
-            res[key] = value;
+
+            js_utils_edit_attr(key, value, res);
         }
         return handle_range_time_value(res);
     }
@@ -57,20 +76,27 @@ export function use_form_values({
         }
 
         for (const [field, [startTimeKey, endTimeKey], format = gDateFormatEnum.date] of fieldMapToTime) {
-            if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+            if (!field || !startTimeKey || !endTimeKey) {
+                continue;
+            }
+            if (!js_utils_find_attr(values, field)) {
+                unset(values, field);
                 continue;
             }
 
-            const [startTime, endTime]: string[] = values[field];
+            const [startTime, endTime]: string[] = js_utils_find_attr(values, field);
 
-            values[startTimeKey] = dayjs(startTime).format(format);
-            values[endTimeKey] = dayjs(endTime).format(format);
-            Reflect.deleteProperty(values, field);
+            unset(values, field);
 
-            values[field] = {
-                [startTimeKey]: values[startTimeKey],
-                [endTimeKey]: values[endTimeKey]
-            };
+            if (!isNullOrUndef(startTime) && !isEmpty(startTime)) {
+                js_utils_edit_attr(startTimeKey, dayjs(startTime).format(format), values);
+                js_utils_edit_attr(`${field}.${startTimeKey}`, dayjs(startTime).format(format), values);
+            }
+
+            if (!isNullOrUndef(endTime) && !isEmpty(endTime)) {
+                js_utils_edit_attr(endTimeKey, dayjs(endTime).format(format), values);
+                js_utils_edit_attr(`${field}.${endTimeKey}`, dayjs(endTime).format(format), values);
+            }
         }
 
         return values;
@@ -81,15 +107,15 @@ export function use_form_values({
         const obj: Record<string, any> = {};
         schemas.forEach((item) => {
             const { defaultValue } = item;
-            if (!js_is_null_or_undef(defaultValue)) {
+            if (!isNullOrUndef(defaultValue)) {
                 obj[item.field] = defaultValue;
                 if (formModel[item.field] === undefined) {
-                    formModel[item.field] = defaultValue;
+                    formModel[item.field] = cloneDeep(defaultValue);
                 }
             }
         });
         defaultValueRef.value = cloneDeep(obj);
     }
 
-    return { handle_form_values, init_default };
+    return { handle_form_values, init_default, handle_fin_form_values };
 }

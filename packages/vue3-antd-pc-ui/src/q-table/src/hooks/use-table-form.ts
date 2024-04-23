@@ -1,7 +1,7 @@
 import { ComputedRef, Slots, computed, unref } from 'vue';
 import { BasicTableProps, FetchParams } from '../types/table';
 import { FormProps } from '@vue3-antd/q-form';
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 
 export function useTableForm(
     propsRef: ComputedRef<BasicTableProps>,
@@ -34,7 +34,7 @@ export function useTableForm(
 
     function handleSearchInfoChange(info: Record<string, any>) {
         const { handleSearchInfoFn } = unref(propsRef);
-        if (handleSearchInfoFn && js_is_function(handleSearchInfoFn)) {
+        if (handleSearchInfoFn && isFunction(handleSearchInfoFn)) {
             info = handleSearchInfoFn(info) || info;
         }
         fetch({ searchInfo: info, page: 1 });

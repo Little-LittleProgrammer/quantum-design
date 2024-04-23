@@ -2,7 +2,7 @@ import { ComputedRef, Ref, computed, nextTick, ref, toRaw, unref, watch } from '
 import { BasicTableProps, TableRowSelection } from '../types/table';
 import { Recordable } from '../types/table';
 import { omit } from 'lodash-es';
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import { ROW_KEY } from '../enums/const';
 
 import { js_utils_find_node_all } from '@quantum-design/utils';
@@ -44,7 +44,7 @@ export function useRowSelection(
                 const {rowSelection} = unref(propsRef);
                 if (rowSelection) {
                     const {onChange} = rowSelection;
-                    if (onChange && js_is_function(onChange)) {
+                    if (onChange && isFunction(onChange)) {
                         onChange(get_select_row_keys(), get_select_rows());
                     }
                 }

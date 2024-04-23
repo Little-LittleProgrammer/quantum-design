@@ -5,6 +5,7 @@ import { ColEx, ComponentType } from './index';
 import { FormItem } from './form-item';
 import { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { ButtonProps } from 'ant-design-vue/lib/button';
+import {Flatten, DeepRequired} from '@quantum-design/types/lib';
 
 export type FieldMapToTime = [string, [string, string], string?][];
 
@@ -41,7 +42,7 @@ export interface HelpComponentProps {
 
 export interface FormSchema<T extends object = Record<string, any>, C extends string = ''> {
     // Field name
-    field: keyof T;
+    field: Flatten<DeepRequired<T>> | keyof T;
     // Event name triggered by internal value change, default change
     changeEvent?: string;
     // Variable name bound to v-model Default value

@@ -2,7 +2,7 @@
 import { PaginationProps } from '../types/pagination';
 import { ComputedRef, Ref, computed, onMounted, reactive, ref, unref, watch, watchEffect } from 'vue';
 import { BasicColumn, BasicTableProps, FetchParams, SorterResult, Recordable } from '../types/table';
-import { js_is_array, js_is_boolean, js_is_function, js_is_object, js_utils_get_table_header_columns, js_utils_get_uuid } from '@quantum-design/utils';
+import { isArray, isBoolean, isFunction, isObject, js_utils_get_table_header_columns, js_utils_get_uuid } from '@quantum-design/utils';
 import { FETCH_SETTING, PAGE_SIZE, ROW_KEY } from '../enums/const';
 import { cloneDeep, get, merge } from 'lodash-es';
 
@@ -75,12 +75,12 @@ export function useDataSource(
 
         const params: Recordable = {};
 
-        if (sorter && js_is_function(sortFn)) {
+        if (sorter && isFunction(sortFn)) {
             const _sortInfo = sortFn(sorter);
             searchState.sortInfo = _sortInfo;
             params.sortInfo = _sortInfo;
         }
-        if (filters && js_is_function(filterFn)) {
+        if (filters && isFunction(filterFn)) {
             const filterInfo = filterFn(filters);
             searchState.filterInfo = filterInfo;
             params.filterInfo = filterInfo;
@@ -148,7 +148,7 @@ export function useDataSource(
         const _findRow = (arr: any[]) => {
             let _ret: any;
             arr.some(function iter(r) {
-                if (js_is_function(_rowKeyName)) {
+                if (isFunction(_rowKeyName)) {
                     if (_rowKeyName(r) === rowKey) {
                         _ret = r;
                         return true;
@@ -173,7 +173,7 @@ export function useDataSource(
     ): Recordable[] | undefined {
         // if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
         index = index ?? dataSourceRef.value?.length;
-        const _record = js_is_object(record) ? [record as Recordable] : (record as Recordable[]);
+        const _record = isObject(record) ? [record as Recordable] : (record as Recordable[]);
         unref(dataSourceRef).splice(index, 0, ..._record);
         return unref(dataSourceRef);
     }
@@ -221,7 +221,7 @@ export function useDataSource(
                 for (let i = 0; i < data.length; i++) {
                     const row = data[i];
                     let targetKeyName: string = rowKeyName as string;
-                    if (js_is_function(rowKeyName)) {
+                    if (isFunction(rowKeyName)) {
                         targetKeyName = rowKeyName(row);
                     }
                     if (row[targetKeyName] === key) {
@@ -261,7 +261,7 @@ export function useDataSource(
             columnsConfig,
             columns
         } = unref(propsRef);
-        if (!api || !js_is_function(api)) {
+        if (!api || !isFunction(api)) {
             return;
         }
         try {
@@ -276,7 +276,7 @@ export function useDataSource(
 
             const { current = 1, pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
 
-            if ((js_is_boolean(pagination) && !pagination) || js_is_boolean(getPaginationInfo)) {
+            if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
                 pageParams = {};
             } else {
                 pageParams[pageField] = (opt && opt.page) || current;
@@ -296,7 +296,7 @@ export function useDataSource(
                 opt?.sortInfo ?? {},
                 opt?.filterInfo ?? {}
             );
-            if (beforeFetch && js_is_function(beforeFetch)) {
+            if (beforeFetch && isFunction(beforeFetch)) {
                 params = (await beforeFetch(params)) || params;
             }
 
@@ -306,7 +306,7 @@ export function useDataSource(
             }
             rawDataSourceRef.value = _res;
 
-            const _isArrayResult = js_is_array(_res);
+            const _isArrayResult = isArray(_res);
 
             let _resultItems: Recordable[] = _isArrayResult ? _res : get(_res, listField);
             const _resultTotal: number = _isArrayResult ? _res.length : get(_res, totalField);
@@ -322,18 +322,18 @@ export function useDataSource(
                 }
             }
 
-            if (afterFetch && js_is_function(afterFetch)) {
+            if (afterFetch && isFunction(afterFetch)) {
                 _resultItems = (await afterFetch(_resultItems)) || _resultItems;
             }
             dataSourceRef.value = _resultItems;
             if (!_isArrayResult && get(_res, headerField)) {
                 const _header = get(_res, headerField);
-                columnsRef.value = js_is_array(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
+                columnsRef.value = isArray(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
             }
 
             if (!_isArrayResult && get(_res, summaryField)) {
                 const _data = get(_res, summaryField);
-                summaryData.value = js_is_array(_data) ? _data : [_data];
+                summaryData.value = isArray(_data) ? _data : [_data];
             }
 
             setPagination({

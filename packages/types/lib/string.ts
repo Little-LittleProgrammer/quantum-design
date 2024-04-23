@@ -296,6 +296,17 @@ type SubStringHelper<
         : Cache
     >
 
+// 将 {a:{b:{c: number}}} => {'a.b.c': number}
+type Flatten<T> = {
+    [K in keyof T]: T[K] extends object
+        ? `${string & K}.${Flatten<T[K]>}`
+        : string & K
+}[keyof T] extends infer D
+    ? D extends never
+        ? never
+        : D
+    : never;
+
 export type {
     CanStringified,
     Stringify,
@@ -320,5 +331,6 @@ export type {
     ToUpperCase,
     ToLowerCase,
     SubString,
-    SubStr
+    SubStr,
+    Flatten
 };

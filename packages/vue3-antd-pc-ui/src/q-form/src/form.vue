@@ -40,7 +40,7 @@
 </template>
 
 <script lang='ts'>
-import { js_utils_deep_merge, js_is_array, js_is_function } from '@quantum-design/utils';
+import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
 import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
@@ -197,7 +197,7 @@ export default defineComponent({
         function set_form_model(key: string, value: any, schema: FormSchema) {
             formModel[key] = value;
             const { validateTrigger } = unref(getBindValue);
-            if (js_is_function(schema.dynamicRules) || js_is_array(schema.rules)) {
+            if (isFunction(schema.dynamicRules) || isArray(schema.rules)) {
                 return;
             }
             if (!validateTrigger || validateTrigger === 'change') {

@@ -1,4 +1,4 @@
-import { js_create_local_storage, js_is_function } from '@quantum-design/utils';
+import { js_create_local_storage, isFunction } from '@quantum-design/utils';
 
 /**
  * @description 添加时间戳
@@ -18,7 +18,7 @@ export function joinTimestamp(join: boolean): string | Recordable<string> {
  */
 
 export function joinEnvToUrl(env: ()=>string): string | Recordable<string> {
-    if (!env || !js_is_function(env)) {
+    if (!env || !isFunction(env)) {
         return {};
     }
     return { env: env()};

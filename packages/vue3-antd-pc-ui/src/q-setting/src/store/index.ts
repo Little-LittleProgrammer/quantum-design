@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { IProjectConfig } from '../type';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { js_is_client, js_utils_deep_merge } from '@quantum-design/utils';
+import { isClient, js_utils_deep_merge } from '@quantum-design/utils';
 
 export interface IFileExport {
     title?: string;
@@ -10,7 +10,7 @@ export interface IFileExport {
     export_url: string
 }
 
-const ls = js_is_client && js_create_local_storage();
+const ls = isClient && js_create_local_storage();
 
 // state
 const createState = () => {

@@ -26,7 +26,7 @@
 		plugins as defaultPlugins,
 		toolbar as defaultToolbar,
 	} from './tinymce';
-	import { js_is_number, js_utils_get_uuid } from '@quantum-design/utils';
+	import { isNumber, js_utils_get_uuid } from '@quantum-design/utils';
 	defineOptions({
 		name: 'RichText',
 	});
@@ -129,7 +129,7 @@
 
 	const containerWidth = computed(() => {
 		const width = props.width;
-		if (js_is_number(width)) {
+		if (isNumber(width)) {
 			return `${width}px`;
 		}
 		return width;

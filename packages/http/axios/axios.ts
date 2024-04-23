@@ -9,7 +9,7 @@ import type { AxiosResponseAgent, CreateAxiosOptions } from './axios-transform';
 import axios from 'axios';
 import qs from 'qs';
 import { AxiosCanceler } from './axios-cancel';
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import { cloneDeep, omit } from 'lodash-es';
 import { gRequestEnum, gContentTypeEnum } from '@quantum-design/shared/enums';
 import { joinEnvToUrl } from './helper';
@@ -97,7 +97,7 @@ export class VAxios {
 				ignoreRepeat && axiosCanceler.addPending(config);
 				if (
 					requestInterceptors &&
-					js_is_function(requestInterceptors)
+					isFunction(requestInterceptors)
 				) {
 					config = requestInterceptors(
 						config as SelectPartial<
@@ -114,7 +114,7 @@ export class VAxios {
 
 		// Request interceptor error capture
 		requestInterceptorsCatch &&
-			js_is_function(requestInterceptorsCatch) &&
+			isFunction(requestInterceptorsCatch) &&
 			this.axiosInstance.interceptors.request.use(undefined, (error) => {
 				requestInterceptorsCatch(error, this.options);
 			});
@@ -125,7 +125,7 @@ export class VAxios {
 				res && axiosCanceler.removePending(res.config);
 				if (
 					responseInterceptors &&
-					js_is_function(responseInterceptors)
+					isFunction(responseInterceptors)
 				) {
 					res = responseInterceptors(
 						res as AxiosResponseAgent<any>,
@@ -139,7 +139,7 @@ export class VAxios {
 
 		// Response result interceptor error capture
 		responseInterceptorsCatch &&
-			js_is_function(responseInterceptorsCatch) &&
+			isFunction(responseInterceptorsCatch) &&
 			this.axiosInstance.interceptors.response.use(undefined, (error) => {
 				responseInterceptorsCatch(
 					error,
@@ -269,7 +269,7 @@ export class VAxios {
 		const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
 		const { beforeRequestHook } = transform || {};
-		if (beforeRequestHook && js_is_function(beforeRequestHook)) {
+		if (beforeRequestHook && isFunction(beforeRequestHook)) {
 			conf = beforeRequestHook(conf, opt);
 		}
 

@@ -1,4 +1,4 @@
-import { js_is_base, js_is_function, js_is_map, js_is_object, js_is_reg_exp, js_is_set, js_is_string, js_is_symbol } from './is';
+import { isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
 
 export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
     // 判断引用类型的temp
@@ -43,11 +43,11 @@ export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷�
     }
 
     // 基本数据类型直接返回
-    if (js_is_base(target)) return target;
+    if (isBase(target)) return target;
     // 判断 不可遍历类型, 并拷贝
-    if (js_is_function(target)) return clone_func(target) as unknown as T;
-    if (js_is_reg_exp(target)) return clone_reg(target) as unknown as T;
-    if (js_is_symbol(target)) return clone_symbol(target) as unknown as T;
+    if (isFunction(target)) return clone_func(target) as unknown as T;
+    if (isRegExp(target)) return clone_reg(target) as unknown as T;
+    if (isSymbol(target)) return clone_symbol(target) as unknown as T;
 
     // 引用数据类型特殊处理
     const _temp = check_temp(target);
@@ -57,14 +57,14 @@ export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷�
     }
     map.set(target, _temp);
     // 处理 Map类型
-    if (js_is_map(target)) {
+    if (isMap(target)) {
         target.forEach((val, key) => {
             _temp.set(key, js_utils_deep_copy(val, map));
         });
         return _temp;
     }
     // 处理 Set类型
-    if (js_is_set(target)) {
+    if (isSet(target)) {
         target.forEach((val) => {
             _temp.add(js_utils_deep_copy(val, map));
         });
@@ -114,7 +114,7 @@ export function js_utils_get_uuid(len: number, radix?: number): string { //  指
 export function js_utils_deep_merge<T = any>(src: any = {}, target: any = {}): T {
     let key: string;
     for (key in target) {
-        src[key] = js_is_object(src[key]) ? js_utils_deep_merge(src[key], target[key]) : (src[key] = target[key]);
+        src[key] = isObject(src[key]) ? js_utils_deep_merge(src[key], target[key]) : (src[key] = target[key]);
     }
     return src;
 }
@@ -210,7 +210,7 @@ export function js_utils_format_money_num<T extends string | number>(num: T): st
         return num.toString();
     }
     let _str = '';
-    _str = js_is_string(num) ? num : num + '';
+    _str = isString(num) ? num : num + '';
     const _resArr = _str.includes('.') ? _str.split('.') : [_str, '00'];
     const _int = _resArr[0].split('').reverse();
     // 如果含逗号，则代表已经格式化成功，则直接返回
@@ -267,7 +267,7 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
  * @returns 值
  */
 export function js_utils_find_attr(object: any, path: string){
-    const tags = path.split('.');
+    const tags = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
     const tagsCopy = JSON.parse(JSON.stringify(tags));
     for (const _key of tagsCopy) {
         object = object[tags[0]];
@@ -285,7 +285,7 @@ export function js_utils_find_attr(object: any, path: string){
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
  */
 export function js_utils_edit_attr(path:string, value: any, obj:any) {
-    const _list = path.split('.');
+    const _list = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
     const _length = _list.length - 1;
     _list.reduce((cur: any, key:string, index: number) => {
         if (!(cur[key]))
@@ -355,7 +355,7 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
     _fileReader.readAsText(file, encoding);
     return new Promise((resolve, reject) => {
         _fileReader.onload = function() {
-            if (js_is_string(this.result)) {
+            if (isString(this.result)) {
                 const _data = this.result.split('\n');
                 const _res:string[][] = [];
                 _data.map(item => {
@@ -371,7 +371,7 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
 }
 
 export function serializeToString<T>(value: T): string {
-    if (js_is_string(value)) {
+    if (isString(value)) {
         return value;
     }
     function deal_special(val: any): string {
@@ -385,13 +385,13 @@ export function serializeToString<T>(value: T): string {
     }
     let serializeObj: Record<string, any> = {};
     function dfs(target: any, map = new Map()) {
-        if (js_is_base(target)) {
+        if (isBase(target)) {
             return target;
         }
-        if (js_is_function(target)) {
+        if (isFunction(target)) {
             return deal_special(target);
         }
-        if (js_is_reg_exp(target)) return deal_special(target);
+        if (isRegExp(target)) return deal_special(target);
 
         const _temp = check_temp(target);
         // 防止循环引用

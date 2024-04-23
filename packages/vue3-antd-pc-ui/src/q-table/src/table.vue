@@ -84,7 +84,7 @@
 
 	import './style/table.scss';
 	import { useDataSource } from './hooks/use-data-source';
-	import { js_is_function } from '@quantum-design/utils';
+	import { isFunction } from '@quantum-design/utils';
 	import { useSummary } from './hooks/use-summary';
 	import { useColumns } from './hooks/use-columns';
 	import { useTableForm } from './hooks/use-table-form';
@@ -221,7 +221,7 @@
 		// 解决通过useTable注册onChange时不起作用的问题
 		const { onChange } = unref(getProps);
 		onChange &&
-			js_is_function(onChange) &&
+			isFunction(onChange) &&
 			onChange.call(undefined, ...args);
 	}
 

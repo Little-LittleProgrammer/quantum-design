@@ -1,6 +1,6 @@
 import { ComputedRef, unref } from 'vue';
 import { BasicTableProps, TableCustomRecord } from '../types/table';
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 
 export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls: string) {
     function getRowClassName(record: TableCustomRecord, index: number) {
@@ -9,7 +9,7 @@ export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls:
         if (striped) {
             classNames.push((index || 0) % 2 === 1 ? `${prefixCls}-row-striped` : '');
         }
-        if (rowClassName && js_is_function(rowClassName)) {
+        if (rowClassName && isFunction(rowClassName)) {
             classNames.push(rowClassName(record, index));
         }
         return classNames.filter((cls) => !!cls).join(' ');

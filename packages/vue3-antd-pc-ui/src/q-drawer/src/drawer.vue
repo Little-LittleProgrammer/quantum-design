@@ -27,7 +27,7 @@ import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, C
 import {Drawer as ADrawer} from 'ant-design-vue';
 import {QLoading} from '@quantum-design/vue3-pc-ui';
 import {basicProps} from './props';
-import { js_utils_deep_merge, js_is_function, js_is_number } from '@quantum-design/utils';
+import { js_utils_deep_merge, isFunction, isNumber } from '@quantum-design/utils';
 import { DrawerInstance, DrawerProps } from './type';
 import DrawerHeader from './components/drawer-header.vue';
 import DrawerFooter from './components/drawer-footer.vue';
@@ -89,7 +89,7 @@ const getBindValues = computed(() => {
 const getFooterHeight = computed(() => {
     const { footerHeight, showFooter } = unref(getProps);
     if (showFooter && footerHeight) {
-        return js_is_number(footerHeight)
+        return isNumber(footerHeight)
             ? `${footerHeight}px`
             : `${footerHeight.replace('px', '')}px`;
     }
@@ -119,7 +119,7 @@ watch(() => visibleRef.value, (visible: boolean) => {
 async function on_close(e: Record<string, any>) {
     const { closeFunc } = unref(getProps);
     emit('close', e);
-    if (closeFunc && js_is_function(closeFunc)) {
+    if (closeFunc && isFunction(closeFunc)) {
         const res = await closeFunc();
         visibleRef.value = !res;
         return;

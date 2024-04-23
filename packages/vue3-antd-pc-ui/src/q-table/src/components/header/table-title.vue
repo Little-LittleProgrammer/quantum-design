@@ -15,7 +15,7 @@
 
 <script lang='ts' setup>
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
-import { js_is_function, js_is_string } from '@quantum-design/utils';
+import { isFunction, isString } from '@quantum-design/utils';
 import { Tooltip } from 'ant-design-vue';
 import { PropType, computed } from 'vue';
 defineOptions({
@@ -37,7 +37,7 @@ const props = defineProps({
 const prefixCls = 'q-table-basic-header-title';
 
 const getHelpMessage = computed(() => {
-    if (js_is_string(props.helpMessage)) {
+    if (isString(props.helpMessage)) {
         return [props.helpMessage];
     }
     return props.helpMessage;
@@ -47,7 +47,7 @@ const getTitle = computed(() => {
     const { title, getSelectRows = () => {} } = props;
     let _title = title;
 
-    if (js_is_function(title)) {
+    if (isFunction(title)) {
         _title = title({
             selectRows: getSelectRows()
         });

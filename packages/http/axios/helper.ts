@@ -1,4 +1,4 @@
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { CreateAxiosOptions } from './axios-transform';
@@ -24,7 +24,7 @@ export function joinTimestamp(join: boolean, restful = false): string | Recordab
  */
 
 export function joinEnvToUrl(env: ()=>string, restful = false): string | Recordable<string> {
-    if (!env || !js_is_function(env)) {
+    if (!env || !isFunction(env)) {
         return restful ? '' : {};
     }
     if (restful) {

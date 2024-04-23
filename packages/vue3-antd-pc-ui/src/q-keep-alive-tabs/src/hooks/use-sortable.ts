@@ -1,5 +1,5 @@
 
-import { js_is_null_or_undef } from '@quantum-design/utils';
+import { isNullOrUndef } from '@quantum-design/utils';
 import { useSortable } from '@quantum-design/hooks/base/use-sortable';
 import { useTabsStore } from './use-tabs-store';
 import { nextTick } from 'vue';
@@ -21,7 +21,7 @@ export function useTabsDrag(affixTextList: string[]) {
 
                 const { oldIndex, newIndex } = evt;
 
-                if (js_is_null_or_undef(oldIndex) || js_is_null_or_undef(newIndex) || oldIndex === newIndex) {
+                if (isNullOrUndef(oldIndex) || isNullOrUndef(newIndex) || oldIndex === newIndex) {
                     return;
                 }
 

@@ -1,4 +1,4 @@
-import { js_is_array, js_is_function, js_is_object, js_is_string, js_utils_deep_merge } from '@quantum-design/utils';
+import { isArray, isFunction, isNullOrUndef, isObject, isString, js_utils_deep_merge, js_utils_find_attr, isFunction } from '@quantum-design/utils';
 import { NamePath } from 'ant-design-vue/lib/form/interface';
 import { ComputedRef, Ref, toRaw, unref } from 'vue';
 import { dateItemType, handle_input_number_value } from '../helper';
@@ -32,7 +32,7 @@ export function use_form_events({
     // 重置表单
     async function resetFields(): Promise<void> {
         const { resetFunc, submitOnReset } = unref(getProps);
-        resetFunc && js_is_function(resetFunc) && (await resetFunc());
+        resetFunc && isFunction(resetFunc) && (await resetFunc());
 
         const formEl = unref(formElRef);
         if (!formEl) return;
@@ -49,7 +49,7 @@ export function use_form_events({
     async function handleSubmit(e?: Event): Promise<void> {
         e && e.preventDefault();
         const { submitFunc } = unref(getProps);
-        if (submitFunc && js_is_function(submitFunc)) {
+        if (submitFunc && isFunction(submitFunc)) {
             await submitFunc();
             return;
         }
@@ -72,36 +72,36 @@ export function use_form_events({
         }
     }
     // 设置表单数据
+    // 设置表单数据
     async function setFieldsValue(values:Record<string, any>): Promise<void> {
         const fields = unref(getSchema).map(item => item.field).filter(Boolean);
         const validkeys: string[] = [];
-        Object.keys(values).forEach(key => {
-            const schema = unref(getSchema).find(item => item.field === key);
-            let _value = values[key];
-            const hasKey = Reflect.has(values, key);
-            _value = handle_input_number_value(schema?.component, _value);
-            // 0| '' is allow
-            if (hasKey && fields.includes(key)) {
-                // time type
+
+        fields.forEach(key => {
+            const schema = unref(getSchema).find((item) => item.field === key);
+            // key 支持 a.b.c 的嵌套写法
+            let value = js_utils_find_attr(values, key);
+            if (!isNullOrUndef(value)) {
+                value = handle_input_number_value(schema?.component, value);
                 if (item_is_date_type(key)) {
-                    if (js_is_array(_value)) {
+                    if (isArray(value)) {
                         const arr:any[] = [];
-                        for (const ele of _value) {
+                        for (const ele of value) {
                             arr.push(ele ? dayjs(ele) : null);
                         }
                         formModel[key] = arr;
-                    } else if (js_is_object(_value)){
+                    } else if (isObject(value)){
                         const fieldMapToTime = unref(getProps).fieldMapToTime;
                         if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
-                            formModel[key] = _value;
+                            formModel[key] = value;
                         } else {
                             for (const [field, [startTimeKey, endTimeKey], format ] of fieldMapToTime) {
                                 if (!field || !startTimeKey || !endTimeKey || !values[field]) {
                                     continue;
                                 }
                                 if (key === field) {
-                                    if (_value[startTimeKey] && _value[endTimeKey]) {
-                                        formModel[key] = [dayjs(_value[startTimeKey]), dayjs(_value[endTimeKey])];
+                                    if (value[startTimeKey] && value[endTimeKey]) {
+                                        formModel[key] = [dayjs(value[startTimeKey]), dayjs(value[endTimeKey])];
                                     }
                                     break;
                                 }
@@ -110,13 +110,14 @@ export function use_form_events({
                     } else {
                         const { componentProps } = schema || {};
                         let _props = componentProps as any;
-                        if (js_is_function(componentProps)) {
-                            _props = _props({formModel});
+                        if (isFunction(componentProps)) {
+                            // const _values = handle_form_values(formModel);
+                            _props = _props({formModel });
                         }
-                        formModel[key] = _value ? (_props?.valueFormat ? _value : dayjs(_value)) : null;
+                        formModel[key] = value ? (_props?.valueFormat ? value : dayjs(value)) : null;
                     }
                 } else {
-                    formModel[key] = _value;
+                    formModel[key] = value;
                 }
                 validkeys.push(key);
             }
@@ -130,9 +131,9 @@ export function use_form_events({
         if (!fields) {
             return;
         }
-        const fieldList: string[] = js_is_string(fields) ? [fields] : fields;
+        const fieldList: string[] = isString(fields) ? [fields] : fields;
         function _remove_schema_by_filed(field: string, schemaList: FormSchema[]): void {
-            if (js_is_string(field)) {
+            if (isString(field)) {
                 const index = schemaList.findIndex((schema) => schema.field === field);
                 if (index !== -1) {
                     delete formModel[field];
@@ -166,10 +167,10 @@ export function use_form_events({
     }
     async function resetSchema(data: Partial<FormSchema> | Partial<FormSchema>[]) {
         let updateData: Partial<FormSchema>[] = [];
-        if (js_is_object(data)) {
+        if (isObject(data)) {
             updateData.push(data as FormSchema);
         }
-        if (js_is_array(data)) {
+        if (isArray(data)) {
             updateData = [...data];
         }
 
@@ -187,10 +188,10 @@ export function use_form_events({
     }
     async function updateSchema(data: Partial<FormSchema> | Partial<FormSchema>[]) {
         let updateData: Partial<FormSchema>[] = [];
-        if (js_is_object(data)) {
+        if (isObject(data)) {
             updateData.push(data as FormSchema);
         }
-        if (js_is_array(data)) {
+        if (isArray(data)) {
             updateData = [...data];
         }
 

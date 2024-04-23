@@ -2,7 +2,7 @@ import { ComputedRef, Ref, computed, reactive, ref, toRaw, unref, watch } from '
 import { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { js_is_array, js_is_boolean, js_is_function, js_is_map, js_is_number, js_is_string } from '@quantum-design/utils';
+import { isArray, isBoolean, isFunction, isMap, isNumber, isString } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 
 interface ActionType {
@@ -69,7 +69,7 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!js_is_boolean(item.ellipsis)) {
+        if (!isBoolean(item.ellipsis)) {
             Object.assign(item, {
                 ellipsis
             });
@@ -79,11 +79,11 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!js_is_boolean(item.resizable)) {
+        if (!isBoolean(item.resizable)) {
             const _obj: any = {
                 resizable
             };
-            if (!js_is_number(item.width)) {
+            if (!isNumber(item.width)) {
                 console.info(`当 resizable 为 ture 时，请保证 width 属性设置，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
                 _obj.width = DEFAULT_NORMAL_WIDTH;
             }
@@ -147,14 +147,14 @@ export function format_cell(text: string, format: CellFormat, record: Recordable
     }
 
     // custom function
-    if (js_is_function(format)) {
+    if (isFunction(format)) {
         return format(text, record, index);
     }
 
     try {
         // date type
         const DATE_FORMAT_PREFIX = 'date|';
-        if (js_is_string(format) && format.startsWith(DATE_FORMAT_PREFIX) && text) {
+        if (isString(format) && format.startsWith(DATE_FORMAT_PREFIX) && text) {
             const _dateFormat = format.replace(DATE_FORMAT_PREFIX, '');
 
             if (!_dateFormat) {
@@ -164,7 +164,7 @@ export function format_cell(text: string, format: CellFormat, record: Recordable
         }
 
         // Map
-        if (js_is_map(format)) {
+        if (isMap(format)) {
             return format.get(text);
         }
     } catch (error) {
@@ -196,8 +196,8 @@ export function useColumns(
             const { customRender, slots, dataIndex } = item;
 
             const _options = {
-                ellipsis: js_is_boolean(item.ellipsis) ? item.ellipsis : !!ellipsis && !customRender && !slots,
-                resizable: js_is_boolean(item.resizable) ? item.resizable : !!resizable && !customRender && !slots
+                ellipsis: isBoolean(item.ellipsis) ? item.ellipsis : !!ellipsis && !customRender && !slots,
+                resizable: isBoolean(item.resizable) ? item.resizable : !!resizable && !customRender && !slots
             };
 
             if (dataIndex !== actionField) {
@@ -215,10 +215,10 @@ export function useColumns(
 
         let _isIfShow = true;
 
-        if (js_is_boolean(_ifShow)) {
+        if (isBoolean(_ifShow)) {
             _isIfShow = _ifShow;
         }
-        if (js_is_function(_ifShow)) {
+        if (isFunction(_ifShow)) {
             _isIfShow = _ifShow(column);
         }
         return _isIfShow;
@@ -305,7 +305,7 @@ export function useColumns(
      */
     function setColumns(columnList: Partial<BasicColumn>[] | (string | string[])[]) {
         const _columns = cloneDeep(columnList);
-        if (!js_is_array(_columns)) return;
+        if (!isArray(_columns)) return;
 
         if (_columns.length <= 0) {
             columnsRef.value = [];
@@ -315,7 +315,7 @@ export function useColumns(
         const _firstColumn = _columns[0];
         const _cacheKeys = cacheColumns.map((item) => item.dataIndex);
 
-        if (!js_is_string(_firstColumn) && !js_is_array(_firstColumn)) {
+        if (!isString(_firstColumn) && !isArray(_firstColumn)) {
             columnsRef.value = _columns as BasicColumn[];
         } else {
             const _columnKeys = (_columns as (string | string[])[]).map((m) => m.toString());
@@ -354,7 +354,7 @@ export function useColumns(
         return cacheColumns;
     }
     function setCacheColumns(columns: BasicColumn[]) {
-        if (!js_is_array(columns)) return;
+        if (!isArray(columns)) return;
         cacheColumns = columns.filter((item) => item.dataIndex !== actionField);
     }
     return {

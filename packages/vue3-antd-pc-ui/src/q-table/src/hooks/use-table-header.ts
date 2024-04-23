@@ -1,6 +1,6 @@
 import { ComputedRef, Slots, computed, h, unref } from 'vue';
 import { BasicTableProps, InnerHandlers, Recordable } from '../types/table';
-import { js_is_string } from '@quantum-design/utils';
+import { isString } from '@quantum-design/utils';
 import TableHeader from '../components/header/table-header.vue';
 import {useSlots} from '@quantum-design/hooks/vue';
 
@@ -14,7 +14,7 @@ export function useTableHeader(
     const getHeaderProps = computed(() => {
         const { title, showTableSetting, titleHelpMessage, tableSetting } = unref(propsRef);
         const _hideTitle = !slots.tableTitle && !title && !slots.toolbar && !showTableSetting;
-        if (_hideTitle && !js_is_string(title)) {
+        if (_hideTitle && !isString(title)) {
             return {};
         }
         return {

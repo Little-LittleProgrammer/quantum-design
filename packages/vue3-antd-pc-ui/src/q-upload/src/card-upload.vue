@@ -40,7 +40,7 @@
         </a-upload>
         <slot name="right" v-if="props.rightShow">
             <div class="upload-right">
-                <span v-if="js_is_string(markWord)">{{markWord}}</span>
+                <span v-if="isString(markWord)">{{markWord}}</span>
                 <template v-else>
                     <div v-for="item in markWord" :key="item">
                         <span>{{item}}</span>
@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 import { propTypes } from '@quantum-design/types/vue/types';
-import { js_is_function, js_is_string, js_is_image, js_is_video } from '@quantum-design/utils';
+import { isFunction, isString, isImage, isVideo } from '@quantum-design/utils';
 import { PropType, reactive, watch } from 'vue';
 import {Upload as AUpload, Modal as AModal, Button as AButton} from 'ant-design-vue';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
@@ -160,7 +160,7 @@ async function before_upload(file: File) {
         emit('validatedFile', _res);
     }
     // 自定义上传前校验事件，可返回boolean或promise
-    if (js_is_function(props.customBeforeUpload)) {
+    if (isFunction(props.customBeforeUpload)) {
         let _flag: boolean | Promise<any> = true;
         _flag = props.customBeforeUpload(file);
         return _flag;
@@ -280,7 +280,7 @@ function handle_change(info: any) {
         data.uploadLoading = true;
         if (info?.file.type.includes('image')) {
             data.fileType = 'image';
-        } else if (js_is_video(info?.file.name)) {
+        } else if (isVideo(info?.file.name)) {
             data.fileType = 'video';
         } else {
             data.fileType = 'other';
@@ -306,7 +306,7 @@ watch(() => props.value, (val) => {
     if (data.imgFlag) {
         if (val.includes('http')) {
             data.imageUrl = val || '';
-            data.fileType = js_is_image(val) ? 'image' : (js_is_video(val) ? 'video' : 'other');
+            data.fileType = isImage(val) ? 'image' : (isVideo(val) ? 'video' : 'other');
             data.fileName = val.split('/').at(-1) || '';
         } else {
             data.imageUrl = val || '';
@@ -322,7 +322,7 @@ watch(() => props.value, (val) => {
 watch(() => props.fullUrl, (val) => {
     if (val) {
         data.fullUrl = val;
-        data.fileType = js_is_image(val) ? 'image' : (js_is_video(val) ? 'video' : 'other');
+        data.fileType = isImage(val) ? 'image' : (isVideo(val) ? 'video' : 'other');
         data.fileName = val.split('/').at(-1) || '';
     }
 }, {immediate: true});

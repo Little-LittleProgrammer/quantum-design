@@ -1,7 +1,7 @@
 import { Modal, message as Message } from 'ant-design-vue';
 import type { ModalFunc, ModalFuncProps } from 'ant-design-vue/lib/modal/Modal';
 import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons-vue';
-import { js_is_string } from '@quantum-design/utils';
+import { isString } from '@quantum-design/utils';
 import { h } from 'vue';
 import { VueNode } from 'ant-design-vue/lib/_util/type';
 
@@ -54,7 +54,7 @@ function getIcon(iconType: string) {
 }
 
 function renderContent({ content }: Pick<ModalOptionsEx, 'content'>) {
-    if (js_is_string(content)) {
+    if (isString(content)) {
         return h('div', {innerHTML: `<div>${content as string}</div>`});
     } else {
         return content;

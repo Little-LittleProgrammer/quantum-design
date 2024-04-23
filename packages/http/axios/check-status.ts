@@ -1,4 +1,4 @@
-import { js_is_function } from "@quantum-design/utils";
+import { isFunction } from "@quantum-design/utils";
 
 export async function check_status(status:string, msg: string, cb?: Fn) {
     let errMessage = '';
@@ -46,7 +46,7 @@ export async function check_status(status:string, msg: string, cb?: Fn) {
             errMessage = '连接错误';
     }
     if (errMessage) {
-        if (cb && js_is_function(cb)) {
+        if (cb && isFunction(cb)) {
             cb(status, errMessage)
         }
         

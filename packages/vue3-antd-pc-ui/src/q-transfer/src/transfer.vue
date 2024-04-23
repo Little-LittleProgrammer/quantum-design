@@ -33,7 +33,7 @@
 <script lang='ts' setup>
 
 import { reactive, PropType, computed, watch} from 'vue';
-import { js_utils_deep_copy, js_is_object } from '@quantum-design/utils';
+import { js_utils_deep_copy, isObject } from '@quantum-design/utils';
 import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
 import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
 import './style/transfer.scss';
@@ -71,7 +71,7 @@ const props = defineProps({
 const emit = defineEmits(['update:targetKeys', 'change']);
 
 const getTreeData = computed<ICity[]>(() => {
-    if (!js_is_object(props.fieldNames)) {
+    if (!isObject(props.fieldNames)) {
         throw Error('fieldNames must be object');
     }
     if (props.fieldNames.key || props.fieldNames.children || props.fieldNames.title) {

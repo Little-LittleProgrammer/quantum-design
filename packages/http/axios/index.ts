@@ -12,8 +12,8 @@ import {
 } from '@quantum-design/shared/enums';
 import {
     js_utils_deep_merge,
-    js_is_string,
-    js_is_server
+    isString,
+    isService
 } from '@quantum-design/utils';
 import {
     joinTimestamp,
@@ -55,14 +55,14 @@ export const defaultTransform: AxiosTransform = {
             if (joinPrefix) {
                 config.url = `${urlPrefix}${config.url}`;
             }
-            if (apiUrl && js_is_string(apiUrl)) {
+            if (apiUrl && isString(apiUrl)) {
                 config.url = `${apiUrl}${config.url}`;
             }
         }
 
         // 处理时间戳
         if (config.method?.toUpperCase() === gRequestEnum.GET) {
-            if (!js_is_string(params)) {
+            if (!isString(params)) {
                 // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
                 config.params = Object.assign(
                     params || {},
@@ -82,7 +82,7 @@ export const defaultTransform: AxiosTransform = {
                 config.params = undefined;
             }
         } else {
-            if (!js_is_string(params)) {
+            if (!isString(params)) {
                 config.url =
 					config.url +
 					(config.url?.includes('?') ? '&' : '?') +
@@ -178,7 +178,7 @@ export const defaultTransform: AxiosTransform = {
         setTokenToLs(options.requestOptions?.withToken || true, res);
         if (res.data.code == gResultEnum.RELOAD) {
             setTokenToLs(options.requestOptions?.withToken || true, res);
-            if (js_is_server) {
+            if (isService) {
                 // node环境
                 if (process.env?.NODE_ENV == 'production') {
                     window.location.reload();
@@ -201,7 +201,7 @@ export const defaultTransform: AxiosTransform = {
             }
             return res;
         } else if (res.data.code == gResultEnum.LOGIN) {
-            if (js_is_server) {
+            if (isService) {
                 // node环境
                 if (process.env?.NODE_ENV == 'production') {
                     window.location.href = res.data.data?.url;

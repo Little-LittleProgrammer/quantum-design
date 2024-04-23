@@ -1,4 +1,4 @@
-import { js_is_function } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import { isEqual } from 'lodash-es';
 import { computed, getCurrentInstance, nextTick, onUnmounted, reactive, ref, toRaw, unref, watchEffect } from 'vue';
 import { DrawerInstance, DrawerProps, ReturnMethods, UseDrawerInnerReturnType, UseDrawerReturnType } from '../type';
@@ -118,7 +118,7 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
     watchEffect(() => {
         const data = dataTransferRef[unref(uidRef)];
         if (!data) return;
-        if (!callbackFn || !js_is_function(callbackFn)) return;
+        if (!callbackFn || !isFunction(callbackFn)) return;
         nextTick(() => {
             callbackFn(data);
         });

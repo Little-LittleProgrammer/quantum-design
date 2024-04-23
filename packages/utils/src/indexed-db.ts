@@ -1,4 +1,4 @@
-import { js_is_window } from './is';
+import { isWindow } from './is';
 
 interface IIndexedDBRes {
     code: number;
@@ -25,7 +25,7 @@ export default class IndexedDB {
         this.dbName = dbName; // 库名
         this.dbversion = version;
         this.storeName = storeName; // 表名
-        this.indexedDB = js_is_window(window) ? window.indexedDB : null;
+        this.indexedDB = isWindow(window) ? window.indexedDB : null;
         this.cacheDB = null; // 缓存数据库，避免重复open 与createStore
     }
     // 创建表 私有属性
