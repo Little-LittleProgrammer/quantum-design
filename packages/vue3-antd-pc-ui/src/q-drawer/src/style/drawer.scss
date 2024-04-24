@@ -19,6 +19,7 @@ $footer-height: 60px;
         .q-drawer-content {
             overflow-y: auto;
             padding: 16px;
+            box-sizing: border-box;
         }
     }
 

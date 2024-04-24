@@ -17,14 +17,14 @@ const _menus:IMenuData[] = [{
             auth_name: 'use-form',
             id: 3,
             pid: 2,
-            path_type: 1,
+            path_type: 1
         }, {
             path: '/demo/form/extra-form',
             auth_name: 'extra-form',
             id: 11,
             pid: 2,
-            path_type: 1,
-        }],
+            path_type: 1
+        }]
     }, {
         path: '/demo/table',
         auth_name: 'table',
@@ -36,15 +36,15 @@ const _menus:IMenuData[] = [{
             auth_name: 'use-table',
             id: 5,
             pid: 4,
-            path_type: 1,
+            path_type: 1
         }, {
             path: '/demo/table/form-table',
             auth_name: 'form-table',
             id: 6,
             pid: 4,
-            path_type: 1,
-        }],
-    }],
+            path_type: 1
+        }]
+    }]
 }];
 
 console.log('_menus', _menus);

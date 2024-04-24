@@ -12,7 +12,7 @@ const _router: RouteRecordRaw[] = [
         meta: {
             title: 'demo',
             id: 'demo',
-            pid: '0',
+            pid: '0'
         },
         redirect: '/demo/form',
         children: [
@@ -22,7 +22,7 @@ const _router: RouteRecordRaw[] = [
                 meta: {
                     title: 'Form表单',
                     id: 'Form',
-                    pid: 'demo',
+                    pid: 'demo'
                 },
                 redirect: '/demo/form/use-form',
                 children: [{
@@ -32,8 +32,8 @@ const _router: RouteRecordRaw[] = [
                     meta: {
                         title: 'UseForm',
                         id: 'UseForm',
-                        pid: 'Form',
-                    },
+                        pid: 'Form'
+                    }
                 }, {
                     path: 'extra-form',
                     name: 'ExtraForm',
@@ -41,9 +41,9 @@ const _router: RouteRecordRaw[] = [
                     meta: {
                         title: 'ExtraForm',
                         id: 'ExtraForm',
-                        pid: 'Form',
-                    },
-                }],
+                        pid: 'Form'
+                    }
+                }]
             },
             {
                 path: 'table',
@@ -51,7 +51,7 @@ const _router: RouteRecordRaw[] = [
                 meta: {
                     title: 'Table表格',
                     id: 'Table',
-                    pid: 'demo',
+                    pid: 'demo'
                 },
                 redirect: '/demo/table/use-table',
                 children: [{
@@ -61,8 +61,8 @@ const _router: RouteRecordRaw[] = [
                     meta: {
                         title: 'UseTable',
                         id: 'UseTable',
-                        pid: 'Table',
-                    },
+                        pid: 'Table'
+                    }
                 }, {
                     path: 'form-table',
                     name: 'FormTable',
@@ -70,11 +70,11 @@ const _router: RouteRecordRaw[] = [
                     meta: {
                         title: 'FormTable',
                         id: 'FormTable',
-                        pid: 'Table',
-                    },
-                }],
+                        pid: 'Table'
+                    }
+                }]
             }
-        ],
+        ]
     }
 ];
 

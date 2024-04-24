@@ -4,7 +4,7 @@
         <template #addonAfter>
             <a-popover placement="bottomRight" trigger="click" v-model="data.visible" overlayClassName="icon-popover">
                 <template #title>
-                    <div class="qm-flex-between">
+                    <div class="g-flex-between">
                         <a-input placeholder="搜索图标" @change="throttle_event_search" allowClear></a-input>
                     </div>
                 </template>

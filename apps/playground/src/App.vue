@@ -29,7 +29,7 @@ export default defineComponent({
         const get_menus_data = async() => {
             const _res = import('@/menus/index');
             const _list = (await _res).default;
-            sysStore.initMenuData = '/backend/data-modules/dashboard';
+            sysStore.initMenuData = '/quantum-design/playground/';
             sysStore.set_format_route_list(_list);
             getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
         };

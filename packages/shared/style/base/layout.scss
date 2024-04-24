@@ -72,7 +72,6 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 }
 
 // flex布局
-.qm-flex,
 .g-flex {
     @include flex-center(left, center);
 

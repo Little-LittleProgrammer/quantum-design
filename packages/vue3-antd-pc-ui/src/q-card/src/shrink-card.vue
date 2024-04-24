@@ -1,11 +1,11 @@
 <!--  -->
 <template>
-    <a-card class="qm-shrink-card" v-bind="getCardProps">
+    <a-card class="q-shrink-card" v-bind="getCardProps">
         <template #extra="slotData">
             <slot name="extra" v-bind="slotData|| {}"></slot>
             <a-button type="link" size="small" @click="change_show"> {{ data.containerShow ? '收起' : '展开'}}</a-button>
         </template>
-        <div class="qm-shrink-card-shrink-container" ref="shrinkContainerRef">
+        <div class="q-shrink-card-shrink-container" ref="shrinkContainerRef">
             <div ref="shrinkCardRef">
                 <slot ></slot>
             </div>

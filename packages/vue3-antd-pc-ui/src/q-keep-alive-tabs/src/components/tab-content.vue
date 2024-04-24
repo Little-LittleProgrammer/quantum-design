@@ -1,10 +1,10 @@
 <!--  -->
 <template>
-    <Dropdown class="tabs-drop-down" :dropMenuList="getDropDownList" :trigger="getTrigger" @menuEvent="handle_menu_event">
-        <div class="tabs-drop-down-info" @contextmenu="handle_context" v-if="getIsTabs">
+    <Dropdown class="q-keep-alive-tabs-drop-down" :dropMenuList="getDropDownList" :trigger="getTrigger" @menuEvent="handle_menu_event">
+        <div class="q-keep-alive-tabs-drop-down-info" @contextmenu="handle_context" v-if="getIsTabs">
             <span class="ml-1">{{ getTitle }}</span>
         </div>
-        <span class="tabs-drop-down-extra-quick" v-else @click="handle_context">
+        <span class="q-keep-alive-tabs-drop-down-extra-quick" v-else @click="handle_context">
             <Icon type="DownOutlined" />
         </span>
     </Dropdown>

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <div class="qm-keep-alive-tabs" id="qm-keep-alive-tabs">
+    <div class="q-keep-alive-tabs" id="q-keep-alive-tabs">
         <a-tabs
             type="editable-card"
             :animated="false"

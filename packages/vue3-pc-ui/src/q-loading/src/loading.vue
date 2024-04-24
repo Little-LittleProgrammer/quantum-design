@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <div class="page-container">
+    <div class="q-loading-page-container">
         <div class="loading-container" v-if="loading">
             <div class="loading" ref="ref-loading" :class="size">
                 <template v-if="mode=='four-part'">
@@ -312,7 +312,7 @@ onBeforeUnmount(() => {
         opacity: .1;
     }
 }
-.page-container {
+.q-loading-page-container {
     position: relative;
     min-height: 60px;
     height: 100%;
