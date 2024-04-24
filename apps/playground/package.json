@@ -6,7 +6,7 @@
   "author": "Evan Wu",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --mode test",
+    "build": "vite build",
     "build:lib": "vite build -c vite.lib.config.ts",
     "preview": "vite preview",
     "type:check": "vue-tsc --noEmit --skipLibCheck"
