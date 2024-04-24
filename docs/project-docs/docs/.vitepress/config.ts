@@ -29,7 +29,7 @@ export default defineConfig({
         lastUpdatedText: '最后更新时间',
         footer: {
             message: 'MIT Licensed',
-            copyright: 'Copyright © qimao',
+            copyright: 'Copyright © quantum',
         },
         outlineTitle: '锚点',
         docFooter: {
@@ -37,11 +37,11 @@ export default defineConfig({
             next: '下一篇'
         },
         socialLinks: [
-            { icon: 'github', link: 'https://codeup.aliyun.com/qimao/front/q-front-npm' }
+            { icon: 'github', link: 'https://github.com/Little-LittleProgrammer/quantum-design' }
         ],
         editLink: {
             text: '编辑此页',
-            pattern: 'https://codeup.aliyun.com/qimao/front/q-front-npm/tree/master/docs/project-docs/docs/:path'
+            pattern: 'https://github.com/Little-LittleProgrammer/quantum-design/tree/master/docs/project-docs/docs/:path'
         }
     },
     vite: {

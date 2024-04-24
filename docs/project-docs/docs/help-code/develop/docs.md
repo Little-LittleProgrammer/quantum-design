@@ -15,7 +15,7 @@
 ```vue
 
 <script setup>
-    import {QButtonGroup} from 'ad.qmniu.com/q-buttom'
+    import {QButtonGroup} from 'playground/q-buttom'
 </script>
 
 <code-view title="基本用法" description="基本按钮用法">
@@ -95,13 +95,13 @@ if (!import.meta.env.SSR) { // ssr不支持浏览器的API
     ...
 }
 ```
-4. 在 文档项目的`package.json`中, 按照以下代码配置(以`ad.qmniu.com`举例)
+4. 在 文档项目的`package.json`中, 按照以下代码配置(以`playground`举例)
 ```json
 {
     ...,
     "dependencies": {
         ...,
-        "ad.qmniu.com": "workspace:*",
+        "playground": "workspace:*",
         ...
     },
     ...
@@ -109,7 +109,7 @@ if (!import.meta.env.SSR) { // ssr不支持浏览器的API
 ```
 5. 在 `.vitepress/theme/index.ts`中 引入 打包好的 样式文件
 ```js
-import 'ad.qmniu.com/dist-components/style.css';
+import 'playground/dist-components/style.css';
 ```
 5. 在md文件中引入组件库
 ```vue

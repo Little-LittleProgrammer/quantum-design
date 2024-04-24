@@ -90,7 +90,7 @@ VITE_USE_SENTRY = false
 VITE_GLOB_UPLOAD_URL= '/local'
 
 # 设置代理 ["/upload","http://aliyun/upload"]
-VITE_PROXY = [["/api","https://api-ad.qmniu.com"], ["/local","http://127.0.0.1:8999/local"]]
+VITE_PROXY = [["/api","https://api-playground"], ["/local","http://127.0.0.1:8999/local"]]
 ```
 
 2. .env.production
@@ -115,11 +115,11 @@ VITE_USE_PWA = true
 VITE_USE_SENTRY = true
 
 # 生产版本请求路径
-VITE_GLOB_API_URL =https://ad.qmniu.com
+VITE_GLOB_API_URL =https://playground
 
 # 生产环境 请求路径前缀
 VITE_GLOB_API_URL_PREFIX = '/api'
 
 # 生产环境 上传请求路径
-VITE_GLOB_UPLOAD_URL =https://ad.qmniu.com/api
+VITE_GLOB_UPLOAD_URL =https://playground/api
 ```

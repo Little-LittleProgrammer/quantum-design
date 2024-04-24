@@ -142,7 +142,7 @@ pnpm dev --filter xxxx
 ```bash
 
 ├── apps # 项目实际目录
-│   ├── ad.qmniu.com # Demo项目
+│   ├── playground # Demo项目
 │   │   ├── package.json # package.json
 ├── packages # 依赖目录
 │   ├── configs # 配置目录

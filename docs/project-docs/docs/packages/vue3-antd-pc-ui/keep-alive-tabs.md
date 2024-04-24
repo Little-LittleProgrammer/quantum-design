@@ -2,13 +2,13 @@
 
 :::warning 提示
 1. 为了全局美观, tabs与面包屑放在一行里, 会自动适应样式
-2. [src/enums/projectEnum.ts](apps/ad.qmniu.com/src/enums/projectEnum.ts)  
+2. [src/enums/projectEnum.ts](apps/playground/src/enums/projectEnum.ts)  
     (`cacheTabsSetting.show`) 为开启tab  
     (`cacheTabsSetting.openKeepAlive`) 为开启页面缓存
 :::
 
 ## 使用
-开启方式: [src/enums/projectEnum.ts](apps/ad.qmniu.com/src/enums/projectEnum.ts)里 (`cacheTabsSetting.show`) 设置为true  
+开启方式: [src/enums/projectEnum.ts](apps/playground/src/enums/projectEnum.ts)里 (`cacheTabsSetting.show`) 设置为true  
 右键点击可以打开操作栏
 
 ```vue

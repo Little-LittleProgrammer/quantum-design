@@ -11,7 +11,7 @@ hero:
           link: /help-code/standard/
           theme: brand
         - text: Github 🔗
-          link: https://codeup.aliyun.com/qimao/front/q-front-npm
+          link: https://github.com/Little-LittleProgrammer/quantum-design
           theme: alt
 
 features:

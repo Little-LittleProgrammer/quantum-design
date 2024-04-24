@@ -38,7 +38,6 @@ OR
 
 ## 如何使用
 main.js中引入全局样式
->import 'qimao-pc-component/lib/component.css';
 
 ### 全局引用
 >import { QmHighlight } from 'qm-npm-pc';  

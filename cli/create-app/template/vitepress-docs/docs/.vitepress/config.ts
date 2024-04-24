@@ -12,7 +12,7 @@ export default defineConfig({
     sidebar: createSidebar(),
     footer: {
       message: 'MIT Licensed',
-      copyright: 'Copyright © q-front-npm',
+      copyright: 'Copyright © quantum-design',
     },
   },
 })

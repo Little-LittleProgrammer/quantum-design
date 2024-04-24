@@ -67,7 +67,7 @@ VITE_GLOB_API_URL_PREFIX = '/manage'
 VITE_GLOB_UPLOAD_URL= '/upload'
 
 # 设置代理 ["/upload","http://aliyun/upload"]
-VITE_PROXY = [["/api","https://zhike.qimao.com"]]
+VITE_PROXY = [["/api","https://xxx.test.com"]]
 ```
 
 ::: warning 注意
@@ -95,7 +95,7 @@ VITE_USE_IMAGEMIN= true
 VITE_USE_PWA = false
 
 # 生产版本请求路径
-VITE_GLOB_API_URL = 'https://zhike.qimao.com'
+VITE_GLOB_API_URL = 'https://xxx.test.com'
 
 # 生产环境 请求路径前缀
 VITE_GLOB_API_URL_PREFIX = '/manage'

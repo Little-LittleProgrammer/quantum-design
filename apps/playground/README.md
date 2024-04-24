@@ -26,5 +26,5 @@ declare module '*.vue' {
 
 
 ## 使用
-1. ****使用前请更新 q-front-npm 所有组件版本****
+1. ****使用前请更新 quantum-design 所有组件版本****
 2. 开发前, 请务必看文档

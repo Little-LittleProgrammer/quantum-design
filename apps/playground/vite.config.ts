@@ -11,7 +11,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_vue_config({ command, mode });
     return {
         ..._common,
-        base: '/monorepo/playground/',
+        base: '/quantum-design/playground/',
         define: {
             cssData: antdCssData
         },

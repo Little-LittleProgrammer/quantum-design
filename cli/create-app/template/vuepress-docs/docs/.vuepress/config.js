@@ -20,77 +20,12 @@ module.exports = {
             { text: '开发手册', link: '/help/' },
         ],
         // 顶部栏右侧的链接
-        repo: 'https://codeup.aliyun.com/qimao/front/qm-npm-pc',
+        repo: 'xxx',
         repoLabel: 'github',
         searchPlaceholder: '搜索组件...',
         backToTop: true,
          // 为以下路由添加侧边栏
         sidebar:{
-            '/baseComponents/0.1.0/': [
-                {
-                    title: '布局类组件',
-                    collapsable: true,
-                    children: [
-                    ]
-                },
-                {
-                    title: '可视化组件',
-                    collapsable: true,
-                    children: [
-                    ]
-                },
-                {
-                    title: '工具类组件',
-                    collapsable: true,
-                    children: [
-                        'q-button',
-                    ]
-                },
-                {
-                    title: '方法类函数',
-                    collapsable: true,
-                    children: [
-
-                    ]
-                },
-            ],
-            '/baseComponents/0.0.9/': [
-                {
-                    title: '布局类组件',
-                    collapsable: true,
-                    children: [
-                    ]
-                },
-                {
-                    title: '可视化组件',
-                    collapsable: true,
-                    children: [
-                    ]
-                },
-                {
-                    title: '工具类组件',
-                    collapsable: true,
-                    children: [
-                        'tool/q-button',
-                    ]
-                },
-                {
-                    title: '方法类函数',
-                    collapsable: true,
-                    children: [
-
-                    ]
-                },
-            ],
-            '/knowledge/': [
-                {
-                    title: 'vue知识点',
-                    collapsable: true,
-                    children: [
-                        'test'
-                    ]
-                },
-            ]
         }
     }
 }

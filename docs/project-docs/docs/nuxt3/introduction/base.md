@@ -22,7 +22,7 @@ VITE_GLOB_API_URL_PREFIX= '/api'
 VITE_GLOB_UPLOAD_URL= '/local'
 
 # 代理地址，可以设置多个， dev 下生效
-VITE_PROXY = [["/api","https://adx-api.qimao.com"], ["/local","http://127.0.0.1:8999/local"]]
+VITE_PROXY = [["/api","https://adx-api.test.com"], ["/local","http://127.0.0.1:8999/local"]]
 
 # 是否使用 sourcemap
 VITE_USE_SOURCEMAP = false

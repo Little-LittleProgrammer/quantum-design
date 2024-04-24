@@ -14,7 +14,7 @@
 
 ```bash
 # vite 本地跨域代理
-VITE_PROXY=[["/api","https://zhike.qimao.com"]]
+VITE_PROXY=[["/api","https://xxx.test.com"]]
 # 接口地址通用前缀
 VITE_GLOB_API_URL=/manage
 ```
@@ -28,9 +28,9 @@ VITE_GLOB_API_URL=/manage
 
 ### 跨域处理
 
-如果你在 `src/api/` 下面的接口为下方代码，且 **.env.development** 文件配置如下注释，则在控制台看到的地址为 `https://zhike.qimao.com/api/manage/auth/index`。
+如果你在 `src/api/` 下面的接口为下方代码，且 **.env.development** 文件配置如下注释，则在控制台看到的地址为 `https://xxx.test.com/api/manage/auth/index`。
 
-由于 `/api` 匹配到了设置的 `VITE_PROXY`，所以上方实际是请求 **https://zhike.qimao.com/manage//auth/index**，这样同时也解决了跨域问题。
+由于 `/api` 匹配到了设置的 `VITE_PROXY`，所以上方实际是请求 **https://xxx.test.com/manage//auth/index**，这样同时也解决了跨域问题。
 
 ### 跨域原理解析
 
@@ -40,7 +40,7 @@ VITE_GLOB_API_URL=/manage
 server: {
   proxy: {
     "/api":{
-      target: 'https://zhike.qimao.com',
+      target: 'https://xxx.test.com',
       changeOrigin: true,
       ws: true,
       rewrite: (path) => path.replace(new RegExp(`^/api`), ''),
@@ -51,7 +51,7 @@ server: {
 
 ::: tip 注意
 
-从浏览器控制台的 Network 看，请求是 `https://zhike.qimao.com/api/xxx`，这是因为 proxy 配置不会改变本地请求的 url。
+从浏览器控制台的 Network 看，请求是 `https://xxx.test.com/api/xxx`，这是因为 proxy 配置不会改变本地请求的 url。
 
 :::
 
