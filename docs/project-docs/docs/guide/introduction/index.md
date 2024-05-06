@@ -67,7 +67,7 @@ node -v
 如果未安装`pnpm`，可以用下面命令来进行全局安装(也可使用npm安装)
 
 ```bash
-npm config set registry=https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/
+npm config set registry=https://registry.npmjs.com/
 
 npm login
 ```

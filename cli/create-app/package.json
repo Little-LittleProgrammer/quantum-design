@@ -17,7 +17,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/",
+    "registry": "https://registry.npmjs.com/",
     "access": "public"
   },
   "keywords": [],

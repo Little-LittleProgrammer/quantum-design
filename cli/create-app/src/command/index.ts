@@ -17,7 +17,7 @@ export function copy_template(targetDir: string, template?: string) {
     copy(templatePath, targetDir);
     // 处理 npmrc;
     const _code = `auto-install-peers = true\n
-    registry=https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/\n
+    registry=https://registry.npmjs.com/\n
     //packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/:_authToken=${!!cliOptions.npmToken ? cliOptions.npmToken: '8189340c-e582-4d1d-9f9f-1cb14eb832ee'}\n
     SENTRYCLI_CDNURL=https://cdn.npmmirror.com/binaries/sentry-cli\n
     sharp_libvips_binary_host=https://npmmirror.com/mirrors/sharp-libvips\n
