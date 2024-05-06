@@ -5,7 +5,8 @@
   "description": "",
   "scripts": {
     "dev": "unbuild --stub",
-    "build": "unbuild"
+    "build": "unbuild",
+    "start": "qmcap"
   },
   "bin": {
     "create-qm-app": "index.js",

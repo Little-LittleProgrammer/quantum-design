@@ -43,12 +43,12 @@
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@quantum-design/shared": "~1.2.1",
-    "@quantum-design/utils": "~1.2.1"
+    "@quantum-design/shared": "~1.1.0",
+    "@quantum-design/utils": "~1.1.0"
   },
   "devDependencies": {
-    "@quantum-design-configs/vite": "~1.2.1",
-    "@quantum-design/types": "~1.2.1",
+    "@quantum-design-configs/vite": "~1.1.0",
+    "@quantum-design/types": "~1.1.0",
     "@vue/test-utils": "^2.4.0",
     "sass": "^1.63.3",
     "vue": "~3.3.10",
