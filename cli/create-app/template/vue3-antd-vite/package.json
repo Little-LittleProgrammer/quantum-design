@@ -1,8 +1,8 @@
 {
-    "name": "xxx.qmniu.com",
+    "name": "demo",
     "private": true,
     "version": "0.0.0",
-    "description": "xxx系统",
+    "description": "demo",
     "author": "Evan Wu",
     "scripts": {
       "dev": "vite",

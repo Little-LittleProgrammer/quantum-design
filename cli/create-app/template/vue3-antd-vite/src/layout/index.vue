@@ -125,7 +125,6 @@ const reload_page = async() => {
 };
 
 // 刷新时记住参数, 具体使用请参考文档
-// https://project-docs.qmniu.com/packages/hooks/use-params-alive.html
 useParamsAliveRoot({
     aliveTabs: cacheList,
     projectSetting: {
