@@ -1,6 +1,6 @@
 import { isFunction } from '@quantum-design/utils';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { CreateAxiosOptions } from './axios-transform';
 
 /**
@@ -60,7 +60,7 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
 
 export function dealToken() {
     const ls = js_create_local_storage();
-    function setTokenToHeader(options: CreateAxiosOptions, config: AxiosRequestConfig<any>) {
+    function setTokenToHeader(options: CreateAxiosOptions, config: InternalAxiosRequestConfig<any>) {
         const {withToken = true } = options.requestOptions!;
         if (!withToken) {
             return config;
@@ -72,7 +72,7 @@ export function dealToken() {
             } else {
                 config.headers = {
                     'x-qm-devops-token': options.authenticationScheme ? `${options.authenticationScheme} ${_token['x-qm-devops-token']}` : _token['x-qm-devops-token']
-                };
+                } as any;
             }
         }
         return config;

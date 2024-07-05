@@ -1,7 +1,8 @@
 {
   "name": "@quantum-design/vue3-antd-pc-ui",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.0",
   "description": "vue3,antd组件库",
+  "type": "module",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
   "typings": "dist/index.d.ts",
@@ -55,27 +56,27 @@
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "~4.17.21",
     "sortablejs": "~1.15.0"
   },
   "devDependencies": {
     "@quantum-design-configs/vite": "workspace:*",
     "@quantum-design/types": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "sass": "^1.63.3",
-    "vue": "~3.3.10",
-    "pinia": "^2.1.6",
-    "@vue/test-utils": "^2.4.0",
-    "@ant-design/icons-vue": "^6.1.0",
-    "ant-design-vue": "~4.0.8",
-    "vue-router": "^4.2.4",
+    "@types/lodash-es": "~4.17.12",
+    "sass": "~1.77.6",
+    "vue": "~3.4.31",
+    "pinia": "~2.1.6",
+    "@vue/test-utils": "~2.4.0",
+    "@ant-design/icons-vue": "~6.1.0",
+    "ant-design-vue": "~4.2.3",
+    "vue-router": "~4.4.0",
     "vue-types": "~5.1.1",
     "dayjs": "~1.11.7",
     "csstype": "~3.1.2"
   },
   "peerDependencies": {
-    "pinia": "^2.0.30",
-    "vue": "~3.3.4",
-    "vue-router": "^4.2.4"
+    "pinia": "~2.0.30",
+    "vue": "~3.4.0",
+    "vue-router": "~4.4.0"
   }
 }

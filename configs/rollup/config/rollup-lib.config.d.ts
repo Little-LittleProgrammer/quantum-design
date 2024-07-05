@@ -5,4 +5,6 @@ interface IPkgList {
     input?: string
 }
 
-export function rollup_commpn_lib_config(pkgList: IPkgList | string | IPkgList[], rollupOptions: RollupOptions, version?: string): any[]
+export function rollup_commpn_lib_config(pkgList: IPkgList | string | IPkgList[], rollupOptions: RollupOptions & {
+    format: ['cjs', 'esm', 'iife']
+}, version?: string): any[]

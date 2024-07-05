@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/shared",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.0",
   "description": "`样式、插件、enums` 公共",
   "main": "index.ts",
   "scripts": {},
@@ -29,9 +29,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@sentry/vue": "~7.66.0",
-    "sass": "^1.63.3",
-    "vue": "~3.3.4"
+    "@sentry/vue": "~8.14.0",
+    "sass": "~1.77.6",
+    "vue": "~3.4.31"
   },
   "dependencies": {}
 }

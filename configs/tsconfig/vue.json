@@ -10,7 +10,8 @@
       "noUnusedParameters": true,
       "experimentalDecorators": true,
       "removeComments": true,
-      "declaration": false
+      "declaration": false,
+      "jsxImportSource": "vue"
     }
   }
   

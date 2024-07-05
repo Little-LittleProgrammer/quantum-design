@@ -31,6 +31,6 @@
   "devDependencies": {
     "@quantum-design/types": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
-    "rollup": "^3.29.4"
+    "rollup": "~4.18.0"
   }
 }

@@ -35,8 +35,44 @@ function isArray(val) {
 }
 
 export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
+    const format = rollupOptions.format || ['cjs', 'esm'];
     const finPkgList = [];
     function get_common() {
+        const prePlugins = [
+            resolve(),
+            commonjs({
+                exclude: 'node_modules'
+            }),
+            json(),
+            typescript({
+                outputToFilesystem: false,
+                tsconfig: './tsconfig.json',
+                compilerOptions: {
+                    declaration: isDeclaration,
+                    declarationMap: false,
+                    declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
+                    module: 'ES2020',
+                    removeComments: false
+                },
+                sourceMap: false,
+                include: ['*.ts+(|x)', '**/*.ts+(|x)'],
+                exclude: ['**/*.spec.ts+(|x)', 'node_modules']
+            }),
+            terser({
+                compress: {drop_console: true }
+            })
+        ];
+        const nextPlugins = [...(rollupOptions.plugins || [])];
+        const preObj = {};
+        for (const item of prePlugins) {
+            preObj[item.name] = item;
+        }
+
+        if (nextPlugins.length > 0) {
+            for (const item of nextPlugins) {
+                preObj[item.name] = item;
+            }
+        }
         const common = {
             output: {
                 footer: '/*! join us */',
@@ -48,30 +84,7 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
             },
             // 外部依赖，也是防止重复打包的配置
             external: [...(rollupOptions.external || [])],
-            plugins: [
-                resolve(),
-                commonjs({
-                    exclude: 'node_modules'
-                }),
-                json(),
-                typescript({
-                    outputToFilesystem: false,
-                    tsconfig: './tsconfig.json',
-                    compilerOptions: {
-                        declaration: isDeclaration,
-                        declarationMap: false,
-                        declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
-                        module: 'ES2020'
-                    },
-                    sourceMap: false,
-                    include: ['*.ts+(|x)', '**/*.ts+(|x)'],
-                    exclude: ['**/*.spec.ts+(|x)', 'node_modules']
-                }),
-                terser({
-                    compress: {drop_console: true}
-                }),
-                ...(rollupOptions.plugins || [])
-            ]
+            plugins: Object.values(preObj)
         };
         return common;
     }
@@ -98,33 +111,22 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
             });
         }
 
-        console.log(finPkgList);
-
         for (const item of finPkgList) {
-            result.push({
-                ...common,
-                input: item.input,
-                output: {
-                    dir: `${packageDirDist}`,
-                    entryFileNames: `${item.name}.esm.min.js`,
-                    format: FormatTypes.esm,
-                    sourcemap: false,
-                    banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
-                    ...common.output
-                }
-            }, {
-                ...common,
-                input: item.input,
-                output: {
-                    dir: `${packageDirDist}`,
-                    entryFileNames: `${item.name}.cjs.min.js`,
-                    format: FormatTypes.cjs,
-                    sourcemap: false,
-                    minifyInternalExports: true,
-                    banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
-                    ...common.output
-                }
-            });
+            result.push(...format.map(key => {
+                return {
+                    ...common,
+                    input: item.input,
+                    output: {
+                        dir: `${packageDirDist}`,
+                        entryFileNames: `${item.name}.${key}.min.js`,
+                        format: FormatTypes[key],
+                        sourcemap: false,
+                        compact: true,
+                        banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
+                        ...common.output
+                    }
+                };
+            }));
         }
     }
 

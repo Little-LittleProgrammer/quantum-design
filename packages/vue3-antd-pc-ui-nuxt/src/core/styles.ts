@@ -18,7 +18,7 @@ export function get_style_dir(config: Options, name: string) {
     }
     const _name = kebab_case(name.slice(5));
     const type = config.importStyle === 'scss' ? 'scss' : 'css';
-    return `${libraryName}/dist/es/style/${_styleDir}/${_name}.${type}`;
+    return `${libraryName}/dist/es/style/${_styleDir}/src/${_name}.${type}`;
 }
 
 // 获取当前组件样式目录

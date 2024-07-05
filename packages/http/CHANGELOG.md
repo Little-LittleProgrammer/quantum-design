@@ -1,5 +1,23 @@
 # @quantum-design/http
 
+## 2.0.0-beta.0
+
+### Major Changes
+
+- 更新适配依赖
+
+  - vite@5.x
+  - vue@3.4.x
+  - nuxt@3.12.x
+  - rollup@4.x
+    ....
+
+### Patch Changes
+
+- Updated dependencies
+  - @quantum-design/shared@2.0.0
+  - @quantum-design/utils@2.0.0
+
 ## 1.1.0
 
 ### Minor Changes

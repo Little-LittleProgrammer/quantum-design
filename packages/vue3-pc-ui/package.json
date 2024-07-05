@@ -1,6 +1,7 @@
 {
   "name": "@quantum-design/vue3-pc-ui",
-  "version": "1.1.0",
+  "version": "2.0.0-beta.0",
+  "type": "module",
   "description": "vue3-pc端组件库",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
@@ -56,15 +57,15 @@
   "devDependencies": {
     "@quantum-design-configs/vite": "workspace:*",
     "@quantum-design/types": "workspace:*",
-    "@vue/test-utils": "^2.4.0",
-    "monaco-editor": "^0.44.0",
-    "sass": "^1.63.3",
-    "tinymce": "^5.10.9",
-    "vue": "~3.3.10",
-    "vue-router": "^4.2.4"
+    "@vue/test-utils": "~2.4.6",
+    "monaco-editor": "~0.44.0",
+    "sass": "~1.77.6",
+    "tinymce": "~5.10.9",
+    "vue": "~3.4.31",
+    "vue-router": "~4.4.0"
   },
   "peerDependencies": {
-    "vue": "~3.3.4",
-    "vue-router": "^4.2.4"
+    "vue": "~3.4.0",
+    "vue-router": "~4.4.0"
   }
 }

@@ -1,9 +1,9 @@
 <template>
     <div v-if="needRefresh" class="qm-pwa pwa-toast" role="alert">
         <div class="message">
-            <span >
-                新的内容可用，点击重新加载按钮更新。
-            </span>
+            <h3>新的内容可用，点击重新加载按钮更新。</h3>
+            <p>更新时间: {{ showData.timestamp }}</p>
+            <p v-if="showData.files.length > 0">更新页面: {{ showData.files.join(',') }}</p>
         </div>
         <button @click="updateServiceWorker?.()">
             重新加载
@@ -17,40 +17,84 @@
 <script lang="ts" setup>
 
 import { useRegisterSW } from 'virtual:pwa-register/vue';
+import { js_is_array } from '@quantum-design/utils';
+import {routerData} from '@/router';
+import { Ref, ref } from 'vue';
 
-/**
-const intervalMS = 60 * 60 * 1000; // 一小时
- * {
-    onRegisteredSW(swUrl, r) {
-        r && setInterval(async() => {
-            if (!(!r.installing && navigator))
-                return;
-
-            if (('connection' in navigator) && !navigator.onLine)
-                return;
-
-            const resp = await fetch(swUrl, {
-                cache: 'no-store',
-                headers: {
-                    'cache': 'no-store',
-                    'cache-control': 'no-cache'
-                }
-            });
-
-            if (resp?.status === 200) {
-                // needRefresh.value = true;
-                await r.update();
-            }
-        }, intervalMS);
+const intervalMS = 10000; // 10秒钟
+const needRefresh = ref(false);
+const showData: Ref<Record<'timestamp' | 'files', any>> = ref({
+    timestamp: new Date().toLocaleString(),
+    files: []
+});
+const formatData: Record<string, any> = [];
+for (const fir of routerData) {
+    if (fir.children) {
+        for (const sub of fir.children) {
+            formatData[sub.path] = sub.meta?.title || sub.name;
+        }
     }
 }
- */
 
 const {
-    needRefresh,
     updateServiceWorker
 } = useRegisterSW({
-    immediate: true
+    immediate: true,
+    onRegisteredSW(_swUrl, r) {
+        if (r) {
+            let _lastDate = new Date().getTime();
+            const requestUpdate = () => {
+                const _currentDate = new Date().getTime();
+                if (_currentDate - _lastDate > intervalMS) {
+                    _lastDate = _currentDate;
+                    r.update();
+                }
+                requestAnimationFrame(requestUpdate);
+            };
+            requestUpdate();
+        }
+    },
+    onNeedRefresh() {
+        fetch('/git-changes.json', {
+            cache: 'no-store',
+            headers: {
+                'cache': 'no-store',
+                'cache-control': 'no-cache'
+            }
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // 解析JSON数据
+        }).then(data => {
+            if (data && data.files && data.timestamp) {
+                showData.value.timestamp = data.timestamp;
+                const set = new Set();
+                const pathObj: Record<string, any> = {};
+                for (const [k, v] of Object.entries(formatData || [])) {
+                    const kArr = k.split('/') || [];
+                    const finKey = ['list', 'index', 'detail'].includes(kArr[kArr.length - 1]) ? kArr[kArr.length - 2] : kArr[kArr.length - 1];
+                    pathObj[finKey] = v;
+                }
+                if (js_is_array(data.files)) {
+                    for (const file of data.files) {
+                        if (!(file.endsWith('.vue') || file.endsWith('.ts'))) continue;
+                        for (const [k, v] of Object.entries(pathObj)) {
+                            if (~(file.indexOf(k))) {
+                                set.add(v);
+                            }
+                        }
+                    }
+                }
+                showData.value.files = [...set];
+            }
+            if (showData.value.files.length !== 0) {
+                needRefresh.value = true;
+            }
+        }).catch(error => {
+            console.error('There was a problem with your fetch operation:', error);
+        });
+    }
 });
 
 const close = async() => {
@@ -76,6 +120,10 @@ const close = async() => {
             margin-bottom: 8px;
             @include text-color(text-color);
             font-size: 16px;
+            line-height: 1.5;
+            h3 {
+                font-weight: 600;
+            }
         }
         & button {
             border: 1px solid;

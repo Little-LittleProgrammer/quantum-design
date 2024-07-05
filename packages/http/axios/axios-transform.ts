@@ -1,10 +1,10 @@
 /**
  * Data processing class, can be configured according to the project
  */
-import type { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
+import type { InternalAxiosRequestConfig, AxiosResponse, AxiosInstance, AxiosHeaders } from 'axios';
 import type { RequestOptions } from './interface';
 
-export interface CreateAxiosOptions extends AxiosRequestConfig {
+export interface CreateAxiosOptions extends InternalAxiosRequestConfig {
     authenticationScheme?: string;
     customTransform?: CustomAxiosTransform;
     defaultTransform?: AxiosTransform;
@@ -12,12 +12,14 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 }
 
 export interface AxiosResponseAgent<T=any> extends AxiosResponse<T> {
-    config: SelectPartial<AxiosRequestConfig, 'url'>
+    config: SelectPartial<InternalAxiosRequestConfig, 'url'> & {
+        headers: AxiosHeaders
+    }
 }
 
 export abstract class CustomAxiosTransform {
     // 自定义拦截器
-    customRequest?: (config:AxiosRequestConfig) => AxiosRequestConfig; // 自定义请求拦截
+    customRequest?: (config:InternalAxiosRequestConfig) => InternalAxiosRequestConfig; // 自定义请求拦截
     customResponse?: (config:AxiosResponse<any>) => AxiosResponse<any>; // 自定义错误响应拦截
     customRequestError?: (error:Error) => void; // 自定义错误请求拦截
     customResponseError?: (error:Error) => void; // 自定义错误响应拦截
@@ -28,7 +30,7 @@ export abstract class AxiosTransform {
     //  * @description: Process configuration before request
     //  * @description: Process configuration before request
     //  */
-    beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
+    beforeRequestHook?: (config: InternalAxiosRequestConfig, options: RequestOptions) => InternalAxiosRequestConfig;
 
     // /**
     //  * @description: Request successfully processed
@@ -44,9 +46,9 @@ export abstract class AxiosTransform {
      * @description: 请求之前的拦截器
      */
     requestInterceptors?: (
-        config: SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>,
+        config: InternalAxiosRequestConfig,
         options: CreateAxiosOptions
-    ) => AxiosRequestConfig;
+    ) => InternalAxiosRequestConfig;
 
     /**
      * @description: 请求之后的拦截器

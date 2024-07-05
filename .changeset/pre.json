@@ -1,0 +1,26 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "playground": "0.0.0",
+    "create-qm-app": "2.0.0",
+    "@quantum-design-configs/eslint": "2.0.0",
+    "@quantum-design-configs/rollup": "2.0.0",
+    "@quantum-design-configs/tsconfig": "2.0.0",
+    "@quantum-design-configs/vite": "2.0.0",
+    "project-docs": "0.0.0",
+    "@quantum-design/hooks": "2.0.0",
+    "@quantum-design/http": "2.0.0",
+    "@quantum-design/polyfill": "1.1.0",
+    "@quantum-design/shared": "2.0.0",
+    "@quantum-design/types": "2.0.0",
+    "@quantum-design/utils": "2.0.0",
+    "@quantum-design/vue3-antd-pc-ui": "2.0.0",
+    "@quantum-design/vue3-antd-pc-ui-nuxt": "2.0.0",
+    "@quantum-design/vue3-pc-ui": "2.0.0",
+    "@quantum-design/vue3-pc-ui-nuxt": "2.0.0"
+  },
+  "changesets": [
+    "six-beers-shake"
+  ]
+}

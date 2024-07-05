@@ -12,27 +12,27 @@
     "gen:css": "esno scripts/gen-antd-style.ts"
   },
   "devDependencies": {
-    "@ant-design-vue/nuxt": "^1.2.0",
-    "ant-design-vue": "^4.0.7",
-    "cross-env": "^7.0.3",
-    "esno": "^0.17.0",
-    "@vite-pwa/nuxt": "^0.3.4",
+    "@ant-design-vue/nuxt": "~1.2.0",
+    "ant-design-vue": "~4.2.3",
+    "cross-env": "~7.0.3",
+    "esno": "~0.17.0",
+    "@vite-pwa/nuxt": "~0.3.4",
     "@nuxt/devtools": "latest",
-    "nuxt": "^3.8.2",
-    "vue": "^3.3.10",
-    "sass": "^1.63.3",
-    "npm-run-all": "^4.1.5",
-    "vue-router": "^4.2.5",
-    "@quantum-design/types": "^1.1.0",
+    "nuxt": "~3.12.3",
+    "vue": "~3.3.10",
+    "sass": "~1.77.6",
+    "npm-run-all": "~4.1.5",
+    "vue-router": "~4.4.0",
+    "@quantum-design/types": "~1.1.0",
     "@quantum-design-configs/vite": "1.1.0"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.5.1",
-    "@quantum-design/shared": "^1.1.0",
-    "@quantum-design/utils": "^1.1.0",
-    "@quantum-design/vue3-antd-pc-ui-nuxt": "^1.1.0",
-    "@quantum-design/vue3-pc-ui-nuxt": "^1.1.0",
-    "crypto-js": "^4.2.0",
-    "pinia": "^2.1.6"
+    "@pinia/nuxt": "~0.5.1",
+    "@quantum-design/shared": "~1.1.0",
+    "@quantum-design/utils": "~1.1.0",
+    "@quantum-design/vue3-antd-pc-ui-nuxt": "~1.1.0",
+    "@quantum-design/vue3-pc-ui-nuxt": "~1.1.0",
+    "crypto-js": "~4.2.0",
+    "pinia": "~2.1.6"
   }
 }

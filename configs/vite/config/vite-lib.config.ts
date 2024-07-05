@@ -59,18 +59,9 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         exports: 'named',
         entryFileNames: '[name].js',
         assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.includes('scss')) {
-                const _dirName = assetInfo.name.split('/').find(item => item.includes('q-'));
-                if (_dirName) {
-                    _assetQueue.push(_dirName);
-                } else {
-                    console.error('组件文件夹必须以 q-开头命名');
-                    throw Error('组件文件夹必须以 q-开头命名');
-                }
-            } else if (assetInfo.name?.includes('css')) {
+            if (assetInfo.name?.includes('css')) {
                 const _realName = assetInfo.name.split('.')[0];
-                const _curDir = _assetQueue.shift();
-                return `style/${_curDir}/${_realName}[extname]`;
+                return `style/${_realName}[extname]`;
             }
             return `[name][extname]`;
         },
@@ -83,18 +74,10 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         exports: 'named',
         entryFileNames: '[name].js',
         assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.includes('scss')) {
-                const _dirName = assetInfo.name.split('/').find(item => item.includes('q-'));
-                if (_dirName) {
-                    _assetQueue.push(_dirName);
-                } else {
-                    console.error('组件文件夹必须以 q-开头命名');
-                    throw Error('组件文件夹必须以 q-开头命名');
-                }
-            } else if (assetInfo.name?.includes('css')) {
+            console.log(assetInfo)
+            if (assetInfo.name?.includes('css')) {
                 const _realName = assetInfo.name.split('.')[0];
-                const _curDir = _assetQueue.shift();
-                return `style/${_curDir}/${_realName}[extname]`;
+                return `style/${_realName}[extname]`;
             }
             return `[name][extname]`;
         },

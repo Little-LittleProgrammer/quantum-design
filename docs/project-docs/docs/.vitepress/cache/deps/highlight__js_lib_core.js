@@ -1,11 +1,11 @@
 import {
   require_core
-} from "./chunk-HWSHGJJI.js";
+} from "./chunk-3SVWYVNJ.js";
 import {
   __toESM
-} from "./chunk-5WWUZCGV.js";
+} from "./chunk-G3PMV62Z.js";
 
-// ../../node_modules/.pnpm/registry.npmmirror.com+highlight.js@11.4.0/node_modules/highlight.js/es/core.js
+// ../../node_modules/.pnpm/highlight.js@11.4.0/node_modules/highlight.js/es/core.js
 var import_core = __toESM(require_core());
 var core_default = import_core.default;
 var export_HighlightJS = import_core.default;

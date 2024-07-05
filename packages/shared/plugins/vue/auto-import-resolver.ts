@@ -41,7 +41,7 @@ function get_side_effects(dirName: string, options: QResolverOptions) {
         return;
     }
     const _compName = kebab_case(dirName.slice(prefix.length));
-    return `${packageName}/dist/${moduleType}/style/${_styleDir}/${_compName}.${importStyle}`;
+    return `${packageName}/dist/${moduleType}/style/${_styleDir}/src/${_compName}.${importStyle}`;
 }
 
 const defaultOptions: QResolverOptions[] = [{

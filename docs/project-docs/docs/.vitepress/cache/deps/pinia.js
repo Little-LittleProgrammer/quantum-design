@@ -1,6 +1,8 @@
 import {
-  setupDevtoolsPlugin
-} from "./chunk-DYSNP4ZX.js";
+  del,
+  isVue2,
+  set
+} from "./chunk-C5BZ36P3.js";
 import {
   computed,
   effectScope,
@@ -20,29 +22,168 @@ import {
   toRefs,
   unref,
   watch
-} from "./chunk-2TIORARE.js";
-import "./chunk-5WWUZCGV.js";
+} from "./chunk-HGWVF6YY.js";
+import "./chunk-G3PMV62Z.js";
 
-// ../../node_modules/.pnpm/registry.npmmirror.com+vue-demi@0.14.5_vue@3.3.4/node_modules/vue-demi/lib/index.mjs
-var isVue2 = false;
-function set(target, key, val) {
-  if (Array.isArray(target)) {
-    target.length = Math.max(target.length, key);
-    target.splice(key, 1, val);
-    return val;
-  }
-  target[key] = val;
-  return val;
+// ../../node_modules/.pnpm/@vue+devtools-api@6.6.3/node_modules/@vue/devtools-api/lib/esm/env.js
+function getDevtoolsGlobalHook() {
+  return getTarget().__VUE_DEVTOOLS_GLOBAL_HOOK__;
 }
-function del(target, key) {
-  if (Array.isArray(target)) {
-    target.splice(key, 1);
-    return;
+function getTarget() {
+  return typeof navigator !== "undefined" && typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : {};
+}
+var isProxyAvailable = typeof Proxy === "function";
+
+// ../../node_modules/.pnpm/@vue+devtools-api@6.6.3/node_modules/@vue/devtools-api/lib/esm/const.js
+var HOOK_SETUP = "devtools-plugin:setup";
+var HOOK_PLUGIN_SETTINGS_SET = "plugin:settings:set";
+
+// ../../node_modules/.pnpm/@vue+devtools-api@6.6.3/node_modules/@vue/devtools-api/lib/esm/time.js
+var supported;
+var perf;
+function isPerformanceSupported() {
+  var _a;
+  if (supported !== void 0) {
+    return supported;
   }
-  delete target[key];
+  if (typeof window !== "undefined" && window.performance) {
+    supported = true;
+    perf = window.performance;
+  } else if (typeof globalThis !== "undefined" && ((_a = globalThis.perf_hooks) === null || _a === void 0 ? void 0 : _a.performance)) {
+    supported = true;
+    perf = globalThis.perf_hooks.performance;
+  } else {
+    supported = false;
+  }
+  return supported;
+}
+function now() {
+  return isPerformanceSupported() ? perf.now() : Date.now();
 }
 
-// ../../node_modules/.pnpm/registry.npmmirror.com+pinia@2.1.6_typescript@5.1.3_vue@3.3.4/node_modules/pinia/dist/pinia.mjs
+// ../../node_modules/.pnpm/@vue+devtools-api@6.6.3/node_modules/@vue/devtools-api/lib/esm/proxy.js
+var ApiProxy = class {
+  constructor(plugin, hook) {
+    this.target = null;
+    this.targetQueue = [];
+    this.onQueue = [];
+    this.plugin = plugin;
+    this.hook = hook;
+    const defaultSettings = {};
+    if (plugin.settings) {
+      for (const id in plugin.settings) {
+        const item = plugin.settings[id];
+        defaultSettings[id] = item.defaultValue;
+      }
+    }
+    const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
+    let currentSettings = Object.assign({}, defaultSettings);
+    try {
+      const raw = localStorage.getItem(localSettingsSaveId);
+      const data = JSON.parse(raw);
+      Object.assign(currentSettings, data);
+    } catch (e) {
+    }
+    this.fallbacks = {
+      getSettings() {
+        return currentSettings;
+      },
+      setSettings(value) {
+        try {
+          localStorage.setItem(localSettingsSaveId, JSON.stringify(value));
+        } catch (e) {
+        }
+        currentSettings = value;
+      },
+      now() {
+        return now();
+      }
+    };
+    if (hook) {
+      hook.on(HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
+        if (pluginId === this.plugin.id) {
+          this.fallbacks.setSettings(value);
+        }
+      });
+    }
+    this.proxiedOn = new Proxy({}, {
+      get: (_target, prop) => {
+        if (this.target) {
+          return this.target.on[prop];
+        } else {
+          return (...args) => {
+            this.onQueue.push({
+              method: prop,
+              args
+            });
+          };
+        }
+      }
+    });
+    this.proxiedTarget = new Proxy({}, {
+      get: (_target, prop) => {
+        if (this.target) {
+          return this.target[prop];
+        } else if (prop === "on") {
+          return this.proxiedOn;
+        } else if (Object.keys(this.fallbacks).includes(prop)) {
+          return (...args) => {
+            this.targetQueue.push({
+              method: prop,
+              args,
+              resolve: () => {
+              }
+            });
+            return this.fallbacks[prop](...args);
+          };
+        } else {
+          return (...args) => {
+            return new Promise((resolve) => {
+              this.targetQueue.push({
+                method: prop,
+                args,
+                resolve
+              });
+            });
+          };
+        }
+      }
+    });
+  }
+  async setRealTarget(target) {
+    this.target = target;
+    for (const item of this.onQueue) {
+      this.target.on[item.method](...item.args);
+    }
+    for (const item of this.targetQueue) {
+      item.resolve(await this.target[item.method](...item.args));
+    }
+  }
+};
+
+// ../../node_modules/.pnpm/@vue+devtools-api@6.6.3/node_modules/@vue/devtools-api/lib/esm/index.js
+function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
+  const descriptor = pluginDescriptor;
+  const target = getTarget();
+  const hook = getDevtoolsGlobalHook();
+  const enableProxy = isProxyAvailable && descriptor.enableEarlyProxy;
+  if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
+    hook.emit(HOOK_SETUP, pluginDescriptor, setupFn);
+  } else {
+    const proxy = enableProxy ? new ApiProxy(descriptor, hook) : null;
+    const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
+    list.push({
+      pluginDescriptor: descriptor,
+      setupFn,
+      proxy
+    });
+    if (proxy) {
+      setupFn(proxy.proxiedTarget);
+    }
+  }
+}
+
+// ../../node_modules/.pnpm/pinia@2.1.7_typescript@5.4.5_vue@3.4.31/node_modules/pinia/dist/pinia.mjs
 var activePinia;
 var setActivePinia = (pinia) => activePinia = pinia;
 var getActivePinia = () => hasInjectionContext() && inject(piniaSymbol) || activePinia;
@@ -300,6 +441,8 @@ function loadStoresState(pinia, state) {
     const storeState = pinia.state.value[key];
     if (storeState) {
       Object.assign(storeState, state[key]);
+    } else {
+      pinia.state.value[key] = state[key];
     }
   }
 }
@@ -615,13 +758,13 @@ function addStoreToDevtools(app, store) {
       // },
     }
   }, (api) => {
-    const now = typeof api.now === "function" ? api.now.bind(api) : Date.now;
+    const now2 = typeof api.now === "function" ? api.now.bind(api) : Date.now;
     store.$onAction(({ after, onError, name, args }) => {
       const groupId = runningActionId++;
       api.addTimelineEvent({
         layerId: MUTATIONS_LAYER_ID,
         event: {
-          time: now(),
+          time: now2(),
           title: "🛫 " + name,
           subtitle: "start",
           data: {
@@ -637,7 +780,7 @@ function addStoreToDevtools(app, store) {
         api.addTimelineEvent({
           layerId: MUTATIONS_LAYER_ID,
           event: {
-            time: now(),
+            time: now2(),
             title: "🛬 " + name,
             subtitle: "end",
             data: {
@@ -655,7 +798,7 @@ function addStoreToDevtools(app, store) {
         api.addTimelineEvent({
           layerId: MUTATIONS_LAYER_ID,
           event: {
-            time: now(),
+            time: now2(),
             logType: "error",
             title: "💥 " + name,
             subtitle: "end",
@@ -678,7 +821,7 @@ function addStoreToDevtools(app, store) {
           api.addTimelineEvent({
             layerId: MUTATIONS_LAYER_ID,
             event: {
-              time: now(),
+              time: now2(),
               title: "Change",
               subtitle: name,
               data: {
@@ -697,7 +840,7 @@ function addStoreToDevtools(app, store) {
       if (!isTimelineActive)
         return;
       const eventData = {
-        time: now(),
+        time: now2(),
         title: formatMutationType(type),
         data: assign$1({ store: formatDisplay(store.$id) }, formatEventData(events)),
         groupId: activeAction
@@ -730,7 +873,7 @@ function addStoreToDevtools(app, store) {
       api.addTimelineEvent({
         layerId: MUTATIONS_LAYER_ID,
         event: {
-          time: now(),
+          time: now2(),
           title: "🔥 " + store.$id,
           subtitle: "HMR update",
           data: {
@@ -1158,10 +1301,7 @@ function createSetupStore($id, setup, options = {}, pinia, hot, isOptionsStore) 
   ) : partialStore);
   pinia._s.set($id, store);
   const runWithContext = pinia._a && pinia._a.runWithContext || fallbackRunWithContext;
-  const setupStore = pinia._e.run(() => {
-    scope = effectScope();
-    return runWithContext(() => scope.run(setup));
-  });
+  const setupStore = runWithContext(() => pinia._e.run(() => (scope = effectScope()).run(setup)));
   for (const key in setupStore) {
     const prop = setupStore[key];
     if (isRef(prop) && !isComputed(prop) || isReactive(prop)) {
@@ -1352,9 +1492,8 @@ function defineStore(idOrOptions, setup, setupOptions) {
     if (pinia)
       setActivePinia(pinia);
     if (!activePinia) {
-      throw new Error(`[🍍]: "getActivePinia()" was called but there was no active Pinia. Did you forget to install pinia?
-	const pinia = createPinia()
-	app.use(pinia)
+      throw new Error(`[🍍]: "getActivePinia()" was called but there was no active Pinia. Are you trying to use a store before calling "app.use(pinia)"?
+See https://pinia.vuejs.org/core-concepts/outside-component-usage.html for help.
 This will fail in production.`);
     }
     pinia = activePinia;
@@ -1533,7 +1672,7 @@ export {
 
 pinia/dist/pinia.mjs:
   (*!
-   * pinia v2.1.6
+   * pinia v2.1.7
    * (c) 2023 Eduardo San Martin Morote
    * @license MIT
    *)

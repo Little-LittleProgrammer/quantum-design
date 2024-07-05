@@ -63,6 +63,7 @@ import { PropType, reactive, watch } from 'vue';
 import {Upload as AUpload, Modal as AModal, Button as AButton} from 'ant-design-vue';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import './style/card-upload.scss';
+import { ILimit } from './types';
 defineOptions({
     name: 'QAntdCardUpload'
 });
@@ -76,14 +77,6 @@ interface DataProps {
     modalImageUrl: string
     modalVisible: boolean
     fullUrl: string
-}
-interface ILimit {
-    type: 'size' | 'ratio' | 'maxSize', // size为固定宽高，ratio为各比例
-    width?: number,
-    height?: number,
-    minDuration?: number,
-    maxDuration?: number,
-    message?: string
 }
 const props = defineProps({
     markWord: propTypes.any.def('格式要求PNG'),

@@ -1,5 +1,5 @@
 import type {
-	AxiosRequestConfig,
+	InternalAxiosRequestConfig,
 	AxiosInstance,
 	AxiosResponse,
 	AxiosError,
@@ -101,7 +101,7 @@ export class VAxios {
 				) {
 					config = requestInterceptors(
 						config as SelectPartial<
-							AxiosRequestConfig,
+							InternalAxiosRequestConfig,
 							'url' | 'headers' | 'method'
 						>,
 						this.options
@@ -152,7 +152,7 @@ export class VAxios {
 	/**
 	 * @description:  上传文件
 	 */
-	uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
+	uploadFile<T = any>(config: InternalAxiosRequestConfig, params: UploadFileParams) {
 		const formData = new window.FormData();
 		if (params.data) {
 			Object.keys(params.data).forEach((key) => {
@@ -203,14 +203,14 @@ export class VAxios {
 			// url: config.url! + '?' + `${joinTimestamp(this.options.requestOptions?.joinEnv ?? true, true)}&` + `${joinEnvToUrl(this.options.requestOptions?.joinEnv ?? true, true)}`,
 			headers: {
 				'Content-type': gContentTypeEnum.FORM_DATA,
-			},
+			} as any,
 			requestOptions: opt,
 		};
 		return this.axiosInstance.request<T>(_option);
 	}
 
 	// 格式化请求参数
-	supportFormData(config: AxiosRequestConfig) {
+	supportFormData(config: InternalAxiosRequestConfig) {
 		const headers = config.headers || this.options.headers;
 		const contentType =
 			headers?.['Content-Type'] || headers?.['content-type'];
@@ -230,35 +230,35 @@ export class VAxios {
 	}
 
 	get<T = any>(
-		config: AxiosRequestConfig,
+		config: InternalAxiosRequestConfig,
 		options?: RequestOptions
 	): Promise<T> {
 		return this.request({ ...config, method: 'GET' }, options);
 	}
 
 	post<T = any>(
-		config: AxiosRequestConfig,
+		config: InternalAxiosRequestConfig,
 		options?: RequestOptions
 	): Promise<T> {
 		return this.request({ ...config, method: 'POST' }, options);
 	}
 
 	put<T = any>(
-		config: AxiosRequestConfig,
+		config: InternalAxiosRequestConfig,
 		options?: RequestOptions
 	): Promise<T> {
 		return this.request({ ...config, method: 'PUT' }, options);
 	}
 
 	delete<T = any>(
-		config: AxiosRequestConfig,
+		config: InternalAxiosRequestConfig,
 		options?: RequestOptions
 	): Promise<T> {
 		return this.request({ ...config, method: 'DELETE' }, options);
 	}
 
 	request<T = any>(
-		config: AxiosRequestConfig,
+		config: InternalAxiosRequestConfig,
 		options?: RequestOptions
 	): Promise<T> {
 		let conf: CreateAxiosOptions = cloneDeep(config);

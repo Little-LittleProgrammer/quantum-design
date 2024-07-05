@@ -4,7 +4,7 @@ import { ViteEnv } from '../types';
 export function vite_plugin_html(env: ViteEnv) {
     const { VITE_GLOB_APP_TITLE } = env;
 
-    const _replaceObj = {
+    const _replaceObj: Record<string, any> = {
         title: VITE_GLOB_APP_TITLE
     };
 
