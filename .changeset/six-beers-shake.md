@@ -5,7 +5,6 @@
 "@quantum-design/vue3-pc-ui": patch
 "@quantum-design-configs/tsconfig": patch
 "@quantum-design/shared": patch
-"create-qm-app": patch
 "@quantum-design-configs/eslint": patch
 "@quantum-design-configs/rollup": patch
 "@quantum-design/hooks": patch
