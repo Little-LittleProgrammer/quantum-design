@@ -1,16 +1,20 @@
 {
-  "name": "create-qm-app",
+  "name": "create-quantum-app",
   "version": "2.0.0-beta.0",
   "type": "module",
   "description": "",
   "scripts": {
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "start": "qmcap"
+    "start": "cqap"
   },
   "bin": {
+    "create-quantum-app": "index.js",
+    "create-quantum-api": "api.js",
     "create-qm-app": "index.js",
-    "qmcap": "index.js"
+    "cqap": "index.js",
+    "create-qm-api": "api.js",
+    "cqa": "api.js"
   },
   "files": [
     "index.js",

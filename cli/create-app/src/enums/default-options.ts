@@ -7,6 +7,7 @@ export const cliOptions: ICliOptions = {
     packageManage: 'npm',
     frame: 'vue3',
     infrastructureMode: 'polyrepo',
-    template: 'vue3-antd-vite'
+    template: 'vue3-antd-vite',
+    communication: 'only_http'
 }
  

@@ -1,0 +1,6 @@
+{
+    "extends": "@q-front-npm-configs/tsconfig/lib.json",
+    "include": ["*.ts", "**/*.ts", "node_modules/@q-front-npm/types/**/*.d.ts", "bin/index.js"],
+    "exclude": ["dist"]
+  }
+  

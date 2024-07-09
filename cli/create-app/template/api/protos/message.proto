@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package rum;
+
+
+option go_package = "rum-go/api;rum";
+
+
+message ReportReply {
+}
+
+
+message ReportRequest {
+  // sdk版本
+  string sdk_ver = 1;
+  // sdk名称
+  string sdk_name = 2;
+  // 上报id
+  string id = 3;
+  // 应用id
+  string app_id = 4;
+  // 用户id
+  string user_id = 5;
+  // 应用名称
+  string app_name = 6;
+  
+  message Data {
+    // 分类
+    Category category = 1;
+    // 子分类
+    SubCategory sub_category = 2;
+    // 页面地址
+    string page_url = 3;
+    // 指标获取时间，ms级时间戳
+    uint32 time = 4; 
+
+    message Performance {
+      // 开始时间: 如：400，单位ms
+      optional double start_time = 1;
+      // 渲染时间: 如 400
+      optional double render_time = 2;
+      // 偏移量
+      optional double value = 3;
+      // 延迟时间
+      optional double duration = 4;
+      // 延迟事件
+      optional string name = 5;
+      // 首次可交互时间 
+      optional double tti = 6;
+      // HTML加载完成时间
+      optional double dom_ready = 7;
+      // 页面完全加载时间
+      optional double load = 8;
+      // 首包时间
+      optional double first_byte = 9;
+      // dns查询耗时
+      optional double dns = 10;
+      // tcp连接时间
+      optional double tcp = 11;
+      // ssl完全连接耗时
+      optional double ssl = 12;
+      // 请求响应耗时
+      optional double ttfb = 13;
+      // 内容传输耗时
+      optional double trans = 14;
+      // dom解析耗时
+      optional double dom_parse = 15;
+      // 资源加载耗时
+      optional double res = 16;
+    }
+    message Error {
+      // 错误类型
+      optional string errorType = 1;
+      // 错误uid
+      optional string errorUid = 2;
+      // 错误消息
+      optional string msg = 3;
+      // 错误栈
+      optional double stackTrace = 4;
+      // 错误请求数据
+      optional ErrorRequest request = 5;
+      // 错误响应数据
+      optional ErrorResponse response = 6;
+      // 错误时长
+      optional float duration = 7;
+      // 错误元类型
+      // optional ErrorMate meta = 4;
+      // message ErrorMate {
+      //   optional string col = 1;
+      //   optional string line = 2;
+      // }
+      // message stackTrace {
+      //   optional repeated string frames
+      // }
+      message ErrorRequest {
+        optional string method = 1;
+        optional string url = 2;
+        optional string body = 3;
+      }
+      message ErrorResponse {
+        optional int32 status = 1;
+        optional string body = 2;
+      }
+    }
+    // 性能数据
+    optional Performance performance = 5;
+    // 错误
+    optional Error error = 6;
+    // 用户行为数据
+    message BreadcrumbData {
+      string category = 1;
+      float time = 2;
+      SeverityLevel level = 3;
+    }
+    repeated BreadcrumbData breadcrumb_data = 7;
+  }
+  repeated Data data = 7;
+
+  message Networkinfo {
+    // 网络状态
+    EffectiveType effective_type = 1;
+    // 下载速度
+    uint32 downlink = 2;
+    // 延迟
+    uint32 rtt = 3;
+  }
+  // 网络
+  Networkinfo network_info = 8;
+
+
+}
+
+enum Category {
+  // 未知
+  Category_Unknown = 0;
+  // 性能
+  Category_Performance = 1;
+  // 错误
+  Category_Error = 2;
+  // 行为
+  Category_Behaviour = 3;
+  // 
+  Category_Custom = 4;
+}
+
+enum EffectiveType{
+  Network_Unknown = 0;
+  Network_Wifi = 1;
+  Network_2G = 2;
+  Network_3G = 3;
+  Network_4G = 4;
+}
+
+enum SubCategory{
+    // 未知
+    Subtype_Known = 0;
+    // 白屏时间/首次绘制
+    FirstPaint = 1;
+    // 首屏时间/首次内容绘制
+    FirstContentulPaint = 2;
+    // 最大内容绘制
+    LargestContentfulPaint = 3;
+    // 最大偏移量
+    CumulativeLayoutShift = 4;
+    // 首屏有意义绘制
+    FirstMeaningPaint = 5;
+    // 首次输入延迟
+    FirstInputDelay = 6;
+    // 页面数据
+    Navigation = 7;
+    // 资源
+    Resource = 9;
+    // 控制台错误
+    ConsoleError =10;
+    // js报错
+    JsError=11;
+    // 异步报错
+    PromiseError=12;
+    // 资源请求错误
+    ResourceError=13;
+    // vue错误
+    VueError=14;
+    // 请求错误
+    FETCH=15;
+    // 请求错误
+    XHR=16;
+}
+
+// 行为等级
+enum SeverityLevel {
+    Unknown = 0;
+    Else = 1;
+    Error = 2;
+    Warning = 3;
+    Info = 4;
+    Debug = 5;
+    /** 上报的错误等级 */
+    Low = 6;
+    Normal = 7;
+    High = 8;
+    Critical = 9;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "rum-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/rum-ts.cjs.min.js",
+  "module": "dist/rum-ts.esm.min.js",
+  "typings": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "rollup -c --environment TYPES:true",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@protobuf-ts/runtime-http": "^2.9.7"
+  },
+  "devDependencies": {
+    "@protobuf-ts/plugin": "^2.9.7",
+    "@protobuf-ts/protoc": "^2.9.7",
+    "@q-front-npm-configs/tsconfig": "1.0.0",
+    "rollup": "^3.29.4",
+    "@quantum-design-configs/rollup": "^1.2.2",
+    "tslib": "2.5.3"
+  }
+}

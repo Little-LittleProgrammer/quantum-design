@@ -10,4 +10,5 @@ export interface ICliOptions {
     isUpdate?: boolean;
     overwrite?: boolean;
     overwriteMonorepo?: boolean;
+    communication?: 'only_http' | 'only_interface' | string;
 }
