@@ -13,7 +13,7 @@
     "typescript": "~5.4.5",
     "@quantum-design-configs/eslint": "~1.0.8",
     "@quantum-design-configs/tsconfig": "~1.0.0",
-    "turbo": "1.10.13",
+    "turbo": "latest",
     "vite": "~5.3.1",
     "tslib": "~2.5.3",
     "@types/node": "~20.2.5"
