@@ -1,8 +1,8 @@
-import { gContentTypeEnum, gResultEnum } from "@quantum-design/shared";
-import { IHttpOptions, RequestOptions } from "../types";
-import { UseFetchOptions } from "nuxt/app";
-import { check_status } from "../utils/check-status";
-import { isFunction } from "@quantum-design/utils";
+import { gContentTypeEnum, gResultEnum } from '@quantum-design/shared';
+import type { IHttpOptions, RequestOptions } from '../types';
+import type { UseFetchOptions } from 'nuxt/app';
+import { check_status } from '../utils/check-status';
+import { isFunction } from '@quantum-design/utils';
 
 export const defaultRequestOptions: RequestOptions = {
     // 默认将prefix 添加到url
@@ -26,21 +26,21 @@ export const defaultRequestOptions: RequestOptions = {
     uploadUrl: '',
     // 接口拼接地址
     urlPrefix: 'api'
-}
+};
 export const defaultHeader = {
     'Content-Type': gContentTypeEnum.JSON
-}
+};
 
-export const transform = (data?: any): UseFetchOptions<any>=> {
+export const transform = (data?: any): UseFetchOptions<any> => {
     return {
         onRequest: ({options}) => {
-            const _options = options as IHttpOptions
-            const params: Record<string, any> = {}
+            const _options = options as IHttpOptions;
+            const params: Record<string, any> = {};
             if (_options.requestOptions?.joinTime) {
-                params.t = new Date().getTime()
+                params.t = new Date().getTime();
             }
             if (_options.requestOptions?.env && isFunction(_options.requestOptions.env)) {
-                params.env = _options.requestOptions.env()
+                params.env = _options.requestOptions.env();
             }
             if (options.method === 'POST') {
                 options.body = { ...data };
@@ -50,18 +50,18 @@ export const transform = (data?: any): UseFetchOptions<any>=> {
             }
         },
         onRequestError: (ctx) => {
-            const { error, response, options} = ctx
-            const _options = options as IHttpOptions
+            const { error, response, options} = ctx;
+            const _options = options as IHttpOptions;
             if (error && response) {
-                check_status(response.status+ '', '连接错误', _options.requestOptions?.errorMessageMode || 'message');
+                check_status(response.status + '', '连接错误', _options.requestOptions?.errorMessageMode || 'message');
             } else {
                 check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageMode || 'message');
             }
             return Promise.reject(response);
         },
         onResponse(ctx) {
-            const { error, response, options} = ctx
-            const _options = options as IHttpOptions
+            const { error, response, options} = ctx;
+            const _options = options as IHttpOptions;
             if (response._data.code == gResultEnum.NOTFOUND){
                 location.replace('/backend/error');
             } else if (response._data.code == gResultEnum.ERROR){
@@ -78,8 +78,8 @@ export const transform = (data?: any): UseFetchOptions<any>=> {
             }
         },
         onResponseError(ctx) {
-            const { error, response, options} = ctx
-            const _options = options as IHttpOptions
+            const { error, response, options} = ctx;
+            const _options = options as IHttpOptions;
             if (error && response) {
                 check_status(response?.status + '', '连接错误', _options.requestOptions?.errorMessageMode || 'message');
             } else if (error && (error as any)?.code === 'ERR_CANCELED') {
@@ -89,13 +89,11 @@ export const transform = (data?: any): UseFetchOptions<any>=> {
                 check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageMode || 'message');
             }
         }
-    }
-}
-
-
+    };
+};
 
 export const defaultHttp: IHttpOptions = {
     headers: defaultHeader,
-    timeout: 60 * 1000, 
+    timeout: 60 * 1000,
     requestOptions: defaultRequestOptions
-}
+};

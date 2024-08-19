@@ -9,4 +9,4 @@ export default defineNuxtConfig((() => {
     const _modulesConfig = get_modules_config(viteEnv);
     const _globalConfig = js_utils_deep_merge(_projectConfig, _modulesConfig);
     return _globalConfig;
-})())
+})());

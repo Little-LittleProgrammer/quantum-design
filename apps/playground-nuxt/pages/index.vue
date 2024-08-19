@@ -6,8 +6,8 @@ const {data} = await useCustomFetch().get({
     params: {
         a: 1
     }
-})
-const globalStore = useGlobalStore()
+});
+const globalStore = useGlobalStore();
 </script>
 
 <template>

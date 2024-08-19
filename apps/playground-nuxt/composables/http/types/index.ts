@@ -1,4 +1,4 @@
-import { AsyncData, UseFetchOptions } from "nuxt/app";
+import type { AsyncData, UseFetchOptions } from 'nuxt/app';
 
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
@@ -32,10 +32,10 @@ export interface IFetchRequest<Req extends UseFetchOptions<any>['params']> {
     params?: Req
 }
 
-export type IFetchRes = <Req extends UseFetchOptions<any>['params'] , Res = any>(config: IFetchRequest<Req>) => Promise<AsyncData<Result<Res>, Error | null>>
+export type IFetchRes = <Req extends UseFetchOptions<any>['params'], Res = any>(config: IFetchRequest<Req>) => Promise<AsyncData<Result<Res>, Error | null>>
 export type IUploadFetchRes = <Req extends UseFetchOptions<any>['params']>(config: IFetchRequest<Req>, params: UploadFileParams) => Promise<AsyncData<any, Error | null>>
 
-// 
+//
 export type IUseCustomFetch = (options?: IHttpOptions<any>) => {
     get: IFetchRes,
     post: IFetchRes,

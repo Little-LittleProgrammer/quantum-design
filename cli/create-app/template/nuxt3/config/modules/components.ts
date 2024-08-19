@@ -1,6 +1,6 @@
 import type { INuxtConfig } from './types';
 import fs from 'fs';
-import path from 'path';
+import { resolve } from 'path';
 // 获取base.scss文件
 const antdCssStrTemp = (fs.readFileSync(path.resolve('node_modules/@quantum-design/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g) || []).join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
@@ -13,6 +13,9 @@ export {
     baseScssFile
 };
 
+function pathResolve(dir: string) {
+    return resolve(process.cwd(), '.', dir);
+}
 
 export const componentsModules: INuxtConfig = {
     app: {
@@ -38,10 +41,12 @@ export const componentsModules: INuxtConfig = {
         },
         resolve: {
             alias: {
-                'ant-design-vue/dist': 'ant-design-vue/dist',
-                'ant-design-vue/es': 'ant-design-vue/es',
-                'ant-design-vue/lib': 'ant-design-vue/es',
-                'ant-design-vue': 'ant-design-vue/es'
+                'ant-design-vue/dist': pathResolve('./node_modules/ant-design-vue/dist'),
+                'ant-design-vue/es': pathResolve('./node_modules/ant-design-vue/es'),
+                'ant-design-vue/lib': pathResolve('./node_modules/ant-design-vue/es'),
+                'ant-design-vue': pathResolve('./node_modules/ant-design-vue/es'),
+                '@quantum-design/utils/extra': pathResolve('./node_modules/@quantum-design/utils/dist/extra.esm.min.js'),
+                '@quantum-design/utils': pathResolve('./node_modules/@quantum-design/utils/dist/utils.esm.min.js')
             }
         }
     },
