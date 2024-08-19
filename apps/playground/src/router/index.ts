@@ -13,7 +13,7 @@ let routerData = [
 routerData = [
     ...routerData,
     redirectRoute,
-    ...routerErrorData // routerErrorData必须添加在最后
+    // ...routerErrorData // routerErrorData必须添加在最后
 ];
 
 routerData = flat_multi_level_routes(routerData);

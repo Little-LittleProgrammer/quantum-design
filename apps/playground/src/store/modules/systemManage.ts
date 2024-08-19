@@ -7,7 +7,7 @@ const createState = () => {
     const state: sysModuleState = {
         mainMenuData: [], // 顶部主导航数据
         asideMenuData: [], // 侧边栏导航数据
-        initMenuData: '/', //  默认地址
+        initMenuData: '/quantum-design/playground/demo/form', //  默认地址
         menuDataLoadingEnd: false, // 加载导航数据
         formatPathRouteList: {}, // 格式化后的路由 <path: menuList>
         formatIdRouteList: {}, // 格式化后的路由  <id: menuList>
