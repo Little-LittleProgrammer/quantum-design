@@ -58,8 +58,10 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         entryFileNames: '[name].js',
         assetFileNames: (assetInfo) => {
             if (assetInfo.name?.includes('css')) {
-                const _realName = assetInfo.name.split('.')[0];
-                return `style/${_realName}[extname]`;
+                const cacheName = assetInfo.name.split('.')[0];
+                const nameArr = cacheName.split('/');
+                const realName = `${nameArr[0]}/${nameArr[nameArr.length - 1]}`
+                return `style/${realName}[extname]`;
             }
             return `[name][extname]`;
         },
@@ -74,8 +76,10 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         assetFileNames: (assetInfo) => {
             console.log(assetInfo)
             if (assetInfo.name?.includes('css')) {
-                const _realName = assetInfo.name.split('.')[0];
-                return `style/${_realName}[extname]`;
+                const cacheName = assetInfo.name.split('.')[0];
+                const nameArr = cacheName.split('/');
+                const realName = `${nameArr[0]}/${nameArr[nameArr.length - 1]}`
+                return `style/${realName}[extname]`;
             }
             return `[name][extname]`;
         },
