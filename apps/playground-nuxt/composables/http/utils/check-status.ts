@@ -1,5 +1,7 @@
+import { isFunction } from '@quantum-design/utils';
+
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
-export function check_status(status:string, msg: string, errorMessageMode: ErrorMessageMode = 'message') {
+export function check_status(status:string, msg: string, cb?:(code: number, msg: string) => void) {
     let errMessage = '';
     switch (status) {
         case '400':
@@ -45,10 +47,8 @@ export function check_status(status:string, msg: string, errorMessageMode: Error
             errMessage = '连接错误';
     }
     if (errMessage) {
-        if (errorMessageMode === 'modal' ) {
-            Modal.error({ title: '错误提示', content: errMessage });
-        } else if (errorMessageMode === 'message') {
-            message.error({ content: errMessage, key: `global_error_message_status_${status}` });
+        if (cb && isFunction(cb)) {
+            cb(status, errMessage);
         }
     }
 }

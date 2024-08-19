@@ -33,51 +33,146 @@
 	let tinymce: any = null;
 
 	const canUse = ref(false);
-	import('tinymce/tinymce')
-		.then((val) => {
-			console.log(val);
+    async function load_tinymic() {
+		try {
+			const val = await import('tinymce/tinymce');
 			tinymce = val.default || val;
-			init_tinymic_plugins();
+			await init_tinymic_plugins();
 			canUse.value = true;
-		})
-		.catch(() => {
+		} catch (error) {
 			canUse.value = false;
 			console.log('skip tinymce');
-		});
-
+		}
+	}
+	load_tinymic();
 	function init_tinymic_plugins() {
-		import('./lang.js');
-		import('tinymce/plugins/anchor');
-		import('tinymce/themes/silver');
-		import('tinymce/icons/default/icons');
-		import('tinymce/plugins/advlist');
-		import('tinymce/plugins/autolink');
-		import('tinymce/plugins/autosave');
-		import('tinymce/plugins/code');
-		import('tinymce/plugins/codesample');
-		import('tinymce/plugins/directionality');
-		import('tinymce/plugins/fullscreen');
-		import('tinymce/plugins/hr');
-		import('tinymce/plugins/insertdatetime');
-		import('tinymce/plugins/link');
-		import('tinymce/plugins/lists');
-		import('tinymce/plugins/media');
-		import('tinymce/plugins/nonbreaking');
-		import('tinymce/plugins/noneditable');
-		import('tinymce/plugins/pagebreak');
-		import('tinymce/plugins/paste');
-		import('tinymce/plugins/preview');
-		import('tinymce/plugins/print');
-		import('tinymce/plugins/save');
-		import('tinymce/plugins/searchreplace');
-		import('tinymce/plugins/spellchecker');
-		import('tinymce/plugins/tabfocus');
-		// import 'tinymce/plugins/table';
-		import('tinymce/plugins/template');
-		import('tinymce/plugins/textpattern');
-		import('tinymce/plugins/visualblocks');
-		import('tinymce/plugins/visualchars');
-		import('tinymce/plugins/wordcount');
+		try {
+            import('./lang.js').catch(() => {});
+            import('tinymce/plugins/anchor').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/themes/silver').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/icons/default/icons').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/advlist').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/autolink').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/autosave').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/code').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/codesample').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/directionality').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/fullscreen').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/hr').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/insertdatetime').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/link').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/lists').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/media').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/nonbreaking').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/noneditable').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/pagebreak').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/paste').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/preview').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/print').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/save').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/searchreplace').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/spellchecker').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/tabfocus').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            // import 'tinymce/plugins/table';
+            import('tinymce/plugins/template').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/textpattern').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/visualblocks').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/visualchars').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+            import('tinymce/plugins/wordcount').catch(() => {
+                canUse.value = false;
+                console.log('skip tinymce');
+            });
+		} catch (error) {
+			canUse.value = false;
+			console.log('skip tinymce');
+		}
 	}
 
 	const props = defineProps({

@@ -1,46 +1,44 @@
-import { isFunction, js_utils_deep_merge } from "@quantum-design/utils";
-import { useRuntimeConfig } from "nuxt/app";
-import type { UseFetchOptions } from "nuxt/app";
-import type { IFetchRequest, IHttpOptions, IUseCustomFetch, RequestOptions } from "./types";
-import { defaultHttp, transform } from "./enums/deault-config";
-import { gContentTypeEnum } from "@quantum-design/shared";
-
-
+import { isFunction, js_utils_deep_merge } from '@quantum-design/utils';
+import { useRuntimeConfig } from 'nuxt/app';
+import type { UseFetchOptions } from 'nuxt/app';
+import type { IFetchRequest, IHttpOptions, IUseCustomFetch, RequestOptions } from './types';
+import { defaultHttp, transform } from './enums/deault-config';
+import { gContentTypeEnum } from '@quantum-design/shared';
 
 function before_request(config: IFetchRequest<any>, requestOptions: RequestOptions) {
     if (requestOptions?.joinPrefix && requestOptions.urlPrefix) {
-        config.url = requestOptions.urlPrefix + config.url
+        config.url = requestOptions.urlPrefix + config.url;
     }
 }
 
 export const useCustomFetch: IUseCustomFetch = (options?: IHttpOptions<any>) => {
     const {public: _appConfig} = useRuntimeConfig();
     const _requestOptions = defaultHttp.requestOptions || {};
-    _requestOptions.urlPrefix = _appConfig.apiPrefix
+    _requestOptions.urlPrefix = _appConfig.apiPrefix;
     options = js_utils_deep_merge(defaultHttp, {
         requestOptions: _requestOptions,
         baseURL: _appConfig.baseRemoteUrl,
-        ...options,
+        ...options
     });
     const defaultTransform: UseFetchOptions<any> = {
         ...options
-    }
+    };
     return {
         get: (config) => {
-            before_request(config, _requestOptions)
+            before_request(config, _requestOptions);
             return useFetch(config.url, {
                 ...defaultTransform,
                 ...transform(config.params),
                 method: 'GET'
-            })
+            });
         },
         post: (config) => {
-            before_request(config, _requestOptions)
+            before_request(config, _requestOptions);
             return useFetch(config.url, {
                 ...defaultTransform,
                 ...transform(config.params),
                 method: 'POST'
-            })
+            });
         },
         upload: (config, params) => {
             const formData = new window.FormData();
@@ -59,17 +57,17 @@ export const useCustomFetch: IUseCustomFetch = (options?: IHttpOptions<any>) => 
             }
             formData.append(params.name || 'file', params.file, params.filename);
             const customParams = {...params};
-            Reflect.get(customParams, 'file') && Reflect.deleteProperty(customParams, 'file')
-            Reflect.get(customParams, 'filename') && Reflect.deleteProperty(customParams, 'filename')
+            Reflect.get(customParams, 'file') && Reflect.deleteProperty(customParams, 'file');
+            Reflect.get(customParams, 'filename') && Reflect.deleteProperty(customParams, 'filename');
 
             Object.keys(customParams).forEach((key) => {
                 formData.append(key, customParams[key]);
             });
 
             const uploadUrl = _requestOptions?.uploadUrl ? _requestOptions?.uploadUrl : '';
-            let url = uploadUrl + '' + config.url ;
+            let url = uploadUrl + '' + config.url;
             if (_requestOptions?.env && isFunction(_requestOptions.env)) {
-                url  += '?' + _requestOptions.env()
+                url += '?' + _requestOptions.env();
             }
             const opt: RequestOptions = Object.assign({}, _requestOptions || {}, {
                 cancelToken: false
@@ -77,7 +75,7 @@ export const useCustomFetch: IUseCustomFetch = (options?: IHttpOptions<any>) => 
 
             const _option = {
                 url: config.url,
-                method: 'POST' as 'POST',
+                method: 'POST' as const,
                 body: formData,
                 headers: {
                     'Content-type': gContentTypeEnum.FORM_DATA
@@ -86,8 +84,8 @@ export const useCustomFetch: IUseCustomFetch = (options?: IHttpOptions<any>) => 
             };
             return useFetch(url, {
                 ..._option
-            })
+            });
         }
-    }
-}
+    };
+};
 

@@ -53,9 +53,9 @@ export const transform = (data?: any): UseFetchOptions<any> => {
             const { error, response, options} = ctx;
             const _options = options as IHttpOptions;
             if (error && response) {
-                check_status(response.status + '', '连接错误', _options.requestOptions?.errorMessageMode || 'message');
+                check_status(response.status + '', '连接错误', _options.requestOptions?.errorMessageCb);
             } else {
-                check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageMode || 'message');
+                check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageCb);
             }
             return Promise.reject(response);
         },
@@ -65,28 +65,28 @@ export const transform = (data?: any): UseFetchOptions<any> => {
             if (response._data.code == gResultEnum.NOTFOUND){
                 location.replace('/backend/error');
             } else if (response._data.code == gResultEnum.ERROR){
-                check_status('400', response._data.msg, _options.requestOptions?.errorMessageMode || 'message');
+                check_status('400', response._data.msg, _options.requestOptions?.errorMessageCb);
             } else if (response._data.code == gResultEnum.SERVERERROR){
-                check_status('400', response._data.msg, _options.requestOptions?.errorMessageMode || 'message');
+                check_status('400', response._data.msg, _options.requestOptions?.errorMessageCb);
             } else if (response._data.code == gResultEnum.RELOAD){
                 // setTokenToLs(options.requestOptions?.withToken || true, res);
                 // window.location.reload();
             } else if (response._data.code == gResultEnum.LOGIN){
                 // window.location.href = response._data.data?.url;
             } else if (response._data.code == gResultEnum.TIMEOUT) {
-                check_status('408', '', _options.requestOptions?.errorMessageMode || 'message');
+                check_status('408', '', _options.requestOptions?.errorMessageCb);
             }
         },
         onResponseError(ctx) {
             const { error, response, options} = ctx;
             const _options = options as IHttpOptions;
             if (error && response) {
-                check_status(response?.status + '', '连接错误', _options.requestOptions?.errorMessageMode || 'message');
+                check_status(response?.status + '', '连接错误', _options.requestOptions?.errorMessageCb);
             } else if (error && (error as any)?.code === 'ERR_CANCELED') {
                 // 如果手动取消, 不予受理
                 console.log('请求重复, 手动取消请求');
             } else {
-                check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageMode || 'message');
+                check_status('400', '连接到服务器失败', _options.requestOptions?.errorMessageCb);
             }
         }
     };

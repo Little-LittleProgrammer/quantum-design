@@ -7,7 +7,7 @@ import { js_create_local_storage, isFunction } from '@quantum-design/utils';
  */
 export function joinTimestamp(join: boolean): string | Recordable<string> {
     if (!join) {
-        return  {};
+        return {};
     }
     const now = new Date().getTime() + '';
     return { t: now };

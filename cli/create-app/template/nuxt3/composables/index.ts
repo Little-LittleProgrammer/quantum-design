@@ -1,1 +1,1 @@
-export {useCustomFetch} from './http/use-custom-fetch'
+export {useCustomFetch} from './http/use-custom-fetch';

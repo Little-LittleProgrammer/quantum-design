@@ -22,15 +22,20 @@ defineOptions({
 type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T
 
 let monaco: any = null
-import('monaco-editor').then((val) => {
-    console.log(val)
-    monaco = val;
-    loading.value = true;
-    init_editor();
-}).catch(() => {
-    console.log('skip')
-})
-
+async function loadMonacoEditor() {
+    try {
+        const p = await import('monaco-editor');
+        console.log(p);
+        monaco = p;
+        loading.value = true;
+        init_editor();
+        // 使用 monaco 编辑器
+    } catch (error) {
+        console.log('skip to load monaco-editor');
+        // 处理错误，例如显示一个提示信息
+    }
+}
+loadMonacoEditor();
 const props = withDefaults(
     defineProps<{
         value?:any

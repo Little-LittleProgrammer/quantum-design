@@ -1,6 +1,6 @@
 import type { INuxtConfig } from './types';
 import fs from 'fs';
-import { resolve } from 'path';
+import path from 'path';
 // 获取base.scss文件
 const antdCssStrTemp = (fs.readFileSync(path.resolve('node_modules/@quantum-design/shared/style/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g) || []).join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
@@ -12,9 +12,8 @@ export {
     antdCssData,
     baseScssFile
 };
-
 function pathResolve(dir: string) {
-    return resolve(process.cwd(), '.', dir);
+    return path.resolve(process.cwd(), '.', dir);
 }
 
 export const componentsModules: INuxtConfig = {
@@ -47,6 +46,43 @@ export const componentsModules: INuxtConfig = {
                 'ant-design-vue': pathResolve('./node_modules/ant-design-vue/es'),
                 '@quantum-design/utils/extra': pathResolve('./node_modules/@quantum-design/utils/dist/extra.esm.min.js'),
                 '@quantum-design/utils': pathResolve('./node_modules/@quantum-design/utils/dist/utils.esm.min.js')
+            }
+        },
+
+        build: {
+            rollupOptions: {
+                external: ['monaco-editor',
+                    'tinymce/tinymce',
+                    'tinymce/plugins/anchor',
+                    'tinymce/themes/silver',
+                    'tinymce/icons/default/icons',
+                    'tinymce/plugins/advlist',
+                    'tinymce/plugins/autolink',
+                    'tinymce/plugins/autosave',
+                    'tinymce/plugins/code',
+                    'tinymce/plugins/codesample',
+                    'tinymce/plugins/directionality',
+                    'tinymce/plugins/fullscreen',
+                    'tinymce/plugins/hr',
+                    'tinymce/plugins/insertdatetime',
+                    'tinymce/plugins/link',
+                    'tinymce/plugins/lists',
+                    'tinymce/plugins/media',
+                    'tinymce/plugins/nonbreaking',
+                    'tinymce/plugins/noneditable',
+                    'tinymce/plugins/pagebreak',
+                    'tinymce/plugins/paste',
+                    'tinymce/plugins/preview',
+                    'tinymce/plugins/print',
+                    'tinymce/plugins/save',
+                    'tinymce/plugins/searchreplace',
+                    'tinymce/plugins/spellchecker',
+                    'tinymce/plugins/tabfocus',
+                    'tinymce/plugins/template',
+                    'tinymce/plugins/textpattern',
+                    'tinymce/plugins/visualblocks',
+                    'tinymce/plugins/visualchars',
+                    'tinymce/plugins/wordcount']
             }
         }
     },
