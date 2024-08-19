@@ -20,7 +20,7 @@
         "default": "./dist/extra.esm.min.js"
       },
       "require": "./extra.js",
-      "types": "./dist/types/utils/extra.d.ts"
+      "types": "./dist/types/utils/index.d.ts"
     },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"

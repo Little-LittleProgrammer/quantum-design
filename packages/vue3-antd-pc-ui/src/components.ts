@@ -26,3 +26,6 @@ export type { CardType } from './q-card';
 
 export {default as QAntdSetting, useProjectSetting, setup_project_conf} from './q-setting';
 export type { IProjectConfig } from './q-setting';
+
+export { default as QAntdThemeModeButton } from './q-theme-mode-button';
+export type {ThemeModeTypes} from './q-theme-mode-button';

@@ -3,4 +3,4 @@ packages:
   - "packages/*"
   - "docs/*"
   - "cli/*"
-  - "apps/playground"
+  - "apps/playground*"
