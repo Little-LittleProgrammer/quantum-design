@@ -3,8 +3,7 @@
   "version": "2.0.0-beta.0",
   "description": "vue3,antd组件库",
   "type": "module",
-  "main": "dist/lib/index.js",
-  "module": "dist/es/index.js",
+  "main": "dist/es/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "vite build",
@@ -65,7 +64,7 @@
     "@types/lodash-es": "~4.17.12",
     "sass": "~1.77.6",
     "vue": "~3.4.31",
-    "pinia": "~2.1.6",
+    "pinia": "~2.2.2",
     "@vue/test-utils": "~2.4.0",
     "@ant-design/icons-vue": "~6.1.0",
     "ant-design-vue": "~4.2.3",
@@ -75,7 +74,7 @@
     "csstype": "~3.1.2"
   },
   "peerDependencies": {
-    "pinia": "~2.0.30",
+    "pinia": "~2.2.2",
     "vue": "~3.4.0",
     "vue-router": "~4.4.0"
   }

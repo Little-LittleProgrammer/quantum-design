@@ -18,7 +18,7 @@
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
     "ant-design-vue": "~4.2.3",
-    "pinia": "~2.1.6",
+    "pinia": "~2.2.2",
     "vue": "~3.4.31"
   },
   "devDependencies": {

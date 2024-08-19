@@ -5,8 +5,6 @@ import VueJsx from '@vitejs/plugin-vue-jsx';
 import dts from 'vite-plugin-dts';
 import { CommonOptions } from '../types';
 import { vite_plugin_component } from '../plugins/component';
-
-const _assetQueue: string[] = [];
 // 定义 build 和 plugin
 const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'entry', string>):UserConfig => {
     const {entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rollupOptions = {}, dtsOptions = {}} = options;
