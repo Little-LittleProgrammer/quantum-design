@@ -72,7 +72,7 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
     }, {
         format: 'cjs',
         exports: 'named',
-        entryFileNames: '[name].js',
+        entryFileNames: '[name].cjs',
         assetFileNames: (assetInfo) => {
             console.log(assetInfo)
             if (assetInfo.name?.includes('css')) {

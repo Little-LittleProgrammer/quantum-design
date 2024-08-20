@@ -44,8 +44,6 @@ export const componentsModules: INuxtConfig = {
                 'ant-design-vue/es': pathResolve('./node_modules/ant-design-vue/es'),
                 'ant-design-vue/lib': pathResolve('./node_modules/ant-design-vue/es'),
                 'ant-design-vue': pathResolve('./node_modules/ant-design-vue/es'),
-                '@quantum-design/utils/extra': pathResolve('./node_modules/@quantum-design/utils/dist/extra.esm.min.js'),
-                '@quantum-design/utils': pathResolve('./node_modules/@quantum-design/utils/dist/utils.esm.min.js')
             }
         },
 

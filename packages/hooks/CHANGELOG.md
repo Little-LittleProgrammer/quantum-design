@@ -1,5 +1,15 @@
 # @quantum-design/hooks
 
+## 2.0.0
+
+### Patch Changes
+
+- 适配依赖
+- Updated dependencies
+  - @quantum-design/shared@2.0.0
+  - @quantum-design/types@2.0.0
+  - @quantum-design/utils@2.0.0
+
 ## 2.0.0-beta.0
 
 ### Major Changes

@@ -1,5 +1,5 @@
-import { encrypt, decrypt } from 'crypto-js/aes';
-import { parse } from 'crypto-js/enc-utf8';
+import crypto from 'crypto-js/aes';
+import utf8 from 'crypto-js/enc-utf8';
 import pkcs7 from 'crypto-js/pad-pkcs7';
 import ECB from 'crypto-js/mode-ecb';
 import UTF8 from 'crypto-js/enc-utf8';
@@ -22,8 +22,8 @@ export class Encryption {
 
     constructor(opt: EncryptionParams = { key: '', iv: '' }) {
         const { key, iv } = opt;
-        this.key = parse(key);
-        this.iv = parse(iv);
+        this.key = utf8.parse(key);
+        this.iv = utf8.parse(iv);
     }
 
     get getOptions():IOption {
@@ -35,11 +35,11 @@ export class Encryption {
     }
 
     encryptByAES(cipherText: string) {
-        return encrypt(cipherText, this.key, this.getOptions).toString();
+        return crypto.encrypt(cipherText, this.key, this.getOptions).toString();
     }
 
     decryptByAES(cipherText: string) {
-        return decrypt(cipherText, this.key, this.getOptions).toString(UTF8);
+        return crypto.decrypt(cipherText, this.key, this.getOptions).toString(UTF8);
     }
 
     encryptByMd5(cipherText: string) {

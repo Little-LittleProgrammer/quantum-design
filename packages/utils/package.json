@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/utils",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "公共 `utils` 方法",
   "main": "index.js",
   "module": "dist/utils.esm.min.js",
@@ -20,7 +20,7 @@
         "default": "./dist/extra.esm.min.js"
       },
       "require": "./extra.js",
-      "types": "./dist/types/utils/index.d.ts"
+      "types": "./dist/types/utils/extra.d.ts"
     },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"

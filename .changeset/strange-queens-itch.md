@@ -14,4 +14,4 @@
 "@quantum-design-configs/vite": patch
 ---
 
-更新适配依赖
+修复缺陷

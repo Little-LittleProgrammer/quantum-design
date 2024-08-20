@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/http",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": " `http` 通讯 方法封装",
   "main": "dist/http.cjs.min.js",
   "module": "dist/http.esm.min.js",

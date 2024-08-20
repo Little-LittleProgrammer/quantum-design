@@ -3,9 +3,7 @@ import { componentsModules } from './components';
 import { dev_proxy } from './dev-proxy';
 import type { INuxtConfig } from './types';
 import { devtools } from './dev-tools';
-import { piniaModules } from './pinia';
 import { pwa_module } from './pwa';
-import { js_utils_deep_merge } from '@quantum-design/utils';
 import {tsConfig} from './tsconfig'
 
 export function get_modules_config(env: ViteEnv): INuxtConfig {
@@ -15,7 +13,7 @@ export function get_modules_config(env: ViteEnv): INuxtConfig {
     return {
         ..._devProxy,
         ...devtools,
-        ...js_utils_deep_merge(piniaModules, componentsModules),
+        ...componentsModules,
         ..._pwaModule,
         ...tsConfig,
         modules: _modules

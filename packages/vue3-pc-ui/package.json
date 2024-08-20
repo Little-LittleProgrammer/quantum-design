@@ -1,9 +1,10 @@
 {
   "name": "@quantum-design/vue3-pc-ui",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "type": "module",
   "description": "vue3-pc端组件库",
-  "main": "dist/es/index.js",
+  "main": "dist/es/index.cjs",
+  "module": "dist/es/index.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
@@ -12,7 +13,7 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
+      "require": "./dist/lib/index.cjs"
     },
     "./es": {
       "types": "./dist/index.d.ts",
@@ -20,15 +21,23 @@
     },
     "./lib": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/lib/index.js"
+      "require": "./dist/lib/index.cjs"
+    },
+    "./es/*.js": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/*.js"
     },
     "./es/*": {
       "types": "./dist/src/*.d.ts",
       "import": "./dist/es/*.js"
     },
+    "./lib/*.cjs": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/lib/*.cjs"
+    },
     "./lib/*": {
       "types": "./dist/src/*.d.ts",
-      "require": "./dist/lib/*.js"
+      "require": "./dist/lib/*.cjs"
     },
     "./*": "./*"
   },

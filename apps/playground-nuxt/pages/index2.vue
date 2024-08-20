@@ -8,6 +8,7 @@
           icon:
           <AlertFilled />
           <LoadingOutlined />
+          <q-antd-icon type="RightOutlined"></q-antd-icon>
         </div>
         <a-table v-bind="tableProps" />
         <a-space>

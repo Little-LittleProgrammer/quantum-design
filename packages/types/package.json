@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/types",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "ts公共type类",
   "scripts": {},
   "author": "Evan Wu",

@@ -1,6 +1,6 @@
 {
   "name": "@quantum-design/vue3-pc-ui-nuxt",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "vue3-pc-ui module for Nuxt",
   "license": "MIT",
   "type": "module",
@@ -20,7 +20,8 @@
     "nuxt"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
   },
   "scripts": {
     "build": "npm run dev:prepare && nuxt-module-build",

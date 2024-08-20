@@ -1,5 +1,11 @@
 # @quantum-design/shared
 
+## 2.0.0
+
+### Patch Changes
+
+- 适配依赖
+
 ## 2.0.0-beta.0
 
 ### Major Changes
