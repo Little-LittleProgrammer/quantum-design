@@ -1,0 +1,26 @@
+{
+  "name": "@q-front-npm-configs/commitlint",
+  "version": "1.0.0",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./index.mjs",
+  "module": "./index.mjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "default": "./index.mjs"
+    }
+  },
+  "dependencies": {
+    "@commitlint/config-conventional": "^19.5.0",
+    "commitlint-plugin-function-rules": "^4.0.1",
+    "cz-git": "^1.10.1",
+    "czg": "^1.10.1"
+  }
+}
