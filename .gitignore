@@ -38,8 +38,6 @@ yarn-error.log*
 
 # turbo
 .turbo
-.vscode
-
 # custom
 *-cache
 **/stats.html
