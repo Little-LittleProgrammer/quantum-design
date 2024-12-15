@@ -20,7 +20,7 @@
   "devDependencies": {
     "@protobuf-ts/plugin": "^2.9.7",
     "@protobuf-ts/protoc": "^2.9.7",
-    "@q-front-npm-configs/tsconfig": "1.0.0",
+    "@quantum-design-configs/tsconfig": "1.0.0",
     "rollup": "^3.29.4",
     "@quantum-design-configs/rollup": "^1.2.2",
     "tslib": "2.5.3"

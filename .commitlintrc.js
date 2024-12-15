@@ -1,3 +1,3 @@
 module.exports = {
-    extends: ['@q-front-npm-configs/commitlint']
+    extends: ['@quantum-design-configs/commitlint']
 }
