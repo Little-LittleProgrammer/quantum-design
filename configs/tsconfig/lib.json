@@ -1,14 +1,14 @@
-{   
-    "extends": "./tsconfig-base.json",
-    "display": "Library",
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Web Application",
+    "extends": "./base.json",
     "compilerOptions": {
-      "target": "ES2015",
-      "allowSyntheticDefaultImports": true,
-      "strictFunctionTypes": false,
-      "resolveJsonModule": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "experimentalDecorators": true,
-      "removeComments": true
+      "jsx": "preserve",
+      "lib": ["ESNext", "DOM", "DOM.Iterable"],
+      "useDefineForClassFields": true,
+      "moduleResolution": "bundler",
+      "declaration": true,
+      "noEmit": false
     }
-}
+  }
+  
