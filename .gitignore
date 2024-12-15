@@ -41,6 +41,7 @@ yarn-error.log*
 # custom
 *-cache
 **/stats.html
+.eslintcache
 
 # vite
 vite.config.ts.*

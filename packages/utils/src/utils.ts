@@ -1,4 +1,4 @@
-import { isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
+import { isArray, isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
 
 export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
     // 判断引用类型的temp
@@ -266,17 +266,40 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
  * @param string 要查找的属性 'a.b.c'
  * @returns 值
  */
-export function js_utils_find_attr(object: any, path: string){
-    const tags = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
-    const tagsCopy = JSON.parse(JSON.stringify(tags));
-    for (const _key of tagsCopy) {
-        object = object[tags[0]];
-        if (object === undefined || object === null) {
-            return undefined;
+export function js_utils_find_attr(object: any, path: string) {
+    // 将路径转换为数组，支持 a.b.c[*].d 形式
+    const tags = path.replace(/\[(\w+|\*)\]/g, '.$1').replace(/\["(\w+|\*)"\]/g, '.$1').replace(/\['(\w+|\*)'\]/g, '.$1').split('.').filter(Boolean);
+
+    // 递归函数来处理路径
+    function findAttr(obj: any, tags: string[]): any[] {
+        if (!tags.length) {
+            return [obj];
         }
-        tags.shift();
+
+        const currentTag = tags[0];
+        const remainingTags = tags.slice(1);
+
+        if (currentTag === '*') {
+            if (!Array.isArray(obj)) {
+                return [];
+            }
+
+            // 处理数组中的每个元素
+            return obj.flatMap(item => findAttr(item, remainingTags));
+        } else {
+            if (obj === undefined || obj === null) {
+                return [];
+            }
+
+            return findAttr(obj[currentTag as string], remainingTags);
+        }
     }
-    return object;
+    const ans = findAttr(object, tags);
+    if (ans.length <= 1) {
+        return ans[0];
+    }
+
+    return ans;
 }
 
 /**
@@ -285,16 +308,37 @@ export function js_utils_find_attr(object: any, path: string){
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
  */
 export function js_utils_edit_attr(path:string, value: any, obj:any) {
-    const _list = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
+    const _list = path.replace(/\[(\w+|\*)\]/g, '.$1').replace(/\["(\w+|\*)"\]/g, '.$1').replace(/\['(\w+|\*)'\]/g, '.$1').split('.').filter(Boolean);
     const _length = _list.length - 1;
-    _list.reduce((cur: any, key:string, index: number) => {
-        if (!(cur[key]))
-            cur[key] = {};
-        if (index === _length) {
-            cur[key] = value;
+
+    function setAttr(cur: any, index: number) {
+        if (index > _length) return;
+
+        const key = _list[index];
+
+        if (key === undefined) return;
+
+        if (key === '*') {
+            if (isArray(cur)) {
+                cur.forEach(item => setAttr(item, index + 1));
+            }
+        } else {
+            if (!(key in cur)) {
+                cur[key] = isNaN(Number(_list[index + 1])) ? {} : [];
+            }
+            if (index === _length) {
+                if (isArray(value)) {
+                    cur[key] = value.shift();
+                } else {
+                    cur[key] = value;
+                }
+            } else {
+                setAttr(cur[key], index + 1);
+            }
         }
-        return cur[key];
-    }, obj);
+    }
+
+    setAttr(obj, 0);
 }
 
 /**
