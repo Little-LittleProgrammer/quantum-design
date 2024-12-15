@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/fs-extra": "~11.0.4",
     "@ant-design-vue/nuxt": "~1.4.2",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "cross-env": "~7.0.3",
     "esno": "~0.17.0",
     "@vite-pwa/nuxt": "~0.10.0",

@@ -17,7 +17,7 @@
     "@ant-design/icons-vue": "~6.1.0",
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "pinia": "~2.2.2",
     "vue": "~3.4.31"
   },

@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@ant-design-vue/nuxt": "~1.4.2",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "cross-env": "~7.0.3",
     "esno": "~0.17.0",
     "@vite-pwa/nuxt": "~0.10.0",
@@ -26,7 +26,6 @@
     "@quantum-design/types": "workspace:*",
     "@quantum-design-configs/vite": "workspace:*"
   },
-  
   "dependencies": {
     "@pinia/nuxt": "~0.5.1",
     "@quantum-design/shared": "workspace:*",

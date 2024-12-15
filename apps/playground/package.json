@@ -22,7 +22,7 @@
     "@quantum-design/vue3-antd-pc-ui": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
     "@sentry/vue": "~8.14.0",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "axios": "~1.7.2",
     "dayjs": "~1.11.7",
     "crypto-js": "~4.2.0",

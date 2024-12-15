@@ -20,7 +20,7 @@
     "@quantum-design/http": "workspace:*",
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "vue": "~3.4.0",
     "webextension-polyfill": "~0.10.0"
   },

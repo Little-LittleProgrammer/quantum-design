@@ -76,7 +76,7 @@
     "pinia": "~2.2.2",
     "@vue/test-utils": "~2.4.0",
     "@ant-design/icons-vue": "~6.1.0",
-    "ant-design-vue": "~4.2.3",
+    "ant-design-vue": "~4.2.5",
     "vue-router": "~4.4.0",
     "vue-types": "~5.1.1",
     "dayjs": "~1.11.7",
