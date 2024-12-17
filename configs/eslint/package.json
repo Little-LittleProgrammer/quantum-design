@@ -1,36 +1,36 @@
 {
-  "name": "@quantum-design-configs/eslint",
-  "version": "2.0.0",
-  "description": "代码eslint统一文件",
-  "main": "index.js",
-  "scripts": {},
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "keywords": [
-    "quantum-configs",
-    "monorepo",
-    "eslint",
-    "turborepo"
-  ],
-  "files": [
-    "eslint-base.js",
-    "eslint-vue.js",
-    "eslint-tslib.js"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "@typescript-eslint/eslint-plugin": "~8.1.0",
-    "@typescript-eslint/parser": "~8.1.0",
-    "eslint-config-turbo": "~2.0.14",
-    "eslint-plugin-vue": "~9.20.0"
-  },
-  "devDependencies": {
-    "eslint": "~8.57.0"
-  },
-  "peerDependencies": {
-    "eslint": "^8.0.0"
-  }
+    "name": "@quantum-design-configs/eslint",
+    "version": "2.0.1",
+    "description": "代码eslint统一文件",
+    "main": "index.js",
+    "scripts": {},
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [
+        "quantum-configs",
+        "monorepo",
+        "eslint",
+        "turborepo"
+    ],
+    "files": [
+        "eslint-base.js",
+        "eslint-vue.js",
+        "eslint-tslib.js"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "@typescript-eslint/eslint-plugin": "~8.1.0",
+        "@typescript-eslint/parser": "~8.1.0",
+        "eslint-config-turbo": "~2.0.14",
+        "eslint-plugin-vue": "~9.20.0"
+    },
+    "devDependencies": {
+        "eslint": "~8.57.0"
+    },
+    "peerDependencies": {
+        "eslint": "^8.0.0"
+    }
 }
