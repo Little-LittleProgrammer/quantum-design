@@ -1,42 +1,42 @@
 {
-  "name": "@quantum-design/http",
-  "version": "2.0.0",
-  "description": " `http` 通讯 方法封装",
-  "main": "dist/http.cjs.min.js",
-  "module": "dist/http.esm.min.js",
-  "typings": "dist/types/index.d.ts",
-  "scripts": {
-    "build": "rollup -c --environment TYPES:true"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "http",
-    "turborepo"
-  ],
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "ISC",
-  "dependencies": {
-    "crypto-js": "catalog:",
-    "@quantum-design/shared": "workspace:*",
-    "@quantum-design/utils": "workspace:*",
-    "axios": "catalog:",
-    "lodash-es": "catalog:",
-    "qs": "catalog:"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/rollup": "workspace:*",
-    "@quantum-design/types": "workspace:*",
-    "@types/lodash-es": "catalog:",
-    "@types/qs": "catalog:",
-    "rollup": "catalog:"
-  },
-  "peerDependencies": {}
+    "name": "@quantum-design/http",
+    "version": "2.0.2-beta.0",
+    "description": " `http` 通讯 方法封装",
+    "main": "dist/http.cjs.min.js",
+    "module": "dist/http.esm.min.js",
+    "typings": "dist/types/index.d.ts",
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "http",
+        "turborepo"
+    ],
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "crypto-js": "catalog:",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/utils": "workspace:*",
+        "axios": "catalog:",
+        "lodash-es": "catalog:",
+        "qs": "catalog:"
+    },
+    "devDependencies": {
+        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@types/lodash-es": "catalog:",
+        "@types/qs": "catalog:",
+        "rollup": "catalog:"
+    },
+    "peerDependencies": {}
 }

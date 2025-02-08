@@ -1,81 +1,81 @@
 {
-  "name": "@quantum-design/vue3-pc-ui",
-  "version": "2.0.0",
-  "type": "module",
-  "description": "vue3-pc端组件库",
-  "main": "dist/es/index.cjs",
-  "module": "dist/es/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.cjs"
+    "name": "@quantum-design/vue3-pc-ui",
+    "version": "2.0.2-beta.0",
+    "type": "module",
+    "description": "vue3-pc端组件库",
+    "main": "dist/es/index.cjs",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js"
+        },
+        "./lib": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es/*.js": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./es/*": {
+            "types": "./dist/src/*.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./lib/*.cjs": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./lib/*": {
+            "types": "./dist/src/*.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./*": "./*"
     },
-    "./es": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js"
+    "scripts": {
+        "build": "vite build",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
-    "./lib": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/lib/index.cjs"
+    "author": "Evan Wu",
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "vue3",
+        "turborepo"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
-    "./es/*.js": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/*.js"
+    "license": "MIT",
+    "dependencies": {
+        "@quantum-design/styles": "workspace:*",
+        "@quantum-design/utils": "workspace:*"
     },
-    "./es/*": {
-      "types": "./dist/src/*.d.ts",
-      "import": "./dist/es/*.js"
+    "devDependencies": {
+        "@quantum-design-configs/vite": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@vue/test-utils": "catalog:",
+        "sass": "catalog:",
+        "vue": "catalog:",
+        "vue-router": "catalog:"
     },
-    "./lib/*.cjs": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/lib/*.cjs"
+    "optionalDependencies": {
+        "monaco-editor": "catalog:",
+        "tinymce": "catalog:"
     },
-    "./lib/*": {
-      "types": "./dist/src/*.d.ts",
-      "require": "./dist/lib/*.cjs"
-    },
-    "./*": "./*"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "author": "Evan Wu",
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "vue3",
-    "turborepo"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@quantum-design/styles": "workspace:*",
-    "@quantum-design/utils": "workspace:*"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/vite": "workspace:*",
-    "@quantum-design/types": "workspace:*",
-    "@vue/test-utils": "catalog:",
-    "sass": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:"
-  },
-  "optionalDependencies": {
-    "monaco-editor": "catalog:",
-    "tinymce": "catalog:"
-  },
-  "peerDependencies": {
-    "vue": "^3.4.0",
-    "vue-router": "^4.4.0"
-  }
+    "peerDependencies": {
+        "vue": "^3.4.0",
+        "vue-router": "^4.4.0"
+    }
 }

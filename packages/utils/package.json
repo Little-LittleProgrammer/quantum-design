@@ -1,62 +1,62 @@
 {
-  "name": "@quantum-design/utils",
-  "version": "2.0.0",
-  "description": "公共 `utils` 方法",
-  "main": "index.js",
-  "module": "dist/utils.esm.min.js",
-  "typings": "dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "import": {
-        "node": "./index.mjs",
-        "default": "./dist/utils.esm.min.js"
-      },
-      "require": "./index.js",
-      "types": "./dist/types/index.d.ts"
+    "name": "@quantum-design/utils",
+    "version": "2.0.2-beta.0",
+    "description": "公共 `utils` 方法",
+    "main": "index.js",
+    "module": "dist/utils.esm.min.js",
+    "typings": "dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "import": {
+                "node": "./index.mjs",
+                "default": "./dist/utils.esm.min.js"
+            },
+            "require": "./index.js",
+            "types": "./dist/types/index.d.ts"
+        },
+        "./extra": {
+            "import": {
+                "node": "./extra.mjs",
+                "default": "./dist/extra.esm.min.js"
+            },
+            "require": "./extra.js",
+            "types": "./dist/types/extra.d.ts"
+        },
+        "./dist/*": "./dist/*",
+        "./package.json": "./package.json"
     },
-    "./extra": {
-      "import": {
-        "node": "./extra.mjs",
-        "default": "./dist/extra.esm.min.js"
-      },
-      "require": "./extra.js",
-      "types": "./dist/types/extra.d.ts"
+    "files": [
+        "dist",
+        "index.js",
+        "index.mjs",
+        "extra.js",
+        "extra.mjs"
+    ],
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
-    "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist",
-    "index.js",
-    "index.mjs",
-    "extra.js",
-    "extra.mjs"
-  ],
-  "scripts": {
-    "build": "rollup -c --environment TYPES:true",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "utils",
-    "turborepo"
-  ],
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "ISC",
-  "dependencies": {
-    "@quantum-design/shared": "workspace:*"
-  },
-  "devDependencies": {
-    "crypto-js": "catalog:",
-    "@quantum-design/types": "workspace:*",
-    "@quantum-design-configs/rollup": "workspace:*",
-    "@types/crypto-js": "catalog:",
-    "rollup": "catalog:"
-  }
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "utils",
+        "turborepo"
+    ],
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@quantum-design/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "crypto-js": "catalog:",
+        "@quantum-design/types": "workspace:*",
+        "@quantum-design-configs/rollup": "workspace:*",
+        "@types/crypto-js": "catalog:",
+        "rollup": "catalog:"
+    }
 }

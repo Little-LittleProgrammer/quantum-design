@@ -1,5 +1,12 @@
 # @quantum-design/shared
 
+## 2.0.2-beta.0
+
+### Patch Changes
+
+-   bbbb2e3: 修复缺陷
+-   更新所有依赖 vite@6
+
 ## 2.1.0-beta.1
 
 ### Patch Changes

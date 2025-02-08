@@ -2,8 +2,6 @@
 
 ## Usage
 
-
-
 <code-view title="基本用法" description="基本treetable用法">
     <div style="overflow:hidden;width:100%">
         <ClientOnly>
@@ -27,7 +25,7 @@
 
 <script setup>
     import {reactive} from 'vue'
-    import {QTreeTable} from '@quantum-design/vue3-pc-ui'
+    // import {QTreeTable} from '@quantum-design/vue3-pc-ui'
     const tags = ['title1', 'title2', 'title3', 'title7']
 
     const header = {

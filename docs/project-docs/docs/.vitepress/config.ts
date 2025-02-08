@@ -2,10 +2,10 @@ import { defineConfig, DefaultTheme } from 'vitepress';
 import fs from 'fs'
 import path from 'path'
 
-const _antdCssStrTemp = fs.readFileSync(path.resolve('node_modules/@quantum-design/styles/antd/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g)!.join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
-const _antdCssData = JSON.parse('{' + _antdCssStrTemp + '}');
+const antdCssStrTemp = (fs.readFileSync(path.resolve('node_modules/@quantum-design/styles/base/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g) || []).join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
+const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
 
-const _baseScssFile = "@import '@quantum-design/styles/base/base.scss'; @import '@quantum-design/styles/base/mixin.scss'; @import '../docs/.vitepress/theme/styles/custom.scss';";
+const _baseScssFile = "@use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *; @use '../docs/.vitepress/theme/styles/custom.scss' as *;";
 
 
 export default defineConfig({
@@ -50,7 +50,7 @@ export default defineConfig({
             preprocessorOptions: {
                 less: {
                     javascriptEnabled: true,
-                    modifyVars: _antdCssData
+                    modifyVars: antdCssData
                 },
                 scss: {
                     additionalData: _baseScssFile

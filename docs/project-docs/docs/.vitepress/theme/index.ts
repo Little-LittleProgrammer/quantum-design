@@ -23,10 +23,6 @@ export default {
                 ctx.app.use(module.Button)
                 ctx.app.use(module.Card)
             })
-            // import("@quantum-design/vue3-pc-ui").then(module => {
-            //     ctx.app.use(module.QLoading)
-            //     ctx.app.use(module.QTreeTable)
-            // })
         }
       }
   };

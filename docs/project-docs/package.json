@@ -1,31 +1,32 @@
 {
-  "name": "project-docs",
-  "private": true,
-  "version": "0.0.0",
-  "description": "",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
-  },
-  "keywords": [],
-  "author": "Evan Wu",
-  "license": "ISC",
-  "dependencies": {
-    "@ant-design/icons-vue": "catalog:",
-    "@quantum-design/shared": "workspace:*",
-    "@quantum-design/vue3-pc-ui": "workspace:*",
-    "ant-design-vue": "catalog:",
-    "pinia": "catalog:",
-    "vue": "catalog:"
-  },
-  "devDependencies": {
-    "@quantum-design/types": "workspace:*",
-    "highlight.js": "catalog:",
-    "vitepress": "catalog:",
-    "less": "catalog:",
-    "sass": "catalog:"
-  }
+    "name": "project-docs",
+    "private": true,
+    "version": "0.0.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vitepress dev docs",
+        "build": "vitepress build docs",
+        "preview": "vitepress preview docs"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+        "@ant-design/icons-vue": "catalog:",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/styles": "workspace:*",
+        "@quantum-design/vue3-pc-ui": "workspace:*",
+        "ant-design-vue": "catalog:",
+        "pinia": "catalog:",
+        "vue": "catalog:"
+    },
+    "devDependencies": {
+        "@quantum-design/types": "workspace:*",
+        "highlight.js": "catalog:",
+        "vitepress": "catalog:",
+        "less": "catalog:",
+        "sass": "catalog:"
+    }
 }

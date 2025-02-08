@@ -1,11 +1,11 @@
 {
     "name": "@quantum-design/shared",
-    "version": "2.0.0",
+    "version": "2.0.2-beta.0",
     "description": "",
     "main": "index.js",
     "publishConfig": {
-      "registry": "https://registry.npmjs.com/",
-      "access": "public"
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
     "scripts": {
         "build": "rollup -c --environment TYPES:true"

@@ -1,5 +1,11 @@
 # @quantum-design-configs/vite-sentry
 
+## 2.0.2-beta.0
+
+### Patch Changes
+
+-   更新所有依赖 vite@6
+
 ## 1.1.0-beta.2
 
 ### Patch Changes
