@@ -105,7 +105,7 @@ export default defineComponent({
 </script>
 
 <script lang='ts' setup>
-import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
+import { defineComponent, reactive, type PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
 

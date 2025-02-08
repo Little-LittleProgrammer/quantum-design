@@ -14,7 +14,7 @@ const author = pkg.author;
 const FormatTypes = {
     esm: 'es',
     cjs: 'cjs',
-    iife: 'iife'
+    iife: 'iife',
 };
 
 const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
@@ -41,7 +41,7 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
         const prePlugins = [
             resolve(),
             commonjs({
-                exclude: 'node_modules'
+                exclude: 'node_modules',
             }),
             json(),
             typescript({
@@ -50,16 +50,16 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
                 compilerOptions: {
                     declaration: isDeclaration,
                     declarationMap: false,
-                    declarationDir: isDeclaration ? `${packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
+                    declarationDir: isDeclaration ? `${rollupOptions.output?.dir ? rollupOptions.output.dir : packageDirDist}/types/` : undefined, // 类型声明文件的输出目录
                     module: 'ES2020',
-                    removeComments: false
+                    removeComments: false,
                 },
                 sourceMap: false,
                 include: ['*.ts+(|x)', '**/*.ts+(|x)'],
-                exclude: ['**/*.spec.ts+(|x)', 'node_modules']
+                exclude: ['**/*.spec.ts+(|x)', 'node_modules'],
             }),
             terser({
-                compress: {drop_console: true }
+                compress: {drop_console: true, },
             })
         ];
         const nextPlugins = [...(rollupOptions.plugins || [])];
@@ -77,14 +77,14 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
             output: {
                 footer: '/*! join us */',
                 generatedCode: 'es2015',
-                ...rollupOptions.output
+                ...rollupOptions.output,
             },
             treeshake: {
-                moduleSideEffects: false
+                moduleSideEffects: false,
             },
             // 外部依赖，也是防止重复打包的配置
             external: [...(rollupOptions.external || [])],
-            plugins: Object.values(preObj)
+            plugins: Object.values(preObj),
         };
         return common;
     }
@@ -95,19 +95,19 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
         if (isString(pkgList)) {
             finPkgList.push({
                 name: pkgList,
-                input: `./index.ts`
+                input: `./index.ts`,
             });
         } else if (isArray(pkgList)) {
             for (const item of pkgList) {
                 finPkgList.push({
                     name: item.name,
-                    input: item.input || `./index.ts`
+                    input: item.input || `./index.ts`,
                 });
             }
         } else if (isObject(pkgList)) {
             finPkgList.push({
                 name: pkgList.name,
-                input: pkgList.input || `./index.ts`
+                input: pkgList.input || `./index.ts`,
             });
         }
 
@@ -123,8 +123,8 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
                         sourcemap: false,
                         compact: true,
                         banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
-                        ...common.output
-                    }
+                        ...common.output,
+                    },
                 };
             }));
         }
@@ -133,4 +133,3 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
     package_file(pkgList);
     return result;
 }
-

@@ -1,5 +1,5 @@
-import { ComputedRef, unref } from 'vue';
-import { BasicTableProps, TableCustomRecord } from '../types/table';
+import { type ComputedRef, unref } from 'vue';
+import type { BasicTableProps, TableCustomRecord } from '../types/table';
 import { isFunction } from '@quantum-design/utils';
 
 export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls: string) {

@@ -16,7 +16,7 @@ import type { TableSetting, ColumnChangeParam } from '../../types/table';
 import ColumnSetting from './column-setting.vue';
 import SizeSetting from './size-setting.vue';
 import RedoSetting from './redo-setting.vue';
-import { PropType, computed, unref } from 'vue';
+import { type PropType, computed, unref } from 'vue';
 import { useTableContext } from '../../hooks/use-table-context';
 
 const prefixCls = 'q-table-setting';

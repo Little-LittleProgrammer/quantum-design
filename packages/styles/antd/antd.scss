@@ -1,14 +1,17 @@
+@use "sass:list";
+@use "../base/mixin.scss";
+@use "./base.scss";
 $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300 310 320 330 340 350 360 370 380 390 400 410 420 430 440 450 460 470 480 500 600 700 800 900 1000);
 
 .ant-menu {
     &-submenu-active:hover {
-        @include text-color(text-color);
+        @include mixin.text-color(text-color);
     }
 }
 
 .ant-btn {
     &~.ant-btn {
-        margin-left: $space;
+        margin-left: base.$space;
     }
 }
 
@@ -95,9 +98,9 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 .ant-btn,
 .ant-input-affix-wrapper,
 .ant-popover {
-    @for $i from 1 through length($gWidthArr) {
-        &.w-#{nth($gWidthArr, $i)} {
-            width: #{nth($gWidthArr, $i)}px !important;
+    @for $i from 1 through list.length($gWidthArr) {
+        &.w-#{list.nth($gWidthArr, $i)} {
+            width: #{list.nth($gWidthArr, $i)}px !important;
         }
     }
 
@@ -116,6 +119,7 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
     .ant-empty-description,
     .ant-tree-treenode-disabled .ant-tree-node-content-wrapper span,
     .ant-radio-disabled+span,
+    .ant-checkbox-wrapper-disabled span,
     .ant-select-arrow,
     .ant-pagination-disabled a,
     .ant-dropdown-menu-item-disabled,
@@ -125,12 +129,12 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
     .ant-select-clear,
     .ant-input-clear-icon,
     .ant-picker-cell {
-        color: $dark-disabled-text-color;
+        color: base.$dark-disabled-text-color;
     }
     .ant-switch{
-        background-color: $dark-disabled-text-color;
+        background-color: base.$dark-disabled-text-color;
         &.ant-switch-checked {
-            background-color: $primary-color;
+            background-color: base.$primary-color;
         }
     }
     .ant-select-clear:hover,
@@ -141,12 +145,12 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
     .ant-picker-cell-in-view,
     .ant-picker-header button,
     .ant-descriptions-item>.ant-descriptions-item-container>.ant-descriptions-item-label {
-        color: $dark-text-color;
+        color: base.$dark-text-color;
     }
 
     .ant-picker-header button:hover,
     .ant-picker-header-view button:hover {
-        color: $primary-color;
+        color: base.$primary-color;
     }
     .ant-form-item-label>label {
         position: relative;
@@ -154,13 +158,13 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
         align-items: center;
         max-width: 100%;
         height: 32px;
-        color: $dark-text-color;
+        color: base.$dark-text-color;
         font-size: 14px;
     }
     .ant-steps-item-process {
         .ant-steps-item-container {
             .ant-steps-item-content>.ant-steps-item-title {
-                color: $dark-text-color;
+                color: base.$dark-text-color;
             }
         }
     }
@@ -168,9 +172,9 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
         .ant-steps-item-container{
             .ant-steps-item-icon {
                 background-color: transparent;
-                border-color: $dark-disabled-text-color;
+                border-color: base.$dark-disabled-text-color;
                 .ant-steps-icon {
-                    color: $dark-disabled-text-color;
+                    color: base.$dark-disabled-text-color;
                 }
             }
         }  
@@ -182,7 +186,7 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 .ant-table {
     .p-btn-list {
         a {
-            margin-left: $space;
+            margin-left: base.$space;
 
             &:first-child {
                 margin-left: 0;
@@ -194,8 +198,8 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
         tr{
             th {
                 font-weight: bold;
-                color: $heading-color;
-                @include text-color(heading-color)
+                color: base.$heading-color;
+                @include mixin.text-color(heading-color)
             }
         }
     }
@@ -258,7 +262,7 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 
     .ant-table-pagination.ant-pagination {
         margin: 0;
-        margin-top: $space;
+        margin-top: base.$space;
     }
 
     &.even-bg {
@@ -266,8 +270,8 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
             tr {
                 &:nth-child(odd) {
                     td {
-                        background: $table-even-bg;
-                        @include bg-color(table-even-bg)
+                        background: base.$table-even-bg;
+                        @include mixin.bg-color(table-even-bg)
                     }
                 }
             }
@@ -277,28 +281,22 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 
 .ant-modal {
     .ant-modal-header {
-        padding: 16px $space;
-
         .ant-modal-title {
-            @include text-color(heading-color)
+            @include mixin.text-color(heading-color)
         }
-    }
-
-    .ant-modal-body {
-        padding: $space;
     }
 }
 
 .ant-modal-wrap.g-create-confirm{
     .ant-modal {
         .ant-modal-body {
-            padding: $space * 2 ;
+            padding: base.$space * 2 ;
         }
     }
 }
 
 .ant-card {
     .ant-card-head {
-        @include text-color(heading-color)
+        @include mixin.text-color(heading-color)
     }
 }

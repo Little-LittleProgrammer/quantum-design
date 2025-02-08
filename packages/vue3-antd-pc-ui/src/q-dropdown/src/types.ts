@@ -1,5 +1,5 @@
 
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue';
 
 export interface DropMenu {
     onClick?: Fn;

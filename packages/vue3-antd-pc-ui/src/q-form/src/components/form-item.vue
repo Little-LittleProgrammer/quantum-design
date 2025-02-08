@@ -3,14 +3,14 @@ import type { Slots } from 'vue';
 import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, js_utils_first_to_upper } from '@quantum-design/utils';
 import { defineComponent } from 'vue';
 import { Rule } from 'ant-design-vue/lib/form/interface';
-import { computed, PropType, Ref, toRefs, unref } from 'vue';
+import { computed, type PropType, type Ref, toRefs, unref } from 'vue';
 import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
-import { FormProps, FormSchema } from '../types/form';
-import { FormActionType } from '../types/form';
+import type { FormProps, FormSchema } from '../types/form';
+import type { FormActionType } from '../types/form';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { cloneDeep } from 'lodash-es';
-import { TableActionType } from '@vue3-antd/q-table/src/types/table';
+import type { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
 
 export default defineComponent({

@@ -55,7 +55,7 @@ echarts.use([
 
 import type { EChartsOption } from 'echarts';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { computed, onUnmounted, ref, Ref, unref, watch, nextTick, ComputedRef } from 'vue';
+import { computed, onUnmounted, ref, type Ref, unref, watch, nextTick, type ComputedRef } from 'vue';
 
 export type {EChartsOption};
 

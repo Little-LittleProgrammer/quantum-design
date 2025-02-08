@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
 import { isClient, js_utils_deep_merge } from '@quantum-design/utils';
 

@@ -1,5 +1,5 @@
-import { ComputedRef, Slots, computed, h, unref } from 'vue';
-import { BasicTableProps, InnerHandlers, Recordable } from '../types/table';
+import { type ComputedRef, type Slots, computed, h, unref } from 'vue';
+import type { BasicTableProps, InnerHandlers, Recordable } from '../types/table';
 import { isString } from '@quantum-design/utils';
 import TableHeader from '../components/header/table-header.vue';
 import {useSlots} from '@quantum-design/hooks/vue';

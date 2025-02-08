@@ -1,7 +1,7 @@
 import { isFunction } from '@quantum-design/utils';
 import { isEqual } from 'lodash-es';
 import { computed, getCurrentInstance, nextTick, onUnmounted, reactive, ref, toRaw, unref, watchEffect } from 'vue';
-import { DrawerInstance, DrawerProps, ReturnMethods, UseDrawerInnerReturnType, UseDrawerReturnType } from '../type';
+import type { DrawerInstance, DrawerProps, ReturnMethods, UseDrawerInnerReturnType, UseDrawerReturnType } from '../type';
 
 const dataTransferRef = reactive<any>({});
 

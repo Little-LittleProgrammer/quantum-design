@@ -1,5 +1,5 @@
 
-import { IMenuData } from '@quantum-design/types/vue/router';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 const _menus:IMenuData[] = [{
     path: '/demo',
     auth_name: 'demo',

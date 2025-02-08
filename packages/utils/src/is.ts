@@ -165,7 +165,7 @@ export function isIos(): boolean {
     return /(iphone|ipad|ipod)/i.test(user_agent());
 }
 
-export function js_is_mobile(): boolean {
+export function jsIsMobile(): boolean {
     return isAndroid() || isIos();
 }
 

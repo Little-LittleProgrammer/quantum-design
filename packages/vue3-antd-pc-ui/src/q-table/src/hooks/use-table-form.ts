@@ -1,6 +1,6 @@
-import { ComputedRef, Slots, computed, unref } from 'vue';
-import { BasicTableProps, FetchParams } from '../types/table';
-import { FormProps } from '@vue3-antd/q-form';
+import { type ComputedRef, type Slots, computed, unref } from 'vue';
+import type { BasicTableProps, FetchParams } from '../types/table';
+import type { FormProps } from '@vue3-antd/q-form';
 import { isFunction } from '@quantum-design/utils';
 
 export function useTableForm(

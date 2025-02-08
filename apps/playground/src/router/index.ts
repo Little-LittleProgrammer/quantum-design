@@ -2,7 +2,7 @@ import routerErrorData from '@/router/modules/error'; //  错误
 import { createRouter, createWebHistory } from 'vue-router';
 import { redirectRoute } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
-import { App } from 'vue';
+import type { App } from 'vue';
 import demo from './modules/demo';
 
 let routerData = [

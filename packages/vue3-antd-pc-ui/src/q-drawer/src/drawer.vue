@@ -23,12 +23,12 @@
 </template>
 
 <script lang='ts' setup>
-import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, CSSProperties, nextTick, watch, useSlots} from 'vue';
+import { onMounted, computed, useAttrs, unref, ref, toRaw, getCurrentInstance, type CSSProperties, nextTick, watch, useSlots} from 'vue';
 import {Drawer as ADrawer} from 'ant-design-vue';
 import {QLoading} from '@quantum-design/vue3-pc-ui';
 import {basicProps} from './props';
 import { js_utils_deep_merge, isFunction, isNumber } from '@quantum-design/utils';
-import { DrawerInstance, DrawerProps } from './type';
+import type { DrawerInstance, DrawerProps } from './type';
 import DrawerHeader from './components/drawer-header.vue';
 import DrawerFooter from './components/drawer-footer.vue';
 import './style/drawer.scss';

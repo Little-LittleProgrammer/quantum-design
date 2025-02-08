@@ -3,8 +3,8 @@ import HighlightCode from '../components/highlight-code.vue'
 import CodeVoew from '../components/code-view.vue'
 import {createPinia} from 'pinia';
 
-import '@quantum-design/shared/style/antd/antd.scss';
-import '@quantum-design/shared/style/base/index.scss';
+import '@quantum-design/styles/antd/antd.scss';
+import '@quantum-design/styles/base/index.scss';
 import './styles/var.css';
 import './styles/reset.css'
 

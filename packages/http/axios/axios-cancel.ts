@@ -3,6 +3,7 @@ import axios from 'axios';
 import { isFunction } from '@quantum-design/utils';
 
 // Used to store the identification and cancellation function of each request
+// Used to store the identification and cancellation function of each request
 let pendingMap = new Map<string, Canceler>();
 
 export const getPendingUrl = (config: AxiosRequestConfig) => [config.method, config.url].join('&');
@@ -57,3 +58,4 @@ export class AxiosCanceler {
         pendingMap = new Map<string, Canceler>();
     }
 }
+

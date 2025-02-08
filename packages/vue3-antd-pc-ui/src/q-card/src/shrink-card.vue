@@ -17,8 +17,8 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, onMounted, computed, PropType, ref} from 'vue';
-import {CardProps} from 'ant-design-vue/lib/card/Card';
+import { reactive, onMounted, computed, type PropType, ref} from 'vue';
+import type {CardProps} from 'ant-design-vue/lib/card/Card';
 import {Card as ACard} from 'ant-design-vue';
 import './style/shrink-card.scss';
 

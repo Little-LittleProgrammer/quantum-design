@@ -18,12 +18,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "rollup": "~4.18.0",
-    "@rollup/plugin-terser": "~0.4.4",
-    "@rollup/plugin-typescript": "~11.1.6",
-    "@rollup/plugin-commonjs": "~26.0.1",
-    "@rollup/plugin-json": "~6.1.0",
-    "@rollup/plugin-node-resolve": "~15.2.3"
+    "rollup": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "@rollup/plugin-typescript": "catalog:",
+    "@rollup/plugin-commonjs": "catalog:",
+    "@rollup/plugin-json": "catalog:",
+    "@rollup/plugin-node-resolve": "catalog:"
   },
   "devDependencies": {},
   "peerDependencies": {}

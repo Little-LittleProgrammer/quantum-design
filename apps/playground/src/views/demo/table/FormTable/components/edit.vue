@@ -7,8 +7,8 @@
 
 <script lang='ts' setup>
 import { computed, reactive } from 'vue';
-import { useDrawerInner, useForm, FormSchema, QAntdForm, QAntdDrawer } from '@quantum-design/vue3-antd-pc-ui';
-import { IExampleData } from '../interface';
+import { useDrawerInner, useForm, type FormSchema, QAntdForm, QAntdDrawer } from '@quantum-design/vue3-antd-pc-ui';
+import type { IExampleData } from '../interface';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 
 const emits = defineEmits(['ok', 'register']);

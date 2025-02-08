@@ -1,5 +1,5 @@
 import type { ButtonProps } from 'ant-design-vue';
-import { ComputedRef, CSSProperties } from 'vue';
+import type { ComputedRef, CSSProperties } from 'vue';
 
 export interface DrawerInstance {
     setDrawerProps: (props: Partial<DrawerProps>) => void;

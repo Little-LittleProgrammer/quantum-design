@@ -17,9 +17,9 @@
 <script lang="ts" setup>
 
 import { useRegisterSW } from 'virtual:pwa-register/vue';
-import { js_is_array } from '@quantum-design/utils';
+import { isArray } from '@quantum-design/utils';
 import {routerData} from '@/router';
-import { Ref, ref } from 'vue';
+import { type Ref, ref } from 'vue';
 
 const intervalMS = 10000; // 10秒钟
 const needRefresh = ref(false);
@@ -76,7 +76,7 @@ const {
                     const finKey = ['list', 'index', 'detail'].includes(kArr[kArr.length - 1]) ? kArr[kArr.length - 2] : kArr[kArr.length - 1];
                     pathObj[finKey] = v;
                 }
-                if (js_is_array(data.files)) {
+                if (isArray(data.files)) {
                     for (const file of data.files) {
                         if (!(file.endsWith('.vue') || file.endsWith('.ts'))) continue;
                         for (const [k, v] of Object.entries(pathObj)) {

@@ -119,8 +119,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@quantum-design/shared/style/antd/antd.scss';
-@import '@quantum-design/shared/style/base/index.scss';
+@import '@quantum-design/styles/antd/antd.scss';
+@import '@quantum-design/styles/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

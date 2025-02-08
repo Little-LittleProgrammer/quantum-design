@@ -1,37 +1,34 @@
 {
-  "name": "@quantum-design/shared",
-  "version": "2.0.0",
-  "description": "`样式、插件、enums` 公共",
-  "main": "index.ts",
-  "scripts": {},
-  "files": [
-    "enums",
-    "style",
-    "style/antd/antd.scss",
-    "style/antd/base.scss",
-    "style/base/index.scss",
-    "style/element",
-    "plugins",
-    "plugins/sentry.ts",
-    "plugins/auto-import-resolver.ts",
-    "index"
-  ],
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "shared",
-    "turborepo"
-  ],
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@sentry/vue": "~8.14.0",
-    "sass": "~1.77.6",
-    "vue": "~3.4.31"
-  },
-  "dependencies": {}
+    "name": "@quantum-design/shared",
+    "version": "2.0.0",
+    "description": "",
+    "main": "index.js",
+    "publishConfig": {
+      "registry": "https://registry.npmjs.com/",
+      "access": "public"
+    },
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "module": "dist/shared.esm.min.js",
+    "exports": {
+        "./enums": {
+            "require": "./dist/enums.cjs.min.js",
+            "import": "./dist/enums.esm.min.js",
+            "types": "./dist/types/enums.d.ts"
+        },
+        "./dist/*": "./dist/*",
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist"
+    ],
+    "author": "Evan Wu",
+    "license": "MIT",
+    "devDependencies": {
+        "@quantum-design/types": "workspace:*",
+        "@quantum-design-configs/rollup": "workspace:*",
+        "rollup": "catalog:"
+    },
+    "dependencies": {}
 }

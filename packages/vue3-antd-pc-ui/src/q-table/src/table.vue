@@ -69,7 +69,7 @@
 		TableSummaryCell,
 		TableSummary,
 	} from 'ant-design-vue';
-	import {
+	import type {
 		BasicTableProps,
 		ColumnChangeParam,
 		InnerHandlers,

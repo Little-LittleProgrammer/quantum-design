@@ -18,10 +18,10 @@
         }
     },
     "dependencies": {
-        "@commitlint/cli": "^19.5.0",
-        "@commitlint/config-conventional": "^19.5.0",
-        "commitlint-plugin-function-rules": "^4.0.1",
-        "cz-git": "^1.10.1",
-        "czg": "^1.10.1"
+        "@commitlint/cli": "catalog:",
+        "@commitlint/config-conventional": "catalog:",
+        "commitlint-plugin-function-rules": "catalog:",
+        "cz-git": "catalog:",
+        "czg": "catalog:"
     }
 }

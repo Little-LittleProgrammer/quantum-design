@@ -1,6 +1,6 @@
 import { ignore_t, useTabsStore } from './use-tabs-store';
 import { ref, toRaw } from 'vue';
-import { RouteLocationNormalized, useRouter } from 'vue-router';
+import { type RouteLocationNormalized, useRouter } from 'vue-router';
 
 // 初始化页面设置
 export function init_affix_tabs(initPath: string): string[] {

@@ -30,28 +30,16 @@ const { setTokenToHeader, setTokenToLs, } = dealToken();
  */
 export const defaultTransform: AxiosTransform = {
     /**
-	 * 发送请求前
-	 * @param config
-	 * @param options
-	 */
+     * 发送请求前
+     * @param config
+     * @param options
+     */
     beforeRequestHook: (config, options) => {
-        const {
-            apiUrl,
-            urlPrefix,
-            joinTime = true,
-            env = () => '',
-            joinPrefix,
-            joinCookie = true,
-        } = options;
+        const { apiUrl, urlPrefix, joinTime = true, env = () => '', joinPrefix, joinCookie = true, } = options;
         const params = config.params || {};
         const data = config.data || false;
 
-        if (
-            !(
-                config.url?.match(/^http/) != null ||
-				config.url?.match(/^\/\//) != null
-            )
-        ) {
+        if (!(config.url?.match(/^http/) != null || config.url?.match(/^\/\//) != null)) {
             if (joinPrefix) {
                 config.url = `${urlPrefix}${config.url}`;
             }
@@ -64,57 +52,26 @@ export const defaultTransform: AxiosTransform = {
         if (config.method?.toUpperCase() === gRequestEnum.GET) {
             if (!isString(params)) {
                 // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-                config.params = Object.assign(
-                    params || {},
-                    joinEnvToUrl(env, false),
-                    joinTimestamp(joinTime, false),
-                    joinCookieToUrl(joinCookie, false)
-                );
+                config.params = Object.assign(params || {}, joinEnvToUrl(env, false), joinTimestamp(joinTime, false), joinCookieToUrl(joinCookie, false));
             } else {
                 // 兼容restful风格
-                config.url =
-					config.url +
-					params +
-					'?' +
-					`${joinTimestamp(joinTime, true)}&` +
-					`${joinEnvToUrl(env, true)}&` +
-					`${joinCookieToUrl(joinCookie, true)}`;
+                config.url = config.url + params + '?' + `${joinTimestamp(joinTime, true)}&` + `${joinEnvToUrl(env, true)}&` + `${joinCookieToUrl(joinCookie, true)}`;
                 config.params = undefined;
             }
         } else {
             if (!isString(params)) {
-                config.url =
-					config.url +
-					(config.url?.includes('?') ? '&' : '?') +
-					`${joinTimestamp(joinTime, true)}&` +
-					`${joinEnvToUrl(env, true)}&` +
-					`${joinCookieToUrl(joinCookie, true)}`;
-                if (
-                    Reflect.has(config, 'data') &&
-					config.data &&
-					Object.keys(config.data).length > 0
-                ) {
-                    config.data = Object.assign(
-                        data || {},
-                        joinEnvToUrl(env, false)
-                    );
+                config.url = config.url + (config.url?.includes('?') ? '&' : '?') + `${joinTimestamp(joinTime, true)}&` + `${joinEnvToUrl(env, true)}&` + `${joinCookieToUrl(joinCookie, true)}`;
+                if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
+                    config.data = Object.assign(data || {}, joinEnvToUrl(env, false));
                     config.params = params;
                 } else {
                     // 非GET请求如果没有提供data，则将params视为data
-                    config.data = Object.assign(
-                        params || {},
-                        joinEnvToUrl(env, false)
-                    );
+                    config.data = Object.assign(params || {}, joinEnvToUrl(env, false));
                     config.params = undefined;
                 }
             } else {
                 // 兼容restful风格
-                config.url =
-					config.url +
-					params +
-					'?' +
-					`${joinTimestamp(joinTime, true)}&` +
-					`${joinCookieToUrl(joinCookie, true)}`;
+                config.url = config.url + params + '?' + `${joinTimestamp(joinTime, true)}&` + `${joinCookieToUrl(joinCookie, true)}`;
                 config.params = undefined;
                 config.data = joinEnvToUrl(env, true);
             }
@@ -122,123 +79,66 @@ export const defaultTransform: AxiosTransform = {
         return config;
     },
     /**
-	 * @description: 请求拦截器处理
-	 */
+     * @description: 请求拦截器处理
+     */
     requestInterceptors: (config, options) => {
         if (options.customTransform && options.customTransform.customRequest) {
-            config = options.customTransform.customRequest(
-                config
-            );
+            config = options.customTransform.customRequest(config);
         }
-        config = setTokenToHeader(options, config) ;
+        config = setTokenToHeader(options, config);
         return config;
     },
 
     /**
-	 * @description: 请求拦截器错误处理
-	 * @param error
-	 */
+     * @description: 请求拦截器错误处理
+     * @param error
+     */
     requestInterceptorsCatch: (error: any, options) => {
-        if (
-            options.customTransform &&
-			options.customTransform.customRequestError
-        ) {
+        if (options.customTransform && options.customTransform.customRequestError) {
             options.customTransform.customRequestError(error);
         }
         if (error && error.response) {
-            check_status(
-                error.response?.status,
-                '连接错误',
-                error.config?.requestOptions?.errorMessageCb
-            );
+            check_status(error.response?.status, '连接错误', error.config?.requestOptions?.errorMessageCb);
         } else {
-            check_status(
-                '400',
-                '连接到服务器失败',
-                error.config?.requestOptions?.errorMessageCb
-            );
+            check_status('400', '连接到服务器失败', error.config?.requestOptions?.errorMessageCb);
         }
         return Promise.reject(error.response);
     },
 
     /**
-	 * @description: 响应拦截器处理
-	 */
+     * @description: 响应拦截器处理
+     */
     responseInterceptors: (res: AxiosResponse<any>, options) => {
         console.log(res, options);
         if (options.customTransform && options.customTransform.customResponse) {
             res = options.customTransform.customResponse(res);
         }
-        setTokenToLs(options.requestOptions?.withToken || true, res);
+        setTokenToLs(!!options.requestOptions?.withToken, res);
+        if (res.data.errors && res.data.errors.code) {
+            res.data.code = res.data.errors.code;
+            res.data.msg = res.data.errors.title;
+        }
         if (res.data.code == gResultEnum.RELOAD) {
             setTokenToLs(options.requestOptions?.withToken || true, res);
-            if (isService) {
-                // node环境
-                if (process.env?.NODE_ENV == 'production') {
-                    window.location.reload();
-                } else {
-                    console.warn(
-                        '请复制测试环境的token与cookie到本地环境, 或设置本地nginx来代理localhost'
-                    );
-                }
-            } else if (import.meta && (import.meta as any).env) {
-                // vite 浏览器
-                if (!(import.meta as any).env.DEV) {
-                    window.location.reload();
-                } else {
-                    console.warn(
-                        '请复制测试环境的token与cookie到本地环境, 或设置本地nginx来代理localhost'
-                    );
-                }
-            } else {
+            if (!isService) {
                 window.location.reload();
-            }
+            } 
             return res;
         } else if (res.data.code == gResultEnum.LOGIN) {
-            if (isService) {
-                // node环境
-                if (process.env?.NODE_ENV == 'production') {
-                    window.location.href = res.data.data?.url;
-                } else {
-                    console.warn(
-                        '请复制测试环境的token与cookie到本地环境, 或设置本地nginx来代理localhost'
-                    );
-                }
-            } else if (import.meta && (import.meta as any).env) {
-                // vite 浏览器
-                if (!(import.meta as any).env.DEV) {
-                    window.location.href = res.data.data?.url;
-                } else {
-                    console.warn(
-                        '请复制测试环境的token与cookie到本地环境, 或设置本地nginx来代理localhost'
-                    );
-                }
-            } else {
+            if (!isService) {
                 window.location.href = res.data.data?.url;
             }
             return res;
         } else if (res.data.code == gResultEnum.NOTFOUND) {
-            location.replace('/backend/error');
+            location.replace(options.requestOptions?.errorPage || '/backend/error');
             return res;
         }
-        if ((res.config as any).requestOptions?.useServiceMsg && res.data.code != gResultEnum.SUCCESS) {
-            check_status(
-                '400',
-                res.data.msg,
-                options.requestOptions?.errorMessageCb
-            );
+        if (options.requestOptions?.useServiceMsg && res.data.code != gResultEnum.SUCCESS) {
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageCb);
         } else if (res.data.code == gResultEnum.ERROR) {
-            check_status(
-                '400',
-                res.data.msg,
-                options.requestOptions?.errorMessageCb
-            );
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageCb);
         } else if (res.data.code == gResultEnum.SERVERERROR) {
-            check_status(
-                '400',
-                res.data.msg,
-                options.requestOptions?.errorMessageCb
-            );
+            check_status('400', res.data.msg, options.requestOptions?.errorMessageCb);
         } else if (res.data.code == gResultEnum.TIMEOUT) {
             check_status('408', '', options.requestOptions?.errorMessageCb);
         }
@@ -246,52 +146,49 @@ export const defaultTransform: AxiosTransform = {
     },
 
     /**
-	 * @description: 响应错误处理
-	 */
+     * @description: 响应错误处理
+     */
     responseInterceptorsCatch: (error: any, options, axiosInstance) => {
-        console.log(error, options);
-        if (
-            options.customTransform &&
-			options.customTransform.customResponseError
-        ) {
+        if (options.customTransform && options.customTransform.customResponseError) {
             options.customTransform.customResponseError(error);
         }
+
+        const err: string = error?.toString?.() ?? '';
+        let errMsg = '';
+        if (err?.includes('Network Error')) {
+            errMsg = '网络异常，请检查您的网络连接后重试。';
+        } else if (error?.message?.includes?.('timeout')) {
+            errMsg = '请求超时，请稍后再试。';
+        }
+        if (errMsg) {
+            check_status('400', errMsg, options.requestOptions?.errorMessageCb);
+            return Promise.reject(error);
+        }
+
         if (error && error.response) {
-            check_status(
-                error.response?.status,
-                '连接错误',
-                options.requestOptions?.errorMessageCb
-            );
+            check_status(error.response?.status, '连接错误', options.requestOptions?.errorMessageCb);
         } else if (error.code === 'ERR_CANCELED') {
             // 如果手动取消, 不予受理
             console.log('请求重复, 手动取消请求');
             return Promise.resolve(error);
         } else {
-            check_status(
-                '400',
-                '连接到服务器失败',
-                options.requestOptions?.errorMessageCb
-            );
+            check_status('400', '连接到服务器失败', options.requestOptions?.errorMessageCb);
         }
 
         // 添加自动重试机制
-        const _retry = new AxiosRetry();
+        const retry = new AxiosRetry();
         const { isOpenRetry, } = options.requestOptions?.retryRequest || {};
         // 重试请求只针对get
-        if (
-            error &&
-			error.config?.method &&
-			error.config?.method?.toUpperCase() === gRequestEnum.GET
-        ) {
-            isOpenRetry && _retry.retry(axiosInstance, error);
+        if (error && error.config?.method && error.config?.method?.toUpperCase() === gRequestEnum.GET) {
+            if (isOpenRetry) {
+                retry.retry(axiosInstance, error);
+            }
         }
         return Promise.reject(error.response ? error.response : error);
     },
 };
 
-export function createAxios(
-    opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTransform'>
-) {
+export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTransform'>) {
     return new VAxios(
         js_utils_deep_merge(
             {
@@ -330,12 +227,14 @@ export function createAxios(
                         count: 5,
                         waitTime: 100,
                     },
+                    errorPage: '/backend/error',
                 },
             },
             opt || {}
         )
     );
 }
+
 
 // other api url
 // export const otherHttp = createAxios({

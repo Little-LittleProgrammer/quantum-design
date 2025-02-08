@@ -4,7 +4,7 @@
   "description": "公共 `utils` 方法",
   "main": "index.js",
   "module": "dist/utils.esm.min.js",
-  "typings": "dist/types/utils/index.d.ts",
+  "typings": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -12,7 +12,7 @@
         "default": "./dist/utils.esm.min.js"
       },
       "require": "./index.js",
-      "types": "./dist/types/utils/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     },
     "./extra": {
       "import": {
@@ -20,7 +20,7 @@
         "default": "./dist/extra.esm.min.js"
       },
       "require": "./extra.js",
-      "types": "./dist/types/utils/extra.d.ts"
+      "types": "./dist/types/extra.d.ts"
     },
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
@@ -53,10 +53,10 @@
     "@quantum-design/shared": "workspace:*"
   },
   "devDependencies": {
-    "crypto-js": "~4.2.0",
+    "crypto-js": "catalog:",
     "@quantum-design/types": "workspace:*",
     "@quantum-design-configs/rollup": "workspace:*",
-    "@types/crypto-js": "~4.2.0",
-    "rollup": "~4.18.0"
+    "@types/crypto-js": "catalog:",
+    "rollup": "catalog:"
   }
 }

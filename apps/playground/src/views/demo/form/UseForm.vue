@@ -16,7 +16,7 @@
 
 <script lang='ts' setup>
 import {computed, onMounted} from 'vue';
-import { useForm, FormSchema, QAntdForm } from '@quantum-design/vue3-antd-pc-ui';
+import { useForm, type FormSchema, QAntdForm } from '@quantum-design/vue3-antd-pc-ui';
 defineOptions({
     name: 'UseForm',
 });

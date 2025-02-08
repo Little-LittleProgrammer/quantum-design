@@ -1,5 +1,5 @@
-import { ComputedRef, Ref, computed, reactive, ref, toRaw, unref, watch } from 'vue';
-import { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
+import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watch } from 'vue';
+import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
 import { isArray, isBoolean, isFunction, isMap, isNumber, isString } from '@quantum-design/utils';

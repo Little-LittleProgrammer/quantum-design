@@ -1,4 +1,4 @@
-import {matchComponents} from '../../enums/components';
+import {matchComponents} from '@quantum-design/shared/enums';
 
 function kebab_case(key: string) {
     const result = key.replace(/([A-Z])/g, ' $1').trim();
@@ -8,7 +8,7 @@ function kebab_case(key: string) {
 export interface QResolverOptions {
     importStyle: boolean | 'css' | 'scss';
 
-    prefix: string; // package 的默认开头
+    prefix: string; // package 的默认开头。么，。
     notPrefix?: string[]
     packageName: string // package名称
 
@@ -32,7 +32,7 @@ function get_style_dir(compName: string) {
 }
 
 function get_side_effects(dirName: string, options: QResolverOptions) {
-    const { importStyle, packageName, moduleType, prefix} = options;
+    const { importStyle, packageName, moduleType, prefix,} = options;
     if (!importStyle)
         return;
 
@@ -47,30 +47,30 @@ function get_side_effects(dirName: string, options: QResolverOptions) {
 const defaultOptions: QResolverOptions[] = [{
     importStyle: 'css',
     prefix: 'Q',
-    notPrefix: ['QAntd', 'QEle'],
+    notPrefix: ['QAntd', 'QEle', 'Qm'],
     packageName: '@quantum-design/vue3-pc-ui',
-    moduleType: 'es'
+    moduleType: 'es',
 }, {
     importStyle: 'css',
     prefix: 'QAntd',
     packageName: '@quantum-design/vue3-antd-pc-ui',
-    moduleType: 'es'
+    moduleType: 'es',
 }];
 
 export function QResolver(options: QResolverOptions[] = defaultOptions) {
     const _resolver = options.map(item => {
-        const { prefix, moduleType, packageName } = item;
+        const { prefix, moduleType, packageName, } = item;
         return {
-            type: 'component',
+            type: 'component' as const,
             resolve: (name: string) => {
                 if (name.startsWith(prefix) && (!item.notPrefix?.length || (item.notPrefix?.length && !item.notPrefix.some(e => name.startsWith(e))))) {
                     return {
                         name: name,
                         from: `${packageName}/${moduleType}`,
-                        sideEffects: get_side_effects(name, item)
+                        sideEffects: get_side_effects(name, item),
                     };
                 }
-            }
+            },
         };
     });
     return _resolver;

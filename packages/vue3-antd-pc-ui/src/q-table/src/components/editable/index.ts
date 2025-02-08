@@ -1,4 +1,4 @@
-import { Ref, h, toRaw } from 'vue';
+import { type Ref, h, toRaw } from 'vue';
 import type { BasicColumn, Recordable } from '../../types/table';
 import { isArray } from '@quantum-design/utils';
 import EditableCell from './editable-cell.vue';

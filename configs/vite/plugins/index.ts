@@ -1,5 +1,5 @@
 import type { PluginOption } from 'vite';
-import { IPluginsCommonOptions, ViteEnv } from '../types';
+import type { IPluginsCommonOptions, ViteEnv } from '../types';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -7,7 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { vite_plugin_html } from './html';
 import { vite_plugin_compress } from './compress';
 import { vite_plugin_pwa } from './pwa';
-import { vite_plugin_sentry } from './sentry';
+import { vite_plugin_sentry } from '@quantum-design-configs/vite-sentry/cli';
 import { vite_plugin_component } from './component';
 
 export { vite_plugin_postcss_pxtorem } from './postcss-pxtorem';
@@ -43,3 +43,5 @@ export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?
     }
     return _vitePlugins;
 }
+
+export { vite_plugin_pwa };

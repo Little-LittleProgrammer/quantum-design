@@ -1,6 +1,6 @@
-import { ComputedRef, Ref, computed, nextTick, ref, toRaw, unref, watch } from 'vue';
-import { BasicTableProps, TableRowSelection } from '../types/table';
-import { Recordable } from '../types/table';
+import { type ComputedRef, type Ref, computed, nextTick, ref, toRaw, unref, watch } from 'vue';
+import type { BasicTableProps, TableRowSelection } from '../types/table';
+import type { Recordable } from '../types/table';
 import { omit } from 'lodash-es';
 import { isFunction } from '@quantum-design/utils';
 import { ROW_KEY } from '../enums/const';

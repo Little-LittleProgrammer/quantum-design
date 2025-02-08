@@ -1,6 +1,6 @@
-import { RollupOptions } from 'rollup';
+import type { RollupOptions } from 'rollup';
 import type { BuildOptions, ProxyOptions } from 'vite';
-import { PluginOptions } from 'vite-plugin-dts';
+import type { PluginOptions } from 'vite-plugin-dts';
 import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
 import type { VitePWAOptions } from 'vite-plugin-pwa';
 

@@ -32,7 +32,7 @@ import { useGo } from '@quantum-design/hooks/vue';
 import TabContent from './components/tab-content.vue';
 import { init_affix_tabs } from './hooks/use-affix-tabs';
 import { useTabsDrag } from './hooks/use-sortable';
-import { Router } from 'vue-router';
+import type { Router } from 'vue-router';
 import { ignore_t, useTabsStore } from './hooks/use-tabs-store';
 import { tabsProps } from './props';
 import { create_tab } from './hooks/use-router';

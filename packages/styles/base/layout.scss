@@ -1,40 +1,47 @@
+@use "sass:string";
+@use "./base.scss";
+@use './mixin.scss';
 $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300 310 320 330 340 350 360 370 380 390 400 410 420 430 440 450 460 470 480 500 600 700 800 900 1000);
 
 .mt,
 .g-mt {
-    margin-top: $space;
+    margin-top: base.$space;
 }
 
 .mr,
 .g-mr {
-    margin-right: $space;
+    margin-right: base.$space;
 }
 
 .ml,
 .g-ml {
-    margin-left: $space;
+    margin-left: base.$space;
 }
 
 .mb,
 .g-mb {
-    margin-bottom: $space;
+    margin-bottom: base.$space;
 }
 
 @each $i in (10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100) {
-    .w-p-#{$i} {
-        width: unquote($i+'%') !important;
+    .w-p-#{$i},
+    .g-w-p-#{$i} {
+        width: string.unquote($i+'%') !important;
     }
 
-    .m-l-#{$i} {
-        margin-left:  unquote($i+'px')!important;
+    .m-l-#{$i},
+    .g-m-l-#{$i} {
+        margin-left:  string.unquote($i+'px')!important;
     }
 
-    .m-t-#{$i} {
-        margin-top: unquote($i+'px') !important;
+    .m-t-#{$i},
+    .g-m-t-#{$i} {
+        margin-top: string.unquote($i+'px') !important;
     }
 
-    .p-l-#{$i} {
-        padding-left: unquote($i+'px')!important;
+    .p-l-#{$i},
+    .g-p-l-#{$i} {
+        padding-left: string.unquote($i+'px')!important;
     }
 }
 
@@ -42,7 +49,7 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 @each $i in $gWidthArr {
     .w-#{$i},
     .g-w-#{$i} {
-        width: unquote($i+'px') !important
+        width: string.unquote($i+'px') !important
     }
 }
 
@@ -72,15 +79,16 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 }
 
 // flex布局
+.qm-flex,
 .g-flex {
-    @include flex-center(left, center);
+    @include mixin.flex-center(left, center);
 
     .flex {
         flex: 1
     }
 
     &-center {
-        @include flex-center(center, center);
+        @include mixin.flex-center(center, center);
 
         .flex {
             flex: 1
@@ -88,21 +96,21 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
     }
 
     &-around {
-        @include flex-center(space-around, center);
+        @include mixin.flex-center(space-around, center);
 
         .flex {
             flex: 1
         }
     }
     &-between {
-        @include flex-center(space-between, center);
+        @include mixin.flex-center(space-between, center);
 
         .flex {
             flex: 1
         }
     }
     &-end {
-        @include flex-center(flex-end, center);
+        @include mixin.flex-center(flex-end, center);
 
         .flex {
             flex: 1
@@ -116,15 +124,15 @@ $gWidthArr: (60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230
 .g-bg {
 
     &-red {
-        background-color: $error-color
+        background-color: base.$error-color
     }
 
     &-green {
-        background: $success-color
+        background: base.$success-color
     }
 
     &-grey {
-        background: $disabled-table-color
+        background: base.$disabled-table-color
     }
 }
 
@@ -134,7 +142,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background: $body-bg;
+    background: base.$body-bg;
     overflow: hidden;
 
     &.gray-mode {
@@ -191,7 +199,7 @@ body {
         z-index: 99999;
         width: 100%;
         height: 2px;
-        background-color: $primary-color;
+        background-color: base.$primary-color;
         opacity: 0.75;
     }
 }
@@ -207,19 +215,20 @@ body {
 
 .wrapper,
 .wrapper-special {
-    @include flexbox();
+    @include mixin.flexbox();
     height: calc(100vh - 48px);
     overflow: hidden;
 
-    .main {
+    .layout-main,
+    .js-layout-main {
         display: block;
-        @include flexboxChild();
+        @include mixin.flexboxChild();
         width: 100%;
         height: 100%;
         box-sizing: border-box;
         overflow-y: auto;
         overflow-x: hidden;
-        @include bg-color(body-bg);
+        @include mixin.bg-color(body-bg);
 
         // &::-webkit-scrollbar {
         //     -webkit-appearance: none;
@@ -234,62 +243,62 @@ body {
         // }
         .row {
             // padding: $space;
-            margin-top: $space;
+            margin-top: base.$space;
 
             &:first-child {
                 margin-top: 0;
             }
 
             &.padding {
-                padding: $space;
+                padding: base.$space;
             }
 
             &.flex {
-                @include flexbox();
+                @include mixin.flexbox();
                 background: none;
                 padding: 0;
                 margin: 0;
             }
 
             .col-a {
-                @include flexboxChild();
+                @include mixin.flexboxChild();
                 display: block;
                 width: 100%;
                 background: #fff;
-                padding: $space;
+                padding: base.$space;
             }
 
             .col-b {
                 display: block;
-                margin-left: $space;
+                margin-left: base.$space;
                 width: 300px;
-                padding: $space;
+                padding: base.$space;
                 background: #fff;
             }
         }
 
         .mt {
-            margin-top: $space;
+            margin-top: base.$space;
         }
 
         .mr {
-            margin-right: $space;
+            margin-right: base.$space;
         }
 
         .ml {
-            margin-left: $space;
+            margin-left: base.$space;
         }
 
         .mb {
-            margin-bottom: $space;
+            margin-bottom: base.$space;
         }
 
         .important {
-            color: $important-color;
+            color: base.$important-color;
         }
 
         .important-second {
-            color: $important-second-color;
+            color: base.$important-second-color;
         }
 
         .bold {

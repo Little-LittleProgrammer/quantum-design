@@ -1,6 +1,6 @@
 import { useTabsStore } from './use-tabs-store';
 import { unref } from 'vue';
-import { RouteLocationNormalized, Router, useRouter } from 'vue-router';
+import { type RouteLocationNormalized, type Router, useRouter } from 'vue-router';
 
 // 枚举, 为了统一
 export enum TableActionEnum {

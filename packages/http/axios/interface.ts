@@ -21,6 +21,7 @@ export interface RequestOptions {
     // 请求重试机制
     retryRequest?: RetryRequest;
     useServiceMsg?: boolean;
+    errorPage?: string
 }
 
 export interface RetryRequest {

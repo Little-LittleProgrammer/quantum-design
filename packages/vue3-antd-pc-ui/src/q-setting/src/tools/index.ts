@@ -1,6 +1,6 @@
 import { js_utils_deep_copy, js_utils_deep_merge } from '@quantum-design/utils';
 import { useProjectSettingStore } from '../store';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
 
 export function setup_project_conf(setting:IProjectConfig) {

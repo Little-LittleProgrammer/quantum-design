@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed, toRaw } from 'vue';
-import { Divider, TooltipProps, Button as AButton, Tooltip as ATooltip, Popconfirm as APopconfirm } from 'ant-design-vue';
+import { type PropType, computed, toRaw } from 'vue';
+import { Divider, type TooltipProps, Button as AButton, Tooltip as ATooltip, Popconfirm as APopconfirm } from 'ant-design-vue';
 import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
-import { ActionItem } from '../types/table-action';
+import type { ActionItem } from '../types/table-action';
 import { isBoolean, isFunction, isString } from '@quantum-design/utils';
 import { propTypes } from '@quantum-design/types/vue/types';
 defineOptions({

@@ -1,5 +1,5 @@
 {
-    "extends": "@quantum-design-configs/tsconfig/tsconfig-base.json",
+    "extends": "@quantum-design-configs/tsconfig/base.json",
     "include": ["enums", "plugin"],
     "exclude": ["dist", "node_modules"]
 }

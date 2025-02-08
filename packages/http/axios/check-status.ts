@@ -1,30 +1,31 @@
 import { isFunction } from "@quantum-design/utils";
+import { gResultEnum } from '@quantum-design/shared/enums';
 
 export async function check_status(status:string, msg: string, cb?: Fn) {
     let errMessage = '';
     switch (status) {
-        case '400':
+        case gResultEnum.ERROR:
             errMessage = msg;
             break;
-        case '401':
-            errMessage = '未授权, 请重新登陆';
+        case gResultEnum.LOGIN:
+            errMessage = '登录认证过期，请重新登录后继续。';
             break;
-        case '403':
-            errMessage = '拒绝访问';
+        case gResultEnum.PROMISE:
+            errMessage = '禁止访问, 您没有权限访问此资源。';
             break;
-        case '404':
-            errMessage = '请求错误,未找到该资源';
+        case gResultEnum.NOTFOUND:
+            errMessage = '未找到, 请求的资源不存在。';
             break;
-        case '405':
+        case gResultEnum.NOALLOW:
             errMessage = '请求方法未允许';
             break;
-        case '408':
-            errMessage = '请求超时';
+        case gResultEnum.TIMEOUT:
+            errMessage = '请求超时，请稍后再试。';
             break;
         case '413':
             errMessage = '数据过大';
             break;
-        case '500':
+        case gResultEnum.SERVERERROR:
             errMessage = '服务器端出错';
             break;
         case '501':
@@ -47,10 +48,7 @@ export async function check_status(status:string, msg: string, cb?: Fn) {
     }
     if (errMessage) {
         if (cb && isFunction(cb)) {
-            cb(status, errMessage)
+            cb(status, errMessage);
         }
-        
-        
     }
 }
-

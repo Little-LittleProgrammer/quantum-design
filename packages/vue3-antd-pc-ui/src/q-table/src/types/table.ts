@@ -1,9 +1,9 @@
-import { ColumnProps } from 'ant-design-vue/lib/table';
+import type { ColumnProps } from 'ant-design-vue/lib/table';
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
-import { PaginationProps } from './pagination';
-import { FormProps } from '@vue3-antd/q-form';
-import { VNodeChild } from 'vue';
-import { ComponentType } from './component-type';
+import type { PaginationProps } from './pagination';
+import type { FormProps } from '@vue3-antd/q-form';
+import type { VNodeChild } from 'vue';
+import type { ComponentType } from './component-type';
 
 export declare type SortOrder = 'ascend' | 'descend';
 

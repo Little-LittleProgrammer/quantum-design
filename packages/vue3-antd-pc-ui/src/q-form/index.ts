@@ -1,4 +1,4 @@
-import { App, Plugin } from 'vue';
+import type { App, Plugin } from 'vue';
 import QAntdForm from './src/form.vue';
 import selectAllVue from './src/components/select-all.vue';
 

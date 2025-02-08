@@ -8,6 +8,8 @@ export enum gResultEnum {
     SERVERERROR = '500',
     RELOAD = '307',
     LOGIN = '401',
+    PROMISE = '403',
+    NOALLOW = '403',
     TIMEOUT = '408',
     TYPE = 'success',
 }

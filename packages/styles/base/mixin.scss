@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "sass:map";
+@use "./base.scss";
 /*
   sass混合
 */
@@ -43,7 +46,7 @@
     background-image:     -ms-linear-gradient(top, $begin, $end);
     background-image:      -o-linear-gradient(top, $begin, $end);
     background-image:         linear-gradient(top, $begin, $end);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr="#{ie-hex-str($begin)}", EndColorStr="#{ie-hex-str($end)}");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr="#{color.ie-hex-str($begin)}", EndColorStr="#{color.ie-hex-str($end)}");
 }
 
 @mixin graDeg($deg,$begin,$end){
@@ -64,7 +67,7 @@
 @mixin opacityColor($color,$trans){
     $rgba: rgba($color, $trans);
     background: $rgba;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr="#{ie-hex-str($rgba)}", EndColorStr="#{ie-hex-str($rgba)}");
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr="#{color.ie-hex-str($rgba)}", EndColorStr="#{color.ie-hex-str($rgba)}");
     .ie9 &{
         filter: none;
     }
@@ -156,30 +159,30 @@
 // mixin.scss
 // 背景色
 @mixin bg-color($key) {
-    background-color: map-get($colors-light, $key);
+    background-color: map.get(base.$colors-light, $key);
     [data-theme="dark"] & {
-      background-color: map-get($colors-dark, $key);
+      background-color: map.get(base.$colors-dark, $key);
     }
   }
 // text色
 @mixin text-color($key) {
-    color: map-get($colors-light, $key);
+    color: map.get(base.$colors-light, $key);
     [data-theme="dark"] & {
-        color: map-get($colors-dark, $key);
+        color: map.get(base.$colors-dark, $key);
     }
 }
 // border色
 @mixin border-color($key, $direct:'') {
     @if $direct == '' {
-        border-color: map-get($colors-light, $key);
+        border-color: map.get(base.$colors-light, $key);
         [data-theme="dark"] & {
-            border-color: map-get($colors-dark, $key);
+            border-color: map.get(base.$colors-dark, $key);
         }
     }
     @else {
-        border-#{$direct}-color: map-get($colors-light, $key);
+        border-#{$direct}-color: map.get(base.$colors-light, $key);
         [data-theme="dark"] & {
-            border-#{$direct}-color: map-get($colors-dark, $key);
+            border-#{$direct}-color: map.get(base.$colors-dark, $key);
         }
     }
     

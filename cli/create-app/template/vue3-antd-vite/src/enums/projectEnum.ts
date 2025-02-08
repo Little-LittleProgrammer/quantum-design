@@ -1,4 +1,4 @@
-import { IProjectConfig } from '@quantum-design/vue3-antd-pc-ui';
+import type { IProjectConfig } from '@quantum-design/vue3-antd-pc-ui';
 
 const setting: IProjectConfig = {
     // 主题配置

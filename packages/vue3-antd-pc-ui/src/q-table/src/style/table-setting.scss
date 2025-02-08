@@ -1,4 +1,6 @@
-.#{$prefixCls}-setting {
+@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;
+$prefix-cls: 'q-table';
+.#{$prefix-cls}-setting {
     & > * {
         margin-right: 12px;
     }
@@ -15,7 +17,6 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .ant-checkbox-group {
             max-height: 500px;
             overflow-x: hidden;

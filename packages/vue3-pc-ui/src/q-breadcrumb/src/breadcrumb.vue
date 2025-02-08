@@ -12,8 +12,8 @@
 
 <script lang='ts' setup>
 import { reactive, watch, getCurrentInstance} from 'vue';
-import { LocationQuery, Router } from 'vue-router';
-import { IBreadcrumb, breadcrumbProps } from './types';
+import type { LocationQuery, Router } from 'vue-router';
+import { type IBreadcrumb, breadcrumbProps } from './types';
 import { flatten } from './utils';
 defineOptions({
     name: 'QAntdBreadcrumb'

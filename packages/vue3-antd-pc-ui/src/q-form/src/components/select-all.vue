@@ -23,7 +23,7 @@ export default defineComponent({
 </script>
 
 <script lang='ts' setup>
-import { reactive, useAttrs, computed, watchEffect, PropType, getCurrentInstance, nextTick, defineComponent} from 'vue';
+import { reactive, useAttrs, computed, watchEffect, type PropType, getCurrentInstance, nextTick, defineComponent} from 'vue';
 import { Divider as ADivider, Select as ASelect, Checkbox as ACheckbox } from 'ant-design-vue';
 
 type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean; };

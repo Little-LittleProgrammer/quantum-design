@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { useProjectSettingStore } from '../store';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 
 export function useProjectSetting() {
     const projectSettingStore = useProjectSettingStore();

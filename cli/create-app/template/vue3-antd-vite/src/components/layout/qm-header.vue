@@ -28,7 +28,7 @@
 
 <script lang='ts' setup>
 import { useGo } from '@quantum-design/hooks/vue/use-page';
-import { onMounted, PropType, computed } from 'vue';
+import { onMounted, type PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSysStore } from '@/store/modules/systemManage';
 import { propTypes } from '@quantum-design/types/vue/types';

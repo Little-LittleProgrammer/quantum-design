@@ -41,14 +41,14 @@
 
 <script lang='ts'>
 import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
-import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
+import { computed, defineComponent, onMounted, reactive, type Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
-import { FormActionType, FormProps, FormSchema } from './types/form';
+import type { FormActionType, FormProps, FormSchema } from './types/form';
 import formItem from './components/form-item.vue';
 import formAction from './components/form-action.vue';
 import { use_form_values } from './hooks/use-form-values';
-import { EmitType, use_form_events } from './hooks/use-form-events';
+import { type EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
 import { Form as AForm, Row as ARow } from 'ant-design-vue';
 import './style/form.scss';

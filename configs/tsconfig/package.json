@@ -16,7 +16,7 @@
     "turborepo"
   ],
   "files": [
-    "tsconfig-base.json",
+    "base.json",
     "lib.json",
     "vue.json"
   ],

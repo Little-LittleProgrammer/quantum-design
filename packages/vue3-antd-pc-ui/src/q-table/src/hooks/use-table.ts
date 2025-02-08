@@ -2,7 +2,7 @@ import type { BasicTableProps, TableActionType, FetchParams, BasicColumn, Record
 import type { PaginationProps } from '../types/pagination';
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue';
 import { ref, onUnmounted, unref, watch, toRaw } from 'vue';
-import { FormActionType } from '@vue3-antd/q-form';
+import type { FormActionType } from '@vue3-antd/q-form';
 
 type Props = Partial<DynamicProps<BasicTableProps>>;
 

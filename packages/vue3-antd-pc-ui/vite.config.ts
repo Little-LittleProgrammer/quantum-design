@@ -8,10 +8,10 @@ function path_resolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
-export default ({ command, mode }: ConfigEnv):UserConfig => {
+export default ({ command, mode, }: ConfigEnv):UserConfig => {
     const _common = vite_common_lib_config({
         entry: './index.ts',
-        name: 'qComponents',
+        name: 'qmComponents',
         outDir: 'dist',
         isComponentsBuild: true,
         target: 'modules',
@@ -21,7 +21,6 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                 'vue-router',
                 'ant-design-vue',
                 '@ant-design/icons-vue',
-                'vue-types',
                 '@quantum-design/shared',
                 '@quantum-design/utils',
                 '@quantum-design/utils/extra',
@@ -41,15 +40,15 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                 'dayjs',
                 'lodash-es',
                 'pinia'
-            ]
+            ],
         },
         buildOptions: {
             cssCodeSplit: true,
-            minify: true
+            minify: true,
         },
         dtsOptions: {
-            entryRoot: resolve(__dirname)
-        }
+            entryRoot: resolve(__dirname),
+        },
     });
     _common.plugins?.splice(2, 1);
     return {
@@ -57,17 +56,18 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';"
-                }
-            }
+                    additionalData: "@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;",
+                },
+            },
         },
         resolve: {
             alias: {
-                '@vue3-antd/': path_resolve('src') + '/'
-            }
+                '@vue3-antd/': path_resolve('src') + '/',
+            },
         },
         test: {
-            environment: 'jsdom'
-        }
+            environment: 'jsdom',
+        },
+        plugins: _common.plugins,
     };
 };

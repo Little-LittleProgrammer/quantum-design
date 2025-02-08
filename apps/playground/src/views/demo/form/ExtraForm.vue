@@ -14,7 +14,7 @@
 <script lang='ts' setup>
 import {computed, onMounted, onUnmounted} from 'vue';
 import {QCodeEditor, QRichText} from '@quantum-design/vue3-pc-ui';
-import { useForm, FormSchema, QAntdForm, useComponentRegister, delComponentRegister } from '@quantum-design/vue3-antd-pc-ui';
+import { useForm, type FormSchema, QAntdForm, useComponentRegister, delComponentRegister } from '@quantum-design/vue3-antd-pc-ui';
 defineOptions({
     name: 'UseForm',
 });

@@ -1,0 +1,52 @@
+{
+    "name": "@quantum-design-configs/vite-sentry",
+    "version": "2.0.0",
+    "description": "vite-sentry配置",
+    "main": "dist/sentry.cjs.min.js",
+    "module": "dist/sentry.esm.min.js",
+    "source": "./index.ts",
+    "types": "dist/types/index.d.ts",
+    "type": "module",
+    "exports": {
+        "./cli": {
+            "import": "./dist/sentry-cli.esm.min.js",
+            "require": "./dist/sentry-cli.cjs.min.js",
+            "types": "./dist/types/vite-plugin.d.ts"
+        },
+        "./project": {
+            "import": "./dist/sentry-inner.esm.min.js",
+            "require": "./dist/sentry-inner.cjs.min.js",
+            "types": "./dist/types/project-inner.d.ts"
+        },
+        "./nuxt": {
+            "import": "./dist/sentry-nuxt.esm.min.js",
+            "require": "./dist/sentry-nuxt.cjs.min.js",
+            "types": "./dist/types/project-nuxt.d.ts"
+        }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.com/",
+      "access": "public"
+    },
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "author": "Evan Wu",
+    "license": "MIT",
+    "dependencies": {
+        "@sentry/vue": "catalog:",
+        "@sentry/cli": "catalog:",
+        "@sentry/vite-plugin": "catalog:"
+    },
+    "devDependencies": {
+        "rollup": "catalog:",
+        "@quantum-design-configs/rollup": "workspace:*"
+    },
+    "peerDependencies": {
+        "vue": "^3.4.0"
+    }
+}

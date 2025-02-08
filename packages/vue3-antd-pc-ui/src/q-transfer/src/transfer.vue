@@ -32,10 +32,10 @@
 
 <script lang='ts' setup>
 
-import { reactive, PropType, computed, watch} from 'vue';
+import { reactive, type PropType, computed, watch} from 'vue';
 import { js_utils_deep_copy, isObject } from '@quantum-design/utils';
-import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
-import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
+import type { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
+import { handle_tree_data, type ICity, is_checked, render_title, filter_tree_data, type IFieldNames, dfs, get_parent_keys } from './transfer';
 import './style/transfer.scss';
 import { Transfer as ATransfer, Tree as ATree, InputSearch as AInputSearch} from 'ant-design-vue';
 import { propTypes } from '@quantum-design/types/vue/types';

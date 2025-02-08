@@ -1,9 +1,9 @@
 module.exports = {
-    extends: ['turbo'],
-    'parserOptions': {
+    parserOptions: {
         'ecmaVersion': 12,
         'sourceType': 'module',
     },
+    ignorePatterns: ['*.json', '*.yaml', '*.md'],
     rules: {
         'turbo/no-undeclared-env-vars': 0,
         'no-var': 'error', // 禁止使用var

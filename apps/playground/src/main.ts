@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { register_sentry_vue } from '@quantum-design/shared/plugins';
+import { register_sentry_vue } from '@quantum-design-configs/vite-sentry/project';
 import {setup_store} from '@/store';
 import { router, setup_router } from '@/router';
 import { register_glob_comp } from './antd';

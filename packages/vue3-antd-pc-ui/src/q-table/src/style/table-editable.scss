@@ -1,4 +1,6 @@
-.#{$prefixCls}-editable-cell {
+@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;
+$prefix-cls: 'q-table';
+.#{$prefix-cls}-editable-cell {
     position: relative;
     min-height: 24px; //设置高度让其始终可被hover
     .edit-cell-align-left {

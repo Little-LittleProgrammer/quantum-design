@@ -26,18 +26,18 @@
   },
   "devDependencies": {
     "@quantum-design/types": "workspace:*",
-    "@types/sortablejs": "~1.15.0",
-    "ant-design-vue": "~4.2.5",
-    "@ant-design/icons-vue": "~6.1.0",
-    "vue": "~3.4.31",
-    "vue-router": "~4.4.0",
-    "echarts": "~5.4.2",
-    "sortablejs": "~1.15.0"
+    "@types/sortablejs": "catalog:",
+    "ant-design-vue": "catalog:",
+    "@ant-design/icons-vue": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "echarts": "catalog:",
+    "sortablejs": "catalog:"
   },
   "peerDependencies": {
-    "ant-design-vue": "~4.2.5",
-    "@ant-design/icons-vue": "~6.1.0",
-    "vue": "~3.4.0",
-    "vue-router": "~4.4.0"
+    "ant-design-vue": "^4.2.6",
+    "@ant-design/icons-vue": "^7.0.1",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0"
   }
 }

@@ -17,7 +17,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { isFunction, isString } from '@quantum-design/utils';
 import { Tooltip } from 'ant-design-vue';
-import { PropType, computed } from 'vue';
+import { type PropType, computed } from 'vue';
 defineOptions({
     name: 'QAntdTableTitle'
 });

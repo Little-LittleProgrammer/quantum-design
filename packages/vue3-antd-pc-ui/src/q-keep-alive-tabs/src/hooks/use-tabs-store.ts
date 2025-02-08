@@ -1,7 +1,7 @@
 import { useGo, useRedo } from '@quantum-design/hooks/vue';
 import { defineStore } from 'pinia';
 import { toRaw, unref } from 'vue';
-import { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';
+import type { RouteLocationNormalized, RouteLocationRaw, Router } from 'vue-router';
 import { isClient } from '@quantum-design/utils';
 import { js_create_local_storage, js_create_session_storage } from '@quantum-design/utils/extra';
 import { TabKeys } from '../enums/cacheEnum';

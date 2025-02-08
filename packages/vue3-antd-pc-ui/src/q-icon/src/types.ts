@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes } from 'vue';
 import { propTypes } from '@quantum-design/types/vue/types';
 
 export const iconPickProps = {

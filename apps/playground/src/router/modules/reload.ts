@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 import { LAYOUT } from '../base';
 
 export const redirectRoute: RouteRecordRaw = {

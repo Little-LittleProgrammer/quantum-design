@@ -19,7 +19,7 @@
 </template>
 
 <script lang='ts' setup>
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import {Divider} from 'ant-design-vue';
 import type { TableSetting, ColumnChangeParam } from '../../types/table';
 import TableTitle from './table-title.vue';

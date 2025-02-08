@@ -24,9 +24,9 @@
 </template>
 
 <script lang='ts' setup>
-import { onMounted, PropType, computed} from 'vue';
+import { onMounted, type PropType, computed} from 'vue';
 import { propTypes } from '@quantum-design/types/vue/types';
-import { ColEx } from '../types';
+import type { ColEx } from '../types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import { use_form_context } from '../hooks/use-form-context';
 import { Col as ACol, FormItem as AFormItem, Button as AButton } from 'ant-design-vue';

@@ -5,9 +5,9 @@
 
 <script lang='ts' setup>
 import { useGlobalStore } from '@/store/modules/global';
-import { js_is_funtion } from '@quantum-design/utils';
+import { isFunction } from '@quantum-design/utils';
 import type { ButtonProps } from 'ant-design-vue';
-import { onMounted, PropType, ref} from 'vue';
+import { onMounted, type PropType, ref} from 'vue';
 import { IExportOptions } from './types/interface';
 const props = defineProps({
     options: {
@@ -23,12 +23,12 @@ const globalStore = useGlobalStore();
 const loading = ref(false);
 
 async function export_file() {
-    if (!js_is_funtion(props.options.apiFunc)) {
+    if (!isFunction(props.options.apiFunc)) {
         console.error('请传入上传方法');
     }
     loading.value = true;
     let _req = props.options.params;
-    if (js_is_funtion(props.options.params)) {
+    if (isFunction(props.options.params)) {
         _req = props.options.params();
     }
     const _res = await props.options.apiFunc(_req);

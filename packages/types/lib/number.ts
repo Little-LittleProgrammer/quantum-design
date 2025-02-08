@@ -1,6 +1,6 @@
-import { GetTuple, Pop } from './array';
-import { CheckLeftIsExtendsRight, Not, Or } from './common';
-import { Stringify } from './string';
+import type { GetTuple, Pop } from './array';
+import type { CheckLeftIsExtendsRight, Not, Or } from './common';
+import type { Stringify } from './string';
 
 /**
  *  数字判断

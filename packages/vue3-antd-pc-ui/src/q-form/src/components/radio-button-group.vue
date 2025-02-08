@@ -13,7 +13,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, onMounted, useAttrs, PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
+import { reactive, onMounted, useAttrs, type PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
 import { isString } from '@quantum-design/utils';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import {Tooltip as ATooltip, RadioGroup as ARadioGroup, RadioButton as ARadioButton} from 'ant-design-vue';

@@ -27,22 +27,23 @@
   "dependencies": {
     "@quantum-design/utils": "workspace:*",
     "@quantum-design/shared": "workspace:*",
-    "@sentry/vite-plugin": "~2.20.1",
-    "@vitejs/plugin-vue": "~5.0.5",
-    "@vitejs/plugin-vue-jsx": "~4.0.0",
-    "postcss-pxtorem": "~6.1.0",
-    "unplugin-vue-components": "~0.27.2",
-    "vite-plugin-compression2": "~1.1.2",
-    "vite-plugin-dts": "~3.6.4",
-    "vite-plugin-pwa": "~0.20.0"
+    "@quantum-design-configs/vite-sentry": "workspace:*",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:",
+    "postcss-pxtorem": "catalog:",
+    "unplugin-vue-components": "catalog:",
+    "vite-plugin-compression2": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vite-plugin-pwa": "catalog:"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "catalog:",
     "@quantum-design-configs/rollup": "workspace:*",
-    "@types/postcss-pxtorem": "~6.0.3",
-    "rollup": "~4.18.0"
+    "@types/postcss-pxtorem": "catalog:",
+    "rollup": "catalog:"
   },
   "peerDependencies": {
-    "vite": "~5.4.1",
-    "vue": "~3.4.0"
+    "vite": "~6.0.5",
+    "vue": "^3.4.0"
   }
 }

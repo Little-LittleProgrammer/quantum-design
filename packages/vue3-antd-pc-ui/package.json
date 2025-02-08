@@ -64,27 +64,28 @@
     "@quantum-design/shared": "workspace:*",
     "@quantum-design/utils": "workspace:*",
     "@quantum-design/vue3-pc-ui": "workspace:*",
-    "lodash-es": "~4.17.21",
-    "sortablejs": "~1.15.0"
+    "@quantum-design/styles": "workspace:*",
+    "lodash-es": "catalog:",
+    "sortablejs": "catalog:"
   },
   "devDependencies": {
     "@quantum-design-configs/vite": "workspace:*",
     "@quantum-design/types": "workspace:*",
-    "@types/lodash-es": "~4.17.12",
-    "sass": "~1.77.6",
-    "vue": "~3.4.31",
-    "pinia": "~2.2.2",
-    "@vue/test-utils": "~2.4.0",
-    "@ant-design/icons-vue": "~6.1.0",
-    "ant-design-vue": "~4.2.5",
-    "vue-router": "~4.4.0",
-    "vue-types": "~5.1.1",
-    "dayjs": "~1.11.7",
-    "csstype": "~3.1.2"
+    "@types/lodash-es": "catalog:",
+    "sass": "catalog:",
+    "vue": "catalog:",
+    "pinia": "catalog:",
+    "@vue/test-utils": "catalog:",
+    "@ant-design/icons-vue": "catalog:",
+    "ant-design-vue": "catalog:",
+    "vue-router": "catalog:",
+    "vue-types": "catalog:",
+    "dayjs": "catalog:",
+    "csstype": "catalog:"
   },
   "peerDependencies": {
-    "pinia": "~2.2.2",
-    "vue": "~3.4.0",
-    "vue-router": "~4.4.0"
+    "pinia": "^2.2.2",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
   }
 }

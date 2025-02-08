@@ -26,7 +26,7 @@
 </template>
 
 <script lang='ts' setup>
-import { PropType, onMounted} from 'vue';
+import { type PropType, onMounted} from 'vue';
 import { useDrawerInner } from '@vue3-antd/q-drawer';
 import QAntdDrawer from '@vue3-antd/q-drawer';
 import { Divider } from 'ant-design-vue';
@@ -34,7 +34,7 @@ import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
 import { HandleEnum } from '../enums/enum';
 import { useProjectSetting } from '../hooks/use-project-setting';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,

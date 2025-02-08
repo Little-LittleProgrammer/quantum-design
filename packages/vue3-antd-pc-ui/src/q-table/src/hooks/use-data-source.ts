@@ -1,7 +1,7 @@
 
-import { PaginationProps } from '../types/pagination';
-import { ComputedRef, Ref, computed, onMounted, reactive, ref, unref, watch, watchEffect } from 'vue';
-import { BasicColumn, BasicTableProps, FetchParams, SorterResult, Recordable } from '../types/table';
+import type { PaginationProps } from '../types/pagination';
+import { type ComputedRef, type Ref, computed, onMounted, reactive, ref, unref, watch, watchEffect } from 'vue';
+import type { BasicColumn, BasicTableProps, FetchParams, SorterResult, Recordable } from '../types/table';
 import { isArray, isBoolean, isFunction, isObject, js_utils_get_table_header_columns, js_utils_get_uuid } from '@quantum-design/utils';
 import { FETCH_SETTING, PAGE_SIZE, ROW_KEY } from '../enums/const';
 import { cloneDeep, get, merge } from 'lodash-es';

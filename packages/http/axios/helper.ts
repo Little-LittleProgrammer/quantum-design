@@ -1,7 +1,7 @@
-import { isFunction } from '@quantum-design/utils';
+import { isFunction, isClient } from '@quantum-design/utils';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { CreateAxiosOptions } from './axios-transform';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { CreateAxiosOptions } from './axios-transform';
 
 /**
  * @description 添加时间戳
@@ -16,7 +16,7 @@ export function joinTimestamp(join: boolean, restful = false): string | Recordab
     if (restful) {
         return `t=${now}`;
     }
-    return { t: now };
+    return { t: now, };
 }
 
 /**
@@ -30,7 +30,7 @@ export function joinEnvToUrl(env: ()=>string, restful = false): string | Recorda
     if (restful) {
         return `env=${(env())}`;
     }
-    return { env: env()};
+    return { env: env(), };
 }
 
 /**
@@ -41,17 +41,21 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
     if (!join) {
         return restful ? '' : {};
     }
-    const _cookie = document.cookie;
+    const _cookie = globalThis?.document?.cookie;
     const _cookieObj:any = {};
-    _cookie.split(';').forEach(item => {
-        const _key = item.split('=')[0];
-        const _value = item.split('=')[1];
-        _cookieObj[_key] = _value;
-    });
+    if (_cookie) {
+        _cookie.split(';').forEach(item => {
+            if (item.includes('=')) {
+                const _key = item.split('=')[0]?.trim() || '';
+                const _value = item.split('=')[1]?.trim();
+                _cookieObj[_key] = _value;
+            }
+        });
+    }
     if (restful) {
         return `qm_csrf_backend=${_cookieObj['qm_csrf_backend']}`;
     }
-    return { qm_csrf_backend: _cookieObj['qm_csrf_backend']};
+    return { qm_csrf_backend: _cookieObj['qm_csrf_backend'], };
 }
 
 /**
@@ -59,9 +63,12 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
  */
 
 export function dealToken() {
-    const ls = js_create_local_storage();
-    function setTokenToHeader(options: CreateAxiosOptions, config: InternalAxiosRequestConfig<any>) {
-        const {withToken = true } = options.requestOptions!;
+    const ls = isClient ? js_create_local_storage() : {
+        get: () => { console.log('dealToken暂不支持service'); },
+        set: () => { console.log('dealToken暂不支持service'); },
+    };
+    function setTokenToHeader(options: CreateAxiosOptions, config: AxiosRequestConfig<any>) {
+        const {withToken = true, } = options.requestOptions!;
         if (!withToken) {
             return config;
         }
@@ -71,8 +78,8 @@ export function dealToken() {
                 config.headers['x-qm-devops-token'] = _token['x-qm-devops-token'];
             } else {
                 config.headers = {
-                    'x-qm-devops-token': options.authenticationScheme ? `${options.authenticationScheme} ${_token['x-qm-devops-token']}` : _token['x-qm-devops-token']
-                } as any;
+                    'x-qm-devops-token': options.authenticationScheme ? `${options.authenticationScheme} ${_token['x-qm-devops-token']}` : _token['x-qm-devops-token'],
+                };
             }
         }
         return config;
@@ -83,11 +90,11 @@ export function dealToken() {
         }
         if (res.headers['x-qm-devops-token']) {
             ls.set('qm_token', {
-                'x-qm-devops-token': res.headers['x-qm-devops-token']
+                'x-qm-devops-token': res.headers['x-qm-devops-token'],
             });
         }
     }
     return {
-        setTokenToHeader, setTokenToLs
+        setTokenToHeader, setTokenToLs,
     };
 }

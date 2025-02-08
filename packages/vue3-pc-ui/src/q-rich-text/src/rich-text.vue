@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 	import {
 		ref,
-		PropType,
+		type PropType,
 		computed,
 		unref,
 		watch,

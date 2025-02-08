@@ -14,7 +14,7 @@ import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
-import { IMenuData } from '@quantum-design/types/vue/router';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 
 export default defineComponent({
@@ -58,8 +58,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@quantum-design/shared/style/antd/antd.scss';
-@import '@quantum-design/shared/style/base/index.scss';
+@use '@quantum-design/styles/antd/antd.scss';
+@use '@quantum-design/styles/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

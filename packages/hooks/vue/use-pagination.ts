@@ -1,4 +1,4 @@
-import { ref, unref, computed, Ref } from 'vue';
+import { ref, unref, computed, type Ref } from 'vue';
 
 // 用于前端实现分页
 function pagination<T = any>(list: T[], pageNo: number, pageSize: number): T[] {

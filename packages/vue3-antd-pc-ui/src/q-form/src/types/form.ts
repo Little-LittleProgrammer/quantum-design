@@ -1,11 +1,11 @@
 import type { CSSProperties, Ref, VNode } from 'vue';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import type { NamePath, RuleObject } from 'ant-design-vue/lib/form/interface';
-import { ColEx, ComponentType } from './index';
-import { FormItem } from './form-item';
-import { TableActionType } from '@vue3-antd/q-table/src/types/table';
-import { ButtonProps } from 'ant-design-vue/lib/button';
-import {Flatten, DeepRequired} from '@quantum-design/types/lib';
+import type { ColEx, ComponentType } from './index';
+import type { FormItem } from './form-item';
+import type { TableActionType } from '@vue3-antd/q-table/src/types/table';
+import type { ButtonProps } from 'ant-design-vue/lib/button';
+import type { Flatten, DeepRequired } from '@quantum-design/types/lib';
 
 export type FieldMapToTime = [string, [string, string], string?][];
 

@@ -1,6 +1,7 @@
-import { ViteEnv } from '../types';
+import type { ViteEnv } from './types';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
+
 
 export function vite_plugin_sentry(env: ViteEnv, options?: SentryVitePluginOptions) {
     if (env.VITE_USE_SENTRY) {
