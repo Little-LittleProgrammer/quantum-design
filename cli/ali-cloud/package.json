@@ -1,0 +1,42 @@
+{
+    "name": "qm-ali-cloud",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Quantum CLI for ali cloud api\n, use qa -c to create mr\n, use qa -a to create app stack\n, use qa -v to show version\n, use qa -h to show help",
+    "scripts": {
+        "dev": "unbuild --stub",
+        "build": "unbuild"
+    },
+    "bin": {
+        "qm-ali": "index.js",
+        "qa": "index.js"
+    },
+    "files": [
+        "index.js",
+        "dist"
+    ],
+    "publishConfig": {
+      "registry": "https://registry.npmjs.com/",
+      "access": "public"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "catalog:",
+        "openai": "catalog:"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "catalog:",
+        "@types/minimist": "^1.2.3",
+        "@types/prompts": "^2.4.6",
+        "fs-extra": "catalog:",
+        "kolorist": "^1.8.0",
+        "minimist": "^1.2.5",
+        "prompts": "^2.4.2",
+        "unbuild": "^2.0.0"
+    },
+    "volta": {
+        "node": "18.18.2"
+    }
+}
