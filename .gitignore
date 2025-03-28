@@ -57,3 +57,6 @@ cache
 .nuxt
 .nitro
 .cache
+
+# cursor
+.cursor/mcp.json

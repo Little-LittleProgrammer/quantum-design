@@ -1,0 +1,9 @@
+{
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ES2020",
+        "moduleResolution": "bundler",                          /* Skip type checking all .d.ts files. */
+    },
+    "exclude": ["template/*"]
+}

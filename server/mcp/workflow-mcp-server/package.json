@@ -1,0 +1,44 @@
+{
+    "name": "qm-workflow-mcp",
+    "version": "0.0.1-beta.2",
+    "type": "module",
+    "description": "工作流 mcp server",
+    "scripts": {
+        "dev": "unbuild --stub",
+        "build": "unbuild"
+    },
+    "bin": {
+        "qm-workflow-mcp": "index.js"
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "catalog:",
+        "qm-workflow": "workspace:*",
+        "@modelcontextprotocol/sdk": "catalog:",
+        "dotenv": "catalog:",
+        "zod": "catalog:"
+    },
+    "devDependencies": {
+        "shx": "catalog:",
+        "@types/fs-extra": "catalog:",
+        "@types/minimist": "catalog:",
+        "@types/prompts": "catalog:",
+        "fs-extra": "catalog:",
+        "lodash-es": "catalog:",
+        "@types/lodash-es": "catalog:",
+        "kolorist": "catalog:",
+        "minimist": "catalog:",
+        "prompts": "catalog:",
+        "unbuild": "catalog:"
+    }
+}

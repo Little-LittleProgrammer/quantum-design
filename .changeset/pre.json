@@ -21,10 +21,15 @@
     "@quantum-design/vue3-antd-pc-ui": "2.0.1",
     "@quantum-design/vue3-antd-pc-ui-nuxt": "2.0.1",
     "@quantum-design/vue3-pc-ui": "2.0.1",
-    "@quantum-design/vue3-pc-ui-nuxt": "2.0.1"
+    "@quantum-design/vue3-pc-ui-nuxt": "2.0.1",
+    "qm-workflow": "0.0.1-beta.0",
+    "@quantum-design/ai-hub": "0.0.1",
+    "qm-workflow-mcp": "0.0.1-beta.0"
   },
   "changesets": [
+    "empty-foxes-carry",
     "strange-queens-itch",
-    "swift-jars-look"
+    "swift-jars-look",
+    "wise-cobras-camp"
   ]
 }

@@ -1,0 +1,58 @@
+{
+    "name": "qm-workflow",
+    "version": "0.0.1-beta.2",
+    "type": "module",
+    "description": "工作流 cli",
+    "scripts": {
+        "dev": "unbuild --stub",
+        "build": "unbuild"
+    },
+    "bin": {
+        "qm-workflow": "index.js",
+        "qw": "index.js"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "tools.js"
+    ],
+    "exports": {
+        ".": {
+            "require": "./tools.js",
+            "import": "./dist/tools.mjs"
+        },
+        "./index.js": {
+            "require": "./tools.js",
+            "import": "./dist/tools.mjs"
+        },
+        "./dist/*": "./dist/*"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "catalog:",
+        "openai": "catalog:",
+        "@larksuiteoapi/node-sdk": "catalog:",
+        "dotenv": "catalog:"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "catalog:",
+        "@types/minimist": "catalog:",
+        "@types/prompts": "catalog:",
+        "fs-extra": "catalog:",
+        "lodash-es": "catalog:",
+        "@types/lodash-es": "catalog:",
+        "kolorist": "catalog:",
+        "minimist": "catalog:",
+        "prompts": "catalog:",
+        "unbuild": "catalog:"
+    },
+    "volta": {
+        "node": "18.18.2"
+    }
+}
