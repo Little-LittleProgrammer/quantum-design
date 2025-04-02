@@ -22,8 +22,8 @@ export function createServer(): McpServer {
     const options = getGlobalOptions();
 
     // 验证飞书配置
-    if (!options.feishuConfig?.appId || !options.feishuConfig?.appSecret || !options.feishuConfig?.spaceName) {
-        throw new Error('飞书配置不完整，请检查 appId、appSecret 和 spaceName');
+    if (!options.feishuConfig?.appId || !options.feishuConfig?.appSecret) {
+        throw new Error('飞书配置不完整，请检查 appId、appSecret');
     }
 
     const docxClient = new DocxClient({
@@ -57,7 +57,6 @@ export function createServer(): McpServer {
         },
         async({ url }) => {
             try {
-                await docxClient.getWikiBase();
                 const res = await docxClient.getWikiDocs(url);
                 return {
                     content: [{ type: 'text' as const, text: res }]
@@ -77,13 +76,15 @@ export function createServer(): McpServer {
         },
         async({ markdown, parent_node }) => {
             try {
-                await docxClient.getWikiBase();
+                if (options.feishuConfig.spaceName) {
+                    await docxClient.getWikiBase();
+                }
                 let token = parent_node;
                 if (parent_node.includes('http')) {
                     const infoArr = parent_node.split('?')[0]?.split('/') || [];
                     token = infoArr.pop() || '';
                 }
-                const res = await docxClient.createWikiDocsMarkdown(markdown, token);
+                await docxClient.createWikiDocsMarkdown(markdown, token);
                 return {
                     content: [{ type: 'text' as const, text: 'ok' }]
                 };

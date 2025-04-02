@@ -3,7 +3,6 @@ import type { FeishuDocType } from '../../types/client';
 import { generateUUID } from '../../utils/tools';
 import { FeishuClient } from './feishu-base-client';
 import fs from 'fs-extra';
-import { resolve } from 'path';
 
 export class DocxClient extends FeishuClient {
     // TODO 支持多知识库
@@ -256,7 +255,7 @@ export class DocxClient extends FeishuClient {
         }
 
         // 4. 从云文档迁移至知识库
-        const moveRes = await this.removeDocsToWiki({
+        const moveRes = await this.moveDocsToWiki({
             parent_wiki_token: parent_node || '',
             obj_type: 'docx',
             obj_token: res.data.result.token,
@@ -325,7 +324,7 @@ export class DocxClient extends FeishuClient {
         return res;
     }
 
-    private async removeDocsToWiki(config: {
+    private async moveDocsToWiki(config: {
         parent_wiki_token: string;
         obj_type: FeishuDocType;
         obj_token: string;

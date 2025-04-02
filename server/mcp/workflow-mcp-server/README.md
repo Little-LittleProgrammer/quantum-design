@@ -11,6 +11,7 @@ npx -y qm-workflow-mcp-server
 ```
 
 2. 环境变量
+
 ```bash
 vim ~/.zshrc
 
