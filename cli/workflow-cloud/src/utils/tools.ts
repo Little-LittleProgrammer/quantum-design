@@ -28,3 +28,6 @@ export function generateUUID(len: number, radix?: number) {
     return _uuid.join('');
 }
 
+export function formatRepoName(repoName: string) {
+    return repoName.replace(/\./g, '_').replace(/-/g, '_');
+}

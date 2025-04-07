@@ -150,6 +150,9 @@ catalogs:
     eslint-plugin-vue:
       specifier: ~9.32.0
       version: 9.32.0
+    express:
+      specifier: ^5.0.1
+      version: 5.0.1
     fs-extra:
       specifier: ~11.2.0
       version: 11.2.0
@@ -952,13 +955,6 @@ importers:
       '@quantum-design/utils':
         specifier: workspace:*
         version: link:../utils
-    optionalDependencies:
-      monaco-editor:
-        specifier: 'catalog:'
-        version: 0.52.2
-      tinymce:
-        specifier: 'catalog:'
-        version: 5.10.9
     devDependencies:
       '@quantum-design-configs/vite':
         specifier: workspace:*
@@ -978,6 +974,13 @@ importers:
       vue-router:
         specifier: 'catalog:'
         version: 4.5.0(vue@3.5.13(typescript@5.7.3))
+    optionalDependencies:
+      monaco-editor:
+        specifier: 'catalog:'
+        version: 0.52.2
+      tinymce:
+        specifier: 'catalog:'
+        version: 5.10.9
 
   packages/vue3-pc-ui-nuxt:
     dependencies:
@@ -1024,6 +1027,9 @@ importers:
       dotenv:
         specifier: 'catalog:'
         version: 16.4.7
+      express:
+        specifier: 'catalog:'
+        version: 5.0.1
       qm-workflow:
         specifier: workspace:*
         version: link:../../../cli/workflow-cloud

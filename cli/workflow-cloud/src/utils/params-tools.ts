@@ -4,6 +4,10 @@ import { type IAliConfig, type IFeishuConfig, type IOpenaiConfig } from '../enum
 import { setGlobalOptions } from './question';
 
 export class IParams {
+    // 通用配置
+    port: number = 8989;
+
+    // 阿里云 配置
     aliConfig: IAliConfig = {
         token: '',
         orgId: '',
@@ -12,6 +16,8 @@ export class IParams {
         appId: '',
         appSecret: '',
         appUserToken: '',
+        projectId: '',
+        projectSecret: '',
     };
     openaiConfig: IOpenaiConfig = {
         apiKey: '',
@@ -58,6 +64,8 @@ export class IParams {
 
 export function getParams(): IParams {
     const params = new IParams();
+    // 通用配置
+    params.port = Number(process.env.PORT || 8989);
     // 阿里云 配置
     params.aliConfig.pipelineID = Number(process.env.PIPELINE_ID || 0);
     params.aliConfig.orgId = process.env.ORGANIZATION_ID as string;
@@ -70,6 +78,7 @@ export function getParams(): IParams {
     params.aliConfig.appNameSn = process.env.APP_NAME_SN as string;
     params.aliConfig.APP_ENV = process.env.APP_ENV as string;
     params.aliConfig.pipelineEnv = process.env.PIPELINE_ENV as string;
+    params.aliConfig.reviewerUsers = process.env.REVIEWER_USERS?.split(',') || [];
 
     // 百炼 api 配置
     params.openaiConfig.modelName = process.env.BAILIAN_MODELNAME as string;

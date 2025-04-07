@@ -1,14 +1,16 @@
 import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 import { BaseClient } from '../base-client';
-import type { AppStackSource, TypeAppStackWorkflow, ReleaseStage } from '../../types/client';
+import type { TypeAppStackWorkflow } from '../../types/client';
 import type { IAliConfig } from '../../enums/default-options';
+import { formatRepoName } from '../../utils/tools';
 
 class AppStackClient extends BaseClient {
     private appStackName: string;
     private workflows: TypeAppStackWorkflow = [];
     private workflowList: { workflowSn: string; stageSn: string }[] = [];
     private source: string = '';
+    private repoName: string;
 
     constructor(aliConfig: Partial<IAliConfig>) {
         if (!aliConfig.token) {
@@ -18,6 +20,7 @@ class AppStackClient extends BaseClient {
             aliToken: aliConfig.token,
         });
         this.appStackName = aliConfig.appStackName || '';
+        this.repoName = aliConfig.repoName || '';
     }
 
     // 获取应用栈
@@ -56,9 +59,7 @@ class AppStackClient extends BaseClient {
                             FLOW_INST_RUNNING_COMMENT: '自动执行',
                             APP_ENV: env,
                             pipelineEnv: env,
-                            my_source_1: this.source,
-                            CI_COMMIT_REF_NAME: this.source,
-                            CI_COMMIT_REF_NAME_1: this.source,
+                            [formatRepoName(this.repoName)]: this.source,
                         },
                     },
                     {

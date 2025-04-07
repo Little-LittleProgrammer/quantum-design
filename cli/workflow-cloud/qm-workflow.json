@@ -5,7 +5,9 @@
     },
     "aliConfig": {
         "appStackName": "q-front-npm",
-        "repoName": "q-front-npm",
-        "targetBranch": "master"
+        "repoName": "q-front-npm"
+    },
+    "gitConfig": {
+        "targetBranch": "main"
     }
 }

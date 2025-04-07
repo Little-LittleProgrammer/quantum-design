@@ -57,7 +57,7 @@ async function main() {
                 }
                 if (_paramTarget.includes('appstack') || _argv.a === 'appstack') {
                     // 执行应用栈逻辑
-                    await executeAppStack();
+                    await executeAppStack(_paramTarget);
                 } else {
                     // 执行创建 MR 逻辑
                     await executeCodeup();

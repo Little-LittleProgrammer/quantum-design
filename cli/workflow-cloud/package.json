@@ -14,7 +14,8 @@
     "files": [
         "dist",
         "README.md",
-        "tools.js"
+        "tools.js",
+        "index.js"
     ],
     "exports": {
         ".": {

@@ -26,7 +26,8 @@
         "qm-workflow": "workspace:*",
         "@modelcontextprotocol/sdk": "catalog:",
         "dotenv": "catalog:",
-        "zod": "catalog:"
+        "zod": "catalog:",
+        "express": "catalog:"
     },
     "devDependencies": {
         "shx": "catalog:",

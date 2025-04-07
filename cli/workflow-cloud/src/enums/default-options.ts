@@ -46,6 +46,7 @@ export interface IGitConfig {
 }
 
 export interface ICliOptions {
+    port: number;
     isUpdate: boolean;
     gitConfig: Partial<IGitConfig>;
     openaiConfig: Partial<IOpenaiConfig>;
@@ -54,6 +55,7 @@ export interface ICliOptions {
 }
 
 export const cliOptions: ICliOptions = {
+    port: 8989,
     isUpdate: false,
     gitConfig: {
         sourceBranch: '',

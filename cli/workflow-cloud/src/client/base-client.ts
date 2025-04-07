@@ -13,7 +13,7 @@ export class BaseClient {
         this.baseUrl = 'https://openapi-rdc.aliyuncs.com/oapi/v1';
         this.aliToken = options.aliToken || '';
         this.aliOrgId = '5f6426fcdb0493ecef9118ab';
-        this.feishuAppId = options.feishuAppId || 'cli_a751437852b01013';
+        this.feishuAppId = options.feishuAppId || '';
         this.feishuAppSecret = options.feishuAppSecret || '';
     }
     protected get getAliHeaders() {
