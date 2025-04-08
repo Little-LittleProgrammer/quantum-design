@@ -1,6 +1,6 @@
 {
     "name": "qm-workflow",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "type": "module",
     "description": "工作流 cli",
     "scripts": {

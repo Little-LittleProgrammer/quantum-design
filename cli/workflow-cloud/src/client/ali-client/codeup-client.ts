@@ -209,7 +209,7 @@ class CodeupClient extends BaseClient {
             });
             const compareResult = new CompareResult(response.data.diffs);
 
-            return new PRCompressor(compareResult, 5000); // 返回响应数据
+            return new PRCompressor(compareResult, 4000); // 返回响应数据
         } catch (error) {
             console.error('Error fetching diff patches:', error);
             throw error; // 抛出错误，以便调用者处理
@@ -259,6 +259,7 @@ class CodeupClient extends BaseClient {
         try {
             await axios.post(url, {
                 reviewComment: comment,
+                reviewOpinion: 'NOT_PASS',
             }, {
                 headers: this.getAliHeaders,
             });

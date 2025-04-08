@@ -116,7 +116,7 @@ export class OpenAIClient {
                 this.sessionId = res.data.output.session_id;
                 return res.data.output.text?.trim() || '';
             }
-            return res.data.choices[0]?.message.content?.trim() || '';
+            return res.data.output.choices[0]?.message.content?.trim() || '';
         } catch (error) {
             console.log('解析结果失败', error);
             return null;

@@ -227,7 +227,7 @@ export class CompareResult {
     }
 
     getHunkDiff(hunkHead: string, lineNumber: number, lines: string[]) {
-        let hunkDiffLines = [hunkHead, lines[lineNumber]];
+        const hunkDiffLines = [hunkHead, lines[lineNumber]];
 
         lineNumber++;
         while (lineNumber < lines.length && !lines[lineNumber].match(hunkStartReg)) {
@@ -245,39 +245,39 @@ export class PRCompressor {
     public remainingHunks: Hunk[] = [];
     // 添加需要排除的文件模式
     private static readonly EXCLUDED_PATTERNS = [
-        /\.lock$/,           // package-lock.json, yarn.lock 等
-        /^dist\//,           // 构建输出目录
-        /^build\//,          // 构建输出目录
+        /\.lock$/, // package-lock.json, yarn.lock 等
+        /^dist\//, // 构建输出目录
+        /^build\//, // 构建输出目录
         /\.min\.(js|css)$/, // 压缩后的文件
-        /\.d\.ts$/,         // TypeScript 声明文件
-        /^\.idea\//,        // IDE 配置文件
-        /^\.vscode\//,      // IDE 配置文件
-        /^node_modules\//,   // 依赖目录
-        /\.md$/,            // markdown 文件
-        /\.json$/,          // json 文件
-        /\.yml$/,           // yaml 文件
-        /\.yaml$/,          // yaml 文件
-        /\.toml$/,          // toml 文件
-        /\.png$/,           // 图片
-        /\.jpg$/,           // 图片
-        /\.jpeg$/,          // 图片
-        /\.gif$/,           // 图片
-        /\.svg$/,           // 图片
-        /\.webp$/,          // 图片
-        /\.bmp$/,           // 图片
-        /\.tiff$/,          // 图片
-        /\.ico$/,           // 图片
-        /\.woff$/,          // 字体
-        /\.woff2$/,         // 字体
-        /\.eot$/,           // 字体
-        /\.otf$/,           // 字体
-        /\.ttf$/,           // 字体
+        /\.d\.ts$/, // TypeScript 声明文件
+        /^\.idea\//, // IDE 配置文件
+        /^\.vscode\//, // IDE 配置文件
+        /^node_modules\//, // 依赖目录
+        /\.md$/, // markdown 文件
+        /\.json$/, // json 文件
+        /\.yml$/, // yaml 文件
+        /\.yaml$/, // yaml 文件
+        /\.toml$/, // toml 文件
+        /\.png$/, // 图片
+        /\.jpg$/, // 图片
+        /\.jpeg$/, // 图片
+        /\.gif$/, // 图片
+        /\.svg$/, // 图片
+        /\.webp$/, // 图片
+        /\.bmp$/, // 图片
+        /\.tiff$/, // 图片
+        /\.ico$/, // 图片
+        /\.woff$/, // 字体
+        /\.woff2$/, // 字体
+        /\.eot$/, // 字体
+        /\.otf$/, // 字体
+        /\.ttf$/ // 字体
     ];
 
     constructor(compareResult: CompareResult, maxTokens: number) {
         this.hunks = compareResult.getHunks();
         this.deletedFiles = compareResult.diffs.filter((d) => d.deletedFile) || [];
-        this.maxTokens = maxTokens || 5000;
+        this.maxTokens = maxTokens || 4000;
     }
 
     compressForAI(hunks?: Hunk[]): {
@@ -291,8 +291,8 @@ export class PRCompressor {
         // 1. 按语言对文件进行分组和排序
         const fileGroups = this.groupHunksByLanguage();
         // 2. 计算当前所有 hunks 的 token 数量
-        let prioritizedHunks: Hunk[] = [];
-        let remainingHunks: Hunk[] = [];
+        const prioritizedHunks: Hunk[] = [];
+        const remainingHunks: Hunk[] = [];
         let currentTokenCount = 0;
 
         // 3. 按优先级添加 hunks
@@ -317,7 +317,7 @@ export class PRCompressor {
             otherModifications,
         };
     }
-    
+
     // 添加新的方法来检查文件是否应该被排除
     private shouldExcludeFile(fileName: string): boolean {
         return PRCompressor.EXCLUDED_PATTERNS.some(pattern => pattern.test(fileName));
@@ -373,5 +373,4 @@ export class PRCompressor {
         }
         return 'unknown';
     }
-
 }
