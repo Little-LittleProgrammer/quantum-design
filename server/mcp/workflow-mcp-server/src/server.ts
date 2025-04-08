@@ -25,16 +25,16 @@ function handleError(error: unknown, operation: string): any {
 
 export class FeishuMcpServer {
     private readonly server: McpServer;
-    private sseTransport: SSEServerTransport | null = null;
+    private sseTransports: Map<string, SSEServerTransport> = new Map();
     private docxClient: DocxClient;
     private readonly options: any = null;
-    private isConnected: boolean = false;
     constructor(options: any) {
         // 验证飞书配置
         if (!options.feishuConfig?.appId || !options.feishuConfig?.appSecret) {
             throw new Error('飞书配置不完整，请检查 appId、appSecret');
         }
         this.options = options;
+        this.sseTransports = new Map<string, SSEServerTransport>();
 
         this.docxClient = new DocxClient({
             appId: options.feishuConfig.appId,
@@ -192,31 +192,35 @@ export class FeishuMcpServer {
 
     async startHttpServer(port?: number): Promise<void> {
         const app = express();
-
-        app.get('/sse', async(_req: Request, res: Response) => {
+        app.get('/__mcp/sse', async(_req: Request, res: Response) => {
             try {
-                // 如果已经有连接，先断开旧连接
-                if (this.sseTransport && this.isConnected) {
-                    return;
-                }
-
                 console.log('New SSE connection established');
-                this.sseTransport = new SSEServerTransport('/messages', res);
-                await this.server.connect(this.sseTransport);
-                this.isConnected = true;
+                const sseTransport = new SSEServerTransport('/__mcp/messages', res);
+                this.sseTransports.set(sseTransport.sessionId, sseTransport);
+                res.on('close', () => {
+                    this.sseTransports.delete(sseTransport.sessionId);
+                });
+                await this.server.connect(sseTransport);
             } catch (error) {
                 console.error('SSE connection error:', error);
                 res.status(500).end();
             }
         });
 
-        app.post('/messages', async(req: Request, res: Response) => {
+        app.post('/__mcp/messages', async(req: Request, res: Response) => {
             try {
-                if (!this.sseTransport || !this.isConnected) {
+                const query = new URLSearchParams(req.url?.split('?').pop() || '');
+                const clientId = query.get('sessionId');
+                if (!clientId) {
                     res.sendStatus(400);
                     return;
                 }
-                await this.sseTransport.handlePostMessage(req, res);
+                const transport = this.sseTransports.get(clientId);
+                if (!transport) {
+                    res.sendStatus(400);
+                    return;
+                }
+                await transport.handlePostMessage(req, res);
             } catch (error) {
                 console.error('Message handling error:', error);
                 res.status(500).end();

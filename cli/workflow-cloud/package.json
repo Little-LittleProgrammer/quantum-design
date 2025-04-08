@@ -1,6 +1,6 @@
 {
     "name": "qm-workflow",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "type": "module",
     "description": "工作流 cli",
     "scripts": {
@@ -37,7 +37,6 @@
     "license": "ISC",
     "dependencies": {
         "axios": "catalog:",
-        "openai": "catalog:",
         "@larksuiteoapi/node-sdk": "catalog:",
         "dotenv": "catalog:"
     },

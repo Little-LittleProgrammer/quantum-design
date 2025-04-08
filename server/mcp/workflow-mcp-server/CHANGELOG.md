@@ -1,5 +1,13 @@
 # qm-workflow-mcp-server
 
+## 0.0.3
+
+### Patch Changes
+
+-   去除 openai 依赖;修复 mcp sse 问题
+-   Updated dependencies
+    -   qm-workflow@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
