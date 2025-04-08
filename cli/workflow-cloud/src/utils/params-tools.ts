@@ -22,6 +22,7 @@ export class IParams {
     openaiConfig: IOpenaiConfig = {
         apiKey: '',
         modelName: '',
+        bailianAppId: '',
     };
 
     getCurrentSourceWithMr(): CodeSource | null {
@@ -83,6 +84,7 @@ export function getParams(): IParams {
     // 百炼 api 配置
     params.openaiConfig.modelName = process.env.BAILIAN_MODELNAME as string;
     params.openaiConfig.apiKey = process.env.BAILIAN_API_KEY as string;
+    params.openaiConfig.bailianAppId = process.env.BAILIAN_APP_ID as string;
 
     // 飞书 api 配置
     params.feishuConfig.appId = process.env.FEISHU_APP_ID as string;

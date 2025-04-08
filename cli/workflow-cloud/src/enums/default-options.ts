@@ -25,6 +25,7 @@ export interface IAliConfig {
 export interface IOpenaiConfig {
     apiKey: string;
     modelName: string;
+    bailianAppId: string;
 }
 
 export interface IFeishuConfig {
@@ -65,6 +66,7 @@ export const cliOptions: ICliOptions = {
     openaiConfig: {
         apiKey: '',
         modelName: '',
+        bailianAppId: '',
     },
     aliConfig: {
         repo: '',

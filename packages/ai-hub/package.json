@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/ai-hub",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "整合主流 ai 供应商和模型",
     "main": "dist/ai-hub.cjs.min.js",
     "module": "dist/ai-hub.esm.min.js",

@@ -1,5 +1,23 @@
 # qm-workflow-mcp-server
 
+## 0.0.2
+
+### Patch Changes
+
+-   477a29e: 发布版本,支持飞书文档获取与飞书文档写入
+-   477a29e: 修复缺陷
+-   Updated dependencies [477a29e]
+-   Updated dependencies
+-   Updated dependencies [477a29e]
+    -   qm-workflow@0.0.2
+
+## 0.0.2-beta.0
+
+### Patch Changes
+
+-   Updated dependencies
+    -   qm-workflow@0.0.2-beta.0
+
 ## 0.0.1-beta.2
 
 ### Patch Changes

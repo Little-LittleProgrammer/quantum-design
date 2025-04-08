@@ -1,41 +1,41 @@
 {
-  "name": "create-quantum-app",
-  "version": "2.0.0-beta.0",
-  "type": "module",
-  "description": "",
-  "scripts": {
-    "dev": "unbuild --stub",
-    "build": "unbuild",
-    "start": "cqap"
-  },
-  "bin": {
-    "create-quantum-app": "index.js",
-    "create-quantum-api": "api.js",
-    "create-qm-app": "index.js",
-    "cqap": "index.js",
-    "create-qm-api": "api.js",
-    "cqa": "api.js"
-  },
-  "files": [
-    "index.js",
-    "template",
-    "dist"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "keywords": [],
-  "author": "Evan Wu",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/fs-extra": "~11.0.2",
-    "@types/minimist": "~1.2.3",
-    "@types/prompts": "~2.4.6",
-    "fs-extra": "~11.2.0",
-    "kolorist": "~1.8.0",
-    "minimist": "~1.2.5",
-    "prompts": "~2.4.2",
-    "unbuild": "~2.0.0"
-  }
+    "name": "create-quantum-app",
+    "version": "2.0.0",
+    "type": "module",
+    "description": "",
+    "scripts": {
+        "dev": "unbuild --stub",
+        "build": "unbuild",
+        "start": "cqap"
+    },
+    "bin": {
+        "create-quantum-app": "index.js",
+        "create-quantum-api": "api.js",
+        "create-qm-app": "index.js",
+        "cqap": "index.js",
+        "create-qm-api": "api.js",
+        "cqa": "api.js"
+    },
+    "files": [
+        "index.js",
+        "template",
+        "dist"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "Evan Wu",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/fs-extra": "~11.0.2",
+        "@types/minimist": "~1.2.3",
+        "@types/prompts": "~2.4.6",
+        "fs-extra": "~11.2.0",
+        "kolorist": "~1.8.0",
+        "minimist": "~1.2.5",
+        "prompts": "~2.4.2",
+        "unbuild": "~2.0.0"
+    }
 }
