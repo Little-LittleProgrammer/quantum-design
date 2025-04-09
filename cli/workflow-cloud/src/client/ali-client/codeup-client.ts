@@ -3,6 +3,7 @@ import { BaseClient } from '../base-client';
 import { CompareResult, PRCompressor } from '../code-tools/hunk-patch';
 import type { ReviewResult } from '../openai-client/openai-client';
 import type { IAliConfig, IGitConfig } from '../../enums/default-options';
+import { get_branch, get_repo_info } from '../../utils/command';
 
 class CodeupClient extends BaseClient {
     private repoName: string = '';
@@ -19,10 +20,16 @@ class CodeupClient extends BaseClient {
         super({
             aliToken: aliConfig.token,
         });
-        this.repoName = aliConfig.repoName || '';
-        if (gitConfig.sourceBranch) {
-            this.sourceBranch = gitConfig.sourceBranch;
+        if (!aliConfig.repoName) {
+            const repoInfo = get_repo_info();
+            aliConfig.repoName = repoInfo.repoName;
         }
+        this.repoName = aliConfig.repoName || '';
+        if (!gitConfig.sourceBranch) {
+            const branch = get_branch();
+            gitConfig.sourceBranch = branch;
+        }
+        this.sourceBranch = gitConfig.sourceBranch || '';
         if (gitConfig.targetBranch) {
             this.targetBranch = gitConfig.targetBranch;
         }
@@ -42,11 +49,12 @@ class CodeupClient extends BaseClient {
     public async getUsers() {
         const users: any[] = [];
         let page = 1;
-        while (true) {
+        let condition = true;
+        while (condition) {
             const response = await this.getUsersPage(page);
             users.push(...response);
             if (response.length < 100) {
-                break;
+                condition = false;
             }
             page++;
         }

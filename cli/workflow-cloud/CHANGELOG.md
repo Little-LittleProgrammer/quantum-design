@@ -1,5 +1,11 @@
 # qm-workflow
 
+## 0.0.5
+
+### Patch Changes
+
+-   增加自动获取分支以及仓库名功能
+
 ## 0.0.4
 
 ### Patch Changes

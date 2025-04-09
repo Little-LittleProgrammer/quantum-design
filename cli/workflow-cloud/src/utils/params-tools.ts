@@ -11,6 +11,7 @@ export class IParams {
     aliConfig: IAliConfig = {
         token: '',
         orgId: '',
+        targetBranch: 'master',
     };
     feishuConfig: IFeishuConfig = {
         appId: '',
@@ -75,6 +76,7 @@ export function getParams(): IParams {
     params.aliConfig.token = process.env.ALI_TOKEN as string;
     params.aliConfig.repo = process.env.REPO as string;
     params.aliConfig.repoName = process.env.REPO_NAME as string;
+    params.aliConfig.targetBranch = process.env.TARGET_BRANCH as string;
     params.aliConfig.appStackName = process.env.APP_STACK_NAME as string;
     params.aliConfig.appNameSn = process.env.APP_NAME_SN as string;
     params.aliConfig.APP_ENV = process.env.APP_ENV as string;

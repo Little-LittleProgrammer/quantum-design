@@ -4,11 +4,11 @@ import { BaseClient } from '../base-client';
 import type { TypeAppStackWorkflow } from '../../types/client';
 import type { IAliConfig } from '../../enums/default-options';
 import { formatRepoName } from '../../utils/tools';
+import { get_repo_info } from '../../utils/command';
 
 class AppStackClient extends BaseClient {
     private appStackName: string;
     private workflows: TypeAppStackWorkflow = [];
-    private workflowList: { workflowSn: string; stageSn: string }[] = [];
     private source: string = '';
     private repoName: string;
 
@@ -20,6 +20,10 @@ class AppStackClient extends BaseClient {
             aliToken: aliConfig.token,
         });
         this.appStackName = aliConfig.appStackName || '';
+        if (!aliConfig.repoName) {
+            const repoInfo = get_repo_info();
+            aliConfig.repoName = repoInfo.repoName;
+        }
         this.repoName = aliConfig.repoName || '';
     }
 

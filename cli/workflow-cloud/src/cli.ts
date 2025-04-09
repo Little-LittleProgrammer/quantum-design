@@ -12,6 +12,14 @@ import { config } from 'dotenv';
 config();
 
 async function main() {
+    // 首先判断是否带参数
+    const _argv = get_argv();
+    const _paramTarget = _argv._;
+    if (_argv.v) {
+        // 版本号
+        console.log(pkg.version);
+        return;
+    }
     const _needUpdate = await need_update();
     if (!_needUpdate) {
         // 读取本地文件夹，获取基本信息；
@@ -30,9 +38,6 @@ async function main() {
             setGlobalOptions(baseInfo);
             // 设置环境变量
             setGlobalOptions(params);
-            // 首先判断是否带参数
-            const _argv = get_argv();
-            const _paramTarget = _argv._;
             // 判断参数类型
             // 阿里云工作流
             if (_argv.a) {
@@ -66,9 +71,6 @@ async function main() {
             } else if (_argv.f) {
                 // 飞书工作流
                 await executeFeishu();
-            } else if (_argv.v) {
-                // 版本号
-                console.log(pkg.version);
             }
         } catch (error) {
             console.log('❌ 步骤出错: ' + error);

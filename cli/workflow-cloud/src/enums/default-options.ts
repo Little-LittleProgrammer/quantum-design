@@ -1,4 +1,5 @@
 export interface IAliConfig {
+    targetBranch: string;
     pipelineID?: number;
     token: string;
     orgId: string;
