@@ -59,7 +59,7 @@ export function get_repo_info() {
     try {
         const repo = execSync('git remote get-url origin').toString();
         // 获取 repo 的 name
-        const repoName = repo.split('/').pop()?.split('.').shift();
+        const repoName = repo.split('/').pop()?.split('.git').shift();
         return {
             repoName,
             repoUrl: repo,
