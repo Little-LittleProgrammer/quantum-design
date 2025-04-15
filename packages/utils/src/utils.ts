@@ -133,7 +133,7 @@ export function js_utils_throttle_event(fn: any, data: any) {
         const params = {
             time: data.time || 200,
             context: data.context || null,
-            args: data.args
+            args: data.args,
         };
         // 执行定时器
         // 函数也属于对象，因此可以添加属性
@@ -412,44 +412,4 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
             reject('请上传正确的格式');
         };
     });
-}
-
-export function serializeToString<T>(value: T): string {
-    if (isString(value)) {
-        return value;
-    }
-    function deal_special(val: any): string {
-        // 压缩方法
-        return val.toString().replace(/\n/g, ';');
-    }
-    // 判断引用类型的temp
-    function check_temp(target:any) {
-        const _c = target.constructor;
-        return new _c();
-    }
-    let serializeObj: Record<string, any> = {};
-    function dfs(target: any, map = new Map()) {
-        if (isBase(target)) {
-            return target;
-        }
-        if (isFunction(target)) {
-            return deal_special(target);
-        }
-        if (isRegExp(target)) return deal_special(target);
-
-        const _temp = check_temp(target);
-        // 防止循环引用
-        if (map.get(target)) {
-            return map.get(target);
-        }
-        map.set(target, _temp);
-        // 处理数组和对象
-        for (const key in target) {
-        // 递归
-            _temp[key] = dfs(target[key], map);
-        }
-        return _temp;
-    }
-    serializeObj = dfs(value);
-    return JSON.stringify(serializeObj, null, 4);
 }

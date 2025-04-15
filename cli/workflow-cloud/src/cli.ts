@@ -9,7 +9,7 @@ import { consoleInfo, setGlobalOptions } from './utils/question';
 import pkg from '../package.json';
 import { config } from 'dotenv';
 
-config();
+config({ path: path.resolve(process.cwd(), '.env'), });
 
 async function main() {
     // 首先判断是否带参数
