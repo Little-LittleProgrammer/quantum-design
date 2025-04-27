@@ -1,25 +1,25 @@
 module.exports = {
     parserOptions: {
         'ecmaVersion': 12,
-        'sourceType': 'module',
+        'sourceType': 'module'
     },
     ignorePatterns: ['*.json', '*.yaml', '*.md'],
     rules: {
         'turbo/no-undeclared-env-vars': 0,
         'no-var': 'error', // 禁止使用var
         'accessor-pairs': 2,
-        'indent': [2, 4, { SwitchCase: 1, }], // 缩进 SwitchCase,
-        'arrow-spacing': [2, { before: true, after: true, }], // 箭头函数中的箭头前后需要留空格
+        'indent': [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase,
+        'arrow-spacing': [2, { before: true, after: true }], // 箭头函数中的箭头前后需要留空格
         'block-spacing': [2, 'always'], // 如果代码块是单行的时候，代码块内部前后需要留一个空格
-        'brace-style': [2, '1tbs', { allowSingleLine: true, }], // 大括号语法采用『1tbs』,允许单行样式
+        'brace-style': [2, '1tbs', { allowSingleLine: true }], // 大括号语法采用『1tbs』,允许单行样式
         'comma-dangle': [2, {
             arrays: 'never',
-            objects: 'always',
+            objects: 'never',
             imports: 'never',
             exports: 'never',
-            functions: 'never',
+            functions: 'never'
         }], // 在定义对象或数组时，最后一项不能加逗号
-        'comma-spacing': [2, { before: false, after: true, }], // 在写逗号时，逗号前面不需要加空格，而逗号后面需要添加空格
+        'comma-spacing': [2, { before: false, after: true }], // 在写逗号时，逗号前面不需要加空格，而逗号后面需要添加空格
         'comma-style': [2, 'last'], // 如果逗号可以放在行首或行尾时，那么请放在行尾
         'constructor-super': 2, // 在constructor函数中，如果classes是继承其他class，那么请使用super。否者不使用super
         // 'curly': [2, 'multi-line'], // 在if-else语句中，如果if或else语句后面是多行，那么必须加大括号。如果是单行就应该省略大括号
@@ -29,10 +29,10 @@ module.exports = {
         // 'generator-star-spacing': [2, { 'before': true, 'after': true }], // 该规则规定了generator函数中星号两边的空白
         'handle-callback-err': [2, 'err'], // 规定callback 如果有err参数，只能写出err 或者 error
         // 'jsx-quotes': [2, 'prefer-single'],
-        'key-spacing': [2, { beforeColon: false, afterColon: true, }], // 该规则规定了在对象字面量语法中，key和value之间的空白，冒号前不要空格，冒号后面需要一个空格
-        'keyword-spacing': [2, { before: true, after: true, }], // keyword 前后需要空格
-        'max-len': [2, 200],
-        'new-cap': [2, { newIsCap: true, capIsNew: false, }], // 构造函数首字母大写
+        'key-spacing': [2, { beforeColon: false, afterColon: true }], // 该规则规定了在对象字面量语法中，key和value之间的空白，冒号前不要空格，冒号后面需要一个空格
+        'keyword-spacing': [2, { before: true, after: true }], // keyword 前后需要空格
+        'max-len': [2, 300],
+        'new-cap': [2, { newIsCap: true, capIsNew: false }], // 构造函数首字母大写
         'new-parens': 2, // 在使用构造函数时候，函数调用的圆括号不能够省略
         'no-array-constructor': 2, // 禁止使用Array构造函数
         'no-caller': 2, // 禁止使用arguments.caller和arguments.callee
@@ -61,12 +61,12 @@ module.exports = {
         'no-irregular-whitespace': 2, // 禁止使用不规则的空白符
         'no-iterator': 2, // 禁止使用__iterator__属性
         'no-label-var': 2, // label和var申明的变量不能重名
-        'no-labels': [2, { allowLoop: false, allowSwitch: false, }], // 禁止使用label语句
+        'no-labels': [2, { allowLoop: false, allowSwitch: false }], // 禁止使用label语句
         'no-lone-blocks': 2, // 禁止使用没有必要的嵌套代码块
         'no-mixed-spaces-and-tabs': 2, // 不要把空格和tab混用
         'no-multi-spaces': 2, // 规则旨在禁止在逻辑表达式，条件表达式，声明，数组元素，对象属性，序列和函数参数周围使用多个空格。 *
         'no-multi-str': 2, // 该规则保证了字符串不分两行书写
-        'no-multiple-empty-lines': [2, { max: 1, maxEOF: 1, }], // *空行不能够超过2行
+        'no-multiple-empty-lines': [2, { max: 1, maxEOF: 1 }], // *空行不能够超过2行
         'no-native-reassign': 2, // 该规则保证了不重写原生对象。
         'no-negated-in-lhs': 2, // 在in操作符左边的操作项不能用! 例如这样写不对的：if ( !a in b)
         'no-new-object': 2, // 不要通过new Object()，来定义对象
@@ -94,7 +94,7 @@ module.exports = {
         'no-undef-init': 2, // 禁止把undefined赋值给一个变量
         'no-unexpected-multiline': 2, // 禁止在不需要分行的时候使用了分行
         'no-unmodified-loop-condition': 2, // 该规则查找循环条件内的引用，然后检查这些引用的变量是否在循环中被修改 https://cloud.tencent.com/developer/section/1135772 *
-        'no-unneeded-ternary': [2, { defaultAssignment: false, }], // 禁止使用没有必要的三元操作符，因为用些三元操作符可以使用其他语句替换
+        'no-unneeded-ternary': [2, { defaultAssignment: false }], // 禁止使用没有必要的三元操作符，因为用些三元操作符可以使用其他语句替换
         'no-unreachable': 2, // 禁止执行不到的代码
         'no-unsafe-finally': 2,
         // 注意你必须禁用基本规则，因为它可以报告不正确的错误
@@ -105,22 +105,22 @@ module.exports = {
         'no-useless-escape': 0,
         'no-whitespace-before-property': 2,
         'no-with': 2, // 不要使用with语句
-        'one-var': [2, { initialized: 'never', }], // *在某些场景只能使用一个var来申明变量
+        'one-var': [2, { initialized: 'never' }], // *在某些场景只能使用一个var来申明变量
         'operator-linebreak': [2, 'after', {
             'overrides': {
                 '?': 'before',
-                ':': 'before',
-            },
+                ':': 'before'
+            }
         }], // 在进行断行时，操作符应该放在行首还是行尾。并且还可以对某些操作符进行重写。
         'padded-blocks': [2, 'never'],
-        'quotes': [2, 'single', { avoidEscape: true, allowTemplateLiterals: true, }], // 使用单引号
+        'quotes': [2, 'single', { avoidEscape: true, allowTemplateLiterals: true }], // 使用单引号
         'semi': [2, 'always'], // 这就是分号党和非分号党关心的了
-        'semi-spacing': [2, { before: false, after: true, }], // 该规则规定了分号前后的空格
+        'semi-spacing': [2, { before: false, after: true }], // 该规则规定了分号前后的空格
         // 'space-before-blocks': [2, 'always'], // *代码块前面需要加空格
         'space-before-function-paren': [2, 'never'], // 函数圆括号前面需要加空格
         'space-in-parens': [2, 'never'], // 圆括号内部不需要加空格
         'space-infix-ops': 2, // 操作符前后需要加空格
-        'space-unary-ops': [2, { words: true, nonwords: false, }], // 一元操作符前后是否需要加空格
+        'space-unary-ops': [2, { words: true, nonwords: false }], // 一元操作符前后是否需要加空格
         'spaced-comment': 0, // 评论符号｀／*｀ ｀//｀，后面需要留一个空格
         'template-curly-spacing': [2, 'never'],
         'use-isnan': 2, // 使用isNaN方法，而不要直接和NaN作比较
@@ -128,6 +128,6 @@ module.exports = {
         'wrap-iife': [2, 'any'], // 立即执行函数需要用圆括号包围
         'yield-star-spacing': [2, 'both'],
         'yoda': [2, 'never'], // 条件中变量写在前面，字面量写在右边
-        'prefer-const': 2,
-    },
+        'prefer-const': 2
+    }
 };

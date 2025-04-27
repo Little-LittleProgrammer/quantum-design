@@ -1,37 +1,18 @@
-<!--  -->
+<!-- 表单组件 -->
 <template>
-    <a-form
-        v-bind="getBindValue"
-        id="q-form"
-        class="q-form"
-        :class="getFormClass"
-        ref="formElRef"
-        :model="formModel"
-        @keypress.enter="handle_enter_press"
-    >
+    <a-form v-bind="getBindValue" id="q-form" class="q-form" :class="getFormClass" ref="formElRef" :model="formModel" @keypress.enter="handle_enter_press">
         <a-row class="row" v-bind="getRow">
             <slot name="formHeader"></slot>
             <template v-for="schema in getSchema" :key="schema.field">
-                <form-item
-                    :formActionType="formActionType"
-                    :schema="schema"
-                    :formProps="getProps"
-                    :allDefaultValues="defaultValueRef"
-                    :formModel="formModel"
-                    :setFormModel="set_form_model"
-                    :tableAction="tableAction"
-                >
+                <form-item :formActionType="formActionType" :schema="schema" :formProps="getProps" :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="set_form_model" :blurEvent="blur_event" :tableAction="tableAction">
                     <template #[item]="data" v-for="item in Object.keys($slots)">
                         <slot :name="item" v-bind="data || {}"></slot>
                     </template>
                 </form-item>
             </template>
             <form-action v-bind="getProps">
-                <template
-                    #[item]="data"
-                    v-for="item in ['resetBefore', 'submitBefore', 'submitAfter', 'advanceBefore', 'advanceAfter']"
-                >
-                <slot :name="item" v-bind="data || {}"></slot>
+                <template #[item]="data" v-for="item in ['resetBefore', 'submitBefore', 'submitAfter', 'advanceBefore', 'advanceAfter']">
+                    <slot :name="item" v-bind="data || {}"></slot>
                 </template>
             </form-action>
             <slot name="formFooter"></slot>
@@ -39,9 +20,9 @@
     </a-form>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
-import { computed, defineComponent, onMounted, reactive, type Ref, ref, unref, watch} from 'vue';
+import { computed, defineComponent, onMounted, reactive, type Ref, ref, unref, watch } from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
 import type { FormActionType, FormProps, FormSchema } from './types/form';
@@ -61,8 +42,8 @@ export default defineComponent({
         ...basicProps
     },
     // 提交给父组件的, reset, 清空
-    emits: ['reset', 'submit', 'register'],
-    components: {formItem, formAction, AForm, ARow},
+    emits: ['reset', 'submit', 'register', 'change', 'blur'],
+    components: { formItem, formAction, AForm, ARow },
     setup(props, { emit, attrs }) {
         const formModel = reactive<Record<string, any>>({});
         const schemaRef = ref<Nullable<FormSchema[]>>(null);
@@ -76,9 +57,7 @@ export default defineComponent({
             return unref(getProps).compact ? 'compact' : '';
         });
         // a-from 所需的api, 可能会多传, 但是无所谓
-        const getBindValue = computed(
-            () => ({ ...attrs, ...props, ...unref(getProps) } as Record<string, any>)
-        );
+        const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) } as Record<string, any>));
         // 父组件传入的props + 通过 useForm暴露出去的 setProps() 设置的props合集
         const getProps = computed((): FormProps => {
             return { ...props, ...unref(propsRef) } as FormProps;
@@ -122,20 +101,7 @@ export default defineComponent({
         });
 
         // 暴露出基本的 api, 供 useForm 以及本页面使用使用
-        const {
-            handleSubmit,
-            setFieldsValue,
-            clearValidate,
-            validate,
-            validateFields,
-            getFieldsValue,
-            updateSchema,
-            resetSchema,
-            appendSchemaByField,
-            removeSchemaByFiled,
-            resetFields,
-            scrollToField
-        } = use_form_events({
+        const { handleSubmit, setFieldsValue, clearValidate, validate, validateFields, getFieldsValue, updateSchema, resetSchema, appendSchemaByField, removeSchemaByFiled, resetFields, scrollToField } = use_form_events({
             emit: emit as EmitType,
             getProps,
             formModel,
@@ -203,6 +169,15 @@ export default defineComponent({
             if (!validateTrigger || validateTrigger === 'change') {
                 validateFields([key]).catch(() => {});
             }
+            const finValue = getFieldsValue();
+            emit('change', finValue);
+        }
+
+        function blur_event() {
+            validate().then(() => {
+                const value = getFieldsValue();
+                emit('blur', value);
+            });
         }
 
         // 当焦点为输入框时, enter提交事件
@@ -250,6 +225,8 @@ export default defineComponent({
             getProps,
             set_form_model,
             formElRef,
+            handle_form_values,
+            blur_event,
             // 方便暴露给useForm
             ...formActionType
         };

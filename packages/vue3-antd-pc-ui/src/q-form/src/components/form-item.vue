@@ -1,14 +1,14 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
 import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, js_utils_first_to_upper } from '@quantum-design/utils';
-import { defineComponent } from 'vue';
-import { Rule } from 'ant-design-vue/lib/form/interface';
-import { computed, type PropType, type Ref, toRefs, unref } from 'vue';
+import { defineComponent, computed, toRefs, unref } from 'vue';
+import type { Rule } from 'ant-design-vue/lib/form/interface';
+import type { PropType, Ref } from 'vue';
 import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
 import type { FormProps, FormSchema } from '../types/form';
 import type { FormActionType } from '../types/form';
-import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
+import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 import { cloneDeep } from 'lodash-es';
 import type { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
@@ -17,24 +17,36 @@ export default defineComponent({
     name: 'QAntFormItem',
     inheritAttrs: false,
     props: {
-        schema: { // form-item的 json 数据
+        schema: {
+            // form-item的 json 数据
             type: Object as PropType<FormSchema>,
             default: () => ({})
         },
-        formProps: { // 父组件传递的props(即 q-form 的props)
+        formProps: {
+            // 父组件传递的props(即 q-form 的props)
             type: Object as PropType<FormProps>,
             default: () => ({})
         },
-        allDefaultValues: { // 默认值
+        allDefaultValues: {
+            // 默认值
             type: Object as PropType<Record<string, any>>,
             default: () => ({})
         },
-        formModel: { // formData
+        formModel: {
+            // formData
             type: Object as PropType<Record<string, any>>,
             default: () => ({})
         },
         setFormModel: {
-            type: Function as PropType<(key: string, value: any, schema:FormSchema) => void>,
+            type: Function as PropType<(key: string, value: any, schema: FormSchema) => void>,
+            default: null
+        },
+        blurEvent: {
+            type: Function,
+            default: null
+        },
+        getFormModel: {
+            type: Function as PropType<(values: Record<string, any>) => Record<string, any>>,
             default: null
         },
         tableAction: {
@@ -44,7 +56,7 @@ export default defineComponent({
             type: Object as PropType<FormActionType>
         }
     },
-    setup(props, {slots}) {
+    setup(props, { slots }) {
         const { schema, formProps } = toRefs(props) as {
             schema: Ref<FormSchema>;
             formProps: Ref<FormProps>;
@@ -55,11 +67,7 @@ export default defineComponent({
             const { labelCol = {}, wrapperCol = {} } = schemaItem.itemProps || {};
             const { labelWidth, disabledLabelWidth } = schemaItem;
 
-            const {
-                labelWidth: globalLabelWidth,
-                labelCol: globalLabelCol,
-                wrapperCol: globWrapperCol
-            } = formPropsItem;
+            const { labelWidth: globalLabelWidth, labelCol: globalLabelCol, wrapperCol: globWrapperCol } = formPropsItem;
             if ((!globalLabelWidth && !labelWidth && !globalLabelCol) || disabledLabelWidth) {
                 labelCol.style = {
                     textAlign: 'left'
@@ -67,7 +75,7 @@ export default defineComponent({
                 return { labelCol, wrapperCol };
             }
             let _width = labelWidth || globalLabelWidth;
-            const _col = {...globalLabelCol, ...labelCol};
+            const _col = { ...globalLabelCol, ...labelCol };
             const wrapCol = { ...globWrapperCol, ...wrapperCol };
             if (_width) {
                 _width = isNumber(_width) ? `${_width}px` : _width;
@@ -77,9 +85,10 @@ export default defineComponent({
                 wrapperCol: { style: { width: `calc(100% - ${_width})` }, ...wrapCol }
             };
         }
-        // 获取 value
+
+        // 获取 value TODO, formModel处理
         const getValues = computed(() => {
-            const { allDefaultValues, formModel, schema } = props;
+            const { allDefaultValues, schema, formModel } = props;
             const { mergeDynamicData } = props.formProps;
             return {
                 field: schema.field,
@@ -93,10 +102,11 @@ export default defineComponent({
             };
         });
         const getComponentsProps = computed(() => {
-            const { schema, formModel, formActionType, tableAction } = props;
-            let { componentProps = {}} = schema;
+            const { schema, tableAction, formActionType, formModel } = props;
+            const { mergeDynamicData } = props.formProps;
+            let { componentProps = {} } = schema;
             if (isFunction(componentProps)) {
-                componentProps = componentProps({schema, formModel, formActionType, tableAction}) ?? {};
+                componentProps = componentProps({ schema, formModel, tableAction, formActionType, mergeDynamicData }) ?? {};
             }
             if (schema.component === 'Divider') {
                 componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
@@ -151,15 +161,8 @@ export default defineComponent({
             }
             return { isShow: _isShow, isIfShow: _isIfShow };
         }
-        function handle_rules():Rule[] {
-            const {
-                rules: defRules = [],
-                component,
-                rulesMessageJoinLabel,
-                label,
-                dynamicRules,
-                required
-            } = props.schema;
+        function handle_rules(): Rule[] {
+            const { rules: defRules = [], component, rulesMessageJoinLabel, label, dynamicRules, required } = props.schema;
             if (isFunction(dynamicRules)) {
                 return dynamicRules(unref(getValues)) as Rule[];
             }
@@ -178,9 +181,7 @@ export default defineComponent({
                 } else if (isString(value) && value.trim() === '') {
                     // 空字符串
                     return Promise.reject(_msg);
-                } else if (
-                    isObject(value) && Reflect.has(value, 'checked') && Reflect.has(value, 'halfChecked') && isArray(value.checked) && isArray(value.halfChecked) && value.checked.length === 0 && value.halfChecked.length === 0
-                ) {
+                } else if (isObject(value) && Reflect.has(value, 'checked') && Reflect.has(value, 'halfChecked') && isArray(value.checked) && isArray(value.halfChecked) && value.checked.length === 0 && value.halfChecked.length === 0) {
                     // 非关联选择的tree组件
                     return Promise.reject(_msg);
                 }
@@ -190,11 +191,9 @@ export default defineComponent({
             if ((!_rules || _rules.length === 0) && _getRequired) {
                 _rules = [{ required: _getRequired, validator }];
             }
-            const _requiredRuleIndex: number = _rules.findIndex(
-                (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator')
-            );
+            const _requiredRuleIndex: number = _rules.findIndex((rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'));
             if (_requiredRuleIndex !== -1) {
-                const _rule = _rules[_requiredRuleIndex];
+                const _rule = _rules[_requiredRuleIndex] || {};
                 const { isShow } = get_show();
                 if (!isShow) {
                     _rule.required = false;
@@ -215,33 +214,35 @@ export default defineComponent({
             }
             // Maximum input length rule check
             const _characterInx = _rules.findIndex((val) => val.max);
-            if (_characterInx !== -1 && !_rules[_characterInx].validator) {
+            if (_characterInx !== -1 && !_rules[_characterInx]?.validator) {
                 _rules[_characterInx].message = _rules[_characterInx].message || `字符应小于${[_rules[_characterInx].max] as Record<string, any>}位`;
             }
             return _rules;
         }
         function render_component() {
-            const {
-                renderComponentContent,
-                component,
-                field,
-                changeEvent = 'change',
-                valueField
-            } = props.schema;
+            const { renderComponentContent, component, field, changeEvent = 'change', valueField } = props.schema;
             const _isCheck = component && ['Switch', 'Checkbox'].includes(component);
 
             const _eventKey = `on${js_utils_first_to_upper(changeEvent)}`;
             const _on = {
-                [_eventKey]: (...args:Nullable<Record<string, any>>[]) => {
+                [_eventKey]: (...args: Nullable<Record<string, any>>[]) => {
                     const [e] = args;
                     const _target = e ? e.target : null;
                     const _value = _target ? (_isCheck ? _target.checked : _target.value) : e;
                     props.setFormModel(field, _value, props.schema);
                     // 自定义 change 事件
-                    if (_propsData[_eventKey]) { // 解决 如果 RadioButtonGroup 里也设置了change事件, 会于 emit(‘change’) 冲突, 造成执行2次
+                    if (_propsData[_eventKey]) {
+                        // 解决 如果 RadioButtonGroup 里也设置了change事件, 会于 emit(‘change’) 冲突, 造成执行2次
                         if (!(component === 'RadioButtonGroup' && e && e.target)) {
                             _propsData[_eventKey](...args);
                         }
+                    }
+                },
+                onBlur: (...args: Nullable<Record<string, any>>[]) => {
+                    props.blurEvent();
+                    // 自定义 blur 事件
+                    if (_propsData.onBlur) {
+                        _propsData.onBlur(...args);
                     }
                 }
             };
@@ -258,8 +259,7 @@ export default defineComponent({
             const _isCreatePlaceholder = !_propsData.disabled && autoSetPlaceHolder;
             // RangePicker place is an array
             if (_isCreatePlaceholder && component !== 'RangePicker' && component) {
-                _propsData.placeholder =
-            unref(getComponentsProps)?.placeholder || create_placeholder_message(component);
+                _propsData.placeholder = unref(getComponentsProps)?.placeholder || create_placeholder_message(component);
             }
             _propsData.codeField = field;
             _propsData.formValues = unref(getValues);
@@ -285,7 +285,7 @@ export default defineComponent({
             }
 
             if (!renderComponentContent) {
-                return <Comp {..._compAttr}/>;
+                return <Comp {..._compAttr} />;
             }
             const compSlot = isFunction(renderComponentContent)
                 ? { ...renderComponentContent(unref(getValues)) }
@@ -304,9 +304,7 @@ export default defineComponent({
             ) : (
                 label
             );
-            const getHelpMessage = isFunction(helpMessage)
-                ? helpMessage(unref(getValues))
-                : helpMessage;
+            const getHelpMessage = isFunction(helpMessage) ? helpMessage(unref(getValues)) : helpMessage;
             if (!getHelpMessage || (Array.isArray(getHelpMessage) && getHelpMessage.length === 0)) {
                 return _renderLabel;
             }
@@ -314,7 +312,8 @@ export default defineComponent({
             let getOverlayStyle = {};
             if (helpComponentProps) {
                 getTooltipStyle = {
-                    color: helpComponentProps.color, fontSize: helpComponentProps.fontSize
+                    color: helpComponentProps.color,
+                    fontSize: helpComponentProps.fontSize
                 };
                 getOverlayStyle = {
                     maxWidth: helpComponentProps.maxWidth
@@ -322,12 +321,7 @@ export default defineComponent({
             }
             return (
                 <span>
-                    <Tooltip
-                        placement="top"
-                        class="mr"
-                        title={<div style={getTooltipStyle}>{getHelpMessage}</div>}
-                        overlayStyle={getOverlayStyle}
-                    >
+                    <Tooltip placement="top" class="mr" title={<div style={getTooltipStyle}>{getHelpMessage}</div>} overlayStyle={getOverlayStyle}>
                         <QIcon type="QuestionCircleOutlined"></QIcon>
                     </Tooltip>
                     {_renderLabel}
@@ -353,16 +347,7 @@ export default defineComponent({
                 const _getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix;
                 const _getPrefix = isFunction(prefix) ? prefix(unref(getValues)) : prefix;
                 return (
-                    <Form.Item
-                        name={field}
-                        colon={colon}
-                        class={{ 'suffix-item': _showSuffix || _showPrefix }}
-                        {...(itemProps as Record<string, any>)}
-                        label={render_label_help_message()}
-                        rules={handle_rules()}
-                        labelCol={labelCol}
-                        wrapperCol={wrapperCol}
-                    >
+                    <Form.Item name={field} colon={colon} class={{ 'suffix-item': _showSuffix || _showPrefix }} {...(itemProps as Record<string, any>)} label={render_label_help_message()} rules={handle_rules()} labelCol={labelCol} wrapperCol={wrapperCol}>
                         <div style="display:flex">
                             {_showPrefix && <span class="prefix">{_getPrefix}</span>}
                             <div style="flex:1; max-width: 100%">{get_content()}</div>
@@ -383,10 +368,7 @@ export default defineComponent({
             const { isIfShow, isShow } = get_show();
             const values = unref(getValues);
             const getContent = () => {
-                return colSlot ? get_slot(slots, colSlot, unref(getValues))
-                    : renderColContent
-                        ? renderColContent(values)
-                        : render_item();
+                return colSlot ? get_slot(slots, colSlot, unref(getValues)) : renderColContent ? renderColContent(values) : render_item();
             };
             return (
                 isIfShow && (
@@ -397,6 +379,5 @@ export default defineComponent({
             );
         };
     }
-
 });
 </script>
