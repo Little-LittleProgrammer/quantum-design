@@ -1,5 +1,11 @@
 # @quantum-design/vue3-antd-pc-ui
 
+## 2.0.3-beta.0
+
+### Patch Changes
+
+-   增加 blur 事件
+
 ## 2.0.2
 
 ### Patch Changes
