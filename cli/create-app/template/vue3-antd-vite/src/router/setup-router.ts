@@ -9,7 +9,6 @@ export function setup_outer_guard(router: Router) {
     set_progress(router);
     create_http_guard(router);
     cancel_page_loading(router);
-    create_permission_route(router);
 }
 
 // 基本router方法
@@ -65,43 +64,3 @@ function create_http_guard(router: Router) {
         return true;
     });
 }
-
-function create_permission_route(router: Router) { // 是否包含权限管理
-    const globalStore = useGlobalStore();
-    if (!globalStore.authorityManage){
-        const _initRouter:RouteRecordRaw[] = [
-            {
-                path: '/',
-                redirect: '/backend',
-                name: 'first',
-                meta: {
-                    title: '第一初始页面',
-                    pid: '0',
-                    id: 'first'
-                }
-            },
-            {
-                path: '/backend',
-                redirect: '/backend/data-modules', // 默认初始页面
-                name: 'home',
-                meta: {
-                    title: '初始页面',
-                    pid: 'first',
-                    id: 'home'
-                }
-            }
-        ];
-        _initRouter.forEach(route => {
-            router.addRoute(route);
-        });
-        setTimeout(() => { // 路由的添加并不会及时刷新, 必须延时进行自行调用
-            const isInitPath = router.currentRoute.value.fullPath.split('/').length === 2;
-            if (isInitPath) {
-                router.push({
-                    path: '/'
-                });
-            }
-        }, 1500);
-    }
-}
-

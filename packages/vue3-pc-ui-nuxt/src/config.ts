@@ -5,13 +5,13 @@ export const libraryName = '@quantum-design/vue3-pc-ui';
 const allComponents: string[] = [
     'QLoading', 
     'QTag', 
-    'QThemeModeButton',
+    'QAntdThemeModeButton',
     'QTreeTable',
     'QWatemark'
 ];
 
 const allNoStylesComponents: string[] = [
-    'QThemeModeButton'
+    'QAntdThemeModeButton'
 ];
 
 const defaultInclude: RegExp[] = [

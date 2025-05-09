@@ -5,10 +5,12 @@ import { redirectRoute } from './modules/reload';
 import { flat_multi_level_routes } from './utils';
 import type { App } from 'vue';
 import { exampleRoute } from './modules/example';
+import demoRoute from './modules/demo';
 
 let routerData = [
     ...systemManageData,
-    exampleRoute
+    exampleRoute,
+    ...demoRoute
 ];
 
 // 添加error路由数据

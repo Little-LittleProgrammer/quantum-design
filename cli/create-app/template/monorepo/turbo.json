@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "tasks": {
     "build:lib": {
         "dependsOn": ["^build"],
         "outputs": ["dist/**","dist-components/**", ".next/**"]

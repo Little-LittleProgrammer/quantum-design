@@ -43,7 +43,7 @@
         "rollup": "catalog:"
     },
     "peerDependencies": {
-        "vite": "~6.0.5",
+        "vite": "^6.0.5",
         "vue": "^3.4.0"
     }
 }

@@ -5,7 +5,7 @@ import path from 'path'
 const antdCssStrTemp = (fs.readFileSync(path.resolve('node_modules/@quantum-design/styles/base/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g) || []).join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
 const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
 
-const _baseScssFile = "@use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *; @use '../docs/.vitepress/theme/styles/custom.scss' as *;";
+const baseScssFile = "@use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;";
 
 
 export default defineConfig({

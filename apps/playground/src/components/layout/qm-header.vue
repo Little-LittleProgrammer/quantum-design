@@ -123,6 +123,7 @@ onMounted(() => {
             height: 28px;
             width: 28px;
             vertical-align: top;
+            border-radius: 6px;
         }
         .s-name {
             font-size: $header-system-size;

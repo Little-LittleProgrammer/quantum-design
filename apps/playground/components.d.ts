@@ -22,7 +22,7 @@ declare module 'vue' {
     QmAside: typeof import('./src/components/layout/qm-aside.vue')['default']
     QmHeader: typeof import('./src/components/layout/qm-header.vue')['default']
     QmReloadPrompt: typeof import('./src/components/layout/qm-reload-prompt.vue')['default']
-    QThemeModeButton: typeof import('@quantum-design/vue3-pc-ui/es')['QThemeModeButton']
+    QAntdThemeModeButton: typeof import('@quantum-design/vue3-pc-ui/es')['QAntdThemeModeButton']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

@@ -31,7 +31,7 @@ const createState = () => {
             title: '' //  异步查看文件的列表html代码（包含查看链接）
         },
         hasHistoryUrl: false, // 是否有项目历史地址
-        authorityManage: true, // 权限管理开关（默认为开启，需要配置相应的数据）
+        authorityManage: false, // 权限管理开关（默认为开启，需要配置相应的数据）
         citySelect: [] as ISelectOption[]
     };
     return state;

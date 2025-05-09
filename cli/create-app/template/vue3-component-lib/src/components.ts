@@ -1,6 +1,6 @@
 
 // export { default as QLoading } from './q-loading';
-// export { default as QThemeModeButton } from './q-theme-mode-button';
+// export { default as QAntdThemeModeButton } from './q-theme-mode-button';
 export { default as QTag } from './q-tag';
 // export { default as QTreeTable } from './q-tree-table';
 // export { default as QPageWatermark} from './q-watermark';

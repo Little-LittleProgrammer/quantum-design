@@ -6,5 +6,5 @@ export type {ThemeModeTypes};
 
 import { component_with_install } from '@quantum-design/utils';
 
-const QThemeModeButton = component_with_install(ThemeModeButton);
-export {QThemeModeButton as default};
+const QAntdThemeModeButton = component_with_install(ThemeModeButton);
+export {QAntdThemeModeButton as default};
