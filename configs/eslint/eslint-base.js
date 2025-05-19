@@ -31,7 +31,7 @@ module.exports = {
         // 'jsx-quotes': [2, 'prefer-single'],
         'key-spacing': [2, { beforeColon: false, afterColon: true }], // 该规则规定了在对象字面量语法中，key和value之间的空白，冒号前不要空格，冒号后面需要一个空格
         'keyword-spacing': [2, { before: true, after: true }], // keyword 前后需要空格
-        'max-len': [2, 300],
+        'max-len': [1, 300],
         'new-cap': [2, { newIsCap: true, capIsNew: false }], // 构造函数首字母大写
         'new-parens': 2, // 在使用构造函数时候，函数调用的圆括号不能够省略
         'no-array-constructor': 2, // 禁止使用Array构造函数

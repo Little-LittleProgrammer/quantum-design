@@ -33,7 +33,9 @@
     "pinia": "catalog:",
     "monaco-editor": "catalog:",
     "vue": "catalog:",
-    "vue-router": "catalog:"
+    "vue-router": "catalog:",
+    "echarts": "catalog:",
+    "tinymce": "catalog:"
   },
   "devDependencies": {
     "@types/crypto-js": "catalog:",

@@ -6,3 +6,4 @@ export * from './src/antd-util';
 export * from './src/tree-util';
 export * from './src/indexed-db';
 export * from './src/parse';
+export * from './src/letter';

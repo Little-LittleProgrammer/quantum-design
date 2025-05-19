@@ -29,3 +29,6 @@ export type { IProjectConfig } from './q-setting';
 
 export { default as QAntdThemeModeButton } from './q-theme-mode-button';
 export type {ThemeModeTypes} from './q-theme-mode-button';
+
+export { default as QAntdModal, useQAntdModal } from './q-modal';
+export type { ModalProps } from './q-modal';

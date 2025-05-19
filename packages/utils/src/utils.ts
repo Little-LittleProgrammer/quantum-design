@@ -133,7 +133,7 @@ export function js_utils_throttle_event(fn: any, data: any) {
         const params = {
             time: data.time || 200,
             context: data.context || null,
-            args: data.args,
+            args: data.args
         };
         // 执行定时器
         // 函数也属于对象，因此可以添加属性
@@ -411,5 +411,19 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
             }
             reject('请上传正确的格式');
         };
+    });
+}
+
+export function js_bind_methods<T extends object>(instance: T): void {
+    const prototype = Object.getPrototypeOf(instance);
+    const propertyNames = Object.getOwnPropertyNames(prototype);
+
+    propertyNames.forEach((propertyName) => {
+        const descriptor = Object.getOwnPropertyDescriptor(prototype, propertyName);
+        const propertyValue = instance[propertyName as keyof T];
+
+        if (typeof propertyValue === 'function' && propertyName !== 'constructor' && descriptor && !descriptor.get && !descriptor.set) {
+            instance[propertyName as keyof T] = propertyValue.bind(instance);
+        }
     });
 }

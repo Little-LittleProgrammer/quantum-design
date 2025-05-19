@@ -68,9 +68,7 @@
         "@vue/test-utils": "catalog:",
         "sass": "catalog:",
         "vue": "catalog:",
-        "vue-router": "catalog:"
-    },
-    "optionalDependencies": {
+        "vue-router": "catalog:",
         "monaco-editor": "catalog:",
         "tinymce": "catalog:"
     },

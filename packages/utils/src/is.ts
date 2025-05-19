@@ -192,3 +192,13 @@ export function isSafariBrowser(): boolean {
 export function isBaiduBrowser(): boolean {
     return /Baidu/i.test(user_agent());
 }
+export function js_utils_get_first_non_empty<T>(
+    ...values: (null | T | undefined)[]
+): T | undefined {
+    for (const value of values) {
+        if (value !== undefined && value !== null) {
+            return value;
+        }
+    }
+    return undefined;
+}

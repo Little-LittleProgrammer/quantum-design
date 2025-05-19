@@ -44,6 +44,18 @@ const _menus:IMenuData[] = [{
             pid: 4,
             path_type: 1
         }]
+    }, {
+        path: '/demo/modal',
+        auth_name: 'modal',
+        id: 7,
+        pid: 1,
+        path_type: 1
+    }, {
+        path: '/demo/echarts',
+        auth_name: 'echarts',
+        id: 8,
+        pid: 1,
+        path_type: 1
     }]
 }];
 
