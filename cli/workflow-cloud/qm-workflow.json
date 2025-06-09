@@ -5,7 +5,7 @@
     },
     "aliConfig": {
         "appStackName": "front-author-guanli-platform",
-        "repoName": "q-front-npm",
+        "repoName": "quantum-design",
         "reviewerUsers": ["刘静秋", "余沾沾", "刘如月", "吴忠", "齐琪", "吴安乐", "倪颖峰", "liujinqiu", "yuzhanzhan", "liuruyue", "wuzhong", "qiqi", "wuanle", "niyingfeng"]
     },
     "gitConfig": {

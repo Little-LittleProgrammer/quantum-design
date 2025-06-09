@@ -5,7 +5,7 @@
             <div class="checkbox-wrapper" @mousedown="e => e.preventDefault()">
                 <a-checkbox v-model:checked="isAll">全选</a-checkbox>
             </div>
-            <a-divider style="margin: 4px 0" />
+            <Divider style="margin: 4px 0" />
             <v-nodes :vnodes="menu" />
         </template>
     </a-select>
@@ -24,7 +24,7 @@ export default defineComponent({
 
 <script lang='ts' setup>
 import { reactive, useAttrs, computed, watchEffect, type PropType, getCurrentInstance, nextTick, defineComponent} from 'vue';
-import { Divider as ADivider, Select as ASelect, Checkbox as ACheckbox } from 'ant-design-vue';
+import { Divider, Select as ASelect, Checkbox as ACheckbox } from 'ant-design-vue';
 
 type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean; };
 type SelectOption = OptionsItem;

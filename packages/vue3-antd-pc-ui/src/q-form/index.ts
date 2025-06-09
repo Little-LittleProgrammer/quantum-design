@@ -8,12 +8,12 @@ export type * from './src/types/form-item';
 
 export { useComponentRegister, delComponentRegister } from './src/hooks/use-component-register';
 export { useForm } from './src/hooks/use-form';
-export { defineSchemas } from './src/hooks/use-schemas';
+export { defineSchemas, createFormSchema, createFormSchemas } from './src/hooks/use-schemas';
 
 QAntdForm.selectAll = selectAllVue;
 
 QAntdForm.install = function(app: App) {
-    app.component(QAntdForm.name, QAntdForm);
+    app.component(QAntdForm.name!, QAntdForm);
     app.component(QAntdForm.selectAll.name, QAntdForm.selectAll);
     return app;
 };

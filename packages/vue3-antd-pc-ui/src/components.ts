@@ -10,7 +10,7 @@ export { default as QAntdSearch, get_net_router, find_search_route } from './q-s
 
 export { default as QAntdKeepAliveTabs } from './q-keep-alive-tabs';
 
-export {default as QAntdForm, QAntdSelectAll, useComponentRegister, delComponentRegister, useForm, defineSchemas} from './q-form';
+export {default as QAntdForm, QAntdSelectAll, useComponentRegister, delComponentRegister, useForm, defineSchemas, createFormSchemas, createFormSchema} from './q-form';
 export type {ColEx, ComponentType, FieldMapToTime, RegisterFn, UseFormReturnType, Rule, RenderCallbackParams, HelpComponentProps, FormSchema, FormActionType, FormProps, FormItem} from './q-form';
 export { default as QAntdDropdown } from './q-dropdown';
 export type { DropMenu, DropdownProps} from './q-dropdown';

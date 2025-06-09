@@ -1,6 +1,6 @@
-import type { FormProps, FormActionType, UseFormReturnType, FormSchema } from '../types/form';
 import type { NamePath } from 'ant-design-vue/lib/form/interface';
-import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
+import { nextTick, onUnmounted, ref, unref, watch } from 'vue';
+import type { FormActionType, FormProps, FormSchema, UseFormReturnType } from '../types/form';
 
 export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Record<string, any>>;
 
@@ -22,11 +22,13 @@ export function useForm(props?: Props): UseFormReturnType {
     }
 
     function register(instance: FormActionType) {
-        import.meta.env.PROD &&
-      onUnmounted(() => {
-          formRef.value = null;
-          loadedRef.value = null;
-      });
+        if (import.meta.env.PROD) {
+            onUnmounted(() => {
+                formRef.value = null;
+                loadedRef.value = null;
+            });
+        }
+
         if (unref(loadedRef) && import.meta.env.PROD && instance === unref(formRef)) return;
 
         formRef.value = instance;
@@ -35,11 +37,11 @@ export function useForm(props?: Props): UseFormReturnType {
         watch(
             () => props,
             () => {
-                props && instance.setProps(props);
+                if (props) instance.setProps(props);
             },
             {
                 immediate: true,
-                deep: true
+                deep: true,
             }
         );
     }
@@ -84,7 +86,7 @@ export function useForm(props?: Props): UseFormReturnType {
             return unref(formRef)?.getFieldsValue() as T;
         },
 
-        setFieldsValue: async <T>(values: T) => {
+        setFieldsValue: async <T extends Record<string, any>>(values: T) => {
             const form = await getForm();
             form.setFieldsValue<T>(values);
         },
@@ -111,7 +113,7 @@ export function useForm(props?: Props): UseFormReturnType {
         validateFields: async(nameList?: NamePath[]): Promise<Record<string, any>> => {
             const form = await getForm();
             return form.validateFields(nameList);
-        }
+        },
     };
 
     return [register, methods];

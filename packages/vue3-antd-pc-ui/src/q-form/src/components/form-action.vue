@@ -2,7 +2,7 @@
 <template>
     <a-col v-if="showActionButtonGroup" v-bind="actionColOpt">
         <div style="width: 100%" :style="{ textAlign: actionColOpt.style.textAlign }">
-            <a-form-item>
+            <form-item>
                 <slot name="resetBefore"></slot>
                 <a-button v-bind="getResetBtnOptions" v-if="showResetButton" @click="event.resetAction">
                     {{ getResetBtnOptions.title }}
@@ -18,7 +18,7 @@
                     {{ getSubmitBtnOptions.title }}
                 </a-button>
                 <slot name="submitAfter"></slot>
-            </a-form-item>
+            </form-item>
         </div>
     </a-col>
 </template>
@@ -29,7 +29,7 @@ import { propTypes } from '@quantum-design/types/vue/types';
 import type { ColEx } from '../types';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import { use_form_context } from '../hooks/use-form-context';
-import { Col as ACol, FormItem as AFormItem, Button as AButton } from 'ant-design-vue';
+import { Col as ACol, FormItem, Button as AButton } from 'ant-design-vue';
 
 const props = defineProps({
     showActionButtonGroup: propTypes.bool.def(true), // 是否展示操作栏

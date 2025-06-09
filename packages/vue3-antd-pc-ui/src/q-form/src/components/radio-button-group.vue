@@ -1,22 +1,22 @@
 <!--  -->
 <template>
-    <a-radio-group button-style="solid" v-bind="attrs" v-model:value="state">
+    <radio-group button-style="solid" v-bind="attrs" v-model:value="state">
         <template v-for="item in getOptions" :key="`${item.value}`">
-            <a-radio-button :value="item.value" :disabled="item.disabled">
+            <radio-button :value="item.value" :disabled="item.disabled">
                 {{item.label}}
-                <a-tooltip v-if="item.mark" :title="item.mark">
+                <Tooltip v-if="item.mark" :title="item.mark">
                     <QIcon type="QuestionCircleOutlined"></QIcon>
-                </a-tooltip>
-            </a-radio-button>
+                </Tooltip>
+            </radio-button>
         </template>
-    </a-radio-group>
+    </radio-group>
 </template>
 
 <script lang='ts' setup>
 import { reactive, onMounted, useAttrs, type PropType, getCurrentInstance, computed, nextTick, watchEffect} from 'vue';
 import { isString } from '@quantum-design/utils';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
-import {Tooltip as ATooltip, RadioGroup as ARadioGroup, RadioButton as ARadioButton} from 'ant-design-vue';
+import {Tooltip, RadioGroup, RadioButton} from 'ant-design-vue';
 
 type OptionsItem = { label: string; value: string | number | boolean; disabled?: boolean; mark?: string };
 type RadioItem = string | OptionsItem;
