@@ -1,6 +1,9 @@
 {
-    "extends": "@quantum-design-configs/tsconfig/lib.json",
-    "include": ["*.ts", "**/*.ts", "node_modules/@quantum-design/types/**/*.d.ts"],
-    "exclude": ["dist"]
-  }
-  
+  "extends": "@quantum-design-configs/tsconfig/lib.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist/types"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "**/*.test.ts", "**/*.spec.ts"]
+} 

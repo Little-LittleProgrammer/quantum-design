@@ -1,0 +1,40 @@
+{
+  "name": "qm-product-analysis",
+  "version": "0.0.2-beta.0",
+  "description": "性能分析脚本",
+  "type": "module",
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild"
+  },
+  "bin": {
+    "product-analysis": "index.js"
+  },
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "keywords": [
+    "performance",
+    "analysis",
+    "ai"
+  ],
+  "author": "Evan Wu",
+  "license": "ISC",
+  "publishConfig": {
+      "registry": "https://registry.npmjs.com/",
+      "access": "public"
+  },
+  "dependencies": {
+    "@quantum-design/ai-hub": "workspace:*",
+    "fs-extra": "catalog:",
+    "minimist": "catalog:",
+    "axios": "catalog:",
+    "kolorist": "catalog:"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "catalog:",
+    "@types/minimist": "catalog:",
+    "unbuild": "catalog:"
+  }
+}

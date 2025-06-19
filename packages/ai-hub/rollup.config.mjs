@@ -1,10 +1,12 @@
 import { rollup_commpn_lib_config } from '@quantum-design-configs/rollup';
-import { createRequire } from 'node:module';
-const require = createRequire(import.meta.url);
-const pkg = require('./package.json');
 
-const result = rollup_commpn_lib_config('ai-hub', {
-    external: ['@quantum-design/utils', 'axios', 'lodash-es', 'qs']
-}, pkg.version);
-
-export default result;
+export default rollup_commpn_lib_config(
+    {
+        name: 'ai-hub',
+        input: 'src/index.ts',
+    },
+    {
+        format: ['cjs', 'esm'],
+        external: ['axios', 'lodash-es', 'qs', '@quantum-design/utils', '@quantum-design/shared'],
+    }
+);
