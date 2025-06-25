@@ -1,43 +1,33 @@
 <template>
-    <div
-      :class="prefixCls"
-      class="flex items-center mx-auto"
-      v-if="imgList && imgList.length"
-      :style="getWrapStyle"
-    >
-      <Badge :count="!showBadge || imgList.length == 1 ? 0 : imgList.length" v-if="simpleShow">
-        <div class="img-div">
-          <PreviewGroup>
+    <div :class="prefixCls" v-if="imgList && imgList.length" :style="getWrapStyle">
+        <Badge :count="!showBadge || imgList.length == 1 ? 0 : imgList.length" v-if="simpleShow">
+            <div class="img-div">
+                <PreviewGroup>
+                    <template v-for="(img, index) in imgList" :key="img">
+                        <AImage
+                            :width="size"
+                            :style="{
+                                display: index === 0 ? '' : 'none !important',
+                            }"
+                            :src="srcPrefix + img"
+                            :fallback="fallback"
+                        />
+                    </template>
+                </PreviewGroup>
+            </div>
+        </Badge>
+        <PreviewGroup v-else>
             <template v-for="(img, index) in imgList" :key="img">
-              <AImage
-                :width="size"
-                :style="{
-                  display: index === 0 ? '' : 'none !important',
-                }"
-                :src="srcPrefix + img"
-                :fallback="fallback"
-              />
+                <AImage :width="size" :style="{ marginLeft: index === 0 ? 0 : margin + 'px' }" :src="srcPrefix + img" :fallback="fallback" />
             </template>
-          </PreviewGroup>
-        </div>
-      </Badge>
-      <PreviewGroup v-else>
-        <template v-for="(img, index) in imgList" :key="img">
-          <AImage
-            :width="size"
-            :style="{ marginLeft: index === 0 ? 0 : margin + 'px' }"
-            :src="srcPrefix + img"
-            :fallback="fallback"
-          />
-        </template>
-      </PreviewGroup>
+        </PreviewGroup>
     </div>
-  </template>
+</template>
 <script lang="ts">
 import type { CSSProperties } from 'vue';
 import { defineComponent, computed } from 'vue';
 import { Image, Badge } from 'ant-design-vue';
-import {propTypes} from '@quantum-design/types/vue/types';
+import { propTypes } from '@quantum-design/types/vue/types';
 
 export default defineComponent({
     name: 'QAntdTableImg',
@@ -73,14 +63,18 @@ export default defineComponent({
 
 <style lang="scss">
 $prefixCls: 'q-table';
-#{$prefixCls}-cell {
+.#{$prefixCls}-cell {
     &-img {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
         .ant-image {
             margin-right: 4px;
             cursor: zoom-in;
 
             img {
-              border-radius: 2px;
+                border-radius: 2px;
             }
         }
 

@@ -4,6 +4,7 @@ import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
 import { isArray, isBoolean, isFunction, isMap, isNumber, isString } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
+import dayjs from 'dayjs';
 
 interface ActionType {
     columns: Ref<Recordable[]>
@@ -61,7 +62,7 @@ function deep_merge_by_key(arr1: BasicColumn[], arr2: BasicColumn[]): BasicColum
 }
 
 // ellipsis, resizable 统一设置进去
-function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>) {
+function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>, canResize: boolean) {
     const { key, dataIndex, children } = item;
     const {ellipsis, resizable } = options;
     item.align = item.align || DEFAULT_ALIGN;
@@ -79,29 +80,29 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!isBoolean(item.resizable)) {
+        if (!isBoolean(item.resizable) && !canResize) {
             const _obj: any = {
                 resizable
             };
             if (!isNumber(item.width)) {
-                console.info(`当 resizable 为 ture 时，请保证 width 属性设置，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
+                console.info(`当 resizable 为 ture 时，请保证 width 属性设置, 且存在一项不设置width，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
                 _obj.width = DEFAULT_NORMAL_WIDTH;
             }
             Object.assign(item, _obj);
         }
     }
     if (children && children.length) {
-        handle_children(children, options);
+        handle_children(children, options, canResize);
     }
 }
 
 // 处理 treetable
-function handle_children(children: BasicColumn[] | undefined, options: Record<'resizable' | 'ellipsis', boolean>) {
+function handle_children(children: BasicColumn[] | undefined, options: Record<'resizable' | 'ellipsis', boolean>, canResize: boolean) {
     if (!children) return;
     children.forEach((item) => {
         const { children } = item;
-        handle_item(item, options);
-        handle_children(children, options);
+        handle_item(item, options, canResize);
+        handle_children(children, options, canResize);
     });
 }
 
@@ -192,7 +193,7 @@ export function useColumns(
         }
         const { ellipsis, resizable } = unref(propsRef);
 
-        _columns.forEach((item) => {
+        _columns.forEach((item, index) => {
             const { customRender, slots, dataIndex } = item;
 
             const _options = {
@@ -203,7 +204,8 @@ export function useColumns(
             if (dataIndex !== actionField) {
                 handle_item(
                     item,
-                    _options
+                    _options,
+                    (item.fixed === 'left' || item.fixed === 'right') || index === _columns.length - 2
                 );
             }
         });
@@ -256,7 +258,7 @@ export function useColumns(
             .map((column) => {
                 // Support table multiple header editable
                 if (column.children?.length) {
-                    // @ts-ignore
+                    // @ts-expect-error - children 类型推断问题
                     column.children = column.children.map(map_fn);
                 }
                 return map_fn(column);

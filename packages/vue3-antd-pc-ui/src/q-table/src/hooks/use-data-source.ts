@@ -14,7 +14,8 @@ interface ActionType {
     clearSelectedRowKeys: () => void;
     tableData: Ref<Recordable[]>;
     columns: Ref<Recordable[]>;
-    summaryData: Ref<Recordable[]>
+    summaryData: Ref<Recordable[]>;
+    setColumns: (columns: BasicColumn[]) => void;
 }
 
 interface SearchState {
@@ -32,7 +33,8 @@ export function useDataSource(
         clearSelectedRowKeys,
         tableData,
         columns,
-        summaryData
+        summaryData,
+        setColumns
     }: ActionType,
     emit: EmitType
 ) {
@@ -175,16 +177,16 @@ export function useDataSource(
         index = index ?? dataSourceRef.value?.length;
         const _record = isObject(record) ? [record as Recordable] : (record as Recordable[]);
         unref(dataSourceRef).splice(index, 0, ..._record);
-        return unref(dataSourceRef);
+        return unref(getDataSourceRef);
     }
 
     // 更新表格行，根据 index 更新, 纯前端更新
     async function updateTableData(index: number, key: string, value: any) {
-        const _record = dataSourceRef.value[index];
+        const _record = dataSourceRef.value?.[index];
         if (_record) {
-            dataSourceRef.value[index][key] = value;
+            dataSourceRef.value[index]![key] = value;
         }
-        return dataSourceRef.value[index];
+        return getDataSourceRef.value?.[index];
     }
 
     // 更新表格行，根据 rowkey 更新, 纯前端更新
@@ -267,7 +269,7 @@ export function useDataSource(
         try {
             setLoading(true);
             // 得到映射关系
-            const { pageField, sizeField, listField, totalField, headerField, summaryField } = merge(
+            const { pageField, sizeField, listField, totalField, headerField, summaryField, sortHeaderField } = merge(
                 {},
                 FETCH_SETTING, // 默认映射关系
                 fetchSetting // 自定义映射关系
@@ -301,7 +303,7 @@ export function useDataSource(
             }
 
             let _res = await api(params);
-            if (_res.code) {
+            if (_res.data || (_res.code && _res.code === 200)) {
                 _res = _res.data;
             }
             rawDataSourceRef.value = _res;
@@ -310,6 +312,7 @@ export function useDataSource(
 
             let _resultItems: Recordable[] = _isArrayResult ? _res : get(_res, listField);
             const _resultTotal: number = _isArrayResult ? _res.length : get(_res, totalField);
+            const _sortHeader = isArray(_res) ? [] : get(_res, sortHeaderField);
 
             // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
             if (Number(_resultTotal)) {
@@ -328,7 +331,11 @@ export function useDataSource(
             dataSourceRef.value = _resultItems;
             if (!_isArrayResult && get(_res, headerField)) {
                 const _header = get(_res, headerField);
-                columnsRef.value = isArray(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
+                const _columns = isArray(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
+                setColumns(_columns);
+                if (isArray(_sortHeader) && _sortHeader.length > 0) {
+                    setColumns(_sortHeader);
+                }
             }
 
             if (!_isArrayResult && get(_res, summaryField)) {
@@ -377,6 +384,36 @@ export function useDataSource(
         return await fetch(opt);
     }
 
+    async function exportData(opt?: FetchParams) {
+        const {
+            exportSetting,
+            defSort,
+            useSearchForm,
+            searchInfo
+        } = unref(propsRef);
+        if (!exportSetting?.api || !isFunction(exportSetting.api)) {
+            return;
+        }
+        let params = merge(
+            opt,
+            useSearchForm ? getFieldsValue() : {},
+            searchInfo,
+            opt?.searchInfo ?? {},
+            defSort
+        );
+        if (exportSetting.beforeFetch && isFunction(exportSetting.beforeFetch)) {
+            params = (await exportSetting.beforeFetch(params)) || params;
+        }
+        let _res = await exportSetting.api(params);
+        if (_res.data || (_res.code && _res.code === 200)) {
+            _res = _res.data;
+        }
+        if (exportSetting.afterFetch && isFunction(exportSetting.afterFetch)) {
+            _res = (await exportSetting.afterFetch(_res)) || _res;
+        }
+        return _res;
+    }
+
     onMounted(() => {
         setTimeout(() => {
             unref(propsRef).immediate && fetch();
@@ -396,6 +433,7 @@ export function useDataSource(
         deleteTableDataRecord,
         insertTableDataRecord,
         findTableDataRecord,
-        handleTableChange
+        handleTableChange,
+        exportData
     };
 }

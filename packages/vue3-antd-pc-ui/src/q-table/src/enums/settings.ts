@@ -17,11 +17,16 @@ export default {
             sizeField: 'page_size',
             // Field name of the form data returned by the interface
             listField: 'list',
+            sortHeaderField: 'sort',
             // Total number of tables returned by the interface field name
             totalField: 'count',
             headerField: 'header',
             summaryField: 'total',
-            actionField: 'action'
+            actionField: 'action',
+            customExtra: {
+                checkField: 'checked_list',
+                listField: 'list',
+            },
         },
         // Number of pages that can be selected
         pageSizeOptions: ['10', '50', '80', '100'],
@@ -31,13 +36,15 @@ export default {
         defaultSize: 'small',
         // Custom general sort function
         defaultSortFn: (sortInfo: SorterResult) => {
-            const { field, order } = sortInfo;
+            const { field, order, } = sortInfo;
             if (field && order) {
                 return {
                     // The sort field passed to the backend you
                     field,
                     // Sorting method passed to the background asc/desc
-                    order
+                    order,
+                    sort_type: order === 'ascend' ? 1 : 2,
+                    sort_field: field,
                 };
             } else {
                 return {};
@@ -46,6 +53,6 @@ export default {
         // Custom general filter function
         defaultFilterFn: (data: Partial<Record<string, string[]>>) => {
             return data;
-        }
-    }
+        },
+    },
 };

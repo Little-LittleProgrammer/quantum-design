@@ -27,6 +27,7 @@ componentMap.set('Switch', Switch);
 componentMap.set('Checkbox', Checkbox);
 componentMap.set('DatePicker', DatePicker);
 componentMap.set('MonthPicker', DatePicker.MonthPicker);
+
 componentMap.set('RangePicker', DatePicker.RangePicker);
 componentMap.set('WeekPicker', DatePicker.WeekPicker);
 componentMap.set('TimePicker', TimePicker);
@@ -42,3 +43,16 @@ export function del(compName: ComponentType) {
 }
 
 export { componentMap };
+
+export const tableExtraList = new Map<string, Component>();
+
+export function addTableExtra(component: Component) {
+    tableExtraList.set(component.name || '', component);
+}
+
+export function delTableExtra(component: Component) {
+    const name = component.name;
+    if (name) {
+        tableExtraList.delete(name);
+    }
+}

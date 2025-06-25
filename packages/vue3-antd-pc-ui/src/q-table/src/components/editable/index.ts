@@ -35,7 +35,7 @@ export function render_edit_cell(column: BasicColumn) {
             }
         };
 
-        async function on_edit(edit = true, submit = false) {
+        async function on_edit(edit:boolean = true, submit = false) {
             if (!submit) {
                 record.editable = edit;
             }

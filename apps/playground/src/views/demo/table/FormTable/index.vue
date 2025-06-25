@@ -8,6 +8,7 @@
             <a-button @click="getTableData"> 获取表格数据 </a-button>
             <a-button  @click="getTableRawData"> 获取接口原始数据 </a-button>
             <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
+            <a-button @click="addTableData"> 添加表格数据 </a-button>
         </div>
         <div class="mb-4">
             <a-button @click="getSelectRowList"> 获取选中行 </a-button>
@@ -42,7 +43,7 @@ import { computed, defineComponent, reactive } from 'vue';
 import {Alert} from 'ant-design-vue';
 import { useTable, useDrawer, QAntdTable, QAntdTableAction } from '@quantum-design/vue3-antd-pc-ui';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
-import {api_partner_list, api_partner_select} from '@/http/api/cp-management';
+import { getBasicColumns, getBasicData } from './tableData';
 import edit from './components/edit.vue';
 import dayjs from 'dayjs';
 import { gDateFormatEnum } from '@quantum-design/shared/enums';
@@ -89,13 +90,13 @@ export default defineComponent({
                 getSelectRows,
                 getSelectRowKeys,
                 setSelectedRowKeys,
-                clearSelectedRowKeys
+                clearSelectedRowKeys,
+                insertTableDataRecord
             }
         ] = useTable({
             canResize: true,
             title: 'QTable示例',
             titleHelpMessage: '使用useTable调用表格内方法',
-            api: api_partner_list,
             immediate: true,
             useSearchForm: true,
             formConfig: {
@@ -104,7 +105,7 @@ export default defineComponent({
                 fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]]
             },
             scroll: {x: 2000 },
-            // columns: getBasicColumns(),
+            columns: getBasicColumns(),
             // dataSource: getBasicData(),
             autoCreateKey: true,
             summaryConfig: {
@@ -116,11 +117,6 @@ export default defineComponent({
                     name: 200
                 }
             },
-            columns: [{
-                title: '你好',
-                key: 'helper',
-                helpMessage: '你好'
-            }],
             fetchSetting: {
                 totalField: 'pagination.count'
             },
@@ -136,14 +132,6 @@ export default defineComponent({
         });
 
         const [registerDrawer, {openDrawer }] = useDrawer();
-
-        async function init_select() {
-            const _res = await api_partner_select();
-            if (_res.code === 200) {
-                data.selectObj = _res.data;
-            }
-        }
-        init_select();
 
         function changeLoading() {
             setLoading(true);
@@ -299,6 +287,14 @@ export default defineComponent({
             });
         }
 
+        function addTableData() {
+            insertTableDataRecord({
+                partner_id: '123',
+                partner_code: '123',
+                name: '123'
+            });
+        }
+
         return {
             registerTable,
             handlerEdit,
@@ -317,6 +313,7 @@ export default defineComponent({
             onChange,
             collapseAll,
             createActions,
+            addTableData,
             registerDrawer
         };
     }

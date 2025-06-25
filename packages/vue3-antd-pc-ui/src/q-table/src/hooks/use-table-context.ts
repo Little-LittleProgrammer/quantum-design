@@ -9,7 +9,7 @@ type Instance = TableActionType & {
     getBindValues: ComputedRef<Recordable>;
 };
 
-type RetInstance = Omit<Instance, 'getBindValues'> & {
+export type RetInstance = Omit<Instance, 'getBindValues'> & {
     getBindValues: ComputedRef<BasicTableProps>;
 };
 

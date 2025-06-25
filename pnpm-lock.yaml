@@ -469,6 +469,34 @@ importers:
         specifier: ~2.0.0
         version: 2.0.0(sass@1.83.4)(typescript@5.7.3)
 
+  cli/product-analysis:
+    dependencies:
+      '@quantum-design/ai-hub':
+        specifier: workspace:*
+        version: link:../../packages/ai-hub
+      axios:
+        specifier: 'catalog:'
+        version: 1.7.9
+      fs-extra:
+        specifier: 'catalog:'
+        version: 11.2.0
+      kolorist:
+        specifier: 'catalog:'
+        version: 1.8.0
+      minimist:
+        specifier: 'catalog:'
+        version: 1.2.8
+    devDependencies:
+      '@types/fs-extra':
+        specifier: 'catalog:'
+        version: 11.0.4
+      '@types/minimist':
+        specifier: 'catalog:'
+        version: 1.2.5
+      unbuild:
+        specifier: 'catalog:'
+        version: 2.0.0(sass@1.83.4)(typescript@5.7.3)
+
   cli/workflow-cloud:
     dependencies:
       '@larksuiteoapi/node-sdk':
@@ -707,6 +735,9 @@ importers:
       '@quantum-design-configs/rollup':
         specifier: workspace:*
         version: link:../../configs/rollup
+      '@quantum-design-configs/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@quantum-design/types':
         specifier: workspace:*
         version: link:../types
@@ -719,6 +750,9 @@ importers:
       rollup:
         specifier: 'catalog:'
         version: 4.29.2
+      typescript:
+        specifier: 'catalog:'
+        version: 5.7.3
 
   packages/hooks:
     dependencies:

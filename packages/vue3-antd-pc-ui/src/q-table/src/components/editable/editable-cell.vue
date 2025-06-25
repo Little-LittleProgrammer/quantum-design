@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type {CSSProperties, PropType} from 'vue';
-import {computed, defineComponent, nextTick, ref, toRaw, unref, watchEffect} from 'vue';
+import {computed, defineComponent, nextTick, ref, toRaw, unref, watch, watchEffect} from 'vue';
 import type { BasicColumn } from '../../types/table';
 import {propTypes} from '@quantum-design/types/vue/types';
 import {isArray, isBoolean, isFunction, isNumber, isString} from '@quantum-design/utils';
@@ -57,7 +57,7 @@ export default defineComponent({
             const _valueField = _isCheckVal ? 'checked' : 'value';
 
             const _val = unref(currentValueRef);
-            const _value = _isCheckVal ? (isNumber(_val) && isBoolean(_val) ? _val : !!_val) : _val;
+            const _value = _isCheckVal ? (isNumber(_val) || isBoolean(_val) ? _val : !!_val) : _val;
 
             let _compProps = props.column?.editComponentProps ?? ({} as any);
             const {record, column, index} = props;
@@ -141,10 +141,12 @@ export default defineComponent({
             return !!editable;
         });
 
-        watchEffect(() => {
-            // defaultValueRef.value = props.value;
-            currentValueRef.value = props.value;
-        });
+        watch(
+            () => props.value,
+            (val) => {
+                currentValueRef.value = val;
+            }
+        );
 
         watchEffect(() => {
             const { editable } = props.column;
@@ -369,18 +371,20 @@ export default defineComponent({
                 {this.isEdit && (
                     <Spin spinning={this.spinning}>
                         <div class={`${this.prefixCls}-wrapper`} >
-                            <CellComponent
-                                {...this.getComponentProps}
-                                component={this.getComponent}
-                                style={this.getWrapperStyle}
-                                popoverVisible={this.getRuleVisible}
-                                rule={this.getRule}
-                                ruleMessage={this.ruleMessage}
-                                class={this.getWrapperClass}
-                                ref="elRef"
-                                onChange={this.handle_change}
-                                onPressEnter={this.handle_enter}
-                            ></CellComponent>
+                            <a-form-item-rest>
+                                <CellComponent
+                                    {...this.getComponentProps}
+                                    component={this.getComponent}
+                                    style={this.getWrapperStyle}
+                                    popoverVisible={this.getRuleVisible}
+                                    rule={this.getRule}
+                                    ruleMessage={this.ruleMessage}
+                                    class={this.getWrapperClass}
+                                    ref="elRef"
+                                    onChange={this.handle_change}
+                                    onPressEnter={this.handle_enter}
+                                ></CellComponent>
+                            </a-form-item-rest>
                             {!this.getRowEditable && (
                                 <div class={`${this.prefixCls}-action`}>
                                     <CheckOutlined
