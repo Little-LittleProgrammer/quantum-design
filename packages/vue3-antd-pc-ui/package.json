@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/vue3-antd-pc-ui",
-    "version": "2.0.3-beta.0",
+    "version": "2.0.3-beta.1",
     "description": "vue3,antd组件库",
     "type": "module",
     "main": "dist/lib/index.cjs",
@@ -84,7 +84,7 @@
         "csstype": "catalog:"
     },
     "peerDependencies": {
-        "pinia": "^2.2.2",
+        "pinia": "^3.0.0",
         "vue": "^3.5.0",
         "vue-router": "^4.4.0"
     }

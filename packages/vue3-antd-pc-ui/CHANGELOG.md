@@ -1,5 +1,11 @@
 # @quantum-design/vue3-antd-pc-ui
 
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   更新表格组件功能,支持额外组件注册,排序字段
+
 ## 2.0.3-beta.0
 
 ### Patch Changes

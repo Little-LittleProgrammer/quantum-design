@@ -25,7 +25,6 @@
         "@quantum-design/types": "workspace:*"
     },
     "devDependencies": {
-        "@quantum-design/types": "workspace:*",
         "@types/sortablejs": "catalog:",
         "ant-design-vue": "catalog:",
         "@ant-design/icons-vue": "catalog:",

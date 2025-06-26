@@ -12,7 +12,10 @@
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "commit": "czg",
         "prepare": "husky",
-        "migrator": "sass-migrator module packages/**/*.scss"
+        "migrator": "sass-migrator module packages/**/*.scss",
+        "deps:check": "pnpm list --depth=2 | grep -E 'vue|vite|nuxt'",
+        "deps:audit": "pnpm audit --prod",
+        "deps:verify": "pnpm list --recursive --depth=0 && echo '✅ 所有依赖验证成功'"
     },
     "devDependencies": {
         "sass-migrator": "catalog:",
@@ -40,6 +43,16 @@
     "pnpm": {
         "overrides": {
             "eslint": "~8.57.1"
+        },
+        "peerDependencyRules": {
+            "ignoreMissing": [
+                "@types/*"
+            ],
+            "allowedVersions": {
+                "vue": "^3.5.0",
+                "vue-router": "^4.5.0",
+                "vite": "^6.3.5"
+            }
         }
     },
     "volta": {
