@@ -1,6 +1,6 @@
 {
   "name": "qm-product-analysis",
-  "version": "0.0.2-beta.0",
+  "version": "0.0.2-beta.3",
   "description": "性能分析脚本",
   "type": "module",
   "scripts": {
@@ -22,8 +22,8 @@
   "author": "Evan Wu",
   "license": "ISC",
   "publishConfig": {
-      "registry": "https://registry.npmjs.com/",
-      "access": "public"
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
   },
   "dependencies": {
     "@quantum-design/ai-hub": "workspace:*",

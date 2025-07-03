@@ -150,6 +150,11 @@ export interface TableSetting {
     export?: boolean;
 }
 
+export interface ExtraComponents {
+    component: string;
+    componentProps: Record<string, any>;
+}
+
 // base
 export interface BasicTableProps<T = any> {
     // 点击行选中
@@ -183,7 +188,7 @@ export interface BasicTableProps<T = any> {
         beforeFetch?: Fn;
         afterFetch?: Fn;
     }
-    useExtraComponents?: string[];
+    useExtraComponents?: ExtraComponents[];
     // 请求之前处理参数
     beforeFetch?: Fn;
     // 自定义处理接口返回参数

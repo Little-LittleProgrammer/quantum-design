@@ -1,5 +1,17 @@
 # @quantum-design-configs/vite-sentry
 
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   修复 utils 缺陷
+
+## 2.0.3-beta.0
+
+### Patch Changes
+
+-   常规更新
+
 ## 2.0.2
 
 ### Patch Changes

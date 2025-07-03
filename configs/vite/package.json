@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design-configs/vite",
-    "version": "2.0.2",
+    "version": "2.0.3-beta.2",
     "description": "`vite` 插件以及公共打包方法",
     "type": "module",
     "main": "dist/vite.esm.min.js",

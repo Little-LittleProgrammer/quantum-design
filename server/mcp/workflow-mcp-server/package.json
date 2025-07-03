@@ -1,6 +1,6 @@
 {
     "name": "qm-workflow-mcp",
-    "version": "0.0.5",
+    "version": "0.0.6-beta.1",
     "type": "module",
     "description": "工作流 mcp server",
     "scripts": {

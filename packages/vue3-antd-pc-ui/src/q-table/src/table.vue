@@ -81,7 +81,6 @@ const prefixCls = 'q-table';
 const [registerForm, formActions] = useForm();
 
 const getProps = computed(() => {
-    console.log('props', { ...props, ...unref(innerPropsRef) });
     return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
 });
 const { getViewColumns, getColumns, setCacheColumnsByField, setCacheColumns, setColumns, getColumnsRef, getCacheColumns, getFlatColumns } = useColumns(getProps, { columns });

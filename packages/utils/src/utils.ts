@@ -268,7 +268,12 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
  */
 export function js_utils_find_attr(object: any, path: string) {
     // 将路径转换为数组，支持 a.b.c[*].d 形式
-    const tags = path.replace(/\[(\w+|\*)\]/g, '.$1').replace(/\["(\w+|\*)"\]/g, '.$1').replace(/\['(\w+|\*)'\]/g, '.$1').split('.').filter(Boolean);
+    const tags = path
+        .replace(/\[(\w+|\*)\]/g, '.$1')
+        .replace(/\["(\w+|\*)"\]/g, '.$1')
+        .replace(/\['(\w+|\*)'\]/g, '.$1')
+        .split('.')
+        .filter(Boolean);
 
     // 递归函数来处理路径
     function findAttr(obj: any, tags: string[]): any[] {
@@ -285,7 +290,7 @@ export function js_utils_find_attr(object: any, path: string) {
             }
 
             // 处理数组中的每个元素
-            return obj.flatMap(item => findAttr(item, remainingTags));
+            return obj.flatMap((item) => findAttr(item, remainingTags));
         } else {
             if (obj === undefined || obj === null) {
                 return [];
@@ -307,8 +312,13 @@ export function js_utils_find_attr(object: any, path: string) {
  * @param value 设置值
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
  */
-export function js_utils_edit_attr(path:string, value: any, obj:any) {
-    const _list = path.replace(/\[(\w+|\*)\]/g, '.$1').replace(/\["(\w+|\*)"\]/g, '.$1').replace(/\['(\w+|\*)'\]/g, '.$1').split('.').filter(Boolean);
+export function js_utils_edit_attr(path: string, value: any, obj: any) {
+    const _list = path
+        .replace(/\[(\w+|\*)\]/g, '.$1')
+        .replace(/\["(\w+|\*)"\]/g, '.$1')
+        .replace(/\['(\w+|\*)'\]/g, '.$1')
+        .split('.')
+        .filter(Boolean);
     const _length = _list.length - 1;
 
     function setAttr(cur: any, index: number) {
@@ -320,18 +330,14 @@ export function js_utils_edit_attr(path:string, value: any, obj:any) {
 
         if (key === '*') {
             if (isArray(cur)) {
-                cur.forEach(item => setAttr(item, index + 1));
+                cur.forEach((item) => setAttr(item, index + 1));
             }
         } else {
             if (!(key in cur)) {
                 cur[key] = isNaN(Number(_list[index + 1])) ? {} : [];
             }
             if (index === _length) {
-                if (isArray(value)) {
-                    cur[key] = value.shift();
-                } else {
-                    cur[key] = value;
-                }
+                cur[key] = value;
             } else {
                 setAttr(cur[key], index + 1);
             }

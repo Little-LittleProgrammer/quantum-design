@@ -187,7 +187,6 @@ export function useColumns(
         const _columns = cloneDeep(unref(columnsRef));
 
         handle_action_column(propsRef, _columns, actionField);
-        console.log(_columns);
         if (!_columns) {
             return [];
         }

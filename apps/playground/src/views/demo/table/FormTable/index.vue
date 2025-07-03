@@ -39,7 +39,7 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 import {Alert} from 'ant-design-vue';
 import { useTable, useDrawer, QAntdTable, QAntdTableAction } from '@quantum-design/vue3-antd-pc-ui';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
@@ -76,6 +76,7 @@ export default defineComponent({
                 }
             }];
         });
+        const dataSource = ref([]);
         const [
             registerTable,
             {
@@ -106,6 +107,7 @@ export default defineComponent({
             },
             scroll: {x: 2000 },
             columns: getBasicColumns(),
+            dataSource: dataSource,
             // dataSource: getBasicData(),
             autoCreateKey: true,
             summaryConfig: {
@@ -288,11 +290,17 @@ export default defineComponent({
         }
 
         function addTableData() {
-            insertTableDataRecord({
-                partner_id: '123',
-                partner_code: '123',
-                name: '123'
+            dataSource.value.push({
+                id: Math.random(),
+                name: '123',
+                age: 123
             });
+            console.log(dataSource.value);
+            // insertTableDataRecord({
+            //     partner_id: '123',
+            //     partner_code: '123',
+            //     name: '123'
+            // });
         }
 
         return {

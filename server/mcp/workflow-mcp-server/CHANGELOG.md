@@ -1,5 +1,21 @@
 # qm-workflow-mcp-server
 
+## 0.0.6-beta.1
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   qm-workflow@0.0.6-beta.1
+
+## 0.0.6-beta.0
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   qm-workflow@0.0.6-beta.0
+
 ## 0.0.5
 
 ### Patch Changes

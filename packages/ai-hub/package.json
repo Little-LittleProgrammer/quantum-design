@@ -1,13 +1,13 @@
 {
   "name": "@quantum-design/ai-hub",
-  "version": "0.0.2-beta.4",
+  "version": "0.0.2-beta.7",
   "description": "整合主流 ai 供应商和模型",
   "main": "dist/ai-hub.cjs.min.js",
   "module": "dist/ai-hub.esm.min.js",
   "typings": "dist/types/index.d.ts",
   "publishConfig": {
-      "registry": "https://registry.npmjs.com/",
-      "access": "public"
+    "registry": "https://registry.npmjs.com/",
+    "access": "public"
   },
   "scripts": {
     "build": "rollup -c",

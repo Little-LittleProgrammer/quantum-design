@@ -74,7 +74,6 @@ export const componentsModules: INuxtConfig = {
                     'tinymce/plugins/print',
                     'tinymce/plugins/save',
                     'tinymce/plugins/searchreplace',
-                    'tinymce/plugins/spellchecker',
                     'tinymce/plugins/tabfocus',
                     'tinymce/plugins/template',
                     'tinymce/plugins/textpattern',

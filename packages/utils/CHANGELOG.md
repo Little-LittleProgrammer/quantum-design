@@ -1,5 +1,27 @@
 # @quantum-design/utils
 
+## 2.0.3-beta.2
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   @quantum-design/shared@2.0.3-beta.1
+
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   @quantum-design/shared@2.0.3-beta.0
+
+## 2.0.3-beta.0
+
+### Patch Changes
+
+-   增加方法,适配弹框
+
 ## 2.0.2
 
 ### Patch Changes

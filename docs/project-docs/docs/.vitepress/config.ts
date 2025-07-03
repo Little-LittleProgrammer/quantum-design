@@ -53,7 +53,7 @@ export default defineConfig({
                     modifyVars: antdCssData
                 },
                 scss: {
-                    additionalData: _baseScssFile
+                    additionalData: baseScssFile
                 }
             }
         },

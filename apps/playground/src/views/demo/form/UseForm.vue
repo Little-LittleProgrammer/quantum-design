@@ -61,7 +61,13 @@ const schemas = computed(() =>
         {
             label: 'sub下的sub姓名',
             field: 'sub.sub.name',
-            component: 'Input',
+            component: 'CheckboxGroup',
+            componentProps: {
+                options: [
+                    { label: '1', value: 1 },
+                    { label: '2', value: 2 }
+                ]
+            },
             required: true
         },
         {

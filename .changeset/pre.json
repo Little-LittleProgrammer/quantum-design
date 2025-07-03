@@ -24,9 +24,14 @@
     "@quantum-design/vue3-antd-pc-ui-nuxt": "2.0.2",
     "@quantum-design/vue3-pc-ui": "2.0.2",
     "@quantum-design/vue3-pc-ui-nuxt": "2.0.2",
-    "qm-workflow-mcp": "0.0.5"
+    "qm-workflow-mcp": "0.0.5",
+    "qm-product-analysis": "0.0.2-beta.0"
   },
   "changesets": [
-    "six-trees-develop"
+    "cyan-baboons-fry",
+    "happy-zebras-argue",
+    "poor-eels-develop",
+    "six-trees-develop",
+    "tender-humans-hunt"
   ]
 }

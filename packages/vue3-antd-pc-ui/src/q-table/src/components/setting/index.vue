@@ -15,11 +15,11 @@ export default defineComponent({
     props: {
         setting: {
             type: Object as PropType<TableSetting>,
-            default: () => ({}),
-        },
+            default: () => ({})
+        }
     },
     emits: ['columns-change'],
-    setup(props, { emit, }) {
+    setup(props, { emit }) {
         const table = useTableContext();
 
         const getSetting = computed((): TableSetting => {
@@ -29,14 +29,17 @@ export default defineComponent({
                 setting: true,
                 fullScreen: false,
                 export: !!table.getBindValues.value.exportSetting?.api,
-                ...props.setting,
+                ...props.setting
             };
         });
 
         const getExtraComponents = computed(() => {
             const extraComponents = table.getBindValues.value.useExtraComponents || [];
-            return extraComponents.map((name) => {
-                return tableExtraList.get(name);
+            return extraComponents.map((comp) => {
+                return {
+                    component: tableExtraList.get(comp.component),
+                    componentProps: comp.componentProps
+                };
             });
         });
 
@@ -52,8 +55,8 @@ export default defineComponent({
             return getExtraComponents.value
                 .map((comp, index) => {
                     if (!comp) return null;
-                    const Comp = comp as any;
-                    return <Comp key={index} tableApi={table} />;
+                    const Comp = comp.component as any;
+                    return <Comp key={index} tableApi={table} {...comp.componentProps} />;
                 })
                 .filter(Boolean);
         }
@@ -67,6 +70,6 @@ export default defineComponent({
                 {getSetting.value.setting && <ColumnSetting onColumnsChange={handle_column_change} getPopupContainer={get_table_container} />}
             </div>
         );
-    },
+    }
 });
 </script>

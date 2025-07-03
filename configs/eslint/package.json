@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design-configs/eslint",
-    "version": "2.0.2",
+    "version": "2.0.3-beta.1",
     "description": "代码eslint统一文件",
     "main": "index.js",
     "scripts": {},

@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design-configs/rollup",
-    "version": "2.0.2",
+    "version": "2.0.3-beta.1",
     "description": "rollup配置文件",
     "main": "index.js",
     "type": "module",

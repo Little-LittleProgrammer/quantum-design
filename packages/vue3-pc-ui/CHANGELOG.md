@@ -1,5 +1,30 @@
 # @quantum-design/vue3-pc-ui
 
+## 2.0.3-beta.2
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   @quantum-design/styles@2.0.3-beta.1
+    -   @quantum-design/utils@2.0.3-beta.2
+
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   @quantum-design/styles@2.0.3-beta.0
+    -   @quantum-design/utils@2.0.3-beta.1
+
+## 2.0.3-beta.0
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/utils@2.0.3-beta.0
+
 ## 2.0.2
 
 ### Patch Changes

@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.0.2-beta.7
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   @quantum-design/shared@2.0.3-beta.1
+    -   @quantum-design/utils@2.0.3-beta.2
+
+## 0.0.2-beta.6
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   @quantum-design/shared@2.0.3-beta.0
+    -   @quantum-design/utils@2.0.3-beta.1
+
+## 0.0.2-beta.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/utils@2.0.3-beta.0
+
 ## 0.0.2-beta.4
 
 ### Patch Changes

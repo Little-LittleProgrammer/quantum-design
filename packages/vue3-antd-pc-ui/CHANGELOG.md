@@ -1,5 +1,46 @@
 # @quantum-design/vue3-antd-pc-ui
 
+## 2.0.3-beta.5
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   @quantum-design/vue3-pc-ui@2.0.3-beta.2
+    -   @quantum-design/shared@2.0.3-beta.1
+    -   @quantum-design/styles@2.0.3-beta.1
+    -   @quantum-design/hooks@2.0.3-beta.3
+    -   @quantum-design/utils@2.0.3-beta.2
+
+## 2.0.3-beta.4
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   @quantum-design/vue3-pc-ui@2.0.3-beta.1
+    -   @quantum-design/shared@2.0.3-beta.0
+    -   @quantum-design/styles@2.0.3-beta.0
+    -   @quantum-design/hooks@2.0.3-beta.2
+    -   @quantum-design/utils@2.0.3-beta.1
+
+## 2.0.3-beta.3
+
+### Patch Changes
+
+-   增加方法,适配弹框
+-   Updated dependencies
+    -   @quantum-design/hooks@2.0.3-beta.1
+    -   @quantum-design/utils@2.0.3-beta.0
+    -   @quantum-design/vue3-pc-ui@2.0.3-beta.0
+
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/hooks@2.0.3-beta.0
+
 ## 2.0.3-beta.0
 
 ### Patch Changes

@@ -1,5 +1,35 @@
 # @quantum-design/vue3-antd-pc-ui-nuxt
 
+## 2.0.3-beta.4
+
+### Patch Changes
+
+-   修复 utils 缺陷
+-   Updated dependencies
+    -   @quantum-design/vue3-antd-pc-ui@2.0.3-beta.5
+
+## 2.0.3-beta.3
+
+### Patch Changes
+
+-   常规更新
+-   Updated dependencies
+    -   @quantum-design/vue3-antd-pc-ui@2.0.3-beta.4
+
+## 2.0.3-beta.2
+
+### Patch Changes
+
+-   增加方法,适配弹框
+-   Updated dependencies
+    -   @quantum-design/vue3-antd-pc-ui@2.0.3-beta.3
+
+## 2.0.3-beta.1
+
+### Patch Changes
+
+-   @quantum-design/vue3-antd-pc-ui@2.0.3-beta.1
+
 ## 2.0.3-beta.0
 
 ### Patch Changes
