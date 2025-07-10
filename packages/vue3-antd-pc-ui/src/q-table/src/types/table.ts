@@ -2,7 +2,7 @@ import type { ColumnProps } from 'ant-design-vue/lib/table';
 import type { TableRowSelection as ITableRowSelection, ColumnFilterItem } from 'ant-design-vue/lib/table/interface';
 import type { PaginationProps } from './pagination';
 import type { FormProps } from '@vue3-antd/q-form';
-import type { Component, VNodeChild } from 'vue';
+import type { VNodeChild } from 'vue';
 import type { ComponentType } from './component-type';
 import type { JSX } from 'vue/jsx-runtime';
 
@@ -148,6 +148,7 @@ export interface TableSetting {
     setting?: boolean;
     fullScreen?: boolean;
     export?: boolean;
+    cache?: boolean;
 }
 
 export interface ExtraComponents {

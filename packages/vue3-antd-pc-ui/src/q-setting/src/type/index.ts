@@ -16,6 +16,7 @@ export interface IProjectConfigFunc {
     asideRepeatClick?: boolean, // 左侧菜单栏是否可重复点击
     removeAllHttpPending?: boolean, // 切换界面的时候是否取消已经发送但是未响应的http请求, openKeepAlive为true是失效
     showReloadButton?: boolean // 是否显示刷新按钮
+    tableCache?: boolean // 是否开启表格缓存
 }
 export interface IProjectConfigCache {
     show?: boolean, // 是否展示

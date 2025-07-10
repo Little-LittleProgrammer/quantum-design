@@ -1,4 +1,4 @@
-import { isArray, isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
+import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
 
 export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
     // 判断引用类型的temp
@@ -432,4 +432,80 @@ export function js_bind_methods<T extends object>(instance: T): void {
             instance[propertyName as keyof T] = propertyValue.bind(instance);
         }
     });
+}
+
+/**
+ * URL 信息接口
+ */
+export interface UrlInfo {
+    /** 路径部分，如：/path/to/page */
+    path: string;
+    /** 完整路径，包含查询参数，如：/path/to/page?a=1&b=2 */
+    fullPath: string;
+    /** 查询参数对象 */
+    query: Record<string, string>;
+    /** hash 部分，如：#section */
+    hash: string;
+    /** 主机名和端口，如：localhost:3000 */
+    host: string;
+    /** 主机名，如：localhost */
+    hostname: string;
+    /** 源地址，如：https://localhost:3000 */
+    origin: string;
+    /** 路径名，如：/path/to/page */
+    pathname: string;
+    /** 端口号，如：3000 */
+    port: string;
+    /** 协议，如：https: */
+    protocol: string;
+    /** 搜索参数，如：?a=1&b=2 */
+    search: string;
+}
+
+/**
+ * 获取当前 URL 的详细信息
+ * @returns {UrlInfo | null} 在浏览器环境返回 URL 信息，在服务器环境返回 null
+ * @example
+ * ```js
+ * // 浏览器环境下
+ * const urlInfo = js_utils_get_current_url();
+ * console.log(urlInfo?.path); // '/path/to/page'
+ * console.log(urlInfo?.fullPath); // '/path/to/page?a=1&b=2'
+ * console.log(urlInfo?.query); // { a: '1', b: '2' }
+ * console.log(urlInfo?.hash); // '#section'
+
+ * // 服务器环境下
+ * const urlInfo = js_utils_get_current_url();
+ * console.log(urlInfo); // null
+ * ```
+ */
+export function js_utils_get_current_url(): UrlInfo | null {
+    // 判断是否在浏览器环境
+    if (!isClient || !window.location) {
+        return null;
+    }
+    try {
+        const url = new URL(window.location.href);
+        const query: Record<string, string> = {};
+        // 解析查询参数
+        url.searchParams.forEach((value, key) => {
+            query[key] = value;
+        });
+        return {
+            path: url.pathname,
+            fullPath: url.pathname + url.search,
+            query,
+            hash: url.hash,
+            host: url.host,
+            hostname: url.hostname,
+            origin: url.origin,
+            pathname: url.pathname,
+            port: url.port,
+            protocol: url.protocol,
+            search: url.search
+        };
+    } catch (error) {
+        console.error('获取当前 URL 失败:', error);
+        return null;
+    }
 }

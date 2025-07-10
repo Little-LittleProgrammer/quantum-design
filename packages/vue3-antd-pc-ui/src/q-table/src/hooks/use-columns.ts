@@ -2,7 +2,7 @@ import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watc
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { isArray, isBoolean, isFunction, isMap, isNumber, isString } from '@quantum-design/utils';
+import { isArray, isBoolean, isFunction, isMap, isNumber, isString, js_utils_get_current_url, IndexedDB, js_utils_deep_copy } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 import dayjs from 'dayjs';
 
@@ -169,8 +169,86 @@ export function format_cell(text: string, format: CellFormat, record: Recordable
             return format.get(text);
         }
     } catch (error) {
+        console.log(error);
         return text;
     }
+}
+
+/**
+ * 将IndexDB中存储的列和_header的列合并
+ * @param headerColumns _header中的列配置
+ * @param indexDBColumns IndexDB中存储的列配置
+ * @returns 合并后的列配置
+ */
+function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns: BasicColumn[] | null): BasicColumn[] {
+    if (!indexDBColumns || indexDBColumns.length === 0) {
+        return headerColumns;
+    }
+
+    if (!headerColumns || headerColumns.length === 0) {
+        return indexDBColumns;
+    }
+
+    // 创建索引映射，方便查找
+    const headerMap = new Map<string, BasicColumn>();
+    const indexDBMap = new Map<string, BasicColumn>();
+
+    // 构建映射表
+    headerColumns.forEach(column => {
+        const key = column.dataIndex as string || column.key as string;
+        if (key) {
+            headerMap.set(key, column);
+        }
+    });
+
+    indexDBColumns.forEach(column => {
+        const key = column.dataIndex as string || column.key as string;
+        if (key) {
+            indexDBMap.set(key, column);
+        }
+    });
+
+    const result: BasicColumn[] = [];
+    const processedKeys = new Set<string>();
+
+    // 先按照IndexDB的顺序处理
+    indexDBColumns.forEach(indexDBColumn => {
+        const key = indexDBColumn.dataIndex as string || indexDBColumn.key as string;
+        if (key) {
+            const headerColumn = headerMap.get(key);
+            if (headerColumn) {
+                // 当_header中和indexdb中都存在的，将_header和indexdb合并
+                // 以_header为主，但保留indexdb中的一些用户配置（如宽度、排序等）
+                const mergedColumn = {
+                    ...headerColumn,
+                    // 保留IndexDB中的用户配置
+                    width: indexDBColumn.width || headerColumn.width,
+                    defaultHidden: indexDBColumn.defaultHidden,
+                    fixed: indexDBColumn.fixed !== undefined ? indexDBColumn.fixed : headerColumn.fixed,
+                    sorter: indexDBColumn.sorter !== undefined ? indexDBColumn.sorter : headerColumn.sorter,
+                    // 其他可能的用户配置
+                    resizable: indexDBColumn.resizable !== undefined ? indexDBColumn.resizable : headerColumn.resizable,
+                    ellipsis: indexDBColumn.ellipsis !== undefined ? indexDBColumn.ellipsis : headerColumn.ellipsis
+                };
+                result.push(mergedColumn);
+            } else {
+                // 当_header中不存在，indexdb中存在，保留indexdb的
+                // result.push(indexDBColumn);
+            }
+            processedKeys.add(key);
+        }
+    });
+
+    // 处理headerColumns中存在但indexdb中不存在的列
+    headerColumns.forEach(headerColumn => {
+        const key = headerColumn.dataIndex as string || headerColumn.key as string;
+        if (key && !processedKeys.has(key)) {
+            // 当_header中存在，indexdb中不存在，直接将_header添加
+            result.push(headerColumn);
+        }
+    });
+
+    return result;
 }
 
 export function useColumns(
@@ -179,6 +257,7 @@ export function useColumns(
         columns
     }: ActionType
 ) {
+    const db = new IndexedDB('vue3-antd-pc-ui', 'q-antd-table');
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
     let cacheColumns = unref(propsRef).columns;
     const actionField = unref(propsRef).fetchSetting?.actionField || FETCH_SETTING.actionField;
@@ -229,7 +308,7 @@ export function useColumns(
         const _viewColumns = sort_fixed_column(unref(getColumnsRef));
 
         function map_fn(column:BasicColumn) {
-            const { slots, customRender, format, edit, editRow, flag } = column;
+            const { slots, customRender, format, edit, editRow, flag: _flag } = column;
 
             if (!slots || !slots?.title) {
                 // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
@@ -281,10 +360,20 @@ export function useColumns(
 
     watch(
         [() => unref(propsRef).columns, () => unref(columns)],
-        ([columnsProp, column]) => {
+        async([columnsProp, column]) => {
             const _header = deep_merge_by_key((columnsProp || []), (unref(column) || []));
-            columnsRef.value = _header;
-            cacheColumns = _header?.filter(item => item.dataIndex !== actionField) ?? [];
+
+            // 如果启用了缓存设置，则从IndexDB获取存储的列配置并合并
+            let finalColumns = _header;
+            if (unref(propsRef).tableSetting?.cache && (unref(propsRef).tableSetting?.setting || true)) {
+                const indexDBColumns = await getFromIndexDB();
+                if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
+                    finalColumns = merge_header_with_indexdb(_header, indexDBColumns[0].value);
+                }
+            }
+
+            columnsRef.value = finalColumns;
+            cacheColumns = finalColumns?.filter(item => item.dataIndex !== actionField) ?? [];
         }, {immediate: true }
     );
 
@@ -338,6 +427,7 @@ export function useColumns(
             }
             columnsRef.value = _newColumns;
         }
+        setColumnsByIndexDB(columnsRef.value);
     }
 
     function getColumns(opt?: GetColumnsParams) {
@@ -358,6 +448,33 @@ export function useColumns(
         if (!isArray(columns)) return;
         cacheColumns = columns.filter((item) => item.dataIndex !== actionField);
     }
+
+    function setColumnsByIndexDB(columns: BasicColumn[]) {
+        if (unref(propsRef).tableSetting?.cache && (unref(propsRef).tableSetting?.setting || true)) {
+            storeInIndexDB(js_utils_deep_copy(columns));
+        }
+    }
+
+    async function storeInIndexDB(columns: BasicColumn[]) {
+        const curUrl = js_utils_get_current_url();
+        if (!curUrl?.path) return;
+        const res = await db.set(curUrl.path, columns);
+        if (res?.code !== 200) {
+            console.log('IndexDB 存储失败', res);
+        }
+        return res;
+    }
+
+    async function getFromIndexDB() {
+        const curUrl = js_utils_get_current_url();
+        if (!curUrl?.path) return null;
+        const res = await db.get(curUrl.path);
+        if (res?.code !== 200) {
+            console.log('IndexDB 获取失败', res);
+            return null;
+        }
+        return res.data;
+    }
     return {
         getColumnsRef,
         getCacheColumns,
@@ -366,6 +483,7 @@ export function useColumns(
         getViewColumns,
         setCacheColumnsByField,
         setCacheColumns,
-        getFlatColumns
+        getFlatColumns,
+        setColumnsByIndexDB
     };
 }
