@@ -216,6 +216,38 @@ export class IndexedDB {
     }
 
     /**
+     * 获取所有数据
+     * @returns {Promise<IIndexedDBRes>} 查询结果
+     */
+    getAll(): Promise<IIndexedDBRes> | undefined {
+        return new Promise((resolve, reject) => {
+            if (this.indexedDB) {
+                this._open((result) => {
+                    if (result.error) {
+                        reject(result);
+                    }
+                    const _request = result.index('key').openCursor();
+                    const _resList: any[] = [];
+
+                    _request.onsuccess = (e: any) => {
+                        const _cursor = e.target.result;
+                        if (_cursor) {
+                            _resList.push(_cursor.value);
+                            _cursor.continue();
+                        } else {
+                            resolve({ code: ErrorCode.success, data: _resList, msg: '查询成功' });
+                        }
+                    };
+
+                    _request.onerror = (e: ChangeEvent) => {
+                        reject({ code: ErrorCode.get, error: e, msg: '查询失败' });
+                    };
+                });
+            }
+        });
+    }
+
+    /**
      * 更新数据
      * 注意：只适用于唯一key情况，否则会全部更改
      * @param key 键名
@@ -325,6 +357,10 @@ export class IndexedDB {
                 });
             }
         });
+    }
+
+    support() {
+        return this.indexedDB !== null;
     }
 }
 

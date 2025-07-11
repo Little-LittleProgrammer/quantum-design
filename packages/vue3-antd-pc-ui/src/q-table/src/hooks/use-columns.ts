@@ -2,13 +2,47 @@ import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watc
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { isArray, isBoolean, isFunction, isMap, isNumber, isString, js_utils_get_current_url, IndexedDB, js_utils_deep_copy } from '@quantum-design/utils';
+import { isArray, isBoolean, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 import dayjs from 'dayjs';
+import { IndexedDB } from '@quantum-design/utils';
 
 interface ActionType {
     columns: Ref<Recordable[]>
+    wrapRef: Ref<Element>
 }
+
+const map = new Map<string, BasicColumn[]>();
+let db: IndexedDB | null = null;
+
+function getIndeDB() {
+    if (db && !db.support()) {
+        return false;
+    }
+    db = new IndexedDB('vue3-antd-pc-ui', 'q-antd-table');
+    return db;
+}
+
+async function getIndexDBValue() {
+    console.log('getIndexDBValue', map);
+    if (map.size > 0) {
+        return;
+    }
+    const db = getIndeDB();
+    if (!db) {
+        return;
+    }
+    const res = await db.getAll();
+    if (res?.code !== 200) {
+        console.log('IndexDB 获取失败', res);
+        return;
+    }
+    for (const item of res.data) {
+        map.set(item.key, item.value);
+    }
+    console.log('getTableIndexDBValueMap', map);
+}
+getIndexDBValue();
 
 function set_cache(arr: BasicColumn[], cacheObj:Recordable) {
     for (const item of arr) {
@@ -254,10 +288,10 @@ function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns:
 export function useColumns(
     propsRef: ComputedRef<BasicTableProps>,
     {
-        columns
+        columns,
+        wrapRef
     }: ActionType
 ) {
-    const db = new IndexedDB('vue3-antd-pc-ui', 'q-antd-table');
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
     let cacheColumns = unref(propsRef).columns;
     const actionField = unref(propsRef).fetchSetting?.actionField || FETCH_SETTING.actionField;
@@ -360,16 +394,15 @@ export function useColumns(
 
     watch(
         [() => unref(propsRef).columns, () => unref(columns)],
-        async([columnsProp, column]) => {
+        ([columnsProp, column]) => {
             const _header = deep_merge_by_key((columnsProp || []), (unref(column) || []));
 
             // 如果启用了缓存设置，则从IndexDB获取存储的列配置并合并
             let finalColumns = _header;
-            if (unref(propsRef).tableSetting?.cache && (unref(propsRef).tableSetting?.setting || true)) {
-                const indexDBColumns = await getFromIndexDB();
-                if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
-                    finalColumns = merge_header_with_indexdb(_header, indexDBColumns[0].value);
-                }
+            const indexDBColumns = getColumnsFromIndexDB();
+            if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
+                console.log('indexDBColumns', indexDBColumns);
+                finalColumns = merge_header_with_indexdb(_header, indexDBColumns);
             }
 
             columnsRef.value = finalColumns;
@@ -430,6 +463,25 @@ export function useColumns(
         setColumnsByIndexDB(columnsRef.value);
     }
 
+    function getColumnsFromIndexDB() {
+        const props = unref(propsRef);
+        if (unref(wrapRef) && props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
+            const columns = getFromIndexDB();
+            console.log('columns', columns);
+            if (columns) {
+                return columns;
+            }
+        }
+        return [];
+    }
+
+    function setColumnsByIndexDB(columns: BasicColumn[]) {
+        const props = unref(propsRef);
+        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
+            storeInIndexDB(js_utils_deep_copy(columns));
+        }
+    }
+
     function getColumns(opt?: GetColumnsParams) {
         const {ignoreAction, sort } = opt || {};
         let _columns = toRaw(unref(getColumnsRef));
@@ -444,37 +496,39 @@ export function useColumns(
     function getCacheColumns() {
         return cacheColumns;
     }
+
     function setCacheColumns(columns: BasicColumn[]) {
         if (!isArray(columns)) return;
         cacheColumns = columns.filter((item) => item.dataIndex !== actionField);
     }
 
-    function setColumnsByIndexDB(columns: BasicColumn[]) {
-        if (unref(propsRef).tableSetting?.cache && (unref(propsRef).tableSetting?.setting || true)) {
-            storeInIndexDB(js_utils_deep_copy(columns));
-        }
+    function getCacheKey() {
+        const curUrl = js_utils_get_current_url();
+        if (!curUrl?.path) return null;
+        return curUrl?.path;
     }
 
     async function storeInIndexDB(columns: BasicColumn[]) {
-        const curUrl = js_utils_get_current_url();
-        if (!curUrl?.path) return;
-        const res = await db.set(curUrl.path, columns);
+        const curKey = getCacheKey();
+        if (!curKey) return;
+        const db = getIndeDB();
+        if (!db) {
+            return;
+        }
+        const res = await db.set(curKey, columns);
         if (res?.code !== 200) {
             console.log('IndexDB 存储失败', res);
         }
-        return res;
+        map.set(curKey, columns);
     }
 
-    async function getFromIndexDB() {
-        const curUrl = js_utils_get_current_url();
-        if (!curUrl?.path) return null;
-        const res = await db.get(curUrl.path);
-        if (res?.code !== 200) {
-            console.log('IndexDB 获取失败', res);
-            return null;
-        }
-        return res.data;
+    function getFromIndexDB() {
+        const curKey = getCacheKey();
+        console.log('getFromIndexDB', curKey, map);
+        if (!curKey) return null;
+        return map.get(curKey);
     }
+
     return {
         getColumnsRef,
         getCacheColumns,
