@@ -9,7 +9,6 @@ import { IndexedDB } from '@quantum-design/utils';
 
 interface ActionType {
     columns: Ref<Recordable[]>
-    wrapRef: Ref<Element>
 }
 
 const map = new Map<string, BasicColumn[]>();
@@ -24,7 +23,6 @@ function getIndeDB() {
 }
 
 async function getIndexDBValue() {
-    console.log('getIndexDBValue', map);
     if (map.size > 0) {
         return;
     }
@@ -288,8 +286,7 @@ function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns:
 export function useColumns(
     propsRef: ComputedRef<BasicTableProps>,
     {
-        columns,
-        wrapRef
+        columns
     }: ActionType
 ) {
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
@@ -400,6 +397,7 @@ export function useColumns(
             // 如果启用了缓存设置，则从IndexDB获取存储的列配置并合并
             let finalColumns = _header;
             const indexDBColumns = getColumnsFromIndexDB();
+            console.log('_header', finalColumns, indexDBColumns);
             if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
                 console.log('indexDBColumns', indexDBColumns);
                 finalColumns = merge_header_with_indexdb(_header, indexDBColumns);
@@ -465,7 +463,7 @@ export function useColumns(
 
     function getColumnsFromIndexDB() {
         const props = unref(propsRef);
-        if (unref(wrapRef) && props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
+        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
             const columns = getFromIndexDB();
             console.log('columns', columns);
             if (columns) {

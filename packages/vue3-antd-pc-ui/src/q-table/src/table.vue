@@ -83,7 +83,7 @@ const [registerForm, formActions] = useForm();
 const getProps = computed(() => {
     return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
 });
-const { getViewColumns, getColumns, setCacheColumnsByField, setCacheColumns, setColumns, getColumnsRef, getCacheColumns, getFlatColumns, setColumnsByIndexDB } = useColumns(getProps, { columns });
+const { getViewColumns, getColumns, setCacheColumnsByField, setCacheColumns, setColumns, getColumnsRef, getCacheColumns, getFlatColumns } = useColumns(getProps, { columns });
 
 const { getLoading, setLoading } = useLoading(getProps);
 const { getPaginationInfo, getPagination, setPagination, setShowPagination, getShowPagination } = usePagination(getProps);
@@ -121,14 +121,16 @@ function handle_table_change(...args: any) {
 
 function handle_resize_change(w: number, col: any) {
     col.width = w;
-    const _columns = getColumnsRef.value.map((item) => {
-        if (item.dataIndex === col.dataIndex) {
-            return { ...item, width: w };
-        }
-        return item;
-    });
-    js_utils_throttle_event(setColumnsByIndexDB, {
-        time: 1000,
+    const _columns = getColumnsRef.value
+        .filter((item) => item.dataIndex !== 'action')
+        .map((item) => {
+            if (item.dataIndex === col.dataIndex) {
+                return { ...item, width: w };
+            }
+            return item;
+        });
+    js_utils_throttle_event(setColumns, {
+        time: 300,
         args: [_columns],
     });
 }

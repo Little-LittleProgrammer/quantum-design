@@ -1,12 +1,12 @@
 <template>
-    <div >
-        <div >
+    <div>
+        <div>
             <a-button @click="reloadTable"> 还原 </a-button>
             <a-button @click="changeLoading"> 开启loading </a-button>
             <a-button @click="changeColumns"> 更改Columns </a-button>
             <a-button @click="getColumn"> 获取Columns </a-button>
             <a-button @click="getTableData"> 获取表格数据 </a-button>
-            <a-button  @click="getTableRawData"> 获取接口原始数据 </a-button>
+            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
             <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
             <a-button @click="addTableData"> 添加表格数据 </a-button>
         </div>
@@ -19,9 +19,7 @@
             <a-button @click="collapseAll"> 展开 </a-button>
         </div>
         <q-antd-table @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit">
-            <template #form-slot>
-                12312312312
-            </template>
+            <template #form-slot> 12312312312 </template>
             <template #headerTop>
                 <alert type="info" show-icon>
                     <template #message>
@@ -40,7 +38,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
-import {Alert} from 'ant-design-vue';
+import { Alert } from 'ant-design-vue';
 import { useTable, useDrawer, QAntdTable, QAntdTableAction } from '@quantum-design/vue3-antd-pc-ui';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 import { getBasicColumns, getBasicData } from './tableData';
@@ -56,45 +54,29 @@ export default defineComponent({
             console.log('onChange', arguments);
         }
         const data = reactive({
-            selectObj: {} });
+            selectObj: {}
+        });
         const schemas = computed(() => {
-            return [{field: `key_word`,
-                label: `Slot示例`,
-                component: 'Input',
-                slot: 'slot'
-            }, {
-                label: '日期',
-                field: 'duration',
-                component: 'RangePicker',
-                defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')]
-            }, {
-                label: '接入模式',
-                field: 'access_mode',
-                component: 'Select',
-                componentProps: {
-                    options: data.selectObj.access_mode_list
+            return [
+                { field: `key_word`, label: `Slot示例`, component: 'Input', slot: 'slot' },
+                {
+                    label: '日期',
+                    field: 'duration',
+                    component: 'RangePicker',
+                    defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')]
+                },
+                {
+                    label: '接入模式',
+                    field: 'access_mode',
+                    component: 'Select',
+                    componentProps: {
+                        options: data.selectObj.access_mode_list
+                    }
                 }
-            }];
+            ];
         });
         const dataSource = ref([]);
-        const [
-            registerTable,
-            {
-                setLoading,
-                setProps,
-                getColumns,
-                getDataSource,
-                getRawDataSource,
-                reload,
-                getPaginationRef,
-                setPagination,
-                getSelectRows,
-                getSelectRowKeys,
-                setSelectedRowKeys,
-                clearSelectedRowKeys,
-                insertTableDataRecord
-            }
-        ] = useTable({
+        const [registerTable, { setLoading, setProps, getColumns, getDataSource, getRawDataSource, reload, getPaginationRef, setPagination, getSelectRows, getSelectRowKeys, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
             canResize: true,
             title: 'QTable示例',
             titleHelpMessage: '使用useTable调用表格内方法',
@@ -105,13 +87,15 @@ export default defineComponent({
                 schemas,
                 fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]]
             },
-            scroll: {x: 2000 },
+            scroll: { x: 2000 },
             columns: getBasicColumns(),
-            dataSource: dataSource,
-            // dataSource: getBasicData(),
+            dataSource: getBasicData(),
             autoCreateKey: true,
             summaryConfig: {
                 fixed: 'top'
+            },
+            tableSetting: {
+                cache: true
             },
             columnsConfig: {
                 sortData: ['partner_id'],
@@ -130,10 +114,9 @@ export default defineComponent({
             onColumnsChange: (data: ColumnChangeParam[]) => {
                 console.log('ColumnsChanged', data);
             }
-
         });
 
-        const [registerDrawer, {openDrawer }] = useDrawer();
+        const [registerDrawer, { openDrawer }] = useDrawer();
 
         function changeLoading() {
             setLoading(true);
@@ -144,45 +127,46 @@ export default defineComponent({
         function changeColumns() {
             const _column = [
                 {
-                    'title': '合作平台ID',
-                    'key': 'partner_id',
-                    'dataIndex': 'partner_id',
-                    'width': 150,
-                    'resizable': true,
-                    'align': 'center',
-                    'fixed': '',
-                    'sorter': true,
-                    'customCell': null,
-                    'ellipsis': true,
+                    title: '合作平台ID',
+                    key: 'partner_id',
+                    dataIndex: 'partner_id',
+                    width: 150,
+                    resizable: true,
+                    align: 'center',
+                    fixed: '',
+                    sorter: true,
+                    customCell: null,
+                    ellipsis: true,
                     children: [
                         {
-                            'title': '合作平台Code',
-                            'key': 'partner_code',
-                            'dataIndex': 'partner_code',
-                            'width': 150,
-                            'resizable': true,
-                            'align': 'center',
-                            'fixed': '',
-                            'sorter': false,
-                            'customCell': null,
-                            'ellipsis': true
+                            title: '合作平台Code',
+                            key: 'partner_code',
+                            dataIndex: 'partner_code',
+                            width: 150,
+                            resizable: true,
+                            align: 'center',
+                            fixed: '',
+                            sorter: false,
+                            customCell: null,
+                            ellipsis: true
                         },
                         {
-                            'title': '合作平台名称',
-                            'key': 'name',
-                            'dataIndex': 'name',
-                            'width': 200,
-                            'resizable': true,
-                            'align': 'center',
-                            'fixed': '',
-                            'sorter': false,
-                            'customCell': null,
-                            'editRule': true,
-                            'helpMessage': '你好',
-                            'editRow': true,
-                            'editComponent': 'Input',
-                            'ellipsis': true
-                        } ]
+                            title: '合作平台名称',
+                            key: 'name',
+                            dataIndex: 'name',
+                            width: 200,
+                            resizable: true,
+                            align: 'center',
+                            fixed: '',
+                            sorter: false,
+                            customCell: null,
+                            editRule: true,
+                            helpMessage: '你好',
+                            editRow: true,
+                            editComponent: 'Input',
+                            ellipsis: true
+                        }
+                    ]
                 }
             ];
             setProps({
@@ -245,7 +229,7 @@ export default defineComponent({
             console.log(e);
         }
 
-        function createActions(record, column) {
+        function createActions(record) {
             if (!record.editable) {
                 return [
                     {
@@ -254,7 +238,8 @@ export default defineComponent({
                             record.onEdit();
                             console.log('编辑');
                         }
-                    }, {
+                    },
+                    {
                         label: '编辑2',
                         onClick: () => {
                             openDrawer();
@@ -327,4 +312,3 @@ export default defineComponent({
     }
 });
 </script>
-
