@@ -1,4 +1,4 @@
-name: Build and Deploy Playground
+name: Build and Deploy Playground and Docs
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
     paths:
       - 'apps/playground/**'
+      - 'docs/project-docs/**'
       - 'configs/**'
       - 'packages/**'
-      - 'docs/**'
       - 'turbo.json'
       - 'package.json'
       - '.github/workflows/playground.yml'
@@ -51,13 +51,23 @@ jobs:
     - name: Build Playground
       run: pnpm build --filter=playground
 
-    # - name: Build docs
-    #   run: pnpm build --filter=project-docs
+    - name: Build docs
+      run: pnpm build --filter=project-docs
+
+    - name: Prepare deployment directory
+      run: |
+        mkdir -p ./deploy
+        # 创建 playground 子目录并复制文件
+        mkdir -p ./deploy/playground
+        cp -r ./apps/playground/dist/* ./deploy/playground/
+        # 创建 docs 子目录并复制文档
+        mkdir -p ./deploy/docs
+        cp -r ./docs/project-docs/dist/* ./deploy/docs/
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./apps/playground/dist
+        path: ./deploy
 
   # 部署任务
   deploy:

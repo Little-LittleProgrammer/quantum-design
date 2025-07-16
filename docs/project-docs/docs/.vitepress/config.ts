@@ -9,7 +9,7 @@ const baseScssFile = "@use '@quantum-design/styles/base/base.scss' as *; @use '@
 
 
 export default defineConfig({
-    base: '/',
+    base: '/quantum-design/docs/',
     title: 'Vite-project',
     lang: 'zh-CN',
     description: '一个开箱即用的前端框架',
@@ -45,7 +45,7 @@ export default defineConfig({
         }
     },
     vite: {
-        base: '/',
+        base: '/quantum-design/docs/',
         css: {
             preprocessorOptions: {
                 less: {

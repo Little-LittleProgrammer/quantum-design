@@ -49,6 +49,7 @@ vite.config.ts.*
 
 # docs
 cache
+/cache/**/*
 .temp
 
 # Nuxt dev/build outputs
