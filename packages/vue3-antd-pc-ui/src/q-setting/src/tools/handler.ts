@@ -83,6 +83,13 @@ export function handler(event: HandleEnum, value: any): IProjectConfig {
                 }
             };
         }
+        case HandleEnum.func_table_cache_status: {
+            return {
+                func: {
+                    tableCache: value
+                }
+            };
+        }
         case HandleEnum.theme_mode_change: {
             return {
                 theme: {

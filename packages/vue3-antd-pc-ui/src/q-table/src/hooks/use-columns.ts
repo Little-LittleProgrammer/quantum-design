@@ -2,14 +2,13 @@ import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watc
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { isArray, isBoolean, isObject, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url, js_utils_dom_get_all_class } from '@quantum-design/utils';
+import { isArray, isBoolean, isObject, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 import dayjs from 'dayjs';
 import { IndexedDB } from '@quantum-design/utils';
 
 interface ActionType {
     columns: Ref<Recordable[]>
-    wrapRef: Ref<Element>
 }
 
 const map = new Map<string, BasicColumn[]>();
@@ -288,14 +287,16 @@ function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns:
 export function useColumns(
     propsRef: ComputedRef<BasicTableProps>,
     {
-        columns,
-        wrapRef
+        columns
     }: ActionType
 ) {
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
     let cacheColumns = unref(propsRef).columns;
     const actionField = unref(propsRef).fetchSetting?.actionField || FETCH_SETTING.actionField;
-
+    const autoScrollXConf = {
+        auto: false,
+        columnsLen: 0
+    };
     const getColumnsRef = computed(() => {
         const _columns = cloneDeep(unref(columnsRef));
 
@@ -365,16 +366,29 @@ export function useColumns(
             return reactive(column);
         }
         const _columns = cloneDeep(_viewColumns);
-        return _columns
+        const finalColumns = _columns
             .filter((column) => isIfShow(column))
             .map((column) => {
                 // Support table multiple header editable
                 if (column.children?.length) {
-                    // @ts-expect-error - children 类型推断问题
                     column.children = column.children.map(map_fn);
                 }
                 return map_fn(column);
             });
+        console.log('getViewColumns', _columns);
+        const len = finalColumns.length;
+        if ((isBoolean(propsRef.value.scroll?.x) && propsRef.value.scroll?.x) || autoScrollXConf.auto) {
+            autoScrollXConf.auto = true;
+        }
+        if (autoScrollXConf.auto && autoScrollXConf.columnsLen !== len) {
+            autoScrollXConf.columnsLen = len;
+            // @ts-expect-error - scroll.x 计算
+            const scrollX = finalColumns.reduce((acc: number, column) => {
+                return acc + (Number(column.width) || 0);
+            }, 0) + 150;
+            propsRef.value.scroll!.x = scrollX;
+        }
+        return finalColumns;
     });
 
     const getFlatColumns = computed(() => {
@@ -465,7 +479,7 @@ export function useColumns(
 
     function getColumnsFromIndexDB() {
         const props = unref(propsRef);
-        if (unref(wrapRef) && props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
+        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
             const columns = getFromIndexDB();
             console.log('columns', columns);
             if (columns) {
@@ -504,11 +518,7 @@ export function useColumns(
 
     function getCacheKey() {
         const curUrl = js_utils_get_current_url();
-        if (!unref(wrapRef)) return null;
-        const _wrapClass = js_utils_dom_get_all_class(unref(wrapRef));
-        const _cacheKey = [curUrl?.path, ..._wrapClass].join('/');
-        if (!_cacheKey) return null;
-        return _cacheKey;
+        return curUrl?.path;
     }
 
     async function storeInIndexDB(columns: BasicColumn[]) {

@@ -1,6 +1,6 @@
 export {default as QAntdCardUpload} from './q-upload';
 
-export { default as QAntdTable, QAntdTableAction, QAntdTablePagination, QAntdTableTreeDrag, QAntdTableImg, useTable, add as addTableEditComp, del as delTableEditComp} from './q-table';
+export { default as QAntdTable, QAntdTableAction, QAntdTablePagination, QAntdTableTreeDrag, QAntdTableImg, useTable, add as addTableEditComp, del as delTableEditComp, setGlobalTableSetting} from './q-table';
 export type {PopConfirm, ActionItem, PaginationProps, TableProps, SortOrder, TableRowSelection, TableCurrentDataSource, TableCustomRecord, ExpandedRowRenderRecord, ColumnFilterItem, SorterResult, FetchParams, GetColumnsParams, SizeType, TableActionType, FetchSetting, TableSetting, BasicTableProps, BasicColumn, InnerHandlers, ColumnChangeParam} from './q-table';
 
 export { default as QAntdIcon, QAntdIconPicker } from './q-icon';

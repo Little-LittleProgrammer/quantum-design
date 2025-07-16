@@ -21,7 +21,9 @@ const setting: IProjectConfig = {
         // 切换界面的时候是否取消已经发送但是未响应的http请求, openKeepAlive为true是失效
         removeAllHttpPending: true,
         // 是否显示刷新按钮
-        showReloadButton: true
+        showReloadButton: true,
+        // 是否开启表格缓存
+        tableCache: true
     },
     cacheTabsSetting: {
         // 是否展示

@@ -69,7 +69,7 @@ export function useDataSource(
         filters: Partial<Recordable>,
         sorter: SorterResult
     ) {
-        const { clearSelectOnPageChange, sortFn, filterFn, fetchSetting } = unref(propsRef);
+        const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
         if (clearSelectOnPageChange) {
             clearSelectedRowKeys();
         }
@@ -87,7 +87,11 @@ export function useDataSource(
             searchState.filterInfo = filterInfo;
             params.filterInfo = filterInfo;
         }
-        fetch(params);
+
+        const paginationConfig = unref(getPaginationInfo);
+        if ((isObject(paginationConfig) && !(paginationConfig as PaginationProps).onlyFrontControl)) {
+            fetch(params);
+        }
     }
 
     // 树形表格设置 key
@@ -260,8 +264,7 @@ export function useDataSource(
             afterFetch,
             useSearchForm,
             pagination,
-            columnsConfig,
-            columns
+            columnsConfig
         } = unref(propsRef);
         if (!api || !isFunction(api)) {
             return;

@@ -21,6 +21,12 @@ export declare class PaginationConfig extends Pagination {
 
 export interface PaginationProps {
     /**
+     * 是否只在前端控制分页
+     * @default false
+     * @type boolean
+     */
+    onlyFrontControl?: boolean;
+    /**
      * total number of data items
      * @default 0
      * @type number

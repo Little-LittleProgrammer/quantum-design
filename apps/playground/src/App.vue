@@ -17,6 +17,7 @@ import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
+import { js_utils_get_current_url } from '@quantum-design/utils';
 
 export default defineComponent({
     name: 'App',
@@ -34,9 +35,19 @@ export default defineComponent({
             sysStore.initMenuData = '/demo/form';
             sysStore.set_format_route_list(_list);
             getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
-            go({
-                path: sysStore.initMenuData
-            });
+            const curUrlInfo = js_utils_get_current_url();
+            if (!curUrlInfo) {
+                go({
+                    path: sysStore.initMenuData
+                });
+                return;
+            }
+            console.log('curUrlInfo', curUrlInfo);
+            if (!curUrlInfo?.hash || curUrlInfo?.hash === '#/') {
+                go({
+                    path: sysStore.initMenuData
+                });
+            }
         };
         get_menus_data();
 

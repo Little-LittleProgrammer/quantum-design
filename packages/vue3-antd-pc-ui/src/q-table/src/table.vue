@@ -45,11 +45,11 @@ import { useTableStyle } from './hooks/use-table-style';
 
 import './style/table.scss';
 import { useDataSource } from './hooks/use-data-source';
-import { isFunction, js_utils_throttle_event } from '@quantum-design/utils';
+import { isFunction, js_utils_throttle_event, js_utils_deep_merge } from '@quantum-design/utils';
 import { useSummary } from './hooks/use-summary';
 import { useColumns } from './hooks/use-columns';
 import { useTableForm } from './hooks/use-table-form';
-import { createTableContext } from './hooks/use-table-context';
+import { createTableContext, getGeneralTableSetting } from './hooks/use-table-context';
 import { useRowSelection } from './hooks/use-row-selection';
 import { useTableScroll } from './hooks/use-table-scroll';
 import { useTableScrollTo } from './hooks/use-scroll-to';
@@ -73,7 +73,7 @@ const tableData = ref([]);
 const summaryData = ref([]);
 const columns = ref([]);
 
-const wrapRef = ref(null);
+const wrapRef = ref<Element | null>(null);
 const formRef = ref(null);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -81,7 +81,14 @@ const prefixCls = 'q-table';
 const [registerForm, formActions] = useForm();
 
 const getProps = computed(() => {
-    return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
+    console.log('props', { ...props, ...unref(innerPropsRef) });
+    const _props = { ...props, ...unref(innerPropsRef) } as BasicTableProps;
+    const tableSetting = getGeneralTableSetting();
+    if (tableSetting) {
+        console.log('globalTableSetting', js_utils_deep_merge(_props, { tableSetting }));
+        return js_utils_deep_merge(_props, { tableSetting }) as BasicTableProps;
+    }
+    return { ..._props } as BasicTableProps;
 });
 const { getViewColumns, getColumns, setCacheColumnsByField, setCacheColumns, setColumns, getColumnsRef, getCacheColumns, getFlatColumns } = useColumns(getProps, { columns });
 
