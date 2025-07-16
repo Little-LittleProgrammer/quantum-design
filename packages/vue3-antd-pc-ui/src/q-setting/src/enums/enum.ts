@@ -9,6 +9,7 @@ export enum HandleEnum {
     func_aside_repeat_status,
     func_remove_http_status,
     func_reload_status,
+    func_table_cache_status,
     // cache
     cache_tabs_status,
     cache_alive_status,

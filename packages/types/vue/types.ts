@@ -1,5 +1,5 @@
-import { CSSProperties, VNodeChild } from 'vue';
-import { createTypes, VueTypeValidableDef, VueTypesInterface, toValidableType } from 'vue-types';
+import type { CSSProperties, VNodeChild } from 'vue';
+import { createTypes, type VueTypeValidableDef, type VueTypesInterface, toValidableType } from 'vue-types';
 
 export type VueNode = VNodeChild | JSX.Element;
 

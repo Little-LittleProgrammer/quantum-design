@@ -7,7 +7,7 @@ export interface RequestOptions {
     // 接口地址
     apiUrl?: string;
     urlPrefix?: string;
-    // 错误提示方式 default: 'message'
+    // 错误提示回调方法, 可用于错误时自定义弹框
     errorMessageCb?: (errCode: number, errMes: string) => void;
     // 是否携带时间戳
     joinTime?: boolean;
@@ -18,8 +18,10 @@ export interface RequestOptions {
     [key: string]: any
     // 是否在header中携带token
     withToken?: boolean;
-    // 请求重试机制, 暂未实现
+    // 请求重试机制
     retryRequest?: RetryRequest;
+    useServiceMsg?: boolean;
+    errorPage?: string
 }
 
 export interface RetryRequest {

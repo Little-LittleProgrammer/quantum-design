@@ -1,5 +1,5 @@
 import { defHttp } from '@/http/axios';
-import { ICpInfo, ICpInfoMap, ICpListHeader, ICpListReq, ICpOptionKey, ICpSelect } from './interface';
+import type { ICpInfo, ICpInfoMap, ICpListHeader, ICpListReq, ICpOptionKey, ICpSelect } from './interface';
 
 enum Api {
     partnerSelect = '/partner/select', // 筛选项 1层

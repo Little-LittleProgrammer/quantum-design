@@ -18,7 +18,7 @@
 </template>
 
 <script lang='ts' setup>
-import { onMounted, PropType, computed} from 'vue';
+import { onMounted, type PropType, computed} from 'vue';
 import { HandleEnum } from '../enums/enum';
 import { propTypes } from '@quantum-design/types/vue/types';
 import { Switch, Tooltip as ATooltip } from 'ant-design-vue';

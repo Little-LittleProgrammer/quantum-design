@@ -10,7 +10,8 @@ export type { EditRecordRow } from './src/components/editable';
 export type * from './src/types/table';
 import QAntdTable from './src/table.vue';
 export { useTable } from './src/hooks/use-table';
-export {add, del} from './src/component-map';
+export {add, del, addTableExtra, delTableExtra} from './src/component-map';
+export { useTableContext, type RetInstance } from './src/hooks/use-table-context';
 
 export type {
     PopConfirm,

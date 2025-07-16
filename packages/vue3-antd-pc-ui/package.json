@@ -1,81 +1,91 @@
 {
-  "name": "@quantum-design/vue3-antd-pc-ui",
-  "version": "1.1.0",
-  "description": "vue3,antd组件库",
-  "main": "dist/lib/index.js",
-  "module": "dist/es/index.js",
-  "typings": "dist/index.d.ts",
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "vue3",
-    "antd",
-    "turborepo"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
+    "name": "@quantum-design/vue3-antd-pc-ui",
+    "version": "2.0.3",
+    "description": "vue3,antd组件库",
+    "type": "module",
+    "main": "dist/lib/index.cjs",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
+    "scripts": {
+        "build": "vite build",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
-    "./es": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js"
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "vue3",
+        "antd",
+        "turborepo"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js"
+        },
+        "./lib": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es/*.js": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./es/*": {
+            "types": "./dist/src/*.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./lib/*.cjs": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./lib/*": {
+            "types": "./dist/src/*.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./*": "./*"
     },
-    "./lib": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/lib/index.js"
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
-    "./es/*": {
-      "types": "./dist/src/*.d.ts",
-      "import": "./dist/es/*.js"
+    "license": "MIT",
+    "dependencies": {
+        "@quantum-design/hooks": "workspace:*",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/utils": "workspace:*",
+        "@quantum-design/vue3-pc-ui": "workspace:*",
+        "@quantum-design/styles": "workspace:*",
+        "lodash-es": "catalog:",
+        "sortablejs": "catalog:"
     },
-    "./lib/*": {
-      "types": "./dist/src/*.d.ts",
-      "require": "./dist/lib/*.js"
+    "devDependencies": {
+        "@quantum-design-configs/vite": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@types/lodash-es": "catalog:",
+        "sass": "catalog:",
+        "vue": "catalog:",
+        "pinia": "catalog:",
+        "@vue/test-utils": "catalog:",
+        "@ant-design/icons-vue": "catalog:",
+        "ant-design-vue": "catalog:",
+        "vue-router": "catalog:",
+        "vue-types": "catalog:",
+        "dayjs": "catalog:",
+        "csstype": "catalog:"
     },
-    "./*": "./*"
-  },
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@quantum-design/hooks": "workspace:*",
-    "@quantum-design/shared": "workspace:*",
-    "@quantum-design/utils": "workspace:*",
-    "@quantum-design/vue3-pc-ui": "workspace:*",
-    "lodash-es": "^4.17.21",
-    "sortablejs": "~1.15.0"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/vite": "workspace:*",
-    "@quantum-design/types": "workspace:*",
-    "@types/lodash-es": "^4.17.12",
-    "sass": "^1.63.3",
-    "vue": "~3.3.10",
-    "pinia": "^2.1.6",
-    "@vue/test-utils": "^2.4.0",
-    "@ant-design/icons-vue": "^6.1.0",
-    "ant-design-vue": "~4.0.8",
-    "vue-router": "^4.2.4",
-    "vue-types": "~5.1.1",
-    "dayjs": "~1.11.7",
-    "csstype": "~3.1.2"
-  },
-  "peerDependencies": {
-    "pinia": "^2.0.30",
-    "vue": "~3.3.4",
-    "vue-router": "^4.2.4"
-  }
+    "peerDependencies": {
+        "pinia": "^2.2.2",
+        "vue": "^3.5.0",
+        "vue-router": "^4.4.0"
+    }
 }

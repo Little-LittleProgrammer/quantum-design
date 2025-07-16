@@ -1,0 +1,60 @@
+@use "sass:string";
+@use "./base.scss";
+@use './mixin.scss';
+// 颜色
+.font,
+.qm-font,
+.g-font {
+    &-red {
+        color: base.$error-color
+    }
+
+    &-green {
+        color: base.$success-color
+    }
+}
+
+.qm-title1,
+.g-title1 {
+    font-weight: bold;
+    font-size: base.$font-size-base * 2 - 6;
+    margin: base.$space 0;
+}
+
+.qm-title2,
+.g-title2 {
+    font-weight: bold;
+    font-size: base.$font-size-base + 2;
+    margin: base.$space 0;
+}
+
+.qm-ellipsis-text,
+.g-ellipsis-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text-secondary,
+.g-text-secondary {
+    @include mixin.text-color(text-color-secondary)
+}
+
+// 字体加粗
+.fw-b,
+.g-fw-b {
+    font-weight: bold;
+}
+
+// 字体居中
+@each $var in (left, center, right) {
+    .qm-text-#{$var},
+    .g-text-#{$var} {
+        text-align: $var;
+    }
+}
+
+@each $var in (100, 150, 200) {
+    .l-h-#{$var} {
+        line-height: string.unquote($var+ '%');
+    }
+}

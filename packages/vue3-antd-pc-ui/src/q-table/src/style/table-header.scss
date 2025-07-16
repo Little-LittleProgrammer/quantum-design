@@ -1,4 +1,6 @@
-.#{$prefixCls}-basic-header {
+@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;
+$prefix-cls: 'q-table';
+.#{$prefix-cls}-basic-header {
     &-top {
         margin: 5px
     }

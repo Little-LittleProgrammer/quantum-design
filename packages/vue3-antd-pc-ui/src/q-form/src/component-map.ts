@@ -1,33 +1,34 @@
 import { h, type Component } from 'vue';
-import type { ComponentType } from './types/index';
+import type { FormComponentNames } from './types/index';
 
 /**
  * Component list, register here to setting it in the form
  */
 import {
-    Input,
-    Select,
-    Radio,
-    Checkbox,
     AutoComplete,
     Cascader,
+    Checkbox,
     DatePicker,
+    Divider,
+    Input,
     InputNumber,
+    Radio,
+    Rate,
+    Select,
+    Slider,
     Switch,
     TimePicker,
     TreeSelect,
-    Slider,
-    Rate,
-    Divider
+    Upload
 } from 'ant-design-vue';
 
-import RadioButtonGroup from './components/radio-button-group.vue';
-import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
-import SelectAll from './components/select-all.vue';
-import QCardUpload from '@vue3-antd/q-upload';
+import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 import QTransfer from '@vue3-antd/q-transfer';
+import QCardUpload from '@vue3-antd/q-upload';
+import RadioButtonGroup from './components/radio-button-group.vue';
+import SelectAll from './components/select-all.vue';
 
-const componentMap = new Map<ComponentType<string>, Component>();
+const componentMap = new Map<FormComponentNames, Component>();
 
 componentMap.set('Text', h('p'));
 componentMap.set('Link', h('a'));
@@ -59,6 +60,7 @@ componentMap.set('TimeRangePicker', TimePicker.TimeRangePicker);
 componentMap.set('Icon', QIcon);
 componentMap.set('CardUpload', QCardUpload);
 componentMap.set('Transfer', QTransfer);
+componentMap.set('Upload', Upload);
 
 componentMap.set('Divider', Divider);
 componentMap.set('SelectAll', SelectAll);

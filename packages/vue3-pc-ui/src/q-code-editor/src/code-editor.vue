@@ -14,23 +14,28 @@
 <script lang='ts' setup>
 import { onUnmounted, ref, watch } from 'vue';
 // import * as monaco from 'monaco-editor'
-import {serializeToString} from '@quantum-design/utils'
+import {serializeToString} from '@quantum-design/utils';
 defineOptions({
-     name: 'code-editor'
-})
+    name: 'code-editor'
+});
 
 type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T
 
-let monaco: any = null
-import('monaco-editor').then((val) => {
-    console.log(val)
-    monaco = val;
-    loading.value = true;
-    init_editor();
-}).catch(() => {
-    console.log('skip')
-})
-
+let monaco: any = null;
+async function loadMonacoEditor() {
+    try {
+        const p = await import('monaco-editor');
+        console.log('monaco-editor', p);
+        monaco = p;
+        loading.value = true;
+        init_editor();
+        // 使用 monaco 编辑器
+    } catch (error) {
+        console.log('skip to load monaco-editor');
+        // 处理错误，例如显示一个提示信息
+    }
+}
+loadMonacoEditor();
 const props = withDefaults(
     defineProps<{
         value?:any
@@ -43,16 +48,16 @@ const props = withDefaults(
     }>(), {
         value: '',
         autoSave: true,
-        language: 'typescript',
+        language: 'typescript'
     }
-)
+);
 const emit = defineEmits(['initd', 'save', 'change', 'blur']);
 
 type Momonaco = UnwrapPromise<typeof monaco>['editor']['create'] extends (...args: any) => infer T ? T : any
 
 let vsEditor: Momonaco | null = null;
-const codeEditor = ref<HTMLDivElement>()
-const fullScreen = ref(false)
+const codeEditor = ref<HTMLDivElement>();
+const fullScreen = ref(false);
 
 const values = ref('');
 const loading = ref(false);
@@ -66,47 +71,45 @@ const resizeObserver = new globalThis.ResizeObserver(() => {
 function full_screen_handler() {
     fullScreen.value = !fullScreen.value;
     setTimeout(() => {
-        console.log(vsEditor?.layout)
         vsEditor?.focus();
         vsEditor?.layout();
     }, 200);
 }
 
 const get_editor_value = () => {
-    return to_string(vsEditor?.getValue() || '')
-}
+    return to_string(vsEditor?.getValue() || '');
+};
 
 watch(
     () => props.value,
     (v: string | any, preV: string | any) => {
-        console.log('init', v)
         if (v && v !== preV) {
             set_editor_value(props.value);
         }
     },
     {
         deep: true,
-        immediate: true,
-    },
+        immediate: true
+    }
 );
 
 async function init_editor() {
     if (!codeEditor.value) return;
 
     const options = {
-        value:values.value,
+        value: values.value,
         language: props.language,
         theme: 'vs-dark',
         ...props.options
-    }
+    };
 
     try {
         vsEditor = monaco.editor.create(codeEditor.value, options);
 
-        set_editor_value(props.value || '')
+        set_editor_value(props.value || '');
 
         loading.value = false;
-        
+
         codeEditor.value.addEventListener('keydown', (e) => {
             if (e.keyCode === 83 && (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey)) {
                 e.preventDefault();
@@ -117,7 +120,7 @@ async function init_editor() {
                 emit('change', props.parse ? props.parse(newValue, props.language) : newValue);
                 emit('blur', props.parse ? props.parse(newValue, props.language) : newValue);
             }
-        })
+        });
 
         if (props.autoSave) {
             vsEditor.onDidBlurEditorWidget(() => {
@@ -128,7 +131,7 @@ async function init_editor() {
                     emit('blur', props.parse ? props.parse(newValue, props.language) : newValue);
                     emit('change', props.parse ? props.parse(newValue, props.language) : newValue);
                 }
-            })
+            });
         }
         resizeObserver.observe(codeEditor.value);
     } catch (error) {
@@ -152,36 +155,34 @@ function to_string(v: string | any, language: string = props.language.toLocaleLo
     return value;
 }
 
-
- function set_editor_value(value: string | any){
-    const lang = props.language.toLocaleLowerCase()
+function set_editor_value(value: string | any){
+    const lang = props.language.toLocaleLowerCase();
     values.value = to_string(value, lang);
 
-    if (['javascript', 'typescript'].includes(lang) && !(value.startsWith('{') && value.endsWith('}'))) {
-        values.value = values.value.replace(/;/g, '\n')
+    if (['javascript', 'typescript'].includes(lang) && !(values.value.startsWith('{') && values.value.endsWith('}'))) {
+        values.value = values.value.replace(/;/g, '\n');
     }
-    
-    return vsEditor?.setValue(values.value)
-}
 
+    return vsEditor?.setValue(values.value);
+}
 
 onUnmounted(() => {
     resizeObserver.disconnect();
 });
 
 defineExpose({
-  values,
+    values,
 
-  getEditor() {
-    return vsEditor;
-  },
+    getEditor() {
+        return vsEditor;
+    },
 
-  set_editor_value,
-  get_editor_value,
+    set_editor_value,
+    get_editor_value,
 
-  focus() {
-    vsEditor?.focus();
-  },
+    focus() {
+        vsEditor?.focus();
+    }
 });
 
 </script>

@@ -1,0 +1,44 @@
+html {
+    height:unset !important ;
+
+    overflow: auto;
+}
+body {
+    margin: 0;
+    width: 100%;
+    height:unset !important ;
+    overflow: auto;
+    min-width: 320px;
+    min-height: 100vh;
+    line-height: 24px;
+    font-family: var(--vp-font-family-base) ;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--vp-c-text-1) !important;
+    background-color: var(--vp-c-bg) !important;
+    direction: ltr;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: var(--vp-c-text-1) !important;
+    font-weight: 500;
+}
+
+
+#app .VPDoc.has-aside .content-container {
+    max-width: none;
+    margin: 10px 0;
+}
+#app .aside {
+    max-width: 150px;
+    padding-left: 24px
+}
+#app .vp-doc th, .vp-doc td {
+    padding: 6px 8px;
+}

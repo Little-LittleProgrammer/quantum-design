@@ -1,4 +1,4 @@
-import { ComponentType } from '../../types/component-type';
+import type { ComponentType } from '../../types/component-type';
 
 export function create_placeholder_message(component: ComponentType){
     if (component.includes('Input') || component.includes('AutoComplete')) {

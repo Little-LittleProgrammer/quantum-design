@@ -1,70 +1,79 @@
 {
-  "name": "@quantum-design/vue3-pc-ui",
-  "version": "1.1.0",
-  "description": "vue3-pc端组件库",
-  "main": "dist/lib/index.js",
-  "module": "dist/es/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
+    "name": "@quantum-design/vue3-pc-ui",
+    "version": "2.0.3",
+    "type": "module",
+    "description": "vue3-pc端组件库",
+    "main": "dist/es/index.cjs",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js"
+        },
+        "./lib": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/index.cjs"
+        },
+        "./es/*.js": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./es/*": {
+            "types": "./dist/src/*.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./lib/*.cjs": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./lib/*": {
+            "types": "./dist/src/*.d.ts",
+            "require": "./dist/lib/*.cjs"
+        },
+        "./*": "./*"
     },
-    "./es": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js"
+    "scripts": {
+        "build": "vite build",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
-    "./lib": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/lib/index.js"
+    "author": "Evan Wu",
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "vue3",
+        "turborepo"
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
-    "./es/*": {
-      "types": "./dist/src/*.d.ts",
-      "import": "./dist/es/*.js"
+    "license": "MIT",
+    "dependencies": {
+        "@quantum-design/styles": "workspace:*",
+        "@quantum-design/utils": "workspace:*"
     },
-    "./lib/*": {
-      "types": "./dist/src/*.d.ts",
-      "require": "./dist/lib/*.js"
+    "devDependencies": {
+        "@quantum-design-configs/vite": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@vue/test-utils": "catalog:",
+        "sass": "catalog:",
+        "vue": "catalog:",
+        "vue-router": "catalog:",
+        "monaco-editor": "catalog:",
+        "tinymce": "catalog:"
     },
-    "./*": "./*"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "author": "Evan Wu",
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "vue3",
-    "turborepo"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@quantum-design/shared": "workspace:*",
-    "@quantum-design/utils": "workspace:*"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/vite": "workspace:*",
-    "@quantum-design/types": "workspace:*",
-    "@vue/test-utils": "^2.4.0",
-    "monaco-editor": "^0.44.0",
-    "sass": "^1.63.3",
-    "tinymce": "^5.10.9",
-    "vue": "~3.3.10",
-    "vue-router": "^4.2.4"
-  },
-  "peerDependencies": {
-    "vue": "~3.3.4",
-    "vue-router": "^4.2.4"
-  }
+    "peerDependencies": {
+        "vue": "^3.4.0",
+        "vue-router": "^4.4.0"
+    }
 }

@@ -1,0 +1,43 @@
+{
+  "name": "playground-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production run-s gen:css build:nuxt",
+    "build:nuxt": "nuxt build --dotenv .env.production",
+    "dev": "run-s gen:css dev:nuxt",
+    "dev:nuxt": "nuxt dev --dotenv .env.development",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "gen:css": "esno scripts/gen-antd-style.ts"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "catalog:",
+    "@ant-design-vue/nuxt": "catalog:",
+    "ant-design-vue": "catalog:",
+    "cross-env": "catalog:",
+    "esno": "catalog:",
+    "@vite-pwa/nuxt": "catalog:",
+    "@nuxt/devtools": "catalog:",
+    "nuxt": "catalog:",
+    "vue": "catalog:",
+    "sass": "catalog:",
+    "npm-run-all": "catalog:",
+    "vue-router": "catalog:",
+    "@quantum-design/types": "workspace:*",
+    "@quantum-design-configs/vite": "workspace:*"
+  },
+  "dependencies": {
+    "fs-extra": "catalog:",
+    "@pinia/nuxt": "catalog:",
+    "@quantum-design/shared": "workspace:*",
+    "@quantum-design/utils": "workspace:*",
+    "@quantum-design/vue3-antd-pc-ui-nuxt": "workspace:*",
+    "@quantum-design/vue3-pc-ui-nuxt": "workspace:*",
+    "@quantum-design/vue3-antd-pc-ui": "workspace:*",
+    "@quantum-design/vue3-pc-ui": "workspace:*",
+    "crypto-js": "catalog:",
+    "pinia": "catalog:"
+  }
+}

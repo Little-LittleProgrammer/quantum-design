@@ -1,6 +1,6 @@
-import { RollupOptions } from 'rollup';
+import type { RollupOptions } from 'rollup';
 import type { BuildOptions, ProxyOptions } from 'vite';
-import { PluginOptions } from 'vite-plugin-dts';
+import type { PluginOptions } from 'vite-plugin-dts';
 import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
 import type { VitePWAOptions } from 'vite-plugin-pwa';
 
@@ -10,6 +10,7 @@ export interface ViteEnv {
     VITE_APP_RELEASE_VERSION: string; // 项目版本
     // VITE_USE_MOCK: boolean;
     VITE_USE_PWA: boolean; // 使用pwa
+    VITE_UPDATE_NOTIFY: boolean; // 更新通知pwa
     VITE_PROXY: [string, string][];
     VITE_GLOB_APP_TITLE: string;
     VITE_BASE_PATH: string;

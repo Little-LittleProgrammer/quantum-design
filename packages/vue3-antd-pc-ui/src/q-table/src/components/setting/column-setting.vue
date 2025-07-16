@@ -68,8 +68,8 @@ import { Tooltip, Popover, Checkbox, CheckboxGroup, Divider } from 'ant-design-v
 import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface';
 import { useTableContext } from '../../hooks/use-table-context';
 import { cloneDeep, omit } from 'lodash-es';
-import { BasicColumn, BasicTableProps, ColumnChangeParam } from '../../types/table';
-import {useSortable} from '@quantum-design/hooks/base/use-sortable';
+import type { BasicColumn, BasicTableProps, ColumnChangeParam } from '../../types/table';
+import { useSortable } from '@quantum-design/hooks/base/use-sortable';
 import { isFunction, isNullOrUndef } from '@quantum-design/utils';
 import { SettingOutlined, DragOutlined, VerticalRightOutlined } from '@ant-design/icons-vue';
 interface State {

@@ -1,4 +1,4 @@
-import { inject, InjectionKey, provide, reactive, UnwrapRef, readonly as defineReadonly } from 'vue';
+import { inject, type InjectionKey, provide, reactive, type UnwrapRef, readonly as defineReadonly } from 'vue';
 
 interface CreateContextOptions {
     readonly?: boolean;

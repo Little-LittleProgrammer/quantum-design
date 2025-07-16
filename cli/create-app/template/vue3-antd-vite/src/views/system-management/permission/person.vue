@@ -43,12 +43,12 @@
 <script lang='ts' setup>
 import {gRegEnum} from '@quantum-design/shared/enums';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
-import { IPersonEditData, ITableList } from '@/http/api/system-management/permission/person';
+import type { IPersonEditData, ITableList } from '@/http/api/system-management/permission/person';
 import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit, api_manage_user_add} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';
-import { RuleObject } from 'ant-design-vue/lib/form/interface';
+import type { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { reactive, onMounted, computed, nextTick} from 'vue';
-import { FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
+import { type FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
 import { useGlobalStore } from '@/store/modules/global';
 import { useAntdStore } from '@/store/modules/antd';
 

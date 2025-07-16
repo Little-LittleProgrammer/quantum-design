@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { useProjectSettingStore } from '../store';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 
 export function useProjectSetting() {
     const projectSettingStore = useProjectSettingStore();
@@ -12,6 +12,7 @@ export function useProjectSetting() {
     const getAsideRepeatClick = computed(() => projectSettingStore.getProjectConfig.func?.asideRepeatClick);
     const getRemoveAllHttpPending = computed(() => projectSettingStore.getProjectConfig.func?.removeAllHttpPending);
     const getShowReloadButton = computed(() => projectSettingStore.getProjectConfig.func?.showReloadButton);
+    const getTableCacheSetting = computed(() => projectSettingStore.getProjectConfig.func?.tableCache);
     const getShowCacheTabsSetting = computed(() => projectSettingStore.getProjectConfig.cacheTabsSetting?.show);
     const getOpenKeepAlive = computed(() => projectSettingStore.getProjectConfig.cacheTabsSetting?.openKeepAlive);
     const getShowQuick = computed(() => projectSettingStore.getProjectConfig.cacheTabsSetting?.showQuick);
@@ -38,6 +39,7 @@ export function useProjectSetting() {
         getAsideRepeatClick,
         getRemoveAllHttpPending,
         getShowReloadButton,
+        getTableCacheSetting,
         getShowCacheTabsSetting,
         getOpenKeepAlive,
         getShowQuick

@@ -1,4 +1,4 @@
-import { ProxyList, ProxyTargetList, ViteEnv, httpsRE } from "../types";
+import { type ProxyList, type ProxyTargetList, type ViteEnv, httpsRE } from "../types";
 
 export const outputDir = 'dist';
 

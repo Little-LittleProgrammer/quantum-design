@@ -19,7 +19,8 @@ const result = rollup_commpn_lib_config('vite', {
         'vite-plugin-html',
         'vite-plugin-pwa',
         '@quantum-design/shared'
-    ]
+    ],
+    format: ['esm']
 }, pkg.version);
 
 export default result;

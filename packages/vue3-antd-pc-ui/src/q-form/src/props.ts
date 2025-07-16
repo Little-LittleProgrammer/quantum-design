@@ -5,6 +5,7 @@ import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import { propTypes } from '@quantum-design/types/vue/types';
 import {gDateFormatEnum} from '@quantum-design/shared/enums';
+import type { TableActionType } from '@vue3-antd/q-table/src/types/table';
 
 export const basicProps = {
     // 绑定哪个model, 将 formModel 值绑定

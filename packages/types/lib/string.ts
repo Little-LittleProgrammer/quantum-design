@@ -1,6 +1,6 @@
-import { Join, Push } from './array';
-import { IsEqual, Compare, IntAddSingle } from './number';
-import { And3, Or } from './common';
+import type { Join, Push } from './array';
+import type { IsEqual, Compare, IntAddSingle } from './number';
+import type { And3, Or } from './common';
 
 // 将类型转为字符串有一定的限制，仅支持下面的类型
 type CanStringified = string | number | bigint | boolean | null | undefined

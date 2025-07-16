@@ -86,7 +86,7 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @import '@quantum-design/shared/style/base/base.scss'; @import '@quantum-design/shared/style/base/mixin.scss';"
+                    additionalData: "@use 'sass:math'; @import '@quantum-design/styles/base/base.scss'; @import '@quantum-design/styles/base/mixin.scss';"
                 }
             }
         }

@@ -1,5 +1,10 @@
 {
     "extends": "@quantum-design-configs/tsconfig/lib.json",
-    "include": ["vue", "global"]
+    "include": ["vue", "global"],
+    "compilerOptions": {
+        "jsx": "preserve",
+        "jsxImportSource": "vue"
+        // ...
+    }
   }
   

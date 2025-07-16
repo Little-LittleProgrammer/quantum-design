@@ -1,6 +1,6 @@
 import { isClient } from '@quantum-design/utils';
 import { js_create_session_storage } from '@quantum-design/utils/extra';
-import { Ref, getCurrentInstance, unref, watch } from 'vue';
+import { type Ref, getCurrentInstance, unref, watch } from 'vue';
 
 class Subscribe {
     cache: Fn[]= []

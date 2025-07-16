@@ -1,17 +1,24 @@
 module.exports = {
-    extends: ['turbo'],
-    'parserOptions': {
+    parserOptions: {
         'ecmaVersion': 12,
         'sourceType': 'module'
     },
+    ignorePatterns: ['*.json', '*.yaml', '*.md'],
     rules: {
         'turbo/no-undeclared-env-vars': 0,
         'no-var': 'error', // 禁止使用var
         'accessor-pairs': 2,
+        'indent': [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase,
         'arrow-spacing': [2, { before: true, after: true }], // 箭头函数中的箭头前后需要留空格
         'block-spacing': [2, 'always'], // 如果代码块是单行的时候，代码块内部前后需要留一个空格
         'brace-style': [2, '1tbs', { allowSingleLine: true }], // 大括号语法采用『1tbs』,允许单行样式
-        'comma-dangle': [2, 'never'], // 在定义对象或数组时，最后一项不能加逗号
+        'comma-dangle': [2, {
+            arrays: 'never',
+            objects: 'never',
+            imports: 'never',
+            exports: 'never',
+            functions: 'never'
+        }], // 在定义对象或数组时，最后一项不能加逗号
         'comma-spacing': [2, { before: false, after: true }], // 在写逗号时，逗号前面不需要加空格，而逗号后面需要添加空格
         'comma-style': [2, 'last'], // 如果逗号可以放在行首或行尾时，那么请放在行尾
         'constructor-super': 2, // 在constructor函数中，如果classes是继承其他class，那么请使用super。否者不使用super
@@ -24,6 +31,7 @@ module.exports = {
         // 'jsx-quotes': [2, 'prefer-single'],
         'key-spacing': [2, { beforeColon: false, afterColon: true }], // 该规则规定了在对象字面量语法中，key和value之间的空白，冒号前不要空格，冒号后面需要一个空格
         'keyword-spacing': [2, { before: true, after: true }], // keyword 前后需要空格
+        'max-len': [1, 300],
         'new-cap': [2, { newIsCap: true, capIsNew: false }], // 构造函数首字母大写
         'new-parens': 2, // 在使用构造函数时候，函数调用的圆括号不能够省略
         'no-array-constructor': 2, // 禁止使用Array构造函数

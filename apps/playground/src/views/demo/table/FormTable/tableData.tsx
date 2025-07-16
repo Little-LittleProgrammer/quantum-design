@@ -4,7 +4,7 @@ export function getBasicColumns(): BasicColumn[] {
             title: 'ID',
             dataIndex: 'id',
             fixed: 'left',
-            width: 200
+            width: 50
         },
         {
             title: '姓名',
@@ -39,7 +39,6 @@ export function getBasicColumns(): BasicColumn[] {
         },
         {
             title: '结束时间',
-            width: 150,
             sorter: true,
             dataIndex: 'endTime'
         }

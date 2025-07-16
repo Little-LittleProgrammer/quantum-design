@@ -1,14 +1,12 @@
-$prefixCls: 'q-table';
-@import './table-editable.scss';
-@import './table-header.scss';
-@import './table-setting.scss';
+@use "sass:meta";
+$prefix-cls: 'q-table';
 
 [data-theme='dark'] {
     .ant-table-tbody > tr:hover.ant-table-row-selected > td,
     .ant-table-tbody > tr.ant-table-row-selected td {
       background-color: #262626;
     }
-    .#{$prefixCls} {
+    .#{$prefix-cls} {
         &-card-container {
             padding: 10px;
             background-color: #262626;
@@ -20,7 +18,7 @@ $prefixCls: 'q-table';
     }
 }
 
-.#{$prefixCls} {
+.#{$prefix-cls} {
     max-width: 100%;
     height: 100%;
 
@@ -109,4 +107,11 @@ $prefixCls: 'q-table';
         margin: 0 5px;
         cursor: move;
     }
+    .table-summary-cell {
+        text-align: center;
+    }
 }
+
+@include meta.load-css('table-editable.scss');
+@include meta.load-css('table-header.scss');
+@include meta.load-css('table-setting.scss');

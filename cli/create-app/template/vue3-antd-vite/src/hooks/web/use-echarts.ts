@@ -1,5 +1,5 @@
 import { useEcharts as globalUseEcharts } from '@quantum-design/hooks/vue/use-echarts';
-import { Ref } from 'vue';
+import type { Ref } from 'vue';
 import { useThemeSetting } from '../settings/use-theme-setting';
 
 export function useEcharts(

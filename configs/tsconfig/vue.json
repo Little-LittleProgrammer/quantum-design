@@ -1,16 +1,21 @@
 {   
-    "extends": "./tsconfig-base.json",
+    "extends": "./base.json",
     "display": "Vue",
     "compilerOptions": {
-      "target": "ES2015",
-      "allowSyntheticDefaultImports": true,
-      "strictFunctionTypes": false,
-      "resolveJsonModule": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "experimentalDecorators": true,
-      "removeComments": true,
-      "declaration": false
+        "jsx": "preserve",
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "useDefineForClassFields": true,
+        "moduleResolution": "bundler",
+        "types": ["vite/client"],
+        "declaration": false,
+        "target": "ES2015",
+        "allowSyntheticDefaultImports": true,
+        "strictFunctionTypes": false,
+        "resolveJsonModule": true,
+        "jsxImportSource": "vue",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "experimentalDecorators": true
     }
   }
   

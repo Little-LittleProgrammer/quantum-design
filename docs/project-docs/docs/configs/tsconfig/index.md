@@ -7,7 +7,7 @@ npm包名称: `@quantum-design/tsconfig`
 
 
 提供了公共的eslint配置, 包括
-1. `tsconfig-base.json`, 对应基础tsconfigt配置
+1. `base.json`, 对应基础tsconfigt配置
 2. `lib.json`, 用于 lib包
 3. `vue.json`, 用于 vue3 项目
 

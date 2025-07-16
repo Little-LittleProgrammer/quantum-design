@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import { sysModuleState } from '../index';
+import type { ISysModuleState } from '../index';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 
 // state
 const createState = () => {
-    const state: sysModuleState = {
+    const state: ISysModuleState = {
         mainMenuData: [], // 顶部主导航数据
         asideMenuData: [], // 侧边栏导航数据
         initMenuData: '/', //  默认地址
@@ -19,7 +19,7 @@ const createState = () => {
 const state = createState();
 
 export const useSysStore = defineStore('sys', {
-    state: ():sysModuleState => (state),
+    state: ():ISysModuleState => (state),
     getters: {
         getFormatPathRouteList(): Record<string, IMenuData> {
             return this.formatPathRouteList;

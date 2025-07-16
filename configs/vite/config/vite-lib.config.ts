@@ -1,16 +1,16 @@
-import { UserConfig } from 'vite';
+import type { UserConfig } from 'vite';
 import type {OutputOptions} from 'rollup';
 import vue from '@vitejs/plugin-vue';
 import VueJsx from '@vitejs/plugin-vue-jsx';
 import dts from 'vite-plugin-dts';
-import { CommonOptions } from '../types';
+import type { CommonOptions } from '../types';
 import { vite_plugin_component } from '../plugins/component';
+import type { Plugin } from 'vite';
 
-const _assetQueue: string[] = [];
 // 定义 build 和 plugin
 const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'entry', string>):UserConfig => {
-    const {entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rollupOptions = {}, dtsOptions = {}} = options;
-    let plugin = [
+    const {entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rollupOptions = {}, dtsOptions = {}, } = options;
+    let plugin: Plugin[] = [
         vue(),
         VueJsx(),
         vite_plugin_component()
@@ -18,10 +18,10 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
     if (options.isComponentsBuild) {
         plugin.push({
             name: 'css-all',
-            resolveFileUrl({ fileName }) {
+            resolveFileUrl({ fileName, }) {
                 return `new URL('${fileName}', document.baseURI).href`;
             },
-            generateBundle(options, bundle) {
+            generateBundle(_options, bundle) {
                 //这里可以获取打包后的文件目录以及代码code
                 const _keys = Object.keys(bundle);
                 let _source = '';
@@ -39,9 +39,9 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
                 this.emitFile({
                     type: 'asset',
                     fileName: 'style/index.css',
-                    source: _source
+                    source: _source,
                 });
-            }
+            },
         });
     }
     if (options.customPlugins) {
@@ -51,7 +51,7 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
     if (isDeclaration) {
         plugin.push(dts({
             outDir: 'dist',
-            ...dtsOptions
+            ...dtsOptions,
         }));
     }
     const _output:OutputOptions[] = options.isComponentsBuild ? [{
@@ -59,75 +59,59 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         exports: 'named',
         entryFileNames: '[name].js',
         assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.includes('scss')) {
-                const _dirName = assetInfo.name.split('/').find(item => item.includes('q-'));
-                if (_dirName) {
-                    _assetQueue.push(_dirName);
-                } else {
-                    console.error('组件文件夹必须以 q-开头命名');
-                    throw Error('组件文件夹必须以 q-开头命名');
-                }
-            } else if (assetInfo.name?.includes('css')) {
-                const _realName = assetInfo.name.split('.')[0];
-                const _curDir = _assetQueue.shift();
-                return `style/${_curDir}/${_realName}[extname]`;
+            if (assetInfo.name?.includes('css')) {
+                const cacheName = assetInfo.name.split('.')[0] || '';
+                const nameArr = cacheName.split('/');
+                const realName = `${nameArr[0]}/${nameArr[nameArr.length - 1]}`;
+                return `style/${realName}[extname]`;
             }
             return `[name][extname]`;
         },
         dir: './dist/es',
         //让打包目录和我们目录对应
         preserveModules: true,
-        preserveModulesRoot: 'src'
+        preserveModulesRoot: 'src',
     }, {
         format: 'cjs',
         exports: 'named',
-        entryFileNames: '[name].js',
+        entryFileNames: '[name].cjs',
         assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.includes('scss')) {
-                const _dirName = assetInfo.name.split('/').find(item => item.includes('q-'));
-                if (_dirName) {
-                    _assetQueue.push(_dirName);
-                } else {
-                    console.error('组件文件夹必须以 q-开头命名');
-                    throw Error('组件文件夹必须以 q-开头命名');
-                }
-            } else if (assetInfo.name?.includes('css')) {
-                const _realName = assetInfo.name.split('.')[0];
-                const _curDir = _assetQueue.shift();
-                return `style/${_curDir}/${_realName}[extname]`;
+            console.log(assetInfo);
+            if (assetInfo.name?.includes('css')) {
+                const cacheName = assetInfo.name.split('.')[0] || '';
+                const nameArr = cacheName.split('/');
+                const realName = `${nameArr[0]}/${nameArr[nameArr.length - 1]}`;
+                return `style/${realName}[extname]`;
             }
             return `[name][extname]`;
         },
         dir: './dist/lib',
         //让打包目录和我们目录对应
         preserveModules: true,
-        preserveModulesRoot: 'src'
+        preserveModulesRoot: 'src',
     }] : [{
         globals: {
-            vue: 'Vue'
-        }
+            vue: 'Vue',
+        },
     }];
     return {
-        esbuild: {
-            pure: ['console.log', 'debugger']
-        },
         build: {
             target: options.target || 'es2015',
             outDir: outDir,
             rollupOptions: {
                 external: rollupOptions?.external,
-                output: rollupOptions?.output ? rollupOptions.output : _output
+                output: rollupOptions?.output ? rollupOptions.output : _output as any,
             },
             lib: {
                 formats: formats,
                 entry: entry,
                 name: name,
                 // the proper extensions will be added
-                fileName: name
+                fileName: name,
             },
-            ...(buildOptions || {})
+            ...(buildOptions || {}),
         },
-        plugins: plugin
+        plugins: plugin,
     };
 };
 

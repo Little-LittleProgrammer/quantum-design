@@ -21,3 +21,20 @@ export const pkgManageQuestion: PromptObject = {
         { title: 'Npm', value: 'npm' }
       ]
   }
+
+  export const communicationQuestion: PromptObject = {
+    name: 'communication',
+    type: 'select',
+    message: '选择通讯方式',
+    choices: [
+        { title: '不进行通讯', value: 'only_interface' },
+        {
+          title: 'JSON协议',
+          value: 'only_http'
+        },
+        {
+          title: 'Protobuf协议',
+          value: ''
+        },
+      ]
+  }

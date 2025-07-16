@@ -2,7 +2,7 @@
 <template>
     <div :class="prefixCls" v-if="getTitle">
         <span>{{ getTitle }}</span>
-        <Tooltip>
+        <Tooltip v-if="getHelpMessageShow">
             <template #title>
                 <template v-for="item in getHelpMessage" :key="item">
                     <p>{{ item }}</p>
@@ -15,9 +15,9 @@
 
 <script lang='ts' setup>
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
-import { isFunction, isString } from '@quantum-design/utils';
+import { isArray, isFunction, isString } from '@quantum-design/utils';
 import { Tooltip } from 'ant-design-vue';
-import { PropType, computed } from 'vue';
+import { type PropType, computed } from 'vue';
 defineOptions({
     name: 'QAntdTableTitle'
 });
@@ -39,6 +39,12 @@ const prefixCls = 'q-table-basic-header-title';
 const getHelpMessage = computed(() => {
     if (isString(props.helpMessage)) {
         return [props.helpMessage];
+    }
+    return props.helpMessage;
+});
+const getHelpMessageShow = computed(() => {
+    if (isArray(props.helpMessage)) {
+        return props.helpMessage.length;
     }
     return props.helpMessage;
 });

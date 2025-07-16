@@ -1,4 +1,4 @@
-import { isBase, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
+import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
 
 export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
     // 判断引用类型的temp
@@ -266,17 +266,45 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
  * @param string 要查找的属性 'a.b.c'
  * @returns 值
  */
-export function js_utils_find_attr(object: any, path: string){
-    const tags = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
-    const tagsCopy = JSON.parse(JSON.stringify(tags));
-    for (const _key of tagsCopy) {
-        object = object[tags[0]];
-        if (object === undefined || object === null) {
-            return undefined;
+export function js_utils_find_attr(object: any, path: string) {
+    // 将路径转换为数组，支持 a.b.c[*].d 形式
+    const tags = path
+        .replace(/\[(\w+|\*)\]/g, '.$1')
+        .replace(/\["(\w+|\*)"\]/g, '.$1')
+        .replace(/\['(\w+|\*)'\]/g, '.$1')
+        .split('.')
+        .filter(Boolean);
+
+    // 递归函数来处理路径
+    function findAttr(obj: any, tags: string[]): any[] {
+        if (!tags.length) {
+            return [obj];
         }
-        tags.shift();
+
+        const currentTag = tags[0];
+        const remainingTags = tags.slice(1);
+
+        if (currentTag === '*') {
+            if (!Array.isArray(obj)) {
+                return [];
+            }
+
+            // 处理数组中的每个元素
+            return obj.flatMap((item) => findAttr(item, remainingTags));
+        } else {
+            if (obj === undefined || obj === null) {
+                return [];
+            }
+
+            return findAttr(obj[currentTag as string], remainingTags);
+        }
     }
-    return object;
+    const ans = findAttr(object, tags);
+    if (ans.length <= 1) {
+        return ans[0];
+    }
+
+    return ans;
 }
 
 /**
@@ -284,17 +312,39 @@ export function js_utils_find_attr(object: any, path: string){
  * @param value 设置值
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
  */
-export function js_utils_edit_attr(path:string, value: any, obj:any) {
-    const _list = path.replace(/\[(\w+)\]/g, '.$1').replace(/\["(\w+)"\]/g, '.$1').replace(/\['(\w+)'\]/g, '.$1').split('.');
+export function js_utils_edit_attr(path: string, value: any, obj: any) {
+    const _list = path
+        .replace(/\[(\w+|\*)\]/g, '.$1')
+        .replace(/\["(\w+|\*)"\]/g, '.$1')
+        .replace(/\['(\w+|\*)'\]/g, '.$1')
+        .split('.')
+        .filter(Boolean);
     const _length = _list.length - 1;
-    _list.reduce((cur: any, key:string, index: number) => {
-        if (!(cur[key]))
-            cur[key] = {};
-        if (index === _length) {
-            cur[key] = value;
+
+    function setAttr(cur: any, index: number) {
+        if (index > _length) return;
+
+        const key = _list[index];
+
+        if (key === undefined) return;
+
+        if (key === '*') {
+            if (isArray(cur)) {
+                cur.forEach((item) => setAttr(item, index + 1));
+            }
+        } else {
+            if (!(key in cur)) {
+                cur[key] = isNaN(Number(_list[index + 1])) ? {} : [];
+            }
+            if (index === _length) {
+                cur[key] = value;
+            } else {
+                setAttr(cur[key], index + 1);
+            }
         }
-        return cur[key];
-    }, obj);
+    }
+
+    setAttr(obj, 0);
 }
 
 /**
@@ -370,42 +420,92 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
     });
 }
 
-export function serializeToString<T>(value: T): string {
-    if (isString(value)) {
-        return value;
-    }
-    function deal_special(val: any): string {
-        // 压缩方法
-        return val.toString().replace(/\n/g, ';');
-    }
-    // 判断引用类型的temp
-    function check_temp(target:any) {
-        const _c = target.constructor;
-        return new _c();
-    }
-    let serializeObj: Record<string, any> = {};
-    function dfs(target: any, map = new Map()) {
-        if (isBase(target)) {
-            return target;
-        }
-        if (isFunction(target)) {
-            return deal_special(target);
-        }
-        if (isRegExp(target)) return deal_special(target);
+export function js_bind_methods<T extends object>(instance: T): void {
+    const prototype = Object.getPrototypeOf(instance);
+    const propertyNames = Object.getOwnPropertyNames(prototype);
 
-        const _temp = check_temp(target);
-        // 防止循环引用
-        if (map.get(target)) {
-            return map.get(target);
+    propertyNames.forEach((propertyName) => {
+        const descriptor = Object.getOwnPropertyDescriptor(prototype, propertyName);
+        const propertyValue = instance[propertyName as keyof T];
+
+        if (typeof propertyValue === 'function' && propertyName !== 'constructor' && descriptor && !descriptor.get && !descriptor.set) {
+            instance[propertyName as keyof T] = propertyValue.bind(instance);
         }
-        map.set(target, _temp);
-        // 处理数组和对象
-        for (const key in target) {
-        // 递归
-            _temp[key] = dfs(target[key], map);
-        }
-        return _temp;
+    });
+}
+
+/**
+ * URL 信息接口
+ */
+export interface UrlInfo {
+    /** 路径部分，如：/path/to/page */
+    path: string;
+    /** 完整路径，包含查询参数，如：/path/to/page?a=1&b=2 */
+    fullPath: string;
+    /** 查询参数对象 */
+    query: Record<string, string>;
+    /** hash 部分，如：#section */
+    hash: string;
+    /** 主机名和端口，如：localhost:3000 */
+    host: string;
+    /** 主机名，如：localhost */
+    hostname: string;
+    /** 源地址，如：https://localhost:3000 */
+    origin: string;
+    /** 路径名，如：/path/to/page */
+    pathname: string;
+    /** 端口号，如：3000 */
+    port: string;
+    /** 协议，如：https: */
+    protocol: string;
+    /** 搜索参数，如：?a=1&b=2 */
+    search: string;
+}
+
+/**
+ * 获取当前 URL 的详细信息
+ * @returns {UrlInfo | null} 在浏览器环境返回 URL 信息，在服务器环境返回 null
+ * @example
+ * ```js
+ * // 浏览器环境下
+ * const urlInfo = js_utils_get_current_url();
+ * console.log(urlInfo?.path); // '/path/to/page'
+ * console.log(urlInfo?.fullPath); // '/path/to/page?a=1&b=2'
+ * console.log(urlInfo?.query); // { a: '1', b: '2' }
+ * console.log(urlInfo?.hash); // '#section'
+
+ * // 服务器环境下
+ * const urlInfo = js_utils_get_current_url();
+ * console.log(urlInfo); // null
+ * ```
+ */
+export function js_utils_get_current_url(): UrlInfo | null {
+    // 判断是否在浏览器环境
+    if (!isClient || !window.location) {
+        return null;
     }
-    serializeObj = dfs(value);
-    return JSON.stringify(serializeObj, null, 4);
+    try {
+        const url = new URL(window.location.href);
+        const query: Record<string, string> = {};
+        // 解析查询参数
+        url.searchParams.forEach((value, key) => {
+            query[key] = value;
+        });
+        return {
+            path: url.pathname,
+            fullPath: url.pathname + url.search,
+            query,
+            hash: url.hash,
+            host: url.host,
+            hostname: url.hostname,
+            origin: url.origin,
+            pathname: url.pathname,
+            port: url.port,
+            protocol: url.protocol,
+            search: url.search
+        };
+    } catch (error) {
+        console.error('获取当前 URL 失败:', error);
+        return null;
+    }
 }

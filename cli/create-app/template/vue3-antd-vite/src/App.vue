@@ -21,23 +21,25 @@ import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 import ExportFile from '@/components/export-file/export-modal.vue';
 import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
-import { IMenuData } from '@quantum-design/types/vue/router';
+import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
+import { useGo } from '@quantum-design/hooks/vue/use-page';
 
 export default defineComponent({
     name: 'App',
     components: {
-        ExportFile
+        ExportFile,
     },
     setup() {
         const locale = zhCN;
-        const {createMessage} = useMessage();
+        const {createMessage, } = useMessage();
         const userStore = useUserStore();
         const globalStore = useGlobalStore();
-        const {getSearchButton} = useProjectSetting();
+        const {getSearchButton, } = useProjectSetting();
         const sysStore = useSysStore();
-        const {getThemeMode} = useThemeSetting();
+        const {getThemeMode, } = useThemeSetting();
         let requestNum = 0;
+        const go = useGo()
         const get_global_env = () => { // 环境检测
             api_global_env().then(res => {
                 if (res.code === 200) {
@@ -68,12 +70,12 @@ export default defineComponent({
                     if (window.location.href.endsWith(window.location.host) || window.location.href.endsWith(window.location.host + '/')) {
                         if (_res.data.init_path == '') {
                             router.replace({
-                                path: ''
+                                path: '',
                             });
                             createMessage.error('请通知管理员设置初始页面');
                         } else {
                             router.replace({
-                                path: _res.data.init_path || '/'
+                                path: _res.data.init_path || '/',
                             });
                         }
                     }
@@ -83,13 +85,20 @@ export default defineComponent({
             } else {
                 const _res = import('@/menus/index');
                 const _list = (await _res).default;
-                sysStore.initMenuData = '/backend/data-modules/dashboard';
+                sysStore.initMenuData = '/demo/form';
                 sysStore.set_format_route_list(_list);
                 sysStore.menuDataLoadingEnd = true;
                 getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
+                go({
+                    path: sysStore.initMenuData,
+                })
             }
         };
-        get_global_env();
+        if (globalStore.authorityManage) {
+            get_global_env();
+        } else {
+            get_menus_data();
+        }
 
         const dynamicComponent = import.meta.env.VITE_USE_PWA === 'true' ? defineAsyncComponent(() => {
             return import ('@/components/layout/qm-reload-prompt.vue');
@@ -101,9 +110,9 @@ export default defineComponent({
             userStore,
             globalStore,
             sysStore,
-            dynamicComponent
+            dynamicComponent,
         };
-    }
+    },
 });
 </script>
 <style data-type="start">
@@ -119,8 +128,8 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@import '@quantum-design/shared/style/antd/antd.scss';
-@import '@quantum-design/shared/style/base/index.scss';
+@use '@quantum-design/styles/antd/antd.scss';
+@use '@quantum-design/styles/base/index.scss';
 .table-nowrap{
     .ant-table-cell {
         white-space: nowrap ;

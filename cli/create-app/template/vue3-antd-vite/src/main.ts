@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import { register_sentry_vue } from '@quantum-design/shared/plugins';
+import { register_sentry_vue } from '@quantum-design-configs/vite-sentry/project';
 import {setup_store} from '@/store';
 import { router, setup_router } from '@/router';
 import { register_glob_comp } from './antd';
@@ -8,9 +8,10 @@ import App from './App.vue';
 import 'dayjs/locale/zh-cn';
 import { setup_project_conf } from '@quantum-design/vue3-antd-pc-ui';
 import setting from './enums/projectEnum';
+import dayjs from 'dayjs';
 
 // 时间组件中文
-// dayjs.locale('zh-cn');
+dayjs.locale('zh-cn');
 
 const app = createApp(App);
 

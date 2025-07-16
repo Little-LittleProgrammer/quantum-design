@@ -10,6 +10,7 @@
         <switch-item title="面包屑" :event="HandleEnum.func_bread_status" :default="getBreadCrumb"></switch-item>
         <switch-item title="重复点击" :event="HandleEnum.func_aside_repeat_status" :default="getAsideRepeatClick"></switch-item>
         <switch-item title="刷新按钮" :event="HandleEnum.func_reload_status" :default="getShowReloadButton"></switch-item>
+        <switch-item title="缓存表格配置" tooltip="自动保存表格列设置、排序等配置信息，关闭后会清空所有已有配置信息" :event="HandleEnum.func_table_cache_status" :default="getTableCacheSetting"></switch-item>
         <Divider>tab栏配置</Divider>
         <switch-item title="展示Tab栏" :event="HandleEnum.cache_tabs_status" :default="getShowCacheTabsSetting"></switch-item>
         <switch-item title="tab栏缓存" tooltip="切换tab及刷新页面时保存页面状态" :event="HandleEnum.cache_alive_status" :default="getOpenKeepAlive" :disabled="!getShowCacheTabsSetting"></switch-item>
@@ -25,8 +26,8 @@
     </q-antd-drawer>
 </template>
 
-<script lang='ts' setup>
-import { PropType, onMounted} from 'vue';
+<script lang="ts" setup>
+import { type PropType, onMounted } from 'vue';
 import { useDrawerInner } from '@vue3-antd/q-drawer';
 import QAntdDrawer from '@vue3-antd/q-drawer';
 import { Divider } from 'ant-design-vue';
@@ -34,31 +35,15 @@ import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
 import { HandleEnum } from '../enums/enum';
 import { useProjectSetting } from '../hooks/use-project-setting';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,
         default: () => {}
     }
 });
-const {
-    getShowNProgress,
-    getShowPageLoading,
-    getShowTransition,
-    getCacheCanDrag,
-    getShowThemeSwitch,
-    getGraySwitch,
-    getSearchButton,
-    getBackTop,
-    getBreadCrumb,
-    getAsideRepeatClick,
-    getShowReloadButton,
-    getShowCacheTabsSetting,
-    getOpenKeepAlive,
-    getCacheCanCache,
-    getShowQuick
-} = useProjectSetting();
-const [registerDrawer, {setDrawerProps}] = useDrawerInner();
+const { getShowNProgress, getShowPageLoading, getShowTransition, getCacheCanDrag, getShowThemeSwitch, getGraySwitch, getSearchButton, getBackTop, getBreadCrumb, getAsideRepeatClick, getShowReloadButton, getShowCacheTabsSetting, getOpenKeepAlive, getCacheCanCache, getShowQuick, getTableCacheSetting } = useProjectSetting();
+const [registerDrawer, { setDrawerProps }] = useDrawerInner();
 onMounted(() => {
     setDrawerProps({
         isDetail: false,
@@ -67,7 +52,5 @@ onMounted(() => {
         showFooter: false
     });
 });
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

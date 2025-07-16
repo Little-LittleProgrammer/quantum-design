@@ -1,7 +1,7 @@
 ---
 layout: home
 hero: 
-    name: Q-front-npm 
+    name: Quantum Design
     text: 量子公共框架文档
     tagline: 基于Vue3, monorepo, pnpm
     image:

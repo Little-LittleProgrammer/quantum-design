@@ -1,13 +1,48 @@
-import { ComputedRef, Ref, computed, reactive, ref, toRaw, unref, watch } from 'vue';
-import { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
+import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watch } from 'vue';
+import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { isArray, isBoolean, isFunction, isMap, isNumber, isString } from '@quantum-design/utils';
+import { isArray, isBoolean, isObject, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url, js_utils_dom_get_all_class } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
+import dayjs from 'dayjs';
+import { IndexedDB } from '@quantum-design/utils';
 
 interface ActionType {
     columns: Ref<Recordable[]>
+    wrapRef: Ref<Element>
 }
+
+const map = new Map<string, BasicColumn[]>();
+let db: IndexedDB | null = null;
+
+function getIndeDB() {
+    if (db && !db.support()) {
+        return false;
+    }
+    db = new IndexedDB('vue3-antd-pc-ui', 'q-antd-table');
+    return db;
+}
+
+async function getIndexDBValue() {
+    console.log('getIndexDBValue', map);
+    if (map.size > 0) {
+        return;
+    }
+    const db = getIndeDB();
+    if (!db) {
+        return;
+    }
+    const res = await db.getAll();
+    if (res?.code !== 200) {
+        console.log('IndexDB 获取失败', res);
+        return;
+    }
+    for (const item of res.data) {
+        map.set(item.key, item.value);
+    }
+    console.log('getTableIndexDBValueMap', map);
+}
+getIndexDBValue();
 
 function set_cache(arr: BasicColumn[], cacheObj:Recordable) {
     for (const item of arr) {
@@ -61,7 +96,7 @@ function deep_merge_by_key(arr1: BasicColumn[], arr2: BasicColumn[]): BasicColum
 }
 
 // ellipsis, resizable 统一设置进去
-function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>) {
+function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis', boolean>, canResize: boolean) {
     const { key, dataIndex, children } = item;
     const {ellipsis, resizable } = options;
     item.align = item.align || DEFAULT_ALIGN;
@@ -69,7 +104,7 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!isBoolean(item.ellipsis)) {
+        if (!isObject(item.ellipsis)) {
             Object.assign(item, {
                 ellipsis
             });
@@ -79,29 +114,29 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!isBoolean(item.resizable)) {
+        if (!isObject(item.resizable) && !canResize) {
             const _obj: any = {
                 resizable
             };
             if (!isNumber(item.width)) {
-                console.info(`当 resizable 为 ture 时，请保证 width 属性设置，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
+                console.info(`当 resizable 为 ture 时，请保证 width 属性设置, 且存在一项不设置width，当前以默认为您设置为${DEFAULT_NORMAL_WIDTH}`);
                 _obj.width = DEFAULT_NORMAL_WIDTH;
             }
             Object.assign(item, _obj);
         }
     }
     if (children && children.length) {
-        handle_children(children, options);
+        handle_children(children, options, canResize);
     }
 }
 
 // 处理 treetable
-function handle_children(children: BasicColumn[] | undefined, options: Record<'resizable' | 'ellipsis', boolean>) {
+function handle_children(children: BasicColumn[] | undefined, options: Record<'resizable' | 'ellipsis', boolean>, canResize: boolean) {
     if (!children) return;
     children.forEach((item) => {
         const { children } = item;
-        handle_item(item, options);
-        handle_children(children, options);
+        handle_item(item, options, canResize);
+        handle_children(children, options, canResize);
     });
 }
 
@@ -168,14 +203,93 @@ export function format_cell(text: string, format: CellFormat, record: Recordable
             return format.get(text);
         }
     } catch (error) {
+        console.log(error);
         return text;
     }
+}
+
+/**
+ * 将IndexDB中存储的列和_header的列合并
+ * @param headerColumns _header中的列配置
+ * @param indexDBColumns IndexDB中存储的列配置
+ * @returns 合并后的列配置
+ */
+function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns: BasicColumn[] | null): BasicColumn[] {
+    if (!indexDBColumns || indexDBColumns.length === 0) {
+        return headerColumns;
+    }
+
+    if (!headerColumns || headerColumns.length === 0) {
+        return indexDBColumns;
+    }
+
+    // 创建索引映射，方便查找
+    const headerMap = new Map<string, BasicColumn>();
+    const indexDBMap = new Map<string, BasicColumn>();
+
+    // 构建映射表
+    headerColumns.forEach(column => {
+        const key = column.dataIndex as string || column.key as string;
+        if (key) {
+            headerMap.set(key, column);
+        }
+    });
+
+    indexDBColumns.forEach(column => {
+        const key = column.dataIndex as string || column.key as string;
+        if (key) {
+            indexDBMap.set(key, column);
+        }
+    });
+
+    const result: BasicColumn[] = [];
+    const processedKeys = new Set<string>();
+
+    // 先按照IndexDB的顺序处理
+    indexDBColumns.forEach(indexDBColumn => {
+        const key = indexDBColumn.dataIndex as string || indexDBColumn.key as string;
+        if (key) {
+            const headerColumn = headerMap.get(key);
+            if (headerColumn) {
+                // 当_header中和indexdb中都存在的，将_header和indexdb合并
+                // 以_header为主，但保留indexdb中的一些用户配置（如宽度、排序等）
+                const mergedColumn = {
+                    ...headerColumn,
+                    // 保留IndexDB中的用户配置
+                    width: indexDBColumn.width || headerColumn.width,
+                    defaultHidden: indexDBColumn.defaultHidden,
+                    fixed: indexDBColumn.fixed !== undefined ? indexDBColumn.fixed : headerColumn.fixed,
+                    sorter: indexDBColumn.sorter !== undefined ? indexDBColumn.sorter : headerColumn.sorter,
+                    // 其他可能的用户配置
+                    resizable: indexDBColumn.resizable !== undefined ? indexDBColumn.resizable : headerColumn.resizable,
+                    ellipsis: indexDBColumn.ellipsis !== undefined ? indexDBColumn.ellipsis : headerColumn.ellipsis
+                };
+                result.push(mergedColumn);
+            } else {
+                // 当_header中不存在，indexdb中存在，保留indexdb的
+                // result.push(indexDBColumn);
+            }
+            processedKeys.add(key);
+        }
+    });
+
+    // 处理headerColumns中存在但indexdb中不存在的列
+    headerColumns.forEach(headerColumn => {
+        const key = headerColumn.dataIndex as string || headerColumn.key as string;
+        if (key && !processedKeys.has(key)) {
+            // 当_header中存在，indexdb中不存在，直接将_header添加
+            result.push(headerColumn);
+        }
+    });
+
+    return result;
 }
 
 export function useColumns(
     propsRef: ComputedRef<BasicTableProps>,
     {
-        columns
+        columns,
+        wrapRef
     }: ActionType
 ) {
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
@@ -186,13 +300,12 @@ export function useColumns(
         const _columns = cloneDeep(unref(columnsRef));
 
         handle_action_column(propsRef, _columns, actionField);
-        console.log(_columns);
         if (!_columns) {
             return [];
         }
         const { ellipsis, resizable } = unref(propsRef);
 
-        _columns.forEach((item) => {
+        _columns.forEach((item, index) => {
             const { customRender, slots, dataIndex } = item;
 
             const _options = {
@@ -203,7 +316,8 @@ export function useColumns(
             if (dataIndex !== actionField) {
                 handle_item(
                     item,
-                    _options
+                    _options,
+                    (item.fixed === 'left' || item.fixed === 'right') || index === _columns.length - 2
                 );
             }
         });
@@ -228,7 +342,7 @@ export function useColumns(
         const _viewColumns = sort_fixed_column(unref(getColumnsRef));
 
         function map_fn(column:BasicColumn) {
-            const { slots, customRender, format, edit, editRow, flag } = column;
+            const { slots, customRender, format, edit, editRow } = column;
 
             if (!slots || !slots?.title) {
                 // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
@@ -256,7 +370,7 @@ export function useColumns(
             .map((column) => {
                 // Support table multiple header editable
                 if (column.children?.length) {
-                    // @ts-ignore
+                    // @ts-expect-error - children 类型推断问题
                     column.children = column.children.map(map_fn);
                 }
                 return map_fn(column);
@@ -282,8 +396,17 @@ export function useColumns(
         [() => unref(propsRef).columns, () => unref(columns)],
         ([columnsProp, column]) => {
             const _header = deep_merge_by_key((columnsProp || []), (unref(column) || []));
-            columnsRef.value = _header;
-            cacheColumns = _header?.filter(item => item.dataIndex !== actionField) ?? [];
+
+            // 如果启用了缓存设置，则从IndexDB获取存储的列配置并合并
+            let finalColumns = _header;
+            const indexDBColumns = getColumnsFromIndexDB();
+            if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
+                console.log('indexDBColumns', indexDBColumns);
+                finalColumns = merge_header_with_indexdb(_header, indexDBColumns);
+            }
+
+            columnsRef.value = finalColumns;
+            cacheColumns = finalColumns?.filter(item => item.dataIndex !== actionField) ?? [];
         }, {immediate: true }
     );
 
@@ -337,6 +460,26 @@ export function useColumns(
             }
             columnsRef.value = _newColumns;
         }
+        setColumnsByIndexDB(columnsRef.value);
+    }
+
+    function getColumnsFromIndexDB() {
+        const props = unref(propsRef);
+        if (unref(wrapRef) && props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
+            const columns = getFromIndexDB();
+            console.log('columns', columns);
+            if (columns) {
+                return columns;
+            }
+        }
+        return [];
+    }
+
+    function setColumnsByIndexDB(columns: BasicColumn[]) {
+        const props = unref(propsRef);
+        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
+            storeInIndexDB(js_utils_deep_copy(columns));
+        }
     }
 
     function getColumns(opt?: GetColumnsParams) {
@@ -353,10 +496,42 @@ export function useColumns(
     function getCacheColumns() {
         return cacheColumns;
     }
+
     function setCacheColumns(columns: BasicColumn[]) {
         if (!isArray(columns)) return;
         cacheColumns = columns.filter((item) => item.dataIndex !== actionField);
     }
+
+    function getCacheKey() {
+        const curUrl = js_utils_get_current_url();
+        if (!unref(wrapRef)) return null;
+        const _wrapClass = js_utils_dom_get_all_class(unref(wrapRef));
+        const _cacheKey = [curUrl?.path, ..._wrapClass].join('/');
+        if (!_cacheKey) return null;
+        return _cacheKey;
+    }
+
+    async function storeInIndexDB(columns: BasicColumn[]) {
+        const curKey = getCacheKey();
+        if (!curKey) return;
+        const db = getIndeDB();
+        if (!db) {
+            return;
+        }
+        const res = await db.set(curKey, columns);
+        if (res?.code !== 200) {
+            console.log('IndexDB 存储失败', res);
+        }
+        map.set(curKey, columns);
+    }
+
+    function getFromIndexDB() {
+        const curKey = getCacheKey();
+        console.log('getFromIndexDB', curKey, map);
+        if (!curKey) return null;
+        return map.get(curKey);
+    }
+
     return {
         getColumnsRef,
         getCacheColumns,
@@ -365,6 +540,7 @@ export function useColumns(
         getViewColumns,
         setCacheColumnsByField,
         setCacheColumns,
-        getFlatColumns
+        getFlatColumns,
+        setColumnsByIndexDB
     };
 }

@@ -20,7 +20,7 @@
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-theme-mode-button>
+                <q-antd-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-antd-theme-mode-button>
                 <q-antd-setting class="g-flex-center search-container" :defaultSetting="setting"></q-antd-setting>
             </template>
         </qm-header>

@@ -28,7 +28,7 @@
 
 <script lang='ts' setup>
 import { useGo } from '@quantum-design/hooks/vue/use-page';
-import { onMounted, PropType, computed } from 'vue';
+import { onMounted, type PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSysStore } from '@/store/modules/systemManage';
 import { propTypes } from '@quantum-design/types/vue/types';
@@ -123,6 +123,7 @@ onMounted(() => {
             height: 28px;
             width: 28px;
             vertical-align: top;
+            border-radius: 6px;
         }
         .s-name {
             font-size: $header-system-size;

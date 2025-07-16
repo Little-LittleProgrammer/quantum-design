@@ -1,4 +1,4 @@
-import type { PropType } from 'vue';
+import type { Component, PropType } from 'vue';
 import type { PaginationProps } from './types/pagination';
 import type {
     BasicColumn,
@@ -9,7 +9,9 @@ import type {
     TableRowSelection,
     SizeType,
     Recordable,
-    IOptionsTable
+    IOptionsTable,
+    BasicTableProps,
+    ExtraComponents
 } from './types/table';
 import type { FormProps } from '@vue3-antd/q-form';
 
@@ -45,6 +47,14 @@ export const basicProps = {
     api: {
         type: Function as PropType<(...arg: any[]) => Promise<any>>,
         default: null
+    },
+    exportSetting: {
+        type: Object as PropType<BasicTableProps['exportSetting']>,
+        default: null
+    },
+    useExtraComponents: {
+        type: Array as PropType<ExtraComponents[]>,
+        default: () => []
     },
     beforeFetch: {
         type: Function as PropType<Fn>,

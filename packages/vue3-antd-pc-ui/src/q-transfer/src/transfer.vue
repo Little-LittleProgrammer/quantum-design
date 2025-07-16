@@ -1,14 +1,7 @@
 <!--  -->
 <template>
-  <div>
-        <a-transfer
-            class="q-transfer area-transfer"
-            :data-source="data.dataSource"
-            :target-keys="targetKeys"
-            :render="render_title"
-            :show-select-all="false"
-            @change="on_change"
-        >
+    <div>
+        <a-transfer class="q-transfer area-transfer" :data-source="data.dataSource" :target-keys="targetKeys" :render="render_title" :show-select-all="false" @change="on_change">
             <template #children="{ direction, selectedKeys, onItemSelect }">
                 <a-input-search v-model:value="data.searchWord" v-if="direction === 'left'" placeholder="请选择" @change="on_search" />
                 <a-tree
@@ -16,8 +9,8 @@
                     blockNode
                     checkable
                     checkStrictly
-                    :checkedKeys="direction === 'left' ? [...selectedKeys, ...targetKeys]: selectedKeys "
-                    :treeData=" direction === 'left'? getFilterLeftTreeData : data.filterRightTreeData"
+                    :checkedKeys="direction === 'left' ? [...selectedKeys, ...targetKeys] : selectedKeys"
+                    :treeData="direction === 'left' ? getFilterLeftTreeData : data.filterRightTreeData"
                     @expand="on_expand"
                     @check="
                         (_: boolean, props: AntTreeNodeCheckedEvent) => {
@@ -27,17 +20,16 @@
                 ></a-tree>
             </template>
         </a-transfer>
-  </div>
+    </div>
 </template>
 
-<script lang='ts' setup>
-
-import { reactive, PropType, computed, watch} from 'vue';
-import { js_utils_deep_copy, isObject } from '@quantum-design/utils';
-import { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
-import { handle_tree_data, ICity, is_checked, render_title, filter_tree_data, IFieldNames, dfs, get_parent_keys } from './transfer';
+<script lang="ts" setup>
+import { reactive, type PropType, computed, watch } from 'vue';
+import { js_utils_deep_copy } from '@quantum-design/utils';
+import type { AntTreeNodeCheckedEvent } from 'ant-design-vue/lib/tree/Tree';
+import { handle_tree_data, type ICity, is_checked, render_title, filter_tree_data, type IFieldNames, dfs, get_parent_keys } from './transfer';
 import './style/transfer.scss';
-import { Transfer as ATransfer, Tree as ATree, InputSearch as AInputSearch} from 'ant-design-vue';
+import { Transfer as ATransfer, Tree as ATree, InputSearch as AInputSearch } from 'ant-design-vue';
 import { propTypes } from '@quantum-design/types/vue/types';
 
 defineOptions({
@@ -50,7 +42,7 @@ interface DataProps {
     filterRightTreeData: ICity[];
     filterLeftTreeData: ICity[];
     selectedTreeData: ICity[];
-    searchWord: string
+    searchWord: string;
 }
 
 const props = defineProps({
@@ -71,11 +63,14 @@ const props = defineProps({
 const emit = defineEmits(['update:targetKeys', 'change']);
 
 const getTreeData = computed<ICity[]>(() => {
-    if (!isObject(props.fieldNames)) {
-        throw Error('fieldNames must be object');
-    }
-    if (props.fieldNames.key || props.fieldNames.children || props.fieldNames.title) {
-        return dfs(props.treeData, props.fieldNames);
+    const _fieldNames = {
+        key: 'key',
+        children: 'children',
+        title: 'title',
+        ...(props.fieldNames || {})
+    };
+    if (_fieldNames.key || _fieldNames.children || _fieldNames.title) {
+        return dfs(props.treeData, _fieldNames);
     }
     return props.treeData;
 });
@@ -90,10 +85,7 @@ const data: DataProps = reactive({
 });
 
 const getFilterLeftTreeData = computed<ICity[]>(() => {
-    return handle_tree_data(
-        data.filterLeftTreeData,
-        props.targetKeys
-    );
+    return handle_tree_data(data.filterLeftTreeData, props.targetKeys);
 });
 // 展开的父节点
 function on_expand(expandedKeys: string[]) {
@@ -107,13 +99,13 @@ function flatten(list: ICity[] = []) {
     });
 }
 // 点击左选右选按钮的回调
-function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys:string[]) {
+function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys: string[]) {
     // 防止左侧FilterLeftTreeData值不全, 导致移到右侧时有问题
     data.searchWord = '';
     on_search();
-    let _perentKey:string[] = [];
-    targetKeys = targetKeys.filter(key => {
-        return !getTreeData.value.some(item => {
+    let _perentKey: string[] = [];
+    targetKeys = targetKeys.filter((key) => {
+        return !getTreeData.value.some((item) => {
             if (item.children && item.children.length == 1) {
                 return false;
             }
@@ -126,19 +118,11 @@ function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys:s
 
     if (direction === 'right') {
         // 将带对勾的数据过滤掉，复制给右侧的数组
-        data.selectedTreeData = filter_tree_data(
-            [...getFilterLeftTreeData.value],
-            targetKeys,
-            direction
-        );
+        data.selectedTreeData = filter_tree_data([...getFilterLeftTreeData.value], targetKeys, direction);
         data.filterRightTreeData = data.selectedTreeData;
     } else {
         // 将带对勾的数据过滤掉，返回给给左侧的数组
-        data.selectedTreeData = filter_tree_data(
-            data.selectedTreeData,
-            moveKeys,
-            direction
-        );
+        data.selectedTreeData = filter_tree_data(data.selectedTreeData, moveKeys, direction);
         setTimeout(() => {
             data.filterRightTreeData = data.selectedTreeData;
         });
@@ -150,16 +134,14 @@ function on_change(targetKeys: string[], direction: 'left' | 'right', moveKeys:s
     }
 }
 // 点击复选框时的回调
-function on_checked(_direction:'left' |'right', _:boolean, e: AntTreeNodeCheckedEvent, checkedKeys:string[], itemSelect: (n: any, c: boolean) => void) {
+function on_checked(_direction: 'left' | 'right', _: boolean, e: AntTreeNodeCheckedEvent, checkedKeys: string[], itemSelect: (n: any, c: boolean) => void) {
     const { eventKey } = e.node;
     // 筛选
     if (e.node.dataRef && e.node.dataRef.children) {
-        const _treeNode = e.node.dataRef.children.map(
-            (item) => item.key
-        );
+        const _treeNode = e.node.dataRef.children.map((item) => item.key);
         if (eventKey) {
             const _check = !is_checked(checkedKeys, eventKey);
-            _treeNode.forEach(item => {
+            _treeNode.forEach((item) => {
                 itemSelect(item, _check);
             });
         }
@@ -170,13 +152,10 @@ function on_checked(_direction:'left' |'right', _:boolean, e: AntTreeNodeChecked
 function on_search() {
     const value = data.searchWord;
     data.expandedKeys = [];
-    data.filterLeftTreeData = filter_search_data(
-        value,
-        js_utils_deep_copy(getTreeData.value)
-    );
+    data.filterLeftTreeData = filter_search_data(value, js_utils_deep_copy(getTreeData.value));
 }
 function filter_search_data(value: string, treeData: ICity[]) {
-    let _result:ICity[] = [];
+    let _result: ICity[] = [];
     treeData.forEach((item) => {
         if (item.children) {
             const _child = {
@@ -186,10 +165,7 @@ function filter_search_data(value: string, treeData: ICity[]) {
                     return e.title.includes(value);
                 })
             };
-            if (
-                item.children.filter((e) => e.title.includes(value))
-                    .length !== 0
-            ) {
+            if (item.children.filter((e) => e.title.includes(value)).length !== 0) {
                 _result = [..._result, _child];
                 if (value != '') {
                     data.expandedKeys.push(item.key);
@@ -203,15 +179,19 @@ function filter_search_data(value: string, treeData: ICity[]) {
 watch(props.targetKeys, (val) => {
     on_change(val, 'right', []);
 });
-watch(() => getTreeData.value, (val) => {
-    if (val.length > 0) {
-        data.searchWord = '';
-        flatten(js_utils_deep_copy(getTreeData.value));
-        data.filterLeftTreeData = js_utils_deep_copy(getTreeData.value);
-        // 初始化右侧数据
-        setTimeout(() => {
-            on_change(props.targetKeys, 'right', []);
-        });
-    }
-}, {immediate: true});
+watch(
+    () => getTreeData.value,
+    (val) => {
+        if (val.length > 0) {
+            data.searchWord = '';
+            flatten(js_utils_deep_copy(getTreeData.value));
+            data.filterLeftTreeData = js_utils_deep_copy(getTreeData.value);
+            // 初始化右侧数据
+            setTimeout(() => {
+                on_change(props.targetKeys, 'right', []);
+            });
+        }
+    },
+    { immediate: true }
+);
 </script>

@@ -3,6 +3,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "isolatedModules": true,
+        "verbatimModuleSyntax": false,
         "paths": {
             "@/*": ["src/*"],
             "#/*": ["types/*"]

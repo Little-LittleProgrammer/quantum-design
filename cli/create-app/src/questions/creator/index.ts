@@ -5,7 +5,7 @@ import { nuxt2TemplateQuestion, vue2TemplateQuestion } from "../vue2"
 import { nuxt3TemplateQuestion, vue3TemplateQuestion } from "../vue3"
 import { frameQuestion, infrastructureMode } from "./frame"
 import { otherQuestion } from "./other"
-import { pkgManageQuestion } from "./package-manage"
+import { communicationQuestion, pkgManageQuestion } from "./package-manage"
 import { projectName } from "./project-name"
 
 export async function create_app_questions() {
@@ -15,6 +15,16 @@ export async function create_app_questions() {
         await create_question(infrastructureMode) // 选择基础框架
         await create_question(frameQuestion) // 选择框架
         await choose_template(cliOptions.frame); // 选择模板
+        await create_question(otherQuestion) // 输入其他信息
+    } catch (error) {
+        process.exit(1)
+    }
+}
+
+export async function create_api_questions() {
+    try {
+        await create_question(projectName) // 输入项目名称
+        await create_question(communicationQuestion) // 选择通讯方式
         await create_question(otherQuestion) // 输入其他信息
     } catch (error) {
         process.exit(1)

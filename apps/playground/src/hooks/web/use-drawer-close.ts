@@ -1,5 +1,5 @@
 import { isArray } from '@quantum-design/utils';
-import { ComputedRef, onDeactivated, onUnmounted } from 'vue';
+import { type ComputedRef, onDeactivated, onUnmounted } from 'vue';
 
 interface IConfig {
     getVisible?: ComputedRef<boolean>;

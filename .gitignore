@@ -38,11 +38,10 @@ yarn-error.log*
 
 # turbo
 .turbo
-.vscode
-
 # custom
 *-cache
 **/stats.html
+.eslintcache
 
 # vite
 vite.config.ts.*
@@ -58,3 +57,6 @@ cache
 .nuxt
 .nitro
 .cache
+
+# cursor
+.cursor/mcp.json

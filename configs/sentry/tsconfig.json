@@ -1,0 +1,10 @@
+{
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
+    "compilerOptions": {
+        "declaration": false,
+        "target": "ES5"
+    },
+    "include": ["*.ts", "**/*.ts"],
+    "exclude": ["dist"]
+}
+  

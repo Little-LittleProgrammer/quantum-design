@@ -11,8 +11,8 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, toRefs, onMounted, PropType, computed, unref} from 'vue';
-import { RouteLocationNormalized, useRouter } from 'vue-router';
+import { defineComponent, reactive, toRefs, onMounted, type PropType, computed, unref} from 'vue';
+import { type RouteLocationNormalized, useRouter } from 'vue-router';
 import type { DropMenu } from '@vue3-antd/q-dropdown';
 
 import Dropdown from '@vue3-antd/q-dropdown';

@@ -8,7 +8,8 @@ import { ViteEnv } from '../types';
 import {js_utils_deep_merge} from '@quantum-design/utils';
 
 export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>) {
-    const { VITE_USE_PWA, VITE_GLOB_APP_TITLE } = env;
+    const { VITE_USE_PWA, VITE_UPDATE_NOTIFY, VITE_GLOB_APP_TITLE, } = env;
+    const time = VITE_UPDATE_NOTIFY ? new Date().getTime() : '';
 
     if (VITE_USE_PWA) {
         // vite-plugin-pwa
@@ -16,28 +17,11 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
             registerType: 'prompt', // 手动更新
             injectRegister: 'auto', // 自动注册
             workbox: {
-                swDest: `dist/sw.js?${new Date().getTime()}`,
+                swDest: `dist/sw.js`,
                 cleanupOutdatedCaches: true, // 自动清理过期缓存
                 globPatterns: [], // 要预先缓存的资源
                 navigateFallback: null,
                 runtimeCaching: [ // 运行时缓存
-                    {
-                        urlPattern: ({url }:any) => url.pathname.includes('/api'),
-                        handler: 'NetworkFirst', // 网络优先
-                        options: {
-                            cacheName: 'api-cache', // 缓存get请求
-                            cacheableResponse: {
-                                statuses: [200]
-                            },
-                            matchOptions: {
-                                ignoreSearch: true
-                            },
-                            expiration: {
-                                // 最多30个
-                                maxEntries: 30
-                            }
-                        }
-                    },
                     {
                         urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
                         handler: 'CacheFirst',
@@ -45,23 +29,23 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheName: 'assets-images-cache',
                             expiration: {
                                 // 最多30个图
-                                maxEntries: 30
-                            }
-                        }
+                                maxEntries: 30,
+                            },
+                        },
                     },
                     {
-                        urlPattern: /.*\.js.*/,
+                        urlPattern: /.*\.js$/,
                         handler: 'CacheFirst', // 因为 资源 hash总会变, 所以这种方式即可
                         options: {
                             cacheName: 'project-js-cache',
                             expiration: {
                                 maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
-                                maxAgeSeconds: 7 * 24 * 60 * 60
+                                maxAgeSeconds: 7 * 24 * 60 * 60,
                             },
                             cacheableResponse: {
-                                statuses: [200]
-                            }
-                        }
+                                statuses: [200],
+                            },
+                        },
                     },
                     {
                         urlPattern: /.*\.css.*/,
@@ -70,12 +54,12 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheName: 'project-css-cache',
                             expiration: {
                                 maxEntries: 20,
-                                maxAgeSeconds: 7 * 24 * 60 * 60
+                                maxAgeSeconds: 7 * 24 * 60 * 60,
                             },
                             cacheableResponse: {
-                                statuses: [200]
-                            }
-                        }
+                                statuses: [200],
+                            },
+                        },
                     },
                     {
                         urlPattern: /.*/,
@@ -85,26 +69,27 @@ export function vite_plugin_pwa(env: ViteEnv, options?: Partial<VitePWAOptions>)
                             cacheableResponse: {
                                 statuses: [200],
                                 headers: {
-                                    'Content-Type': 'text/html; charset=UTF-8'
-                                }
-                            }
-                        }
+                                    'Content-Type': 'text/html; charset=UTF-8',
+                                },
+                            },
+                        },
                     }
-                ]
+                ],
             },
             manifest: {
                 name: VITE_GLOB_APP_TITLE,
-                short_name: '量子',
+                short_name: '七猫',
                 description: VITE_GLOB_APP_TITLE,
                 theme_color: '#E6A817',
+                time_stamp: time,
                 icons: [
                     {
                         src: 'img/logo.png',
                         sizes: '192x192',
-                        type: 'image/png'
+                        type: 'image/png',
                     }
-                ]
-            }
+                ],
+            },
         }, options));
         return pwaPlugin;
     }

@@ -9,8 +9,8 @@
 </template>
 
 <script lang='ts' setup>
-import { PropType, computed} from 'vue';
-import {PaginationProps} from '../types/pagination';
+import { type PropType, computed} from 'vue';
+import type { PaginationProps } from '../types/pagination';
 import { Pagination as APagination } from 'ant-design-vue';
 defineOptions({
     name: 'QAntdTablePagination'

@@ -8,60 +8,67 @@ export const matchComponents: IMatcher[] = [
     // default
     {
         pattern: /^QLoading/,
-        styleDir: 'q-loading'
+        styleDir: 'q-loading',
     },
     {
         pattern: /^QTag/,
-        styleDir: 'q-tag'
+        styleDir: 'q-tag',
     },
     {
         pattern: /^QTreeTable/,
-        styleDir: 'q-tree-table'
+        styleDir: 'q-tree-table',
     },
     {
         pattern: /^QWatermark/,
-        styleDir: 'q-watermark'
+        styleDir: 'q-watermark',
     },
     {
         pattern: /^QBreadcrumb/,
-        styleDir: 'q-breadcrumb'
+        styleDir: 'q-breadcrumb',
+    },
+    {
+        pattern: /^QCodeEditor/,
+        styleDir: 'q-code-editor',
+    },
+    {
+        pattern: /^QRickText/,
+        styleDir: 'q-rich-text',
     },
     // antd
     {
         pattern: /^QAntdShrinkCard/,
-        styleDir: 'q-card'
+        styleDir: 'q-card',
     },
     {
         pattern: /^QAntdDrawer/,
-        styleDir: 'q-drawer'
+        styleDir: 'q-drawer',
     },
     {
         pattern: /^QAntdForm|^QAntdSelectAll/,
-        styleDir: 'q-form'
+        styleDir: 'q-form',
     },
     {
         pattern: /^QAntdIconPicker/,
-        styleDir: 'q-icon'
+        styleDir: 'q-icon',
     },
     {
         pattern: /^QAntdKeepAliveTabs/,
-        styleDir: 'q-keep-alive-tabs'
+        styleDir: 'q-keep-alive-tabs',
     },
     {
         pattern: /^QAntdSetting/,
-        styleDir: 'q-setting'
+        styleDir: 'q-setting',
     },
     {
-        pattern: /^QAntdTable|^QAntdTableAction|^QAntdTablePagination|^QAntdTableImg/,
-        styleDir: 'q-table'
+        pattern: /^QAntdTable$|^QAntdTableAction|^QAntdTablePagination|^QAntdTableImg/,
+        styleDir: 'q-table',
     },
     {
         pattern: /^QAntdTransfer/,
-        styleDir: 'q-transfer'
+        styleDir: 'q-transfer',
     },
-
     {
         pattern: /^QAntdUpload/,
-        styleDir: 'q-upload'
+        styleDir: 'q-upload',
     }
 ];

@@ -1,7 +1,7 @@
 /**
  * Data processing class, can be configured according to the project
  */
-import type { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse, AxiosInstance, AxiosHeaders } from 'axios';
 import type { RequestOptions } from './interface';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
@@ -12,7 +12,9 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 }
 
 export interface AxiosResponseAgent<T=any> extends AxiosResponse<T> {
-    config: SelectPartial<AxiosRequestConfig, 'url'>
+    config: SelectPartial<AxiosRequestConfig, 'url'> & {
+        headers: AxiosHeaders
+    }
 }
 
 export abstract class CustomAxiosTransform {
@@ -44,7 +46,7 @@ export abstract class AxiosTransform {
      * @description: 请求之前的拦截器
      */
     requestInterceptors?: (
-        config: SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>,
+        config: AxiosRequestConfig,
         options: CreateAxiosOptions
     ) => AxiosRequestConfig;
 

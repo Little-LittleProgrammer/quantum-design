@@ -1,36 +1,36 @@
 {
-  "name": "@quantum-design/polyfill",
-  "version": "1.1.0",
-  "description": "`polyfill`,低版本兼容",
-  "main": "dist/polyfill.cjs.min.js",
-  "module": "dist/polyfill.esm.min.js",
-  "typings": "dist/types/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "rollup -c --environment TYPES:true",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "keywords": [
-    "quantum",
-    "monorepo",
-    "utils",
-    "turborepo"
-  ],
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "license": "ISC",
-  "dependencies": {
-    "@quantum-design/utils": "workspace:*"
-  },
-  "devDependencies": {
-    "@quantum-design/types": "workspace:*",
-    "@quantum-design-configs/rollup": "workspace:*",
-    "rollup": "^3.29.4"
-  }
+    "name": "@quantum-design/polyfill",
+    "version": "2.0.1",
+    "description": "`polyfill`,低版本兼容",
+    "main": "dist/polyfill.cjs.min.js",
+    "module": "dist/polyfill.esm.min.js",
+    "typings": "dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
+    },
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "utils",
+        "turborepo"
+    ],
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@quantum-design/utils": "workspace:*"
+    },
+    "devDependencies": {
+        "@quantum-design/types": "workspace:*",
+        "@quantum-design-configs/rollup": "workspace:*",
+        "rollup": "catalog:"
+    }
 }

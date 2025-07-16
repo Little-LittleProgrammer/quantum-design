@@ -23,7 +23,7 @@
 <script lang='ts' setup>
 import { reactive, watch } from 'vue';
 import TreeTableCell from './components/cell.vue';
-import { TreeTableData } from './type/tree-table';
+import type { TreeTableData } from './type/tree-table';
 import { treeTableProps } from './type/props';
 
 defineOptions({

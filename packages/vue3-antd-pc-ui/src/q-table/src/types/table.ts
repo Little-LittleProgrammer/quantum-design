@@ -1,9 +1,10 @@
-import { ColumnProps } from 'ant-design-vue/lib/table';
-import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface';
-import { PaginationProps } from './pagination';
-import { FormProps } from '@vue3-antd/q-form';
-import { VNodeChild } from 'vue';
-import { ComponentType } from './component-type';
+import type { ColumnProps } from 'ant-design-vue/lib/table';
+import type { TableRowSelection as ITableRowSelection, ColumnFilterItem } from 'ant-design-vue/lib/table/interface';
+import type { PaginationProps } from './pagination';
+import type { FormProps } from '@vue3-antd/q-form';
+import type { VNodeChild } from 'vue';
+import type { ComponentType } from './component-type';
+import type { JSX } from 'vue/jsx-runtime';
 
 export declare type SortOrder = 'ascend' | 'descend';
 
@@ -25,7 +26,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
      * Callback executed when select/deselect one row
      * @type Function
      */
-    onSelect?: (record: T, selected: boolean, selectedRows: Object[], nativeEvent: Event) => any;
+    onSelect?: (record: T, selected: boolean, selectedRows: object[], nativeEvent: Event) => any;
 
     /**
      * Callback executed when select/deselect all rows
@@ -51,14 +52,14 @@ export interface ExpandedRowRenderRecord<T> extends TableCustomRecord<T> {
     expanded?: boolean;
 }
 
-// table header filters props
-export interface ColumnFilterItem {
-    text: string;
-    value: string;
-    children?:
-    | any[]
-    | (((props: Record<string, any>) => any[]) & (() => any[]) & (() => any[]));
-}
+// table header filters props - 使用 ant-design-vue 的 ColumnFilterItem 类型
+// export interface ColumnFilterItem {
+//     text: string;
+//     value: string;
+//     children?:
+//     | any[]
+//     | (((props: Record<string, any>) => any[]) & (() => any[]) & (() => any[]));
+// }
 
 // table header sorters props
 export interface SorterResult {
@@ -122,8 +123,10 @@ export interface TableActionType {
     getShowPagination: () => boolean;
     setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
     setCacheColumns?: (columns: BasicColumn[]) => void;
+    exportData: (opt?: FetchParams) => Promise<any>;
 }
 // table api Mapping field, support 'a.b.c'
+// pageField, sizeField, listField, totalField, headerField, summaryField
 export interface FetchSetting {
     // page key, default: 'page'
     pageField: string;
@@ -135,6 +138,7 @@ export interface FetchSetting {
     totalField: string;
     summaryField: string; // default: 'total'
     actionField: string; // default 'action'
+    headerField: string; // default 'header'
 }
 
 // table setting set table base conf
@@ -143,6 +147,13 @@ export interface TableSetting {
     size?: boolean;
     setting?: boolean;
     fullScreen?: boolean;
+    export?: boolean;
+    cache?: boolean;
+}
+
+export interface ExtraComponents {
+    component: string;
+    componentProps: Record<string, any>;
 }
 
 // base
@@ -167,10 +178,18 @@ export interface BasicTableProps<T = any> {
     summaryFunc?: (...arg: any) => Recordable[];
     // 自定义合计表格内容
     summaryData?: Recordable[];
+    summaryConfig?: {fixed: string};
     // 是否可拖拽列
     canColDrag?: boolean;
     // 接口请求对象
     api?: (...arg: any) => Promise<any>;
+    exportSetting?: {
+        custom?: boolean;
+        api: (...arg: any) => Promise<any>;
+        beforeFetch?: Fn;
+        afterFetch?: Fn;
+    }
+    useExtraComponents?: ExtraComponents[];
     // 请求之前处理参数
     beforeFetch?: Fn;
     // 自定义处理接口返回参数
@@ -271,7 +290,7 @@ export interface BasicTableProps<T = any> {
      * Customize row expand Icon.
      * @type Function | VNodeChild
      */
-    expandIcon?: Function | VNodeChild | JSX.Element;
+    expandIcon?: Fn | VNodeChild | JSX.Element;
 
     /**
      * Whether to expand row by clicking anywhere in the whole row
@@ -289,7 +308,7 @@ export interface BasicTableProps<T = any> {
      * Table footer renderer
      * @type Function | VNodeChild
      */
-    footer?: Function | VNodeChild | JSX.Element;
+    footer?: Fn | VNodeChild | JSX.Element;
 
     /**
      * Indent size in pixels of tree data
@@ -380,7 +399,7 @@ export interface BasicTableProps<T = any> {
      *
      * @version 1.5.4
      */
-    transformCellText?: Function;
+    transformCellText?: Fn;
 
     /**
      * Callback executed before editable cell submit value, not for row-editor
@@ -418,6 +437,7 @@ export interface BasicTableProps<T = any> {
     onExpandedRowsChange?: (expandedRows: string[] | number[]) => void;
 
     onColumnsChange?: (data: ColumnChangeParam[]) => void;
+
 }
 
 // customRender

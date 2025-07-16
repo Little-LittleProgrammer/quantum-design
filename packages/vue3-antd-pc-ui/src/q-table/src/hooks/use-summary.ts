@@ -1,5 +1,5 @@
-import { Ref, ComputedRef, computed, unref } from 'vue';
-import { BasicTableProps, Recordable } from '../types/table';
+import { type Ref, type ComputedRef, computed, unref } from 'vue';
+import type { BasicTableProps, Recordable } from '../types/table';
 import { isArray, isFunction } from '@quantum-design/utils';
 
 interface ActionType {

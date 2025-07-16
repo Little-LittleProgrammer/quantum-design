@@ -14,23 +14,25 @@
                 </div>
             </div>
         </div>
-        <div v-show="data.isShow" ref="js-code-segment" class="code-segment">
+        <div v-show="data.isShow" ref="jsCodeSegment" class="code-segment">
             <slot name="codeText"></slot>
         </div>
         <div v-if="$slots.codeText" class="code-button" >
             <span :title="data.codeTextBtn">
-                <a class="show-button" :type="data.isShow?'CaretUpOutline':'CaretDownOutline'" @click="handle_toggle_show">1</a>
+                <CaretUpOutlined class="show-button" v-if="data.isShow" @click="handle_toggle_show" ></CaretUpOutlined>
+                <CaretDownOutlined class="show-button" v-else @click="handle_toggle_show"></CaretDownOutlined>
             </span>
             <span :title="data.copyText">
-                <a class="copy-icon" :type="data.copyText=='复制成功'? 'CheckOutLine':'CopyOutline'" @click="copy_code" @mouseleave="reset_text"> 2</a>
+                <CheckOutlined class="copy-icon" v-if="data.copyText=='复制成功'" @click="copy_code" @mouseleave="reset_text"></CheckOutlined>
+                <CopyOutlined class="copy-icon" v-else @click="copy_code" @mouseleave="reset_text"></CopyOutlined>
             </span>
       </div>
     </div>
   </template>
 
 <script lang='ts' setup>
-import { reactive,onMounted} from 'vue';
-import {QIcon} from '@quantum-design/vue3-antd-pc-ui'
+import { reactive,onMounted, ref} from 'vue';
+import {CaretUpOutlined, CaretDownOutlined, CheckOutlined, CopyOutlined} from '@ant-design/icons-vue'
 const props = defineProps({
     title: {
         type: String,
@@ -46,27 +48,28 @@ const data = reactive({
     codeTextBtn: '显示代码',
     copyText: '复制代码'
 })
+const jsCodeSegment = ref<HTMLElement | null> ( null)
 
 function handle_toggle_show() {
     data.isShow = !data.isShow
     data.codeTextBtn = data.isShow ? '隐藏代码' : '显示代码'
 }
 function copy_code() {
-    const _code = this.$refs['js-code-segment'].innerText;
+    const _code = jsCodeSegment.value!.innerText;
     let $input = document.createElement("textarea");
     document.body.appendChild($input);
     $input.value = _code; // 修改文本框的内容
     $input.select(); // 选中文本
     if (document.execCommand("copy")) {
         document.execCommand("copy");
-    this.copyText = '复制成功'
+        data.copyText = '复制成功'
     } else {
-        this.copyText = '复制失败'
+        data.copyText = '复制失败'
     }
     document.body.removeChild($input);
 }
 function reset_text() {
-    this.copyText = '复制代码'
+    data.copyText = '复制代码'
 }
 onMounted(() => {
 })
@@ -75,25 +78,25 @@ onMounted(() => {
 <style lang='scss' scoped>
 .code {
   .code-demo {
-    border: 1px solid rgb(235, 237, 240);
+    border: 1px solid var(--vp-c-divider-light);
     border-bottom: none;
     border-radius: 3px;
-    box-shadow: 0 0 2px 0 rgba(232, 237, 250, 0.6),
-      0 1px 2px 0 rgba(232, 237, 250, 0.5);
+    box-shadow: 0 0 2px 0 var(--vp-badge-info-bg),
+      0 1px 2px 0 var(--vp-badge-info-bg);
       overflow: hidden;
     .code-content {
       display: flex;
-      justify-content: center;
       align-items: center;
       box-sizing: border-box;
       padding: 30px;
+      overflow: auto;
     }
     .code-describe {
       margin: 10px 0;
       position: relative;
-      border-top: 1px solid rgb(235, 237, 240);
+      border-top: 1px solid var(--vp-c-divider-light);
       .describe-title {
-        background-color: #fff;
+        background-color: var(--vp-c-bg);
         padding: 0px 6px;
         position: absolute;
         left: 20px;
@@ -106,14 +109,18 @@ onMounted(() => {
       }
     }
   }
+  .code-segment{ 
+        border-left: 1px solid var(--vp-c-divider-light);
+        border-right: 1px solid var(--vp-c-divider-light);
+    }
   .code-button {
-    background: #fafbfc;
-    color: #409eff;
+    background: var(--vp-badge-info-bg);
+    color: var(--vp-c-brand);
     font-weight: 400;
     line-height: 40px;
     text-align: center;
-    box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-      0 2px 4px 0 rgba(232, 237, 250, 0.5);
+    box-shadow: 0 0 8px 0 var(--vp-badge-info-bg),
+      0 2px 4px 0 var(--vp-badge-info-bg);
     .show-button {
       cursor: pointer;
       &:hover {

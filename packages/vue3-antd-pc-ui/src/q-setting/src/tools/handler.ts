@@ -1,6 +1,6 @@
 import { HandleEnum } from '../enums/enum';
 import { useProjectSetting } from '../hooks/use-project-setting';
-import { IProjectConfig } from '../type';
+import type { IProjectConfig } from '../type';
 
 export function handler(event: HandleEnum, value: any): IProjectConfig {
     switch (event) {

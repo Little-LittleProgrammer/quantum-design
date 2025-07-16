@@ -1,74 +1,73 @@
 {
-  "hash": "5bc04331",
-  "browserHash": "cf5403e5",
+  "hash": "c43767ee",
+  "configHash": "aed229f7",
+  "lockfileHash": "22b5fa9a",
+  "browserHash": "a258dbeb",
   "optimized": {
     "vue": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+vue@3.3.4/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../../../node_modules/.pnpm/vue@3.4.31_typescript@5.4.5/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "ebaaea62",
+      "fileHash": "daa88882",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+@vue+devtools-api@6.5.0/node_modules/@vue/devtools-api/lib/esm/index.js",
+      "src": "../../../../../../node_modules/.pnpm/@vue+devtools-api@7.3.5/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "1340472b",
+      "fileHash": "8f53b741",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../../../node_modules/.pnpm/@vueuse+core@10.11.0_vue@3.4.31/node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "7de45372",
       "needsInterop": false
     },
     "pinia": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+pinia@2.1.6_typescript@5.1.3_vue@3.3.4/node_modules/pinia/dist/pinia.mjs",
+      "src": "../../../../../../node_modules/.pnpm/pinia@2.1.7_typescript@5.4.5_vue@3.4.31/node_modules/pinia/dist/pinia.mjs",
       "file": "pinia.js",
-      "fileHash": "3d20259f",
+      "fileHash": "6b5f83b3",
       "needsInterop": false
     },
     "ant-design-vue": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+ant-design-vue@4.0.2_vue@3.3.4/node_modules/ant-design-vue/es/index.js",
+      "src": "../../../../../../node_modules/.pnpm/ant-design-vue@4.2.3_vue@3.4.31/node_modules/ant-design-vue/es/index.js",
       "file": "ant-design-vue.js",
-      "fileHash": "7712b682",
+      "fileHash": "ba7efc27",
       "needsInterop": false
     },
     "highlight.js/lib/core": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+highlight.js@11.4.0/node_modules/highlight.js/es/core.js",
+      "src": "../../../../../../node_modules/.pnpm/highlight.js@11.4.0/node_modules/highlight.js/es/core.js",
       "file": "highlight__js_lib_core.js",
-      "fileHash": "62b18ca8",
+      "fileHash": "cb04069f",
       "needsInterop": false
     },
     "highlight.js/lib/common": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+highlight.js@11.4.0/node_modules/highlight.js/es/common.js",
+      "src": "../../../../../../node_modules/.pnpm/highlight.js@11.4.0/node_modules/highlight.js/es/common.js",
       "file": "highlight__js_lib_common.js",
-      "fileHash": "68047ec7",
+      "fileHash": "1a8b127b",
       "needsInterop": false
     },
     "@ant-design/icons-vue": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+@ant-design+icons-vue@6.1.0_vue@3.3.4/node_modules/@ant-design/icons-vue/es/index.js",
+      "src": "../../../../../../node_modules/.pnpm/@ant-design+icons-vue@6.1.0_vue@3.4.31/node_modules/@ant-design/icons-vue/es/index.js",
       "file": "@ant-design_icons-vue.js",
-      "fileHash": "1158f5d1",
+      "fileHash": "18bfabf9",
       "needsInterop": false
-    },
-    "dayjs": {
-      "src": "../../../../../../node_modules/.pnpm/registry.npmmirror.com+dayjs@1.11.7/node_modules/dayjs/dayjs.min.js",
-      "file": "dayjs.js",
-      "fileHash": "a25a772f",
-      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-DYSNP4ZX": {
-      "file": "chunk-DYSNP4ZX.js"
+    "chunk-C5BZ36P3": {
+      "file": "chunk-C5BZ36P3.js"
     },
-    "chunk-266XN4M5": {
-      "file": "chunk-266XN4M5.js"
+    "chunk-3SVWYVNJ": {
+      "file": "chunk-3SVWYVNJ.js"
     },
-    "chunk-HWSHGJJI": {
-      "file": "chunk-HWSHGJJI.js"
+    "chunk-5BSGNXMN": {
+      "file": "chunk-5BSGNXMN.js"
     },
-    "chunk-XPRRSVSJ": {
-      "file": "chunk-XPRRSVSJ.js"
+    "chunk-HGWVF6YY": {
+      "file": "chunk-HGWVF6YY.js"
     },
-    "chunk-2TIORARE": {
-      "file": "chunk-2TIORARE.js"
-    },
-    "chunk-5WWUZCGV": {
-      "file": "chunk-5WWUZCGV.js"
+    "chunk-G3PMV62Z": {
+      "file": "chunk-G3PMV62Z.js"
     }
   }
 }

@@ -18,8 +18,23 @@ module.exports = {
         '@typescript-eslint'
     ],
     rules: {
-        '@typescript-eslint/indent': [2, 4, { SwitchCase: 1 }], // 缩进 SwitchCase,
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+                argsIgnorePattern: '^_',
+                varsIgnorePattern: '^_'
+            }
+        ],
+        'no-empty-function': 'off',
+        '@typescript-eslint/no-empty-function': [
+            'error',
+            {
+                allow: ['arrowFunctions', 'functions', 'methods']
+            }
+        ]
     }
 };
 

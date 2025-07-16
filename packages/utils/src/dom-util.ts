@@ -81,6 +81,11 @@ export function js_utils_dom_has_class(el: Element, cls: string) {
     }
 }
 
+// 获取当前元素的所有 class 类名
+export function js_utils_dom_get_all_class(el: Element) {
+    return el.className.split(' ');
+}
+
 /* istanbul ignore next */
 export function js_utils_dom_add_class(el: Element, cls: string) {
     if (!el) return;
@@ -303,4 +308,111 @@ export function js_utils_copy_code(str: string) {
         document.body.removeChild($input);
         return false;
     }
+}
+
+/**
+ * 获取图片的宽高信息
+ * @param {string} src 图片路径或base64
+ * @returns {Promise<{width: number, height: number}>} 返回包含宽高的对象
+ * @description
+ * ```js
+ * // 使用示例
+ * const { width, height } = await js_utils_get_image_size('https://example.com/image.jpg');
+ * console.log(width, height);
+ * ```
+ */
+export function js_utils_get_image_size(src: string): Promise<{width: number, height: number}> {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = function() {
+            resolve({
+                width: img.width,
+                height: img.height
+            });
+        };
+        img.onerror = function() {
+            reject(new Error('加载图片失败'));
+        };
+        // 处理跨域问题
+        img.crossOrigin = 'anonymous';
+        img.src = src;
+    });
+}
+
+/**
+ * 将Base64字符串转换为二进制流文件(Blob对象)
+ * @param {string} base64 base64字符串
+ * @param {string} [mimeType] 文件类型，如 'image/jpeg', 'application/pdf' 等，不传时会尝试从base64字符串中提取
+ * @param {string} [fileName] 文件名称（可选）
+ * @returns {Blob|File} 如果提供了fileName返回File对象，否则返回Blob对象
+ * @description
+ * ```js
+ * // 自动提取MIME类型
+ * const blob = js_utils_base64_to_blob('data:image/jpeg;base64,...');
+ *
+ * // 指定MIME类型
+ * const blob = js_utils_base64_to_blob('data:image/jpeg;base64,...', 'image/png');
+ *
+ * // 转换为File对象
+ * const file = js_utils_base64_to_blob('data:image/jpeg;base64,...', 'image/jpeg', 'image.jpg');
+ *
+ * // 下载文件示例
+ * const blob = js_utils_base64_to_blob('data:image/jpeg;base64,...');
+ * const url = URL.createObjectURL(blob);
+ * const a = document.createElement('a');
+ * a.href = url;
+ * a.download = 'filename.jpg';
+ * a.click();
+ * URL.revokeObjectURL(url);
+ * ```
+ */
+export function js_utils_base64_to_blob(base64: string, fileName?: string, mimeType?: string): Blob | File {
+    // 从base64字符串中提取MIME类型
+    let detectedMimeType = '';
+    if (base64.startsWith('data:')) {
+        const matches = base64.match(/^data:([^;]+);base64,/);
+        if (matches && matches.length > 1) {
+            detectedMimeType = matches[1] || '';
+        }
+    }
+
+    // 使用提供的mimeType，如果没有则使用从base64中检测到的类型
+    const finalMimeType = mimeType || detectedMimeType || 'application/octet-stream';
+
+    // 处理base64字符串，移除前缀如 "data:image/jpeg;base64,"
+    const base64Parts = base64.split(',');
+    const base64Content = base64Parts.length > 1 ? base64Parts[1] : base64;
+
+    if (!base64Content) {
+        throw new Error('无效的base64字符串');
+    }
+
+    const byteCharacters = window.atob(base64Content);
+    const byteArrays = [];
+
+    // 将字符串分片处理，避免单次处理过多数据导致内存问题
+    const sliceSize = 1024;
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        // 将每个字符转换为其UTF-16代码单元值
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        // 使用Uint8Array创建字节数组
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    // 创建Blob对象或File对象
+    const blob = new Blob(byteArrays, { type: finalMimeType });
+
+    // 如果提供了文件名，返回File对象
+    if (fileName) {
+        return new File([blob], fileName, { type: finalMimeType });
+    }
+
+    return blob;
 }

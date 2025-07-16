@@ -19,9 +19,9 @@
     </a-modal>
 </template>
 <script lang='ts' setup>
-import { reactive, onBeforeMount, onMounted, watch, nextTick, PropType} from 'vue';
+import { reactive, onBeforeMount, onMounted, watch, nextTick, type PropType} from 'vue';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
-import { find_search_route, ICacheObj } from './search';
+import { find_search_route, type ICacheObj } from './search';
 import { js_utils_throttle_event } from '@quantum-design/utils';
 import { useRouter } from 'vue-router';
 import { QLoading } from '@quantum-design/vue3-pc-ui';

@@ -55,7 +55,7 @@ echarts.use([
 
 import type { EChartsOption } from 'echarts';
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { computed, onUnmounted, ref, Ref, unref, watch, nextTick, ComputedRef } from 'vue';
+import { computed, onUnmounted, ref, type Ref, unref, watch, nextTick, type ComputedRef } from 'vue';
 
 export type {EChartsOption};
 
@@ -137,10 +137,23 @@ export function useEcharts(
         return chartInstance;
     }
 
+    function addComp(comp: any[]) {
+        echarts.use(comp);
+    }
+
+    function rerender(newInitOpts?: EChartsInitOpts) {
+        if (chartInstance) {
+            chartInstance.dispose();
+            init_echarts(getDarkMode.value as 'default', newInitOpts);
+        }
+    }
+
     return {
         setOptions: set_options,
         echarts,
-        getInstance: get_instance
+        getInstance: get_instance,
+        addComp,
+        rerender
     };
 }
 

@@ -1,6 +1,6 @@
 <template>
     <header-edit-icon v-if="getIsEdit">
-      {{ getTitle }}
+        {{ getTitle }}
     </header-edit-icon>
     <span v-else>{{ getTitle }}</span>
     <Tooltip v-if="getHelpMessage?.length">
@@ -11,12 +11,12 @@
         </template>
         <InfoCircleOutlined></InfoCircleOutlined>
     </Tooltip>
-  </template>
+</template>
 <script lang="ts">
 import type { PropType } from 'vue';
 import type { BasicColumn } from '../../types/table';
 import { defineComponent, computed } from 'vue';
-// import BasicHelp from '/@/components/Basic/src/BasicHelp.vue';
+// import BasicHelp from '/@vue3-antd/components/Basic/src/BasicHelp.vue';
 import headerEditIcon from './header-edit-icon.vue';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { Tooltip } from 'ant-design-vue';
@@ -39,7 +39,9 @@ export default defineComponent({
         const prefixCls = 'q-table-header-cell';
 
         const getIsEdit = computed(() => !!props.column?.edit);
-        const getTitle = computed(() => props.column?.customTitle || props.column?.title);
+        const getTitle = computed(() => {
+            return props.column.customTitle ?? (isString(props.column?.title) ? props.column?.title : '');
+        });
         const getHelpMessage = computed(() => {
             if (isString(props.column?.helpMessage)) {
                 return [props.column?.helpMessage];
@@ -51,14 +53,13 @@ export default defineComponent({
     }
 });
 </script>
-  <style lang="scss">
-    $prefix-cls: 'q-table-header-cell';
+<style lang="scss">
+$prefix-cls: 'q-table-header-cell';
 
-    .#{prefix-cls} {
-      &__help {
+.#{prefix-cls} {
+    &__help {
         margin-left: 8px;
         color: rgb(0 0 0 / 65%) !important;
-      }
     }
-  </style>
-
+}
+</style>

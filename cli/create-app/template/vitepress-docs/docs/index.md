@@ -1,7 +1,7 @@
 ---
 layout: home
 hero: 
-    name: Qmfront Turborepo
+    name: quantum-design
     text: 量子中后台框架文档
     tagline: 基于Vue3, turborepo, pnpm
     image:

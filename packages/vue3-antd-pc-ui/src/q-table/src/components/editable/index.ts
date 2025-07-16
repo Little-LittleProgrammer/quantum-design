@@ -1,4 +1,4 @@
-import { Ref, h, toRaw } from 'vue';
+import { type Ref, h, toRaw } from 'vue';
 import type { BasicColumn, Recordable } from '../../types/table';
 import { isArray } from '@quantum-design/utils';
 import EditableCell from './editable-cell.vue';
@@ -35,7 +35,7 @@ export function render_edit_cell(column: BasicColumn) {
             }
         };
 
-        async function on_edit(edit = true, submit = false) {
+        async function on_edit(edit:boolean = true, submit = false) {
             if (!submit) {
                 record.editable = edit;
             }

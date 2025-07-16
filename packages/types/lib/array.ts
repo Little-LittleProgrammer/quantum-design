@@ -1,6 +1,6 @@
-import { And, CheckLeftIsExtendsRight, IsEqual, Not, Or } from './common';
-import { IntAddSingle } from './number';
-import {CanStringified} from './string';
+import type { And,  CheckLeftIsExtendsRight, IsEqual, Not, Or } from './common';
+import type { IntAddSingle } from './number';
+import type {CanStringified} from './string';
 
 /**
  * 构造长度为 Length 的元祖

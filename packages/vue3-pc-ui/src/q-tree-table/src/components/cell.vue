@@ -1,7 +1,7 @@
 <script lang="ts">
 import { h, defineComponent } from 'vue';
 import { treeTableCellProps } from '../type/props';
-import { TreeTableData } from '../type/tree-table';
+import type { TreeTableData } from '../type/tree-table';
 export default defineComponent({
     name: 'QTreeTableCell',
     props: {

@@ -1,0 +1,27 @@
+{
+    "name": "@quantum-design-configs/commitlint",
+    "version": "1.0.2",
+    "publishConfig": {
+        "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+    },
+    "license": "MIT",
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "main": "./index.mjs",
+    "module": "./index.mjs",
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "default": "./index.mjs"
+        }
+    },
+    "dependencies": {
+        "@commitlint/cli": "catalog:",
+        "@commitlint/config-conventional": "catalog:",
+        "commitlint-plugin-function-rules": "catalog:",
+        "cz-git": "catalog:",
+        "czg": "catalog:"
+    }
+}

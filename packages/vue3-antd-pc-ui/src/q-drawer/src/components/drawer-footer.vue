@@ -24,7 +24,7 @@
 </template>
 
 <script lang='ts' setup>
-import { CSSProperties, useSlots } from 'vue';
+import { type CSSProperties, useSlots } from 'vue';
 import { computed } from 'vue';
 import { footerProps } from '../props';
 const props = defineProps({

@@ -1,7 +1,7 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue';
-import { ComputedRef, computed, ref, unref, watch } from 'vue';
-import { BasicTableProps } from '../types/table';
-import { PaginationProps } from '../types/pagination';
+import { type ComputedRef, computed, ref, unref, watch } from 'vue';
+import type { BasicTableProps } from '../types/table';
+import type { PaginationProps } from '../types/pagination';
 import { isBoolean } from '@quantum-design/utils';
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../enums/const';
 

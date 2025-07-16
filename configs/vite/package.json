@@ -1,47 +1,49 @@
 {
-  "name": "@quantum-design-configs/vite",
-  "version": "1.1.0",
-  "description": "`vite` 插件以及公共打包方法",
-  "main": "dist/vite.cjs.min.js",
-  "module": "dist/vite.esm.min.js",
-  "types": "dist/types/configs/vite/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "rollup -c --environment TYPES:true"
-  },
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "keywords": [
-    "quantum-configs",
-    "monorepo",
-    "vite",
-    "turborepo"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "@quantum-design/utils": "workspace:*",
-    "@quantum-design/shared": "workspace:*",
-    "@sentry/vite-plugin": "^2.4.0",
-    "@vitejs/plugin-vue": "^4.3.4",
-    "@vitejs/plugin-vue-jsx": "^3.0.2",
-    "postcss-pxtorem": "^6.0.0",
-    "unplugin-vue-components": "^0.25.2",
-    "vite-plugin-compression2": "^0.10.4",
-    "vite-plugin-dts": "~3.6.4",
-    "vite-plugin-pwa": "^0.16.4"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/rollup": "workspace:*",
-    "@types/postcss-pxtorem": "^6.0.0",
-    "rollup": "^3.29.4"
-  },
-  "peerDependencies": {
-    "vite": "^4.5.1",
-    "vue": "^3.3.4"
-  }
+    "name": "@quantum-design-configs/vite",
+    "version": "2.0.3",
+    "description": "`vite` 插件以及公共打包方法",
+    "type": "module",
+    "main": "dist/vite.esm.min.js",
+    "types": "dist/types/configs/vite/index.d.ts",
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [
+        "quantum-configs",
+        "monorepo",
+        "vite",
+        "turborepo"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "@quantum-design/utils": "workspace:*",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design-configs/vite-sentry": "workspace:*",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitejs/plugin-vue-jsx": "catalog:",
+        "postcss-pxtorem": "catalog:",
+        "unplugin-vue-components": "catalog:",
+        "vite-plugin-compression2": "catalog:",
+        "vite-plugin-dts": "catalog:",
+        "vite-plugin-pwa": "catalog:"
+    },
+    "devDependencies": {
+        "@sentry/vite-plugin": "catalog:",
+        "@quantum-design-configs/rollup": "workspace:*",
+        "@types/postcss-pxtorem": "catalog:",
+        "rollup": "catalog:"
+    },
+    "peerDependencies": {
+        "vite": "^6.0.5",
+        "vue": "^3.4.0"
+    }
 }

@@ -9,14 +9,16 @@ const allComponents: string[] = [
     'QAntdDropdown',
     'QAntdDrawer',
     'QAntdTransfer',
-    'QAntdShrinkCard'
+    'QAntdShrinkCard',
+    'QAntdThemeModeButton'
 ];
 
 const allNoStylesComponents: string[] = [
     'QAntdTableTreeDrag',
     'QAntdDropdown',
     'QAntdSelectAll',
-    'QAntdIcon'
+    'QAntdIcon',
+    'QAntdThemeModeButton'
 ];
 
 const defaultInclude: RegExp[] = [

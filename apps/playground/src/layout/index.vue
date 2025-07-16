@@ -20,7 +20,7 @@
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-theme-mode-button>
+                <q-antd-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-antd-theme-mode-button>
                 <q-antd-setting class="g-flex-center search-container" :defaultSetting="setting"></q-antd-setting>
             </template>
         </qm-header>
@@ -66,7 +66,7 @@
 
 <script lang='ts' setup>
 import { reactive, computed, ref, watch, nextTick } from 'vue';
-import { useProjectSetting, QAntdIcon, QAntdSetting, QAntdSearch, QAntdKeepAliveTabs} from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting, QAntdIcon, QAntdSetting, QAntdSearch, QAntdKeepAliveTabs, QAntdThemeModeButton} from '@quantum-design/vue3-antd-pc-ui';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
@@ -78,7 +78,7 @@ import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import setting from '@/enums/projectEnum';
 import { BackTop } from 'ant-design-vue';
 import { useParamsAliveRoot } from '@quantum-design/hooks/vue/use-params-alive';
-import {QLoading, QBreadcrumb, QThemeModeButton} from '@quantum-design/vue3-pc-ui';
+import {QLoading, QBreadcrumb} from '@quantum-design/vue3-pc-ui';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();

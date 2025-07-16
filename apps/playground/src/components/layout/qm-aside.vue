@@ -1,27 +1,12 @@
 <!-- \ -->
 <template>
-    <a-layout-sider
-        theme="light"
-        class="qm-aside"
-        ref="refAsideMenu"
-        :class="{ 'qm-aside-hide': !getArrowBtnShow || (getArrowBtnShow && !data.isShow)  }"
-    >
-        <a-menu
-            class="qm-aside-tabs"
-            mode="inline"
-            v-model:openKeys="data.openKeys"
-            :selectedKeys="data.selectedKeys"
-            :inlineIndent="16"
-            @click="jump_page"
-        >
+    <a-layout-sider theme="light" class="qm-aside" ref="refAsideMenu" :class="{ 'qm-aside-hide': !getArrowBtnShow || (getArrowBtnShow && !data.isShow) }">
+        <a-menu class="qm-aside-tabs" mode="inline" v-model:openKeys="data.openKeys" :selectedKeys="data.selectedKeys" :inlineIndent="16" @click="jump_page">
             <template v-for="second_level in props.menuData">
                 <template v-if="second_level.children == undefined">
                     <a-menu-item :key="second_level.id" class="qm-aside-title">
                         <template #icon>
-                            <q-antd-icon
-                                :type="second_level.icon as 'default'"
-                                v-if="second_level.icon != undefined && second_level.icon != ''"
-                            ></q-antd-icon>
+                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
                         </template>
                         {{ second_level.auth_name }}
                     </a-menu-item>
@@ -29,32 +14,23 @@
                 <template v-else>
                     <a-sub-menu :key="second_level.id">
                         <template #icon>
-                            <q-antd-icon
-                                :type="second_level.icon as 'default'"
-                                v-if="second_level.icon != undefined && second_level.icon != ''"
-                            ></q-antd-icon>
+                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
                         </template>
                         <template #title>
                             <span class="qm-aside-title">{{ second_level.auth_name }}</span>
                         </template>
-                        <template v-for="third_level in second_level.children" >
+                        <template v-for="third_level in second_level.children">
                             <template v-if="!!third_level.children">
                                 <a-sub-menu :key="third_level.id">
                                     <template #icon>
-                                        <q-antd-icon
-                                            :type="third_level.icon as 'default'"
-                                            v-if="third_level.icon != undefined && third_level.icon != ''"
-                                        ></q-antd-icon>
+                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
                                     </template>
                                     <template #title>
                                         <span class="qm-aside-title-sub">{{ third_level.auth_name }}</span>
                                     </template>
                                     <a-menu-item class="qm-aside-link" :key="four_level.id" v-for="four_level in third_level.children">
                                         <template #icon>
-                                            <q-antd-icon
-                                                :type="four_level.icon as 'default'"
-                                                v-if="four_level.icon != undefined && four_level.icon != ''"
-                                            ></q-antd-icon>
+                                            <q-antd-icon :type="four_level.icon as 'default'" v-if="four_level.icon != undefined && four_level.icon != ''"></q-antd-icon>
                                         </template>
                                         {{ four_level.auth_name }}
                                     </a-menu-item>
@@ -63,10 +39,7 @@
                             <template v-else>
                                 <a-menu-item class="qm-aside-link" :key="third_level.id">
                                     <template #icon>
-                                        <q-antd-icon
-                                            :type="third_level.icon as 'default'"
-                                            v-if="third_level.icon != undefined && third_level.icon != ''"
-                                        ></q-antd-icon>
+                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
                                     </template>
                                     {{ third_level.auth_name }}
                                 </a-menu-item>
@@ -85,7 +58,7 @@
     </a-layout-sider>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { Layout, Menu as AMenu } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 import { useSysStore } from '@/store/modules/systemManage';
@@ -100,12 +73,12 @@ interface DataProps {
 
 export default defineComponent({
     name: 'QmAside',
-    components: {'a-layout-sider': Layout.Sider, },
+    components: { 'a-layout-sider': Layout.Sider }
 });
 </script>
 
-<script lang='ts' setup>
-import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
+<script lang="ts" setup>
+import { defineComponent, reactive, type PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
 
@@ -115,20 +88,20 @@ const props = defineProps({
         required: true,
         default: () => {
             return [];
-        },
-    },
+        }
+    }
 });
 
 const go = useGo();
 const route = useRoute();
 const sysStore = useSysStore();
-const {getShowCacheTabsSetting, getBreadCrumb, getAsideRepeatClick, } = useProjectSetting();
+const { getShowCacheTabsSetting, getBreadCrumb, getAsideRepeatClick } = useProjectSetting();
 const refAsideMenu = ref<Nullable<typeof Layout>>(null);
 const data: DataProps = reactive({
     openKeys: [],
     selectedKeys: [],
     init: true, //  初始化
-    isShow: true,
+    isShow: true
 });
 const getClass = computed(() => {
     if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
@@ -165,71 +138,68 @@ function find_parent(path: string): number {
     }
     return find_parent(path.split('/').slice(0, -1).join('/'));
 }
-watch(() => props.menuData, (val) => {
-    // 延时处理， 等待router更新完成
-    setTimeout(() => {
-        const _routePath = route.path;
-        const _selectedKey: number[] = [];
-        const _defaultOpenKeys: number[] = [];
+watch(
+    () => props.menuData,
+    (val) => {
+        // 延时处理， 等待router更新完成
+        setTimeout(() => {
+            const _routePath = route.path;
+            const _selectedKey: number[] = [];
+            const _defaultOpenKeys: number[] = [];
 
-        // 处理 _selectedKey, _defaultOpenKeys
-        function select_key(list: IMenuData[]) {
-            list.forEach(e => {
-                if (e.children) {
-                    _defaultOpenKeys.push(e.id!);
-                    select_key(e.children);
-                } else {
-                    if (_routePath.includes(e.path!)) {
-                        _selectedKey.push(e.id!);
-                    }
-                }
-            });
-        }
-
-        if (val.length == 0) {
-            data.isShow = false;
-        } else {
-            data.isShow = true;
-            select_key(val);
-            data.openKeys = _defaultOpenKeys;
-            data.selectedKeys = _selectedKey;
-            setTimeout(() => {
-                if (refAsideMenu.value) {
-                    // 选中导航超出自动滚动到中间位置
-                    const _height = refAsideMenu.value.$el.offsetHeight;
-                    const $selectedMenu: NodeListOf<HTMLElement> = refAsideMenu.value.$el.querySelectorAll(
-                        '.ant-menu-item-selected'
-                    );
-                    if ($selectedMenu.length > 0) {
-                        const _topNum = $selectedMenu[0].offsetTop;
-                        const _scrollTopNum = refAsideMenu.value.$el.scrollTop;
-                        console.log(refAsideMenu.value);
-                        if (_topNum >= _height + _scrollTopNum - 60) {
-                            refAsideMenu.value.$el.children[0].scrollTop = _topNum - 200;
-                        // (refAsideMenu.value as unknown as HTMLElement)?.c;
+            // 处理 _selectedKey, _defaultOpenKeys
+            function select_key(list: IMenuData[]) {
+                list.forEach((e) => {
+                    if (e.children) {
+                        _defaultOpenKeys.push(e.id!);
+                        select_key(e.children);
+                    } else {
+                        if (_routePath.includes(e.path!)) {
+                            _selectedKey.push(e.id!);
                         }
                     }
-                }
-            }, 500);
-        }
-    }, 300);
-});
+                });
+            }
+
+            if (val.length == 0) {
+                data.isShow = false;
+            } else {
+                data.isShow = true;
+                select_key(val);
+                data.openKeys = _defaultOpenKeys;
+                data.selectedKeys = _selectedKey;
+                setTimeout(() => {
+                    if (refAsideMenu.value) {
+                        // 选中导航超出自动滚动到中间位置
+                        const _height = refAsideMenu.value.$el.offsetHeight;
+                        const $selectedMenu: NodeListOf<HTMLElement> = refAsideMenu.value.$el.querySelectorAll('.ant-menu-item-selected');
+                        if ($selectedMenu.length > 0) {
+                            const _topNum = $selectedMenu[0].offsetTop;
+                            const _scrollTopNum = refAsideMenu.value.$el.scrollTop;
+                            console.log(refAsideMenu.value);
+                            if (_topNum >= _height + _scrollTopNum - 60) {
+                                refAsideMenu.value.$el.children[0].scrollTop = _topNum - 200;
+                                // (refAsideMenu.value as unknown as HTMLElement)?.c;
+                            }
+                        }
+                    }
+                }, 500);
+            }
+        }, 300);
+    }
+);
 const jump_page = (item: MenuInfo) => {
     const _path = sysStore.getFormatIdRouteList[item.key as unknown as number].path || '/';
-    const _query = getAsideRepeatClick.value ? {
-        t: Date.now(),
-    } : {};
+    const _query = getAsideRepeatClick.value
+        ? {
+            t: Date.now()
+        }
+        : {};
     // 外链可以直接跳转
-    if (
-        !(
-            _path.includes('http://') ||
-            _path.includes('https://') ||
-            _path.match(/^\/\//) != null
-        )
-    ) {
+    if (!(_path.includes('http://') || _path.includes('https://') || _path.match(/^\/\//) != null)) {
         go({
             path: _path,
-            query: _query,
+            query: _query
         });
     }
 };
@@ -240,18 +210,17 @@ const show_hide_aside = () => {
         data.isShow = !data.isShow;
     }
 };
-
 </script>
-<style lang='scss'>
+<style lang="scss">
 .qm-aside {
     @include bg-color(aside-bg);
     position: relative;
     width: $aside-width !important;
     min-width: $aside-width !important;
     max-width: $aside-width !important;
-    transition: all .5s ease 0s;
+    transition: all 0.5s ease 0s;
     &:before {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         right: 0;
@@ -338,7 +307,7 @@ const show_hide_aside = () => {
         z-index: 1000;
         .anticon {
             font-size: 16px;
-            margin-left: 4px
+            margin-left: 4px;
         }
     }
     &-title {
@@ -384,7 +353,7 @@ const show_hide_aside = () => {
                 border: 0 none;
             }
             &:not(.ant-menu-item-selected) {
-                &:hover{
+                &:hover {
                     background: $aside-tabs-hover-bg;
                     span {
                         color: $aside-tabs-hover-color;
@@ -405,6 +374,7 @@ const show_hide_aside = () => {
         overflow-y: auto;
         overflow-x: hidden;
         scroll-behavior: smooth;
+        height: 100%;
     }
 }
 </style>

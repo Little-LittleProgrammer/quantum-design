@@ -1,5 +1,5 @@
 import { ref, type ComputedRef, type Ref, nextTick, unref, computed, watch, onActivated, onMounted } from 'vue';
-import { BasicTableProps, BasicColumn, TableRowSelection } from '../types/table';
+import type { BasicTableProps, BasicColumn, TableRowSelection } from '../types/table';
 import type {Recordable} from '../types/table';
 import { js_utils_dom_offset, js_utils_throttle_event } from '@quantum-design/utils';
 import { isBoolean } from 'lodash-es';

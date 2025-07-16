@@ -1,0 +1,6 @@
+{
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
+    "include": ["*.ts", "**/*.ts", "node_modules/@quantum-design/types/**/*.d.ts", "bin/index.js"],
+    "exclude": ["dist"]
+  }
+  

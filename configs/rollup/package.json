@@ -1,30 +1,30 @@
 {
-  "name": "@quantum-design-configs/rollup",
-  "version": "1.1.0",
-  "description": "rollup配置文件",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {},
-  "author": "Evan Wu",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/",
-    "access": "public"
-  },
-  "keywords": [
-    "quantum-configs",
-    "monorepo",
-    "rollup",
-    "turborepo"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "rollup": "^3.29.4",
-    "@rollup/plugin-terser": "^0.4.3",
-    "@rollup/plugin-typescript": "^11.1.3",
-    "@rollup/plugin-commonjs": "^25.0.4",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.2.1"
-  },
-  "devDependencies": {},
-  "peerDependencies": {}
+    "name": "@quantum-design-configs/rollup",
+    "version": "2.0.3",
+    "description": "rollup配置文件",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {},
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [
+        "quantum-configs",
+        "monorepo",
+        "rollup",
+        "turborepo"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "rollup": "catalog:",
+        "@rollup/plugin-terser": "catalog:",
+        "@rollup/plugin-typescript": "catalog:",
+        "@rollup/plugin-commonjs": "catalog:",
+        "@rollup/plugin-json": "catalog:",
+        "@rollup/plugin-node-resolve": "catalog:"
+    },
+    "devDependencies": {},
+    "peerDependencies": {}
 }

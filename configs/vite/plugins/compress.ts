@@ -18,7 +18,7 @@ export function vite_plugin_compress(
                 exclude: [/\.(br)$/, /\.(gz)$/],
                 algorithm: 'gzip',
                 deleteOriginalAssets,
-                ...options
+                ...options,
             })
         );
     }
@@ -28,7 +28,7 @@ export function vite_plugin_compress(
                 exclude: [/\.(br)$/, /\.(gz)$/],
                 algorithm: 'brotliCompress',
                 deleteOriginalAssets,
-                ...options
+                ...options,
             })
         );
     }

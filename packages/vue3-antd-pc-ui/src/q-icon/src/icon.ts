@@ -1,4 +1,4 @@
-import { CSSProperties, createVNode } from 'vue';
+import { type CSSProperties, createVNode } from 'vue';
 import * as Icons from '@ant-design/icons-vue';
 import type { Component } from 'vue';
 import {icons} from '../data/icons-data';

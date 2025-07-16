@@ -1,0 +1,27 @@
+const res = [
+    {
+        data: {
+            branch: 'feature/作家中心支持异步导出',
+            branchMode: false,
+            cloneDepth: 0,
+            codeupMrLocalId: 410,
+            commitId: 'e77d22beccd89911878399e4ff905e8631680d1b',
+            connection: 394291,
+            displayName: '吴忠',
+            displayUserEmail: 'wuzhong@qimao.com',
+            isTrigger: true,
+            method: 'http',
+            password: '2451770757283c0e54156275bd29e9c5',
+            projectId: '2835855',
+            repo: 'https://codeup.aliyun.com/qimao/front/guanli-platform.qimao.com.git',
+            repoUrl: 'https://packages.aliyun.com',
+            submodule: false,
+            userName: '5fb61742e1cf498f37f6a344',
+            webhook: 'http://flow-openapi.aliyun.com/scm/webhook/VwzJ0mP0yJU3NgRVlaoJ',
+        },
+        name: 'guanli_platform_qimao_com',
+        order: 1,
+        sign: 'guanli_platform_qimao_com',
+        type: 'codeup',
+    },
+];

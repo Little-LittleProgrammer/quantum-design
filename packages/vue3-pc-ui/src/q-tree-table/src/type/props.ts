@@ -1,5 +1,5 @@
-import { ExtractPropTypes, PropType } from 'vue';
-import { TreeTableData } from './tree-table';
+import type { ExtractPropTypes, PropType } from 'vue';
+import type { TreeTableData } from './tree-table';
 
 export const treeTableProps = {
     treeData: { // 树形结构数据

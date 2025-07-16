@@ -1,16 +1,16 @@
 <script lang="tsx">
 import type { Slots } from 'vue';
 import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isString, js_utils_first_to_upper } from '@quantum-design/utils';
-import { defineComponent } from 'vue';
-import { Rule } from 'ant-design-vue/lib/form/interface';
-import { computed, PropType, Ref, toRefs, unref } from 'vue';
+import { defineComponent, computed, toRefs, unref} from 'vue';
+import type { Rule } from 'ant-design-vue/lib/form/interface';
+import type { PropType, Ref } from 'vue';
 import { componentMap } from '../component-map';
 import { create_placeholder_message, set_component_rule_type } from '../helper';
-import { FormProps, FormSchema } from '../types/form';
-import { FormActionType } from '../types/form';
+import type { FormProps, FormSchema } from '../types/form';
+import type { FormActionType } from '../types/form';
 import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
 import { cloneDeep } from 'lodash-es';
-import { TableActionType } from '@vue3-antd/q-table/src/types/table';
+import type { TableActionType } from '@vue3-antd/q-table/src/types/table';
 import { Col, Divider, Form, Tooltip } from 'ant-design-vue';
 
 export default defineComponent({
@@ -35,6 +35,14 @@ export default defineComponent({
         },
         setFormModel: {
             type: Function as PropType<(key: string, value: any, schema:FormSchema) => void>,
+            default: null
+        },
+        blurEvent: {
+            type: Function,
+            default: null
+        },
+        getFormModel: {
+            type: Function as PropType<(values: Record<string, any>) => Record<string, any>>,
             default: null
         },
         tableAction: {
@@ -77,9 +85,10 @@ export default defineComponent({
                 wrapperCol: { style: { width: `calc(100% - ${_width})` }, ...wrapCol }
             };
         }
-        // 获取 value
+
+        // 获取 value TODO, formModel处理
         const getValues = computed(() => {
-            const { allDefaultValues, formModel, schema } = props;
+            const { allDefaultValues, schema, formModel } = props;
             const { mergeDynamicData } = props.formProps;
             return {
                 field: schema.field,
@@ -93,10 +102,11 @@ export default defineComponent({
             };
         });
         const getComponentsProps = computed(() => {
-            const { schema, formModel, formActionType, tableAction } = props;
+            const { schema, tableAction, formActionType, formModel } = props;
+            const { mergeDynamicData } = props.formProps;
             let { componentProps = {}} = schema;
             if (isFunction(componentProps)) {
-                componentProps = componentProps({schema, formModel, formActionType, tableAction}) ?? {};
+                componentProps = componentProps({schema, formModel, tableAction, formActionType, mergeDynamicData}) ?? {};
             }
             if (schema.component === 'Divider') {
                 componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
@@ -194,7 +204,7 @@ export default defineComponent({
                 (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator')
             );
             if (_requiredRuleIndex !== -1) {
-                const _rule = _rules[_requiredRuleIndex];
+                const _rule = _rules[_requiredRuleIndex] || {};
                 const { isShow } = get_show();
                 if (!isShow) {
                     _rule.required = false;
@@ -242,6 +252,13 @@ export default defineComponent({
                         if (!(component === 'RadioButtonGroup' && e && e.target)) {
                             _propsData[_eventKey](...args);
                         }
+                    }
+                },
+                onBlur: (...args:Nullable<Record<string, any>>[]) => {
+                    props.blurEvent();
+                    // 自定义 blur 事件
+                    if (_propsData.onBlur) {
+                        _propsData.onBlur(...args);
                     }
                 }
             };

@@ -1,0 +1,45 @@
+@use "sass:string";
+@use "./base.scss";
+@each $i in ('url', 'pointer', 'move', 'text') {
+    .qm-cursor-style-#{$i},
+    .g-cursor-style-#{$i} {
+        cursor: string.unquote($i) !important;
+    }
+}
+
+
+.inline-block,
+.g-inline-block {
+    display: inline-block;
+}
+
+.g-status-icon {
+    &-primary,
+    &-success,
+    &-error,
+    &-disable {
+        display: inline-block;
+        margin-right: 4px;
+        margin-bottom: 2px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+    }
+    &-primary {
+        background-color: base.$blue-color;
+    }
+    &-success {
+        background-color: base.$success-color;
+    }
+    &-error {
+        background-color: base.$error-color;
+    }
+    &-disable {
+        background-color: base.$border-color-base;
+    }
+    &-suffix {
+        margin-left: 2px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}

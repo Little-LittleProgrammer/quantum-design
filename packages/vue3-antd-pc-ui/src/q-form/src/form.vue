@@ -19,6 +19,7 @@
                     :allDefaultValues="defaultValueRef"
                     :formModel="formModel"
                     :setFormModel="set_form_model"
+                    :blurEvent="blur_event"
                     :tableAction="tableAction"
                 >
                     <template #[item]="data" v-for="item in Object.keys($slots)">
@@ -31,7 +32,7 @@
                     #[item]="data"
                     v-for="item in ['resetBefore', 'submitBefore', 'submitAfter', 'advanceBefore', 'advanceAfter']"
                 >
-                <slot :name="item" v-bind="data || {}"></slot>
+                    <slot :name="item" v-bind="data || {}"></slot>
                 </template>
             </form-action>
             <slot name="formFooter"></slot>
@@ -41,14 +42,14 @@
 
 <script lang='ts'>
 import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
-import { computed, defineComponent, onMounted, reactive, Ref, ref, unref, watch} from 'vue';
+import { computed, defineComponent, onMounted, reactive, type Ref, ref, unref, watch} from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
-import { FormActionType, FormProps, FormSchema } from './types/form';
+import type { FormActionType, FormProps, FormSchema } from './types/form';
 import formItem from './components/form-item.vue';
 import formAction from './components/form-action.vue';
 import { use_form_values } from './hooks/use-form-values';
-import { EmitType, use_form_events } from './hooks/use-form-events';
+import { type EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
 import { Form as AForm, Row as ARow } from 'ant-design-vue';
 import './style/form.scss';
@@ -61,7 +62,7 @@ export default defineComponent({
         ...basicProps
     },
     // 提交给父组件的, reset, 清空
-    emits: ['reset', 'submit', 'register'],
+    emits: ['reset', 'submit', 'register', 'change', 'blur'],
     components: {formItem, formAction, AForm, ARow},
     setup(props, { emit, attrs }) {
         const formModel = reactive<Record<string, any>>({});
@@ -203,6 +204,15 @@ export default defineComponent({
             if (!validateTrigger || validateTrigger === 'change') {
                 validateFields([key]).catch(() => {});
             }
+            const finValue = getFieldsValue();
+            emit('change', finValue);
+        }
+
+        function blur_event() {
+            // validate().then(() => {
+            const value = getFieldsValue();
+            emit('blur', value);
+            // })
         }
 
         // 当焦点为输入框时, enter提交事件
@@ -250,6 +260,8 @@ export default defineComponent({
             getProps,
             set_form_model,
             formElRef,
+            handle_form_values,
+            blur_event,
             // 方便暴露给useForm
             ...formActionType
         };

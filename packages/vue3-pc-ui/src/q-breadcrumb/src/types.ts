@@ -1,5 +1,5 @@
-import { ExtractPropTypes, PropType } from 'vue';
-import { RouteRecordRaw } from 'vue-router';
+import type { ExtractPropTypes, PropType } from 'vue';
+import type { RouteRecordRaw } from 'vue-router';
 
 export const breadcrumbProps = {
     routerList: {
