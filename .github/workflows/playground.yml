@@ -1,4 +1,4 @@
-name: Build Playground
+name: Build and Deploy Playground
 
 on:
   push:
@@ -13,23 +13,40 @@ on:
       - 'package.json'
       - '.github/workflows/playground.yml'
 
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一次部署，跳过正在运行的部署队列中的运行
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Install pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.10.0
 
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '18' # 使用适合你项目的Node.js版本
+        node-version: '20.18.1' # 与 volta 配置保持一致
         cache: 'pnpm'
 
-    - run: pnpm i
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Install dependencies
+      run: pnpm install
 
     - name: Build Playground
       run: pnpm build --filter=playground
@@ -37,18 +54,19 @@ jobs:
     # - name: Build docs
     #   run: pnpm build --filter=project-docs
 
-    - name: mkdir dist
-      run: mkdir dist && mkdir dist/playground
-    #   run: mkdir dist && mkdir dist/docs && mkdir dist/playground
-    
-    - name: move to dist
-      run: mv apps/playground/dist/* dist/playground
-    #   run: mv docs/project-docs/dist/* dist/docs && mv apps/playground/dist/* dist/playground
-
-    - name: Deploy to GitHub Pages
-      uses: crazy-max/ghaction-github-pages@v2
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        target_branch: gh-pages
-        build_dir: dist
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        path: ./apps/playground/dist
+
+  # 部署任务
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
