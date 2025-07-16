@@ -2,13 +2,14 @@ import { type ComputedRef, type Ref, computed, reactive, ref, toRaw, unref, watc
 import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams, Recordable } from '../types/table';
 import { cloneDeep, isEqual } from 'lodash-es';
 import { FETCH_SETTING, DEFAULT_ALIGN, DEFAULT_NORMAL_WIDTH } from '../enums/const';
-import { isArray, isBoolean, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url } from '@quantum-design/utils';
+import { isArray, isBoolean, isObject, isFunction, isMap, isNumber, isString, js_utils_deep_copy, js_utils_get_current_url, js_utils_dom_get_all_class } from '@quantum-design/utils';
 import { render_edit_cell } from '../components/editable';
 import dayjs from 'dayjs';
 import { IndexedDB } from '@quantum-design/utils';
 
 interface ActionType {
     columns: Ref<Recordable[]>
+    wrapRef: Ref<Element>
 }
 
 const map = new Map<string, BasicColumn[]>();
@@ -23,6 +24,7 @@ function getIndeDB() {
 }
 
 async function getIndexDBValue() {
+    console.log('getIndexDBValue', map);
     if (map.size > 0) {
         return;
     }
@@ -102,7 +104,7 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!isBoolean(item.ellipsis)) {
+        if (!isObject(item.ellipsis)) {
             Object.assign(item, {
                 ellipsis
             });
@@ -112,7 +114,7 @@ function handle_item(item: BasicColumn, options: Record<'resizable' | 'ellipsis'
         if (!key) {
             item.key = dataIndex as any;
         }
-        if (!isBoolean(item.resizable) && !canResize) {
+        if (!isObject(item.resizable) && !canResize) {
             const _obj: any = {
                 resizable
             };
@@ -286,7 +288,8 @@ function merge_header_with_indexdb(headerColumns: BasicColumn[], indexDBColumns:
 export function useColumns(
     propsRef: ComputedRef<BasicTableProps>,
     {
-        columns
+        columns,
+        wrapRef
     }: ActionType
 ) {
     const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
@@ -339,7 +342,7 @@ export function useColumns(
         const _viewColumns = sort_fixed_column(unref(getColumnsRef));
 
         function map_fn(column:BasicColumn) {
-            const { slots, customRender, format, edit, editRow, flag: _flag } = column;
+            const { slots, customRender, format, edit, editRow } = column;
 
             if (!slots || !slots?.title) {
                 // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
@@ -397,7 +400,6 @@ export function useColumns(
             // 如果启用了缓存设置，则从IndexDB获取存储的列配置并合并
             let finalColumns = _header;
             const indexDBColumns = getColumnsFromIndexDB();
-            console.log('_header', finalColumns, indexDBColumns);
             if (isArray(indexDBColumns) && indexDBColumns.length > 0) {
                 console.log('indexDBColumns', indexDBColumns);
                 finalColumns = merge_header_with_indexdb(_header, indexDBColumns);
@@ -463,7 +465,7 @@ export function useColumns(
 
     function getColumnsFromIndexDB() {
         const props = unref(propsRef);
-        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
+        if (unref(wrapRef) && props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
             const columns = getFromIndexDB();
             console.log('columns', columns);
             if (columns) {
@@ -475,7 +477,7 @@ export function useColumns(
 
     function setColumnsByIndexDB(columns: BasicColumn[]) {
         const props = unref(propsRef);
-        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting || true)) {
+        if (props.showTableSetting && props.tableSetting?.cache && (props.tableSetting?.setting !== false)) {
             storeInIndexDB(js_utils_deep_copy(columns));
         }
     }
@@ -502,8 +504,11 @@ export function useColumns(
 
     function getCacheKey() {
         const curUrl = js_utils_get_current_url();
-        if (!curUrl?.path) return null;
-        return curUrl?.path;
+        if (!unref(wrapRef)) return null;
+        const _wrapClass = js_utils_dom_get_all_class(unref(wrapRef));
+        const _cacheKey = [curUrl?.path, ..._wrapClass].join('/');
+        if (!_cacheKey) return null;
+        return _cacheKey;
     }
 
     async function storeInIndexDB(columns: BasicColumn[]) {

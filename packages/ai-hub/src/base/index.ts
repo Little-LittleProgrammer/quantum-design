@@ -13,10 +13,12 @@ export interface AIConfig {
 export interface AIMessage {
     role: 'user' | 'assistant' | 'system';
     content: string;
+    reasoning_content?: string;
 }
 
 export interface AIResponse {
     content: string;
+    reasoning_content?: string;
     usage?: {
         promptTokens?: number;
         completionTokens?: number;
@@ -28,6 +30,7 @@ export interface AIResponse {
 
 export interface AIStreamResponse {
     content: string;
+    reasoning_content?: string;
     done: boolean;
     usage?: {
         promptTokens?: number;

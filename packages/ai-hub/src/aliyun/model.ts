@@ -88,6 +88,7 @@ export interface AliyunResponse {
             message: {
                 role: string;
                 content: string;
+                reasoning_content?: string;
             };
         }>;
     };
@@ -102,6 +103,7 @@ export interface AliyunResponse {
 export interface BailianResponse {
     output: {
         text: string;
+        reasoning_content?: string;
         session_id: string;
     };
     usage: {
@@ -124,6 +126,7 @@ export interface AliyunStreamChunk {
             message: {
                 role: string;
                 content: string;
+                reasoning_content?: string;
             };
         }>;
     };
@@ -138,6 +141,7 @@ export interface AliyunStreamChunk {
 export interface BailianStreamChunk {
     output: {
         text: string;
+        reasoning_content?: string;
         session_id?: string;
         finish_reason?: string;
     };

@@ -54,7 +54,7 @@ done
 脚本内置了以下配置，如需修改请编辑脚本：
 
 ```bash
-DASHSCOPE_API_KEY="sk-3e88c5f288ca46eea89c6843c095dbdc"
+DASHSCOPE_API_KEY="sk-xxxxxxxx"
 FEISHU_WEBHOOK_URL="https://x0sgcptncj.feishu.cn/base/automation/webhook/event/DS8NaRuBtwMzrThsmzdcQEtPnUb"
 ```
 

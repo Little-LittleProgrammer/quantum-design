@@ -133,6 +133,12 @@ const _menus:IMenuData[] = [{
             pid: 22,
             path_type: 1
         }]
+    }, {
+        path: '/demo/ai',
+        auth_name: 'ai',
+        id: 25,
+        pid: 1,
+        path_type: 1
     }]
 }];
 

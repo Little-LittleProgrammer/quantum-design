@@ -202,6 +202,15 @@ const _router: RouteRecordRaw[] = [
                     pid: 'DataEntry'
                 }
             }]
+        }, {
+            path: 'ai',
+            name: 'AI',
+            component: () => import('@/views/demo/ai/index.vue'),
+            meta: {
+                title: 'AI Hub Demo',
+                id: 'AI',
+                pid: 'demo'
+            }
         }]
     }
 ];

@@ -81,6 +81,11 @@ export function js_utils_dom_has_class(el: Element, cls: string) {
     }
 }
 
+// 获取当前元素的所有 class 类名
+export function js_utils_dom_get_all_class(el: Element) {
+    return el.className.split(' ');
+}
+
 /* istanbul ignore next */
 export function js_utils_dom_add_class(el: Element, cls: string) {
     if (!el) return;

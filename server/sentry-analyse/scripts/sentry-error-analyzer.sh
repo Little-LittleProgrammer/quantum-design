@@ -17,8 +17,8 @@ TEMP_DIR="${SCRIPT_DIR}/temp"
 LOG_FILE="${LOG_DIR}/sentry-analyzer-$(date +%Y%m%d).log"
 TEMP_JSON_FILE="${TEMP_DIR}/sentry-data-$$.json"
 TEMP_RESULT_FILE="${TEMP_DIR}/analysis-result-$$.json"
-FEISHU_WEBHOOK_URL="https://x0sgcptncj.feishu.cn/base/automation/webhook/event/DS8NaRuBtwMzrThsmzdcQEtPnUb"
-DASHSCOPE_API_KEY="sk-3e88c5f288ca46eea89c6843c095dbdc"
+FEISHU_WEBHOOK_URL="https://x0sgcptncj.feishu.cn/base/automation/webhook/event/xxxxxxxx"
+DASHSCOPE_API_KEY="sk-xxxxxxxxxx"
 
 # 默认配置
 VERBOSE=false

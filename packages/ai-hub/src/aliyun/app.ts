@@ -26,7 +26,7 @@ export class AliyunProvider extends BaseAIProvider {
             modelName: config.modelName || AliyunModels.QWen3_32B_Instruct,
             baseURL: config.baseURL,
             timeout: config.timeout || 60000,
-            maxRetries: config.maxRetries || 3,
+            maxRetries: config.maxRetries || 3
         };
 
         super(baseConfig);
@@ -43,7 +43,6 @@ export class AliyunProvider extends BaseAIProvider {
         this.rawBaseURL = this.aliyunConfig.bailianAppId
             ? `${this.aliyunBaseURL}/apps/${this.aliyunConfig.bailianAppId}/completion`
             : `${this.aliyunBaseURL}/services/aigc/text-generation/generation`;
-        console.log('this.config', this.config);
     }
 
     private async fetchWithRetry(url: string, options: RequestInit): Promise<Response> {
@@ -60,8 +59,8 @@ export class AliyunProvider extends BaseAIProvider {
                     headers: {
                         Authorization: `Bearer ${this.config.apiKey}`,
                         'Content-Type': 'application/json',
-                        ...options.headers,
-                    },
+                        ...options.headers
+                    }
                 });
 
                 clearTimeout(timeoutId);
@@ -122,13 +121,13 @@ export class AliyunProvider extends BaseAIProvider {
                 // 使用百炼应用接口
                 const prompt = this.messagesToPrompt(options.messages);
                 const requestData: BailianRequest = {
-                    input: { prompt, session_id: this.aliyunConfig.sessionId,},
+                    input: { prompt, session_id: this.aliyunConfig.sessionId}
 
                 };
 
                 response = await this.fetchWithRetry(this.rawBaseURL, {
                     method: 'POST',
-                    body: JSON.stringify(requestData),
+                    body: JSON.stringify(requestData)
                 });
             } else {
                 // 使用通义千问接口
@@ -137,20 +136,20 @@ export class AliyunProvider extends BaseAIProvider {
                     input: {
                         messages: options.messages.map((msg) => ({
                             role: msg.role,
-                            content: msg.content,
-                        })),
+                            content: msg.content
+                        }))
                     },
                     parameters: {
                         temperature: options.temperature,
                         max_tokens: options.maxTokens,
                         stop: options.stop,
-                        result_format: options.resultFormat || 'message',
-                    },
+                        result_format: options.resultFormat || 'message'
+                    }
                 };
 
                 response = await this.fetchWithRetry(this.rawBaseURL, {
                     method: 'POST',
-                    body: JSON.stringify(requestData),
+                    body: JSON.stringify(requestData)
                 });
             }
 
@@ -184,11 +183,11 @@ export class AliyunProvider extends BaseAIProvider {
             // 使用百炼应用流式接口
             const prompt = this.messagesToPrompt(options.messages);
             requestData = {
-                input: { prompt, session_id: this.aliyunConfig.sessionId,},
+                input: { prompt, session_id: this.aliyunConfig.sessionId},
                 parameters: {
                     incremental_output: true,
-                    result_format: 'text',
-                },
+                    result_format: 'text'
+                }
             };
         } else {
             // 使用通义千问流式接口
@@ -197,16 +196,16 @@ export class AliyunProvider extends BaseAIProvider {
                 input: {
                     messages: options.messages.map((msg) => ({
                         role: msg.role,
-                        content: msg.content,
-                    })),
+                        content: msg.content
+                    }))
                 },
                 parameters: {
                     temperature: options.temperature,
                     max_tokens: options.maxTokens,
                     stop: options.stop,
                     result_format: options.resultFormat || 'message',
-                    incremental_output: true,
-                },
+                    incremental_output: true
+                }
             };
         }
 
@@ -214,8 +213,8 @@ export class AliyunProvider extends BaseAIProvider {
             method: 'POST',
             body: JSON.stringify(requestData),
             headers: {
-                'X-DashScope-SSE': 'enable',
-            },
+                'X-DashScope-SSE': 'enable'
+            }
         });
 
         if (!response.ok) {
@@ -239,10 +238,10 @@ export class AliyunProvider extends BaseAIProvider {
 
         try {
             while (true) {
-                const { done, value, } = await reader.read();
+                const { done, value } = await reader.read();
                 if (done) break;
 
-                buffer += decoder.decode(value, { stream: true, });
+                buffer += decoder.decode(value, { stream: true });
                 const lines = buffer.split('\n');
                 buffer = lines.pop() || '';
 
@@ -258,8 +257,8 @@ export class AliyunProvider extends BaseAIProvider {
                             if (streamResponse) {
                                 yield streamResponse;
                             }
-                        } catch (_e) {
-                            console.warn('Failed to parse stream chunk:', data);
+                        } catch (error) {
+                            console.warn('Failed to parse stream chunk:', data, error);
                         }
                     }
                 }
@@ -285,14 +284,15 @@ export class AliyunProvider extends BaseAIProvider {
             const usage = parsed.usage?.models?.[0];
             return {
                 content: parsed.output.text,
+                reasoning_content: parsed.output.reasoning_content,
                 done: parsed.output.finish_reason !== 'null',
                 usage: usage
                     ? {
                         promptTokens: usage.input_tokens,
                         completionTokens: usage.output_tokens,
-                        totalTokens: usage.input_tokens + usage.output_tokens,
+                        totalTokens: usage.input_tokens + usage.output_tokens
                     }
-                    : undefined,
+                    : undefined
             };
         } else {
             // 通义千问响应解析
@@ -300,33 +300,38 @@ export class AliyunProvider extends BaseAIProvider {
 
             // 处理两种可能的流式响应格式
             let content: string;
+            let reasoningContent: string | undefined;
             let finishReason: string | undefined;
 
             if (parsed.output.choices && parsed.output.choices.length > 0) {
                 // 新版本格式：有 choices 数组
                 const choice = parsed.output.choices[0];
                 content = choice?.message?.content || '';
+                reasoningContent = choice?.message?.reasoning_content;
                 finishReason = choice?.finish_reason || '';
             } else if (parsed.output.text) {
                 // 旧版本格式：直接的 text 字段
                 content = parsed.output.text;
+                reasoningContent = undefined; // 旧格式不支持推理内容
                 finishReason = parsed.output.finish_reason;
             } else {
                 // 没有内容的情况
                 content = '';
+                reasoningContent = undefined;
                 finishReason = parsed.output.finish_reason;
             }
 
             return {
                 content,
+                reasoning_content: reasoningContent,
                 done: finishReason !== 'null' && finishReason !== null,
                 usage: parsed.usage
                     ? {
                         promptTokens: parsed.usage.input_tokens,
                         completionTokens: parsed.usage.output_tokens,
-                        totalTokens: parsed.usage.total_tokens,
+                        totalTokens: parsed.usage.total_tokens
                     }
-                    : undefined,
+                    : undefined
             };
         }
     }
@@ -365,16 +370,19 @@ export class AliyunProvider extends BaseAIProvider {
 
             // 处理两种可能的响应格式
             let content: string;
+            let reasoningContent: string | undefined;
             let finishReason: string;
 
             if (response.output.choices && response.output.choices.length > 0) {
                 // 新版本格式：有 choices 数组
                 const choice = response.output.choices[0];
                 content = choice?.message?.content || '';
+                reasoningContent = choice?.message?.reasoning_content;
                 finishReason = choice?.finish_reason || '';
             } else if (response.output.text) {
                 // 旧版本格式：直接的 text 字段
                 content = response.output.text;
+                reasoningContent = undefined; // 旧格式不支持推理内容
                 finishReason = response.output.finish_reason || 'stop';
             } else {
                 throw new Error('Invalid response format: no content found');
@@ -382,13 +390,14 @@ export class AliyunProvider extends BaseAIProvider {
 
             return {
                 content,
+                reasoning_content: reasoningContent,
                 usage: {
                     promptTokens: response.usage.input_tokens,
                     completionTokens: response.usage.output_tokens,
-                    totalTokens: response.usage.total_tokens,
+                    totalTokens: response.usage.total_tokens
                 },
                 model: this.config.modelName,
-                finishReason,
+                finishReason
             };
         } else {
             // 百炼应用响应
@@ -402,15 +411,16 @@ export class AliyunProvider extends BaseAIProvider {
 
             return {
                 content: response.output.text,
+                reasoning_content: response.output.reasoning_content,
                 usage: usage
                     ? {
                         promptTokens: usage.input_tokens,
                         completionTokens: usage.output_tokens,
-                        totalTokens: usage.input_tokens + usage.output_tokens,
+                        totalTokens: usage.input_tokens + usage.output_tokens
                     }
                     : undefined,
                 model: usage?.model_name || this.config.modelName,
-                finishReason: 'stop',
+                finishReason: 'stop'
             };
         }
     }

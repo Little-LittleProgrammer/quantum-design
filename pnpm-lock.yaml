@@ -344,6 +344,9 @@ importers:
       '@quantum-design-configs/vite':
         specifier: workspace:*
         version: link:../../configs/vite
+      '@quantum-design/ai-hub':
+        specifier: workspace:*
+        version: link:../../packages/ai-hub
       '@quantum-design/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks

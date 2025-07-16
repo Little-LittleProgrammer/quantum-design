@@ -1,6 +1,6 @@
 
 curl -X POST "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation" \
--H "Authorization: Bearer sk-3e88c5f288ca46eea89c6843c095dbdc" \
+-H "Authorization: Bearer sk-xxxxxxxx" \
 -H "Content-Type: application/json" \
 -d '{
     "model": "deepseek-v3",
