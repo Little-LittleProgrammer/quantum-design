@@ -1,5 +1,20 @@
 # @quantum-design/hooks
 
+## 2.0.3
+
+### Patch Changes
+
+-   371bf90: 增加方法,适配弹框
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 增加 hooks 依次从插槽、attrs、props、state 中获取值
+-   371bf90: 常规更新
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+    -   @quantum-design/utils@2.0.3
+    -   @quantum-design/shared@2.0.3
+    -   @quantum-design/types@2.0.3
+
 ## 2.0.3-beta.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/vue3-antd-pc-ui",
-    "version": "2.0.3-beta.5",
+    "version": "2.0.3",
     "description": "vue3,antd组件库",
     "type": "module",
     "main": "dist/lib/index.cjs",

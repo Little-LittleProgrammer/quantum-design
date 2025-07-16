@@ -1,5 +1,12 @@
 # @quantum-design/shared
 
+## 2.0.3
+
+### Patch Changes
+
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 常规更新
+
 ## 2.0.3-beta.1
 
 ### Patch Changes

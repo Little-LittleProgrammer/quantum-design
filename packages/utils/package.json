@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/utils",
-    "version": "2.0.3-beta.2",
+    "version": "2.0.3",
     "description": "公共 `utils` 方法",
     "main": "index.js",
     "module": "dist/utils.esm.min.js",

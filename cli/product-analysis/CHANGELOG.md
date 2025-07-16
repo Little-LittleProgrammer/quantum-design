@@ -1,5 +1,15 @@
 # qm-product-analysis
 
+## 0.0.2
+
+### Patch Changes
+
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 常规更新
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+    -   @quantum-design/ai-hub@0.0.2
+
 ## 0.0.2-beta.3
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @quantum-design-configs/vite
 
+## 2.0.3
+
+### Patch Changes
+
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 常规更新
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+    -   @quantum-design/utils@2.0.3
+    -   @quantum-design/shared@2.0.3
+    -   @quantum-design-configs/vite-sentry@2.0.3
+
 ## 2.0.3-beta.2
 
 ### Patch Changes

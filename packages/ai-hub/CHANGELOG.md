@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.2
+
+### Patch Changes
+
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 常规更新
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+-   Updated dependencies [371bf90]
+    -   @quantum-design/utils@2.0.3
+    -   @quantum-design/shared@2.0.3
+
 ## 0.0.2-beta.7
 
 ### Patch Changes

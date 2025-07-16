@@ -1,5 +1,12 @@
 # @quantum-design-configs/commitlint
 
+## 1.0.2
+
+### Patch Changes
+
+-   371bf90: 修复 utils 缺陷
+-   371bf90: 常规更新
+
 ## 1.0.2-beta.1
 
 ### Patch Changes
