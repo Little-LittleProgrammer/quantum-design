@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/hooks",
-    "version": "2.0.3",
+    "version": "2.0.4-beta.0",
     "description": "公共 `hooks` 方法",
     "scripts": {},
     "files": [

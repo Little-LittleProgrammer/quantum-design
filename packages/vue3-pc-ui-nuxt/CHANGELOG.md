@@ -1,5 +1,11 @@
 # @quantum-design/vue3-pc-ui-nuxt
 
+## 2.0.4-beta.0
+
+### Patch Changes
+
+-   @quantum-design/vue3-pc-ui@2.0.4-beta.0
+
 ## 2.0.3
 
 ### Patch Changes

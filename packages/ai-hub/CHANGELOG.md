@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.3-beta.0
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/utils@2.0.4-beta.0
+
 ## 0.0.2
 
 ### Patch Changes

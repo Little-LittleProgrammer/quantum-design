@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/vue3-antd-pc-ui-nuxt",
-    "version": "2.0.3",
+    "version": "2.0.4-beta.0",
     "description": "vue3-antd-pc-ui module for Nuxt",
     "license": "MIT",
     "type": "module",

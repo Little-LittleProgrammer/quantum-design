@@ -1,5 +1,12 @@
 # @quantum-design/vue3-pc-ui
 
+## 2.0.4-beta.0
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/utils@2.0.4-beta.0
+
 ## 2.0.3
 
 ### Patch Changes

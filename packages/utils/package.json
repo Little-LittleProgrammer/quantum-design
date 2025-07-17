@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/utils",
-    "version": "2.0.3",
+    "version": "2.0.4-beta.0",
     "description": "公共 `utils` 方法",
     "main": "index.js",
     "module": "dist/utils.esm.min.js",
@@ -49,11 +49,10 @@
         "access": "public"
     },
     "license": "ISC",
-    "dependencies": {
-        "@quantum-design/shared": "workspace:*"
-    },
+    "dependencies": {},
     "devDependencies": {
         "crypto-js": "catalog:",
+        "@quantum-design/shared": "workspace:*",
         "@quantum-design/types": "workspace:*",
         "@quantum-design-configs/rollup": "workspace:*",
         "@types/crypto-js": "catalog:",
