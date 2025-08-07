@@ -102,5 +102,16 @@ export const basicProps = {
 
     labelAlign: propTypes.string,
 
-    rowProps: Object as PropType<RowProps>
+    rowProps: Object as PropType<RowProps>,
+
+    // 是否启用自定义筛选功能
+    enableCustomFilter: propTypes.bool.def(false),
+    // 表单唯一标识，同页面多表单时用于区分
+    formId: propTypes.string,
+    // 自定义筛选按钮文本
+    customFilterButtonText: propTypes.string.def('自定义筛选'),
+    // 弹窗标题
+    customFilterModalTitle: propTypes.string.def('自定义筛选项'),
+    // 是否显示重置按钮（在弹窗中）
+    showCustomFilterReset: propTypes.bool.def(true)
 };

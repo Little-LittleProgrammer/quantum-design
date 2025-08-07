@@ -81,6 +81,9 @@ const schemas = computed(() =>
 const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     schemas,
     layout: 'inline',
+    // 开启自定义筛选功能
+    enableCustomFilter: true,
+    formId: '1234',
     submitFunc: async() => {
         console.log(getFieldsValue());
     }

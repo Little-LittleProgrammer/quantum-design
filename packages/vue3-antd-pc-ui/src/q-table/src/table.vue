@@ -9,7 +9,7 @@
             </q-antd-form>
         </card>
         <card size="small">
-            <Table ref="tableElRef" v-bind="getBindValues" :rowClassName="getRowClassName" v-show="getEmptyDataIsShowTable" @change="handle_table_change" @resizeColumn="handle_resize_change">
+            <Table ref="tableElRef" v-bind="getBindValues" :pagination="false" :rowClassName="getRowClassName" v-show="getEmptyDataIsShowTable" @change="handle_table_change" @resizeColumn="handle_resize_change">
                 <template #headerCell="{ column }">
                     <header-cell :column="column" />
                 </template>
@@ -27,6 +27,9 @@
                     </table-summary>
                 </template>
             </Table>
+            <TablePagination v-if="getPaginationInfo" :pageOption="getPaginationInfo" @change="handle_table_change">
+                <slot name="paginationButton"></slot>
+            </TablePagination>
         </card>
     </div>
 </template>
@@ -58,6 +61,7 @@ import { useTableHeader } from './hooks/use-table-header';
 import { useCustomRow } from './hooks/use-cuctom-row';
 import { useTableExpand } from './hooks/use-table-expand';
 import HeaderCell from './components/header/header-cell.vue';
+import TablePagination from './components/table-pagination.vue';
 
 defineOptions({
     name: 'QAntdTable'
@@ -73,7 +77,7 @@ const tableData = ref([]);
 const summaryData = ref([]);
 const columns = ref([]);
 
-const wrapRef = ref<Element | null>(null);
+const wrapRef = ref<HTMLElement | null>(null);
 const formRef = ref(null);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -260,7 +264,7 @@ const tableAction: TableActionType = {
     exportData,
 };
 
-createTableContext({ ...tableAction, wrapRef, getBindValues });
+createTableContext({ ...tableAction, wrapRef, getBindValues, tableElRef });
 
 defineExpose(tableAction);
 

@@ -1,4 +1,4 @@
-import type { Component, PropType } from 'vue';
+import type { PropType } from 'vue';
 import type { PaginationProps } from './types/pagination';
 import type {
     BasicColumn,

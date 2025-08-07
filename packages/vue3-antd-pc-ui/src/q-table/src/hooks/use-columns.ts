@@ -518,7 +518,7 @@ export function useColumns(
 
     function getCacheKey() {
         const curUrl = js_utils_get_current_url();
-        return curUrl?.path;
+        return `${curUrl?.path}/${curUrl?.hash || ''}`;
     }
 
     async function storeInIndexDB(columns: BasicColumn[]) {

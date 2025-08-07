@@ -10,35 +10,25 @@
 
 ```vue
 <template>
-  <div class="p-4">
-    <q-antd-table
-      title="基础示例"
-      titleHelpMessage="温馨提醒"
-      :columns="columns"
-      :dataSource="data"
-      :canResize="canResize"
-      :loading="loading"
-      :striped="striped"
-      :bordered="border"
-      :pagination="{ pageSize: 20 }"
-    >
-      <template #toolbar>
-        <a-button type="primary"> 操作按钮 </a-button>
-      </template>
-    </q-antd-table>
-  </div>
+    <div class="p-4">
+        <q-antd-table title="基础示例" titleHelpMessage="温馨提醒" :columns="columns" :dataSource="data" :canResize="canResize" :loading="loading" :striped="striped" :bordered="border" :pagination="{ pageSize: 20 }">
+            <template #toolbar>
+                <a-button type="primary"> 操作按钮 </a-button>
+            </template>
+        </q-antd-table>
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref } from 'vue';
-  import { getBasicColumns, getBasicData } from './tableData';
+import { defineComponent, ref } from 'vue';
+import { getBasicColumns, getBasicData } from './tableData';
 
-  export default defineComponent({
-      return {
-        columns: getBasicColumns(),
-        data: getBasicData(),
-      };
-    },
-  });
+export default defineComponent({
+    return {
+      columns: getBasicColumns(),
+      data: getBasicData(),
+    };
+  },
+});
 </script>
 ```
 
@@ -48,164 +38,155 @@
 
 ```vue
 <template>
-  <div class="p-4">
-    <q-antd-table
-      :canResize="false"
-      title="RefTable示例"
-      titleHelpMessage="使用Ref调用表格内方法"
-      ref="tableRef"
-      :api="api"
-      :columns="columns"
-      rowKey="id"
-      :rowSelection="{ type: 'checkbox' }"
-    />
-  </div>
+    <div class="p-4">
+        <q-antd-table :canResize="false" title="RefTable示例" titleHelpMessage="使用Ref调用表格内方法" ref="tableRef" :api="api" :columns="columns" rowKey="id" :rowSelection="{ type: 'checkbox' }" />
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref } from 'vue';
-  import { TableActionType } from '/@/components/Table';
-  import { getBasicColumns, getBasicShortColumns } from './tableData';
-  import { demoListApi } from '/@/api/demo/table';
-  export default defineComponent({
+import { defineComponent, ref, unref } from 'vue';
+import { TableActionType } from '/@/components/Table';
+import { getBasicColumns, getBasicShortColumns } from './tableData';
+import { demoListApi } from '/@/api/demo/table';
+export default defineComponent({
     setup() {
-      const tableRef = ref<Nullable<TableActionType>>(null);
+        const tableRef = ref<Nullable<TableActionType>>(null);
 
-      function getTableAction() {
-        const tableAction = unref(tableRef);
-        if (!tableAction) {
-          throw new Error('tableAction is null');
+        function getTableAction() {
+            const tableAction = unref(tableRef);
+            if (!tableAction) {
+                throw new Error('tableAction is null');
+            }
+            return tableAction;
         }
-        return tableAction;
-      }
-      function changeLoading() {
-        getTableAction().setLoading(true);
-        setTimeout(() => {
-          getTableAction().setLoading(false);
-        }, 1000);
-      }
-      return {
-        tableRef,
-        api: demoListApi,
-        columns: getBasicColumns(),
-        changeLoading,
-      };
+        function changeLoading() {
+            getTableAction().setLoading(true);
+            setTimeout(() => {
+                getTableAction().setLoading(false);
+            }, 1000);
+        }
+        return {
+            tableRef,
+            api: demoListApi,
+            columns: getBasicColumns(),
+            changeLoading,
+        };
     },
-  });
+});
 </script>
 ```
 
 ### BasicColumn 和 tableAction 通过权限和业务控制显示隐藏的示例
+
 ```vue
 <template>
-  <div class="p-4">
-    <q-antd-table @register="registerTable">
-      <template #action="{ record }">
-        <q-antd-table-action
-          :actions="[
-            {
-              label: '编辑',
-              onClick: handleEdit.bind(null, record),
-              auth: 'other', // 根据权限控制是否显示: 无权限，不显示
-            },
-            {
-              label: '删除',
-              icon: 'ic:outline-delete-outline',
-              onClick: handleDelete.bind(null, record),
-              auth: 'super', // 根据权限控制是否显示: 有权限，会显示
-            },
-          ]"
-          :dropDownActions="[
-            {
-              label: '启用',
-              popConfirm: {
-                title: '是否启用？',
-                confirm: handleOpen.bind(null, record),
-              },
-              ifShow: (_action) => {
-                return record.status !== 'enable'; // 根据业务控制是否显示: 非enable状态的不显示启用按钮
-              },
-            },
-            {
-              label: '禁用',
-              popConfirm: {
-                title: '是否禁用？',
-                confirm: handleOpen.bind(null, record),
-              },
-              ifShow: () => {
-                return record.status === 'enable'; // 根据业务控制是否显示: enable状态的显示禁用按钮
-              },
-            },
-            {
-              label: '同时控制',
-              popConfirm: {
-                title: '是否动态显示？',
-                confirm: handleOpen.bind(null, record),
-              },
-              auth: 'super', // 同时根据权限和业务控制是否显示
-              ifShow: () => {
-                return true; // 根据业务控制是否显示
-              },
-            },
-          ]"
-        />
-      </template>
-    </q-antd-table>
-  </div>
+    <div class="p-4">
+        <q-antd-table @register="registerTable">
+            <template #action="{ record }">
+                <q-antd-table-action
+                    :actions="[
+                        {
+                            label: '编辑',
+                            onClick: handleEdit.bind(null, record),
+                            auth: 'other', // 根据权限控制是否显示: 无权限，不显示
+                        },
+                        {
+                            label: '删除',
+                            icon: 'ic:outline-delete-outline',
+                            onClick: handleDelete.bind(null, record),
+                            auth: 'super', // 根据权限控制是否显示: 有权限，会显示
+                        },
+                    ]"
+                    :dropDownActions="[
+                        {
+                            label: '启用',
+                            popConfirm: {
+                                title: '是否启用？',
+                                confirm: handleOpen.bind(null, record),
+                            },
+                            ifShow: (_action) => {
+                                return record.status !== 'enable'; // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+                            },
+                        },
+                        {
+                            label: '禁用',
+                            popConfirm: {
+                                title: '是否禁用？',
+                                confirm: handleOpen.bind(null, record),
+                            },
+                            ifShow: () => {
+                                return record.status === 'enable'; // 根据业务控制是否显示: enable状态的显示禁用按钮
+                            },
+                        },
+                        {
+                            label: '同时控制',
+                            popConfirm: {
+                                title: '是否动态显示？',
+                                confirm: handleOpen.bind(null, record),
+                            },
+                            auth: 'super', // 同时根据权限和业务控制是否显示
+                            ifShow: () => {
+                                return true; // 根据业务控制是否显示
+                            },
+                        },
+                    ]"
+                />
+            </template>
+        </q-antd-table>
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { useTable, BasicColumn } from '/@/components/Table';
+import { defineComponent } from 'vue';
+import { useTable, BasicColumn } from '/@/components/Table';
 
-  import { demoListApi } from '/@/api/demo/table';
-  const columns: BasicColumn[] = [
+import { demoListApi } from '/@/api/demo/table';
+const columns: BasicColumn[] = [
     {
-      title: '姓名',
-      dataIndex: 'name',
-      auth: 'test', // 根据权限控制是否显示: 无权限，不显示
+        title: '姓名',
+        dataIndex: 'name',
+        auth: 'test', // 根据权限控制是否显示: 无权限，不显示
     },
     {
-      title: '地址',
-      dataIndex: 'address',
-      auth: 'super', // 同时根据权限控制是否显示
-      ifShow: (_column) => {
-        return true; // 根据业务控制是否显示
-      },
-    },
-  ];
-  export default defineComponent({
-    setup() {
-      const [registerTable] = useTable({
-        title: 'TableAction组件及固定列示例',
-        api: demoListApi,
-        columns: columns,
-        bordered: true,
-        actionColumn: {
-          width: 250,
-          title: 'Action',
-          dataIndex: 'action',
-          slots: { customRender: 'action' },
+        title: '地址',
+        dataIndex: 'address',
+        auth: 'super', // 同时根据权限控制是否显示
+        ifShow: (_column) => {
+            return true; // 根据业务控制是否显示
         },
-      });
-      function handleEdit(record: Recordable) {
-        console.log('点击了编辑', record);
-      }
-      function handleDelete(record: Recordable) {
-        console.log('点击了删除', record);
-      }
-      function handleOpen(record: Recordable) {
-        console.log('点击了启用', record);
-      }
-      return {
-        registerTable,
-        handleEdit,
-        handleDelete,
-        handleOpen,
-      };
     },
-  });
+];
+export default defineComponent({
+    setup() {
+        const [registerTable] = useTable({
+            title: 'TableAction组件及固定列示例',
+            api: demoListApi,
+            columns: columns,
+            bordered: true,
+            actionColumn: {
+                width: 250,
+                title: 'Action',
+                dataIndex: 'action',
+                slots: { customRender: 'action' },
+            },
+        });
+        function handleEdit(record: Recordable) {
+            console.log('点击了编辑', record);
+        }
+        function handleDelete(record: Recordable) {
+            console.log('点击了删除', record);
+        }
+        function handleOpen(record: Recordable) {
+            console.log('点击了启用', record);
+        }
+        return {
+            registerTable,
+            handleEdit,
+            handleDelete,
+            handleOpen,
+        };
+    },
+});
 </script>
 ```
-
 
 ## useTable
 
@@ -215,38 +196,38 @@
 
 ```vue
 <template>
-  <q-antd-table @register="registerTable" />
+    <q-antd-table @register="registerTable" />
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { useTable } from '@/components/Table';
-  import { getBasicColumns, getBasicShortColumns } from './tableData';
-  import { demoListApi } from '@/api/demo/table';
-  export default defineComponent({
-    setup() {
-      const [
-        registerTable,
-        {
-          setLoading,
-        },
-      ] = useTable({
-        api: demoListApi,
-        columns: getBasicColumns(),
-      });
+import { defineComponent } from 'vue';
+import { useTable } from '@/components/Table';
+import { getBasicColumns, getBasicShortColumns } from './tableData';
+import { demoListApi } from '@/api/demo/table';
+export default defineComponent({
+  setup() {
+    const [
+      registerTable,
+      {
+        setLoading,
+      },
+    ] = useTable({
+      api: demoListApi,
+      columns: getBasicColumns(),
+    });
 
-      function changeLoading() {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-      }
-      return {
-        registerTable,
-        changeLoading,
-      };
-    },
-  });
+    function changeLoading() {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    }
+    return {
+      registerTable,
+      changeLoading,
+    };
+  },
+});
 </script>
 ```
 
@@ -265,15 +246,15 @@ register 用于注册 useTable，如果需要使用`useTable`提供的 api，必
 
 ```vue
 <template>
-  <q-antd-table @register="register" />
+    <q-antd-table @register="register" />
 </template>
 <script>
-  export default defineComponent({
+export default defineComponent({
     setup() {
-      const [register] = useTable();
-      return { register };
+        const [register] = useTable();
+        return { register };
     },
-  });
+});
 </script>
 ```
 
@@ -443,114 +424,108 @@ register 用于注册 useTable，如果需要使用`useTable`提供的 api，必
 
 ::: tip 温馨提醒
 
-- 除以下参数外，官方文档内的 props 也都支持，具体可以参考 [antv table](https://2x.antdv.com/components/table-cn/#API)
-- 注意：`defaultExpandAllRows`、`defaultExpandedRowKeys` 属性在basicTable中不受支持，并且在`antv table` v2.2.0之后也被移除。
+-   除以下参数外，官方文档内的 props 也都支持，具体可以参考 [antv table](https://2x.antdv.com/components/table-cn/#API)
+-   注意：`defaultExpandAllRows`、`defaultExpandedRowKeys` 属性在 basicTable 中不受支持，并且在`antv table` v2.2.0 之后也被移除。
 
 :::
 
-| 属性                    | 类型                                               | 默认值  | 可选值 | 说明                                                                                            | 版本 |
-| ----------------------- | -------------------------------------------------- | ------- | ------ | ----------------------------------------------------------------------------------------------- | ---- |
-| clickToRowSelect        | `boolean`                                          | `true`  | -      | 点击行是否选中 checkbox 或者 radio。需要开启                                                    |      |
-| sortFn                  | `(sortInfo: SorterResult<any>) => any`             | -       | -      | 自定义排序方法。见下方全局配置说明                                                              |      |
-| filterFn                | `(sortInfo: Partial<Recordable<string[]>>) => any` | -       | -      | 自定义过滤方法。见下方全局配置说明                                                              |      |
-| showTableSetting        | `boolean`                                          | `false` | -      | 显示表格设置工具                                                                                |      |
-| tableSetting            | `TableSetting`                                     | -       | -      | 表格设置工具配置，见下方 TableSetting                                                           |      |
-| striped                 | `boolean`                                          | `true`  | -      | 斑马纹                                                                                          |      |
-| inset                   | `boolean`                                          | `false` | -      | 取消表格的默认 padding                                                                          |      |
-| autoCreateKey           | `boolean`                                          | `true`  | -      | 是否自动生成 key                                                                                |      |
-| showSummary             | `boolean`                                          | `false` | -      | 是否显示合计行                                                                                  |      |
-| summaryData             | `any[]`                                            | -       | -      | 自定义合计数据。如果有则显示该数据                                                              |      |
-| emptyDataIsShowTable    | `boolean`                                          | `true`  | -      | 在启用搜索表单的前提下，是否在表格没有数据的时候显示表格                                        |      |
-| summaryFunc             | `(...arg) => any[]`                                | -       | -      | 计算合计行的方法                                                                                |      |
-| summaryData             | `Recordable[]`                                | -       | -      | 总结行                                                                                |      |
-| ~~canRowDrag~~          | ~~`boolean`~~                                          | ~~`false`~~ | -      | ~~是否可拖拽行排序~~                                                                            |      |
-| ~~canColDrag~~          | ~~`boolean`~~                                          | ~~`false`~~ | -      | ~~是否可拖拽列~~                                                                                |      |
-| isTreeTable             | `boolean`                                          | `false` | -      | 是否树表                                                                                        |      |
-| api                     | `(...arg: any) => Promise<any>`                    | -       | -      | 请求接口，可以直接将`src/api内的函数直接传入`                                                   |      |
-| beforeFetch             | `(T)=>T`                                           | -       | -      | 请求之前对参数进行处理                                                                          |      |
-| afterFetch              | `(T)=>T`                                           | -       | -      | 请求之后对返回值进行处理                                                                        |      |
-| handleSearchInfoFn      | `(T)=>T`                                           | -       | -      | 开启表单后，在请求之前处理搜索条件参数                                                          |      |
-| fetchSetting            | `FetchSetting`                                     | -       | -      | 接口请求配置，可以配置请求的字段和响应的字段名，见下方全局配置说明                              |      |
-| immediate               | `boolean`                                          | `true`  | -      | 组件加载后是否立即请求接口，在 api 有传的情况下，如果为 false，需要自行使用 reload 加载表格数据 |      |
-| searchInfo              | `any`                                              | -       | -      | 额外的请求参数                                                                                  |
-| useSearchForm           | `boolean`                                          | false   | -      | 使用搜索表单                                                                                    |      |
-| formConfig              | `any`                                              | -       | -      | 表单配置，参考表单组件的 Props                                                                  |      |
-| columns                 | `any`                                              | -       | -      | 表单列信息 BasicColumn[]                                                                        |      |
-| columnsConfig            | `IOptionsTable`                                              | -       | -      | 当 columns 为服务端返回时， 自定义 header 属性的                                                                        |      |
-| showIndexColumn         | `boolean`                                          | ture    | -      | 是否显示序号列                                                                                  |      |
-| indexColumnProps        | `any`                                              | -       | -      | 序号列配置 BasicColumn                                                                          |      |
-| actionColumn            | `any`                                              | -       | -      | 表格右侧操作列配置 BasicColumn                                                                  |      |
-| ellipsis                | `boolean`                                          | `true`  | -      | 文本超过宽度是否显示...                                                                         |      |
-| canResize               | `boolean`                                          | `true`  | -      | 是否可以自适应高度(如果置于PageWrapper组件内，请勿启用PageWrapper的fixedHeight属性，二者不可同时使用)                                                                              |      |
-| clearSelectOnPageChange | `boolean`                                          | false   | -      | 切换页码是否重置勾选状态                                                                        |      |
-| resizeHeightOffset      | `number`                                           | 0       | -      | 表格自适应高度计算结果会减去这个值                                                              |      |
-| rowSelection            | `any`                                              | -       | -      | 选择列配置                                                                                      |      |
-| title                   | `string`                                           | -       | -      | 表格标题                                                                                        |      |
-| titleHelpMessage        | `string ｜ string[]`                               | -       | -      | 表格标题右侧温馨提醒                                                                            |      |
-| maxHeight               | `number`                                           | -       | -      | 表格最大高度，超出会显示滚动条                                                                  |      |
-| dataSource              | `any[]`                                            | -       | -      | 表格数据，非 api 加载情况                                                                       |      |
-| bordered                | `boolean`                                          | `false` | -      | 是否显示表格边框                                                                                |      |
-| pagination              | `any`                                              | -       | -      | 分页信息配置，为 `false` 不显示分页                                                             |      |
-| loading                 | `boolean`                                          | `false` | -      | 表格 loading 状态                                                                               |      |
-| scroll                  | `any`                                              | -       | -      | 参考官方文档 scroll                                                                             |      |
-| beforeEditSubmit | `({record: Recordable,index: number,key: string \| number,value: any}) => Promise<any>`                                              | -       | -      | 单元格编辑状态提交回调，返回false将阻止单元格提交数据到table。该回调在行编辑模式下无效。   | 2.7.2 |
+| 属性                    | 类型                                                                                    | 默认值      | 可选值 | 说明                                                                                                        | 版本  |
+| ----------------------- | --------------------------------------------------------------------------------------- | ----------- | ------ | ----------------------------------------------------------------------------------------------------------- | ----- |
+| clickToRowSelect        | `boolean`                                                                               | `true`      | -      | 点击行是否选中 checkbox 或者 radio。需要开启                                                                |       |
+| sortFn                  | `(sortInfo: SorterResult<any>) => any`                                                  | -           | -      | 自定义排序方法。见下方全局配置说明                                                                          |       |
+| filterFn                | `(sortInfo: Partial<Recordable<string[]>>) => any`                                      | -           | -      | 自定义过滤方法。见下方全局配置说明                                                                          |       |
+| showTableSetting        | `boolean`                                                                               | `false`     | -      | 显示表格设置工具                                                                                            |       |
+| tableSetting            | `TableSetting`                                                                          | -           | -      | 表格设置工具配置，见下方 TableSetting                                                                       |       |
+| striped                 | `boolean`                                                                               | `true`      | -      | 斑马纹                                                                                                      |       |
+| inset                   | `boolean`                                                                               | `false`     | -      | 取消表格的默认 padding                                                                                      |       |
+| autoCreateKey           | `boolean`                                                                               | `true`      | -      | 是否自动生成 key                                                                                            |       |
+| showSummary             | `boolean`                                                                               | `false`     | -      | 是否显示合计行                                                                                              |       |
+| summaryData             | `any[]`                                                                                 | -           | -      | 自定义合计数据。如果有则显示该数据                                                                          |       |
+| emptyDataIsShowTable    | `boolean`                                                                               | `true`      | -      | 在启用搜索表单的前提下，是否在表格没有数据的时候显示表格                                                    |       |
+| summaryFunc             | `(...arg) => any[]`                                                                     | -           | -      | 计算合计行的方法                                                                                            |       |
+| summaryData             | `Recordable[]`                                                                          | -           | -      | 总结行                                                                                                      |       |
+| ~~canRowDrag~~          | ~~`boolean`~~                                                                           | ~~`false`~~ | -      | ~~是否可拖拽行排序~~                                                                                        |       |
+| ~~canColDrag~~          | ~~`boolean`~~                                                                           | ~~`false`~~ | -      | ~~是否可拖拽列~~                                                                                            |       |
+| isTreeTable             | `boolean`                                                                               | `false`     | -      | 是否树表                                                                                                    |       |
+| api                     | `(...arg: any) => Promise<any>`                                                         | -           | -      | 请求接口，可以直接将`src/api内的函数直接传入`                                                               |       |
+| beforeFetch             | `(T)=>T`                                                                                | -           | -      | 请求之前对参数进行处理                                                                                      |       |
+| afterFetch              | `(T)=>T`                                                                                | -           | -      | 请求之后对返回值进行处理                                                                                    |       |
+| handleSearchInfoFn      | `(T)=>T`                                                                                | -           | -      | 开启表单后，在请求之前处理搜索条件参数                                                                      |       |
+| fetchSetting            | `FetchSetting`                                                                          | -           | -      | 接口请求配置，可以配置请求的字段和响应的字段名，见下方全局配置说明                                          |       |
+| immediate               | `boolean`                                                                               | `true`      | -      | 组件加载后是否立即请求接口，在 api 有传的情况下，如果为 false，需要自行使用 reload 加载表格数据             |       |
+| searchInfo              | `any`                                                                                   | -           | -      | 额外的请求参数                                                                                              |
+| useSearchForm           | `boolean`                                                                               | false       | -      | 使用搜索表单                                                                                                |       |
+| formConfig              | `any`                                                                                   | -           | -      | 表单配置，参考表单组件的 Props                                                                              |       |
+| columns                 | `any`                                                                                   | -           | -      | 表单列信息 BasicColumn[]                                                                                    |       |
+| columnsConfig           | `IOptionsTable`                                                                         | -           | -      | 当 columns 为服务端返回时， 自定义 header 属性的                                                            |       |
+| showIndexColumn         | `boolean`                                                                               | ture        | -      | 是否显示序号列                                                                                              |       |
+| indexColumnProps        | `any`                                                                                   | -           | -      | 序号列配置 BasicColumn                                                                                      |       |
+| actionColumn            | `any`                                                                                   | -           | -      | 表格右侧操作列配置 BasicColumn                                                                              |       |
+| ellipsis                | `boolean`                                                                               | `true`      | -      | 文本超过宽度是否显示...                                                                                     |       |
+| canResize               | `boolean`                                                                               | `true`      | -      | 是否可以自适应高度(如果置于 PageWrapper 组件内，请勿启用 PageWrapper 的 fixedHeight 属性，二者不可同时使用) |       |
+| clearSelectOnPageChange | `boolean`                                                                               | false       | -      | 切换页码是否重置勾选状态                                                                                    |       |
+| resizeHeightOffset      | `number`                                                                                | 0           | -      | 表格自适应高度计算结果会减去这个值                                                                          |       |
+| rowSelection            | `any`                                                                                   | -           | -      | 选择列配置                                                                                                  |       |
+| title                   | `string`                                                                                | -           | -      | 表格标题                                                                                                    |       |
+| titleHelpMessage        | `string ｜ string[]`                                                                    | -           | -      | 表格标题右侧温馨提醒                                                                                        |       |
+| maxHeight               | `number`                                                                                | -           | -      | 表格最大高度，超出会显示滚动条                                                                              |       |
+| dataSource              | `any[]`                                                                                 | -           | -      | 表格数据，非 api 加载情况                                                                                   |       |
+| bordered                | `boolean`                                                                               | `false`     | -      | 是否显示表格边框                                                                                            |       |
+| pagination              | `any`                                                                                   | -           | -      | 分页信息配置，为 `false` 不显示分页                                                                         |       |
+| loading                 | `boolean`                                                                               | `false`     | -      | 表格 loading 状态                                                                                           |       |
+| scroll                  | `any`                                                                                   | -           | -      | 参考官方文档 scroll                                                                                         |       |
+| beforeEditSubmit        | `({record: Recordable,index: number,key: string \| number,value: any}) => Promise<any>` | -           | -      | 单元格编辑状态提交回调，返回 false 将阻止单元格提交数据到 table。该回调在行编辑模式下无效。                 | 2.7.2 |
 
 ### TableSetting
-```ts
-{
-  // 是否显示刷新按钮
-  redo?: boolean;
-  // 是否显示尺寸调整按钮
-  size?: boolean;
-  // 是否显示字段调整按钮
-  setting?: boolean;
-  // 是否显示全屏按钮
-  fullScreen?: boolean;
-}
-```
 
+| 参数       | 说明                 | 类型      | 默认值  |
+| ---------- | -------------------- | --------- | ------- |
+| cache      | 是否启用缓存         | `boolean` | `false` |
+| setting    | 是否启用列设置       | `boolean` | `true`  |
+| redo       | 是否启用刷新按钮     | `boolean` | `true`  |
+| size       | 是否启用尺寸调整按钮 | `boolean` | `true`  |
+| export     | 是否启用导出按钮     | `boolean` | `true`  |
+| fullScreen | 是否启用全屏按钮     | `boolean` | `true`  |
+| floating   | 是否启用悬浮设置     | `boolean` | `false` |
 
 ## BasicColumn
 
 除 参考官方 [Column 配置](https://2x.antdv.com/components/table-cn/#Column)外，扩展以下参数
 
-| 属性               | 类型                                                      | 默认值  | 可选值 | 说明                     |
-| ------------------ | --------------------------------------------------------- | ------- | ------ | ------------------------ |
-| defaultHidden      | `boolean`                                                 | false   | -      | 默认隐藏，可在列配置显示 |
-| helpMessage        | `string｜string[]`                                        | -       | -      | 列头右侧帮助文本         |
-| edit               | `boolean`                                                 | -       | -      | 是否开启单元格编辑       |
-| editRow            | `boolean`                                                 | -       | -      | 是否开启行编辑           |
-| editable           | `boolean`                                                 | false   | -      | 是否处于编辑状态         |
-| editComponent      | `ComponentType`                                           | `Input` | -      | 编辑组件                 |
-| editComponentProps | `any`                                                     | -       | -      | 对应编辑组件的 props     |
-| editRule           | `((text: string, record: Recordable) => Promise<string>)` | -       | -      | 对应编辑组件的表单校验   |
-| editValueMap       | `(value: any) => string`                                  | -       | -      | 对应单元格值枚举         |
-| onEditRow          | `（）=>void`                                               | -       | -      | 触发行编辑               |
-| format             | `CellFormat`                                              | -       | -      | 单元格格式化             |
-| auth               | `RoleEnum` ｜ `RoleEnum[]` ｜ `string` ｜ `string[]`       | -       | -      | 根据权限编码来控制当前列是否显示    |
-| ifShow             | `boolean ｜ ((action: ActionItem) => boolean)`            | -       | -      | 根据业务状态来控制当前列是否显示    |
+| 属性               | 类型                                                      | 默认值  | 可选值 | 说明                             |
+| ------------------ | --------------------------------------------------------- | ------- | ------ | -------------------------------- |
+| defaultHidden      | `boolean`                                                 | false   | -      | 默认隐藏，可在列配置显示         |
+| helpMessage        | `string｜string[]`                                        | -       | -      | 列头右侧帮助文本                 |
+| edit               | `boolean`                                                 | -       | -      | 是否开启单元格编辑               |
+| editRow            | `boolean`                                                 | -       | -      | 是否开启行编辑                   |
+| editable           | `boolean`                                                 | false   | -      | 是否处于编辑状态                 |
+| editComponent      | `ComponentType`                                           | `Input` | -      | 编辑组件                         |
+| editComponentProps | `any`                                                     | -       | -      | 对应编辑组件的 props             |
+| editRule           | `((text: string, record: Recordable) => Promise<string>)` | -       | -      | 对应编辑组件的表单校验           |
+| editValueMap       | `(value: any) => string`                                  | -       | -      | 对应单元格值枚举                 |
+| onEditRow          | `（）=>void`                                              | -       | -      | 触发行编辑                       |
+| format             | `CellFormat`                                              | -       | -      | 单元格格式化                     |
+| auth               | `RoleEnum` ｜ `RoleEnum[]` ｜ `string` ｜ `string[]`      | -       | -      | 根据权限编码来控制当前列是否显示 |
+| ifShow             | `boolean ｜ ((action: ActionItem) => boolean)`            | -       | -      | 根据业务状态来控制当前列是否显示 |
 
 ### EditComponentType
 
 ```ts
 export type ComponentType =
-  | 'Input'
-  | 'InputNumber'
-  | 'Select'
-  | 'ApiSelect'
-  | 'Checkbox'
-  | 'Switch'
-  | 'DatePicker'  // v2.5.0 以上
-  | 'TimePicker'; // v2.5.0 以上
+    | 'Input'
+    | 'InputNumber'
+    | 'Select'
+    | 'ApiSelect'
+    | 'Checkbox'
+    | 'Switch'
+    | 'DatePicker' // v2.5.0 以上
+    | 'TimePicker'; // v2.5.0 以上
 ```
 
 ### CellFormat
 
 ```ts
-export type CellFormat =
-  | string
-  | ((text: string, record: Recordable, index: number) => string | number)
-  | Map<string | number, any>;
+export type CellFormat = string | ((text: string, record: Recordable, index: number) => string | number) | Map<string | number, any>;
 ```
 
 ## 事件
@@ -561,19 +536,19 @@ export type CellFormat =
 
 :::
 
-| 事件             | 回调参数                                | 说明                                |
-| ---------------- | --------------------------------------- | ----------------------------------- |
-| fetch-success    | `Function({items,total})`               | 接口请求成功后触发                  |
-| fetch-error      | `Function(error)`                       | 错误信息                            |
-| selection-change | `Function({keys，rows})`                | 勾选事件触发                        |
-| row-click        | `Function(record, index, event)`        | 行点击触发                          |
-| row-dbClick      | `Function(record, index, event)`        | 行双击触发                          |
-| row-contextmenu  | `Function(record, index, event)`        | 行右键触发                          |
-| row-mouseenter   | `Function(record, index, event)`        | 行移入触发                          |
-| row-mouseleave   | `Function(record, index, event)`        | 行移出触发                          |
-| edit-end         | `Function({record, index, key, value})` | 单元格编辑完成触发                  |
-| edit-cancel      | `Function({record, index, key, value})` | 单元格取消编辑触发                  |
-| edit-row-end     | `Function()`                            | 行编辑结束触发                      |
+| 事件             | 回调参数                                | 说明                                  |
+| ---------------- | --------------------------------------- | ------------------------------------- |
+| fetch-success    | `Function({items,total})`               | 接口请求成功后触发                    |
+| fetch-error      | `Function(error)`                       | 错误信息                              |
+| selection-change | `Function({keys，rows})`                | 勾选事件触发                          |
+| row-click        | `Function(record, index, event)`        | 行点击触发                            |
+| row-dbClick      | `Function(record, index, event)`        | 行双击触发                            |
+| row-contextmenu  | `Function(record, index, event)`        | 行右键触发                            |
+| row-mouseenter   | `Function(record, index, event)`        | 行移入触发                            |
+| row-mouseleave   | `Function(record, index, event)`        | 行移出触发                            |
+| edit-end         | `Function({record, index, key, value})` | 单元格编辑完成触发                    |
+| edit-cancel      | `Function({record, index, key, value})` | 单元格取消编辑触发                    |
+| edit-row-end     | `Function()`                            | 行编辑结束触发                        |
 | edit-change      | `Function({column,value,record})`       | 单元格编辑组件的 value 发生变化时触发 |
 
 ::: tip edit-change 说明
@@ -583,13 +558,15 @@ export type CellFormat =
 :::
 
 ```javascript
-      function onEditChange({ column, record }) {
-        // 当同一行的单价或者数量发生变化时，更新合计金额（三个数据均为当前行编辑组件的值）
-        if (column.dataIndex === 'qty' || column.dataIndex === 'price') {
-          const { editValueRefs: { total, qty, price } } = record;
-          total.value = unref(qty) * unref(price);
-        }
-      }
+function onEditChange({ column, record }) {
+    // 当同一行的单价或者数量发生变化时，更新合计金额（三个数据均为当前行编辑组件的值）
+    if (column.dataIndex === 'qty' || column.dataIndex === 'price') {
+        const {
+            editValueRefs: { total, qty, price },
+        } = record;
+        total.value = unref(qty) * unref(price);
+    }
+}
 ```
 
 ## Slots
@@ -600,12 +577,12 @@ export type CellFormat =
 
 :::
 
-| 名称              | 说明             |  版本  |
-| ----------------- | ---------------- | -- |
-| tableTitle        | 表格顶部左侧区域 |  |
-| toolbar           | 表格顶部右侧区域 |  |
-| expandedRowRender | 展开行区域       |  |
-| headerTop | 表格顶部区域（标题上方）       |  2.6.1 |
+| 名称              | 说明                     | 版本  |
+| ----------------- | ------------------------ | ----- |
+| tableTitle        | 表格顶部左侧区域         |       |
+| toolbar           | 表格顶部右侧区域         |       |
+| expandedRowRender | 展开行区域               |       |
+| headerTop         | 表格顶部区域（标题上方） | 2.6.1 |
 
 ## Form-Slots
 
@@ -619,7 +596,7 @@ e.g
 form-submitBefore
 ```
 
-## ColumnSetting组件
+## ColumnSetting 组件
 
 > 字段调整组件
 
@@ -627,7 +604,7 @@ form-submitBefore
 
 :::warning 值得注意的是
 
-`序号列`和`勾选列`是在table的props中定义的，对应的字段分别是`showIndexColumn`、`rowSelection`。因此在**动态改变表格列配置**的时候，建议使用**setProps**方法，并显式地设置这两个字段的值来保证达到预期效果
+`序号列`和`勾选列`是在 table 的 props 中定义的，对应的字段分别是`showIndexColumn`、`rowSelection`。因此在**动态改变表格列配置**的时候，建议使用**setProps**方法，并显式地设置这两个字段的值来保证达到预期效果
 
 :::
 
@@ -652,53 +629,55 @@ setProps({
 
 #### Props
 
-| 属性                  | 类型           | 默认值  | 可选值       | 说明                            | 版本  |
-| --------------------- | -------------- | ------- | ------------ | ------------------------------- | ----- |
-| actions               | `ActionItem[]` | -       | -            | 右侧操作列按钮列表              |       |
-| dropDownActions       | `ActionItem[]` | -       | -            | 右侧操作列更多下拉按钮列表      |       |
-| stopButtonPropagation | `boolean`      | `false` | `true/false` | 是否阻止操作按钮的click事件冒泡 | 2.5.0 |
+| 属性                  | 类型           | 默认值  | 可选值       | 说明                              | 版本  |
+| --------------------- | -------------- | ------- | ------------ | --------------------------------- | ----- |
+| actions               | `ActionItem[]` | -       | -            | 右侧操作列按钮列表                |       |
+| dropDownActions       | `ActionItem[]` | -       | -            | 右侧操作列更多下拉按钮列表        |       |
+| stopButtonPropagation | `boolean`      | `false` | `true/false` | 是否阻止操作按钮的 click 事件冒泡 | 2.5.0 |
 
 **ActionItem**
 
 ```ts
 export interface ActionItem {
-  // 按钮文本
-  label: string;
-  // 是否禁用
-  disabled?: boolean;
-  // 按钮颜色
-  color?: 'success' | 'error' | 'warning';
-  // 按钮类型
-  type?: string;
-  // button组件props
-  props?: any;
-  // 按钮图标
-  icon?: string;
-  // 气泡确认框
-  popConfirm?: PopConfirm;
-  // 是否显示分隔线，v2.0.0+
-  divider?: boolean;
-  // 根据权限编码来控制当前列是否显示，v2.4.0+
-  auth?: RoleEnum | RoleEnum[] | string | string[];
-  // 根据业务状态来控制当前列是否显示，v2.4.0+
-  ifShow?: boolean | ((action: ActionItem) => boolean);
-  // 点击回调
-  onClick?: Fn;
-  // Tooltip配置，2.5.3以上版本支持，可以配置为string，或者完整的tooltip属性
-  tooltip?: string | TooltipProps
+    // 按钮文本
+    label: string;
+    // 是否禁用
+    disabled?: boolean;
+    // 按钮颜色
+    color?: 'success' | 'error' | 'warning';
+    // 按钮类型
+    type?: string;
+    // button组件props
+    props?: any;
+    // 按钮图标
+    icon?: string;
+    // 气泡确认框
+    popConfirm?: PopConfirm;
+    // 是否显示分隔线，v2.0.0+
+    divider?: boolean;
+    // 根据权限编码来控制当前列是否显示，v2.4.0+
+    auth?: RoleEnum | RoleEnum[] | string | string[];
+    // 根据业务状态来控制当前列是否显示，v2.4.0+
+    ifShow?: boolean | ((action: ActionItem) => boolean);
+    // 点击回调
+    onClick?: Fn;
+    // Tooltip配置，2.5.3以上版本支持，可以配置为string，或者完整的tooltip属性
+    tooltip?: string | TooltipProps;
 }
 ```
-有关TooltipProps的说明，请参考[tooltip](https://2x.antdv.com/components/tooltip-cn#API)
+
+有关 TooltipProps 的说明，请参考[tooltip](https://2x.antdv.com/components/tooltip-cn#API)
 
 **PopConfirm**
+
 ```ts
 export interface PopConfirm {
-  title: string;
-  okText?: string;
-  cancelText?: string;
-  confirm: Fn;
-  cancel?: Fn;
-  icon?: string;
+    title: string;
+    okText?: string;
+    cancelText?: string;
+    confirm: Fn;
+    cancel?: Fn;
+    icon?: string;
 }
 ```
 
@@ -713,9 +692,9 @@ export interface PopConfirm {
 | imgList    | `string[]` | -       | -            | 图片地址列表                     |       |
 | size       | `number`   | -       | -            | 图片大小                         |       |
 | simpleShow | `boolean`  | `false` | `true/false` | 简单显示模式（只显示第一张图片） | 2.5.0 |
-| showBadge  | `boolean`  | `true`  | `true/false` | 简单模式下是否显示计数Badge      | 2.5.0 |
+| showBadge  | `boolean`  | `true`  | `true/false` | 简单模式下是否显示计数 Badge     | 2.5.0 |
 | margin     | `number`   | 4       | -            | 常规模式下的图片间距             | 2.5.0 |
-| srcPrefix  | `string`   | -       | -            | 在每一个图片src前插入的内容      | 2.5.0 |
+| srcPrefix  | `string`   | -       | -            | 在每一个图片 src 前插入的内容    | 2.5.0 |
 
 ## 全局配置
 

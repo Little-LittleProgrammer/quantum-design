@@ -66,6 +66,7 @@
         "@quantum-design/vue3-pc-ui": "workspace:*",
         "@quantum-design/styles": "workspace:*",
         "lodash-es": "catalog:",
+        "moveable": "catalog:",
         "sortablejs": "catalog:"
     },
     "devDependencies": {

@@ -149,6 +149,7 @@ export interface TableSetting {
     fullScreen?: boolean;
     export?: boolean;
     cache?: boolean;
+    floating?: boolean;
 }
 
 export interface ExtraComponents {

@@ -85,9 +85,11 @@ export default defineComponent({
             formConfig: {
                 layout: 'inline',
                 schemas,
+                formId: '44ry',
+                enableCustomFilter: true,
                 fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]]
             },
-            scroll: { x: 2000 },
+            scroll: { x: true },
             columns: getBasicColumns(),
             dataSource: getBasicData(),
             autoCreateKey: true,

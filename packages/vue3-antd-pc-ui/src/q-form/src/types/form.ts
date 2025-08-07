@@ -43,6 +43,38 @@ export interface HelpComponentProps {
 }
 
 /**
+ * 自定义筛选弹窗组件 Props 接口
+ * @interface ICustomFilterModalProps
+ */
+export interface ICustomFilterModalProps {
+    /** 弹窗显示状态 */
+    visible: boolean;
+    /** 弹窗标题 */
+    title?: string;
+    /** 表单配置数组 */
+    schemas: FormSchema[]; // 使用 any[] 避免循环引用，实际使用时会是 FormSchema[]
+    /** 初始选中的字段列表 */
+    initialSelectedFields?: string[];
+    /** 初始字段顺序 */
+    initialFieldOrder?: string[];
+    /** 是否显示重置按钮 */
+    showResetButton?: boolean;
+}
+
+/**
+ * 自定义筛选弹窗组件 Emits 接口
+ * @interface ICustomFilterModalEmits
+ */
+export interface ICustomFilterModalEmits {
+    /** 更新弹窗显示状态 */
+    (e: 'update:visible', visible: boolean): void;
+    /** 确认配置 */
+    (e: 'confirm', config: { selectedFields: string[]; fieldOrder: string[] }): void;
+    /** 重置配置 */
+    (e: 'reset'): void;
+}
+
+/**
  * 获取组件props类型的工具类型
  */
 type GetComponentProps<
@@ -59,7 +91,7 @@ type GetComponentProps<
  */
 export interface BaseFormSchema<
     Fields extends Record<string, any> = Record<string, any>,
-    CustomComponentPropsMap extends Record<string, any> = Record<string, any>
+    _CustomComponentPropsMap extends Record<string, any> = Record<string, any>
 > {
     // Field name
     field: Flatten<DeepRequired<Fields>> | keyof Fields;
@@ -69,6 +101,8 @@ export interface BaseFormSchema<
     valueField?: string;
     // Label name
     label: string | VNode;
+    // 自定义筛选弹窗中展示的label（当组件为自定义组件时这个属性可以用）
+    formFilterLabel?: string;
     // Auxiliary text
     subLabel?: string;
     // 提示语
@@ -301,4 +335,16 @@ export interface FormProps {
     submitFunc?: () => void;
     transformDateFunc?: (date: any) => string;
     colon?: boolean;
+
+    // 自定义筛选相关属性
+    // 是否启用自定义筛选功能
+    enableCustomFilter?: boolean;
+    // 表单唯一标识，同页面多表单时用于区分
+    formId?: string;
+    // 自定义筛选按钮文本
+    customFilterButtonText?: string;
+    // 弹窗标题
+    customFilterModalTitle?: string;
+    // 是否显示重置按钮（在弹窗中）
+    showCustomFilterReset?: boolean;
 }
