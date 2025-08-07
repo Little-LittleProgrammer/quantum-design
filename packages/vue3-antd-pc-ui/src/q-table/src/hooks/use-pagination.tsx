@@ -25,6 +25,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     const show = ref(true);
 
     watch(() => refProps.value.pagination, (pagination) => {
+        console.log('watch pagination', pagination);
         if (!isBoolean(pagination) && pagination) {
             configRef.value = {
                 ...unref(configRef),

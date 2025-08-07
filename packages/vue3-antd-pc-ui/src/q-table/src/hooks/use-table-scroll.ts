@@ -70,7 +70,7 @@ export function useTableScroll(
         const { pagination } = unref(propsRef);
         // Pager height
         let paginationHeight = 2;
-        if (!isBoolean(pagination)) {
+        if (!isBoolean(pagination) || (isBoolean(pagination) && pagination)) {
             paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement;
             if (paginationEl) {
                 const offsetHeight = paginationEl.offsetHeight;
