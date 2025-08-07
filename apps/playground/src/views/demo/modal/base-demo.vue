@@ -7,17 +7,21 @@ const [Modal, modalApi] = useQAntdModal({
     draggable: true,
     onCancel() {
         modalApi.close();
-    },
-    onClosed() {
-        message.info('onClosed：关闭动画结束');
+        console.log('onCancel');
     },
     onConfirm() {
         message.info('onConfirm');
+        console.log('onConfirm');
         // modalApi.close();
     },
-    onOpened() {
-        message.info('onOpened：打开动画结束');
+    onOpenChange(isOpen: boolean) {
+        message.info(`onOpenChange: ${isOpen}`);
+        console.log('onOpenChange', isOpen);
     },
+    onOpened() {
+        message.info('onOpened');
+        console.log('onOpened');
+    }
 });
 
 function lockModal() {

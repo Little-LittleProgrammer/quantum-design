@@ -1,4 +1,4 @@
-import { isFunction, js_bind_methods } from '@quantum-design/utils';
+import { js_bind_methods } from '@quantum-design/utils';
 import type { ModalApiOptions, ModalState } from './types/modal';
 import { defineStore, type StoreDefinition } from 'pinia';
 
@@ -15,6 +15,7 @@ export class ModalApi {
     | 'onCancel'
     | 'onConfirm'
     | 'onOpenChange'
+    | 'onOpened'
   >;
 
     // private prevState!: ModalState;
@@ -28,6 +29,7 @@ export class ModalApi {
             onCancel,
             onConfirm,
             onOpenChange,
+            onOpened,
             id,
             ...storeState
         } = options;
@@ -58,6 +60,7 @@ export class ModalApi {
             destroyOnClose: false
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const _this = this;
 
         const store = defineStore(`q-antd-modal-${id}`, {
@@ -95,7 +98,8 @@ export class ModalApi {
             onBeforeClose,
             onCancel,
             onConfirm,
-            onOpenChange
+            onOpenChange,
+            onOpened
         };
         js_bind_methods(this);
     }
@@ -138,6 +142,13 @@ export class ModalApi {
         } else {
             this.close();
         }
+    }
+    onOpenChange(isOpen: boolean) {
+        this.api.onOpenChange?.(isOpen);
+    }
+
+    onOpened() {
+        this.api.onOpened?.();
     }
 
     /**
