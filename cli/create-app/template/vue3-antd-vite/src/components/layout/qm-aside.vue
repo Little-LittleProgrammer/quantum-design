@@ -1,63 +1,4 @@
 <!-- \ -->
-<template>
-    <a-layout-sider theme="light" class="qm-aside" ref="refAsideMenu" :class="{ 'qm-aside-hide': !getArrowBtnShow || (getArrowBtnShow && !data.isShow) }">
-        <a-menu class="qm-aside-tabs" mode="inline" v-model:openKeys="data.openKeys" :selectedKeys="data.selectedKeys" :inlineIndent="16" @click="jump_page">
-            <template v-for="second_level in props.menuData">
-                <template v-if="second_level.children == undefined">
-                    <a-menu-item :key="second_level.id" class="qm-aside-title">
-                        <template #icon>
-                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
-                        </template>
-                        {{ second_level.auth_name }}
-                    </a-menu-item>
-                </template>
-                <template v-else>
-                    <a-sub-menu :key="second_level.id">
-                        <template #icon>
-                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
-                        </template>
-                        <template #title>
-                            <span class="qm-aside-title">{{ second_level.auth_name }}</span>
-                        </template>
-                        <template v-for="third_level in second_level.children">
-                            <template v-if="!!third_level.children">
-                                <a-sub-menu :key="third_level.id">
-                                    <template #icon>
-                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
-                                    </template>
-                                    <template #title>
-                                        <span class="qm-aside-title-sub">{{ third_level.auth_name }}</span>
-                                    </template>
-                                    <a-menu-item class="qm-aside-link" :key="four_level.id" v-for="four_level in third_level.children">
-                                        <template #icon>
-                                            <q-antd-icon :type="four_level.icon as 'default'" v-if="four_level.icon != undefined && four_level.icon != ''"></q-antd-icon>
-                                        </template>
-                                        {{ four_level.auth_name }}
-                                    </a-menu-item>
-                                </a-sub-menu>
-                            </template>
-                            <template v-else>
-                                <a-menu-item class="qm-aside-link" :key="third_level.id">
-                                    <template #icon>
-                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
-                                    </template>
-                                    {{ third_level.auth_name }}
-                                </a-menu-item>
-                            </template>
-                        </template>
-                    </a-sub-menu>
-                </template>
-            </template>
-        </a-menu>
-        <div class="qm-aside-arrow-btn" :class="getClass" @click="show_hide_aside">
-            <template v-if="getArrowBtnShow">
-                <q-antd-icon :type="getArrow[0] as 'default'" v-if="data.isShow" class="arrow-btn" />
-                <q-antd-icon :type="getArrow[1] as 'default'" v-else class="arrow-btn" />
-            </template>
-        </div>
-    </a-layout-sider>
-</template>
-
 <script lang="ts">
 import { Layout, Menu as AMenu } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
@@ -73,7 +14,7 @@ interface DataProps {
 
 export default defineComponent({
     name: 'QmAside',
-    components: { 'a-layout-sider': Layout.Sider }
+    components: { ALayoutSider: Layout.Sider },
 });
 </script>
 
@@ -88,8 +29,8 @@ const props = defineProps({
         required: true,
         default: () => {
             return [];
-        }
-    }
+        },
+    },
 });
 
 const go = useGo();
@@ -101,7 +42,7 @@ const data: DataProps = reactive({
     openKeys: [],
     selectedKeys: [],
     init: true, //  初始化
-    isShow: true
+    isShow: true,
 });
 const getClass = computed(() => {
     if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
@@ -130,6 +71,9 @@ watch(route, (val) => {
 });
 
 function find_parent(path: string): number {
+    if (!path) {
+        return -1;
+    }
     if (sysStore.getFormatPathRouteList[path]?.id) {
         return sysStore.getFormatPathRouteList[path].id!;
     }
@@ -183,20 +127,20 @@ watch(
                 }, 500);
             }
         }, 300);
-    }
+    },
 );
 const jump_page = (item: MenuInfo) => {
     const _path = sysStore.getFormatIdRouteList[item.key as unknown as number].path || '/';
     const _query = getAsideRepeatClick.value
         ? {
-            t: Date.now()
-        }
+              t: Date.now(),
+          }
         : {};
     // 外链可以直接跳转
     if (!(_path.includes('http://') || _path.includes('https://') || _path.match(/^\/\//) != null)) {
         go({
             path: _path,
-            query: _query
+            query: _query,
         });
     }
 };
@@ -208,6 +152,65 @@ const show_hide_aside = () => {
     }
 };
 </script>
+
+<template>
+    <ALayoutSider theme="light" class="qm-aside" ref="refAsideMenu" :class="{ 'qm-aside-hide': !getArrowBtnShow || (getArrowBtnShow && !data.isShow) }">
+        <AMenu class="qm-aside-tabs" mode="inline" v-model:openKeys="data.openKeys" :selectedKeys="data.selectedKeys" :inlineIndent="16" @click="jump_page">
+            <template v-for="second_level in props.menuData">
+                <template v-if="second_level.children == undefined">
+                    <a-menu-item :key="second_level.id" class="qm-aside-title">
+                        <template #icon>
+                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
+                        </template>
+                        {{ second_level.auth_name }}
+                    </a-menu-item>
+                </template>
+                <template v-else>
+                    <a-sub-menu :key="second_level.id">
+                        <template #icon>
+                            <q-antd-icon :type="second_level.icon as 'default'" v-if="second_level.icon != undefined && second_level.icon != ''"></q-antd-icon>
+                        </template>
+                        <template #title>
+                            <span class="qm-aside-title">{{ second_level.auth_name }}</span>
+                        </template>
+                        <template v-for="third_level in second_level.children">
+                            <template v-if="!!third_level.children">
+                                <a-sub-menu :key="third_level.id">
+                                    <template #icon>
+                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
+                                    </template>
+                                    <template #title>
+                                        <span class="qm-aside-title-sub">{{ third_level.auth_name }}</span>
+                                    </template>
+                                    <a-menu-item class="qm-aside-link" :key="four_level.id" v-for="four_level in third_level.children">
+                                        <template #icon>
+                                            <q-antd-icon :type="four_level.icon as 'default'" v-if="four_level.icon != undefined && four_level.icon != ''"></q-antd-icon>
+                                        </template>
+                                        {{ four_level.auth_name }}
+                                    </a-menu-item>
+                                </a-sub-menu>
+                            </template>
+                            <template v-else>
+                                <a-menu-item class="qm-aside-link" :key="third_level.id">
+                                    <template #icon>
+                                        <q-antd-icon :type="third_level.icon as 'default'" v-if="third_level.icon != undefined && third_level.icon != ''"></q-antd-icon>
+                                    </template>
+                                    {{ third_level.auth_name }}
+                                </a-menu-item>
+                            </template>
+                        </template>
+                    </a-sub-menu>
+                </template>
+            </template>
+        </AMenu>
+        <div class="qm-aside-arrow-btn" :class="getClass" @click="show_hide_aside">
+            <template v-if="getArrowBtnShow">
+                <q-antd-icon :type="getArrow[0] as 'default'" v-if="data.isShow" class="arrow-btn" />
+                <q-antd-icon :type="getArrow[1] as 'default'" v-else class="arrow-btn" />
+            </template>
+        </div>
+    </ALayoutSider>
+</template>
 <style lang="scss">
 .qm-aside {
     @include bg-color(aside-bg);

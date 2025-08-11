@@ -9,25 +9,25 @@
         "format": "prettier --write \"**/*.{ts,tsx,md}\""
     },
     "devDependencies": {
+        "@quantum-design-configs/eslint": "catalog:",
+        "@quantum-design-configs/tsconfig": "catalog:",
+        "@types/node": "catalog:",
         "eslint": "catalog:",
         "lint-staged": "catalog:",
         "typescript": "catalog:",
-        "@quantum-design-configs/eslint": "catalog:",
-        "@quantum-design-configs/tsconfig": "catalog:",
-        "turbo": "latest",
-        "vite": "catalog:",
         "tslib": "catalog:",
-        "@types/node": "catalog:"
+        "turbo": "catalog:",
+        "vite": "catalog:"
     },
-    "packageManager": "pnpm@9.15.7",
     "engines": {
         "npm": ">=8.0.0",
         "node": ">=18.0.0"
     },
+    "packageManager": "pnpm@9.15.7",
     "pnpm": {
         "overrides": {
-            "eslint": "catalog:",
-            "@sentry/cli": "catalog:"
+            "@sentry/cli": "catalog:",
+            "eslint": "catalog:"
         }
     },
     "volta": {
