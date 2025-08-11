@@ -1,5 +1,12 @@
 # @quantum-design/vue3-antd-pc-ui-nuxt
 
+## 2.0.4
+
+### Patch Changes
+
+-   Updated dependencies [40d821c]
+    -   @quantum-design/vue3-antd-pc-ui@2.0.4
+
 ## 2.0.4-beta.0
 
 ### Patch Changes

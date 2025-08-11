@@ -1,5 +1,12 @@
 # @quantum-design/http
 
+## 2.0.4
+
+### Patch Changes
+
+-   Updated dependencies [38c1fee]
+    -   @quantum-design/utils@2.0.4
+
 ## 2.0.4-beta.0
 
 ### Patch Changes

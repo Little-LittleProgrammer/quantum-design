@@ -1,159 +1,198 @@
-# Form表单组件
-对 `antdv`的form组件进行封装, 扩展一些常用的功能, 更加方便代码的开发, 提高整体效率
+# Form 表单组件
+
+对 `antdv`的 form 组件进行封装, 扩展一些常用的功能, 更加方便代码的开发, 提高整体效率
 
 ## 使用方式
+
 有两种使用方式供选择:
-1. 使用props 传递到组件内
+
+1. 使用 props 传递到组件内
 2. 使用暴露的 api 进行传递
 3. 两者结合
-### **props使用方式**
+
+### **props 使用方式**
+
 ::: details 点击查看代码
+
 ```vue
 <template>
-  <div>
-    <q-form 
-      :labelWidth="100"
-      :schemas="schemas"
-      :actionColOptions="{ span: 24 }"
-      @submit="handleSubmit"
-    />
-  </div>
+    <div>
+        <q-form :labelWidth="100" :schemas="schemas" :actionColOptions="{ span: 24 }" @submit="handleSubmit" />
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { QForm, FormSchema } from '@quantum-design/vue3-antd-pc-ui';
-  import { useMessage } from '@quantum-design/hooks';
-  const schemas: FormSchema[] = [ 
+import { defineComponent } from 'vue';
+import { QForm, FormSchema } from '@quantum-design/vue3-antd-pc-ui';
+import { useMessage } from '@quantum-design/hooks';
+const schemas: FormSchema[] = [
     {
-      field: 'field',
-      component: 'Input',
-      label: '字段1',
-      colProps: {
-        span: 8,
-      },
-      defaultValue: '1',
-      componentProps: {
-        placeholder: '自定义placeholder',
-        onChange: (e) => {
-          console.log(e);
+        field: 'field',
+        component: 'Input',
+        label: '字段1',
+        colProps: {
+            span: 8,
         },
-      },
+        defaultValue: '1',
+        componentProps: {
+            placeholder: '自定义placeholder',
+            onChange: (e) => {
+                console.log(e);
+            },
+        },
     },
-  ];
+];
 
-  export default defineComponent({
+export default defineComponent({
     components: { QForm },
     setup() {
-      const { createMessage } = useMessage();
-      return {
-        schemas,
-        handleSubmit: (values: any) => {
-          createMessage.success('click search,values:' + JSON.stringify(values));
-        },
-      };
+        const { createMessage } = useMessage();
+        return {
+            schemas,
+            handleSubmit: (values: any) => {
+                createMessage.success('click search,values:' + JSON.stringify(values));
+            },
+        };
     },
-  });
+});
 </script>
 ```
+
 :::
 
+### 自定义筛选项
 
-### **useForm使用方式**
+支持在表单中开启“自定义筛选项”，用于按需勾选与排序要显示的字段。开启后，会在操作区默认渲染一个按钮，点击可打开配置弹窗；也可通过插槽自定义该按钮。
+
 ::: details 点击查看代码
+
 ```vue
 <template>
-  <div>
-    <q-form
-      @register="register"
-    />
-  </div>
+    <QAntdForm :schemas="schemas" :enableCustomFilter="true" formId="userListForm" customFilterButtonText="筛选项" customFilterModalTitle="自定义筛选" @customFilterChange="onCustomFilterChange">
+        <!-- 自定义筛选按钮（可选） -->
+        <template #customFilterButton="{ openCustomModal }">
+            <a-button type="dashed" @click="openCustomModal">筛选项</a-button>
+        </template>
+    </QAntdForm>
 </template>
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  import { QForm, FormSchema } from '@quantum-design/vue3-antd-pc-ui';
-  import { useMessage } from '@quantum-design/hooks';
-  const schemas: computed<FormSchema<interface>[]>(() => ([
-    {
-      field: 'field',
-      component: 'Input',
-      label: '字段1',
-      colProps: {
-        span: 8,
-      },
-      defaultValue: '1',
-      componentProps: {
-        placeholder: '自定义placeholder',
-        onChange: (e) => {
-          console.log(e);
-        },
-      },
-    },
-  ]));
+<script lang="ts" setup>
+import type { FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 
-  export default defineComponent({
-    components: { QForm },
-    setup() {
-      const { createMessage } = useMessage();
-      const _defaultValue = {
-        field: '1'
-      } 
-      const [register, {validate, resetFields, getFieldsValue, setFieldsValue, appendSchemaByField, removeSchemaByFiled}] = useForm({
-        labelWidth: '100px',
-        schemas: schemas,
-        actionColOptions: {
-          span: 24
-        },
-        submitFunc: handleSubmit
-      });
-      const handleSubmit = async() => {
-          await validate() // 校验
-          const data = await getFieldsValue(); // 获取值
-          createMessage.success('click search,values:' + data);
-          resetFields() // 重置值
-        },
-      onMounted(()=>{
-        setFieldsValue(_defaultValue) // 设置值
-      })
-      return {
-        register
-      };
-    },
-  });
+const schemas: FormSchema[] = [
+    { field: 'name', label: '姓名', component: 'Input', alwaysVisible: true },
+    { field: 'age', label: '年龄', component: 'InputNumber' },
+    { field: 'dept', label: '部门', component: 'Select', formFilterLabel: '所属部门' },
+];
+
+function onCustomFilterChange(config: { selectedFields: string[]; fieldOrder: string[] }) {
+    // 配置变更回调（可用于联动，例如触发表格重算高度等）
+    console.log(config);
+}
 </script>
 ```
+
+:::
+
+### **useForm 使用方式**
+
+::: details 点击查看代码
+
+```vue
+<template>
+    <div>
+        <q-form @register="register" />
+    </div>
+</template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { QForm, FormSchema } from '@quantum-design/vue3-antd-pc-ui';
+import { useMessage } from '@quantum-design/hooks';
+const schemas: computed<FormSchema<interface>[]>(() => ([
+  {
+    field: 'field',
+    component: 'Input',
+    label: '字段1',
+    colProps: {
+      span: 8,
+    },
+    defaultValue: '1',
+    componentProps: {
+      placeholder: '自定义placeholder',
+      onChange: (e) => {
+        console.log(e);
+      },
+    },
+  },
+]));
+
+export default defineComponent({
+  components: { QForm },
+  setup() {
+    const { createMessage } = useMessage();
+    const _defaultValue = {
+      field: '1'
+    }
+    const [register, {validate, resetFields, getFieldsValue, setFieldsValue, appendSchemaByField, removeSchemaByFiled}] = useForm({
+      labelWidth: '100px',
+      schemas: schemas,
+      actionColOptions: {
+        span: 24
+      },
+      submitFunc: handleSubmit
+    });
+    const handleSubmit = async() => {
+        await validate() // 校验
+        const data = await getFieldsValue(); // 获取值
+        createMessage.success('click search,values:' + data);
+        resetFields() // 重置值
+      },
+    onMounted(()=>{
+      setFieldsValue(_defaultValue) // 设置值
+    })
+    return {
+      register
+    };
+  },
+});
+</script>
+```
+
 :::
 
 ## useForm
+
 提供了 useForm, 方便调用函数内部方法
 
 ### 参数介绍
+
 ```js
 const [register, methods] = useForm(props);
 ```
+
 > 参数 props 内的值可以是 computed 或者 ref 类型, 方便响应式
 
 **register**  
 register 用于注册 useForm，如果需要使用 useForm 提供的 api，必须将 register 传入组件的 onRegister
+
 ```vue
 <template>
-  <QForm @register="register" @submit="handleSubmit" />
+    <QForm @register="register" @submit="handleSubmit" />
 </template>
 <script>
-  export default defineComponent({
+export default defineComponent({
     components: { QForm },
     setup() {
-      const [register] = useForm();
-      return {
-        register,
-      };
+        const [register] = useForm();
+        return {
+            register,
+        };
     },
-  });
+});
 </script>
 ```
 
 ### Methods
 
-**getFieldsValue**  
+**getFieldsValue**
 
 类型: `() => Recordable;`
 
@@ -228,47 +267,56 @@ register 用于注册 useForm，如果需要使用 useForm 提供的 api，必�
 类型: `(data: Partial<FormSchema> | Partial<FormSchema>[]) => Promise<void>`
 
 说明: 更新表单的 schema, 只更新函数所传的参数
+
 ```js
 updateSchema({ field: 'filed', componentProps: { disabled: true } });
 updateSchema([
-  { field: 'filed', componentProps: { disabled: true } },
-  { field: 'filed1', componentProps: { disabled: false } },
+    { field: 'filed', componentProps: { disabled: true } },
+    { field: 'filed1', componentProps: { disabled: false } },
 ]);
 ```
 
 ## Props
+
 ::: tip
 除以下参数外，官方文档内的 props 也都支持，具体可以参考 antv form
 :::
 | 属性 | 类型 | 默认值 | 可选值 | 说明 | 版本 |
 | --- | --- | --- | --- | --- | -- |
-| schemas | `ComputedRef<Schema[]>` | - | - | 表单配置，见下方 `FormSchema` 配置 |  |
-| submitOnReset | `boolean` | `true` | - | 重置时是否提交表单 |  |
-| labelCol | `Partial<ColEx>` | - | - | 整个表单通用 LabelCol 配置 |  |
-| wrapperCol | `Partial<ColEx>` | - | - | 整个表单通用 wrapperCol 配置 |  |
-| baseColProps | `Partial<ColEx>` | - | - | 配置所有选子项的 ColProps，不需要逐个配置，子项也可单独配置优先与全局 |  |
-| baseRowStyle | `object` | - | - | 配置所有 Row 的 style 样式 |  |
-| labelWidth | `number , string` | - | - | 扩展 form 组件，增加 label 宽度，表单内所有组件适用，可以单独在某个项覆盖或者禁用 |  |
-| labelAlign | `string` | - | `left`,`right` | label 布局 |  |
-| mergeDynamicData | `object` | - | - | 额外传递到子组件的参数 values |  |
-| autoFocusFirstItem | `boolean` | `false` | - | 是否聚焦第一个输入框，只在第一个表单项为 input 的时候作用 |  |
-| compact | `boolean` | `false` | `true/false` | 紧凑类型表单，减少 margin-bottom |  |
-| size | `string` | `default` | `'default' , 'small' , 'large'` | 向表单内所有组件传递 size 参数,自定义组件需自行实现 size 接收 |  |
-| disabled | `boolean` | `false` | `true/false` | 向表单内所有组件传递 disabled 属性，自定义组件需自行实现 disabled 接收 |  |
-| autoSetPlaceHolder | `boolean` | `true` | ` true/false` | 自动设置表单内组件的 placeholder，自定义组件需自行实现 |  |
-| autoSubmitOnEnter | `boolean` | `false` | ` true/false` | 在input中输入时按回车自动提交 | 2.4.0  |
-| rulesMessageJoinLabel | `boolean` | `false` | `true/false` | 如果表单项有校验，会自动生成校验信息，该参数控制是否将字段中文名字拼接到自动生成的信息后方 |  |
+| schemas | `ComputedRef<Schema[]>` | - | - | 表单配置，见下方 `FormSchema` 配置 | |
+| submitOnReset | `boolean` | `true` | - | 重置时是否提交表单 | |
+| labelCol | `Partial<ColEx>` | - | - | 整个表单通用 LabelCol 配置 | |
+| wrapperCol | `Partial<ColEx>` | - | - | 整个表单通用 wrapperCol 配置 | |
+| baseColProps | `Partial<ColEx>` | - | - | 配置所有选子项的 ColProps，不需要逐个配置，子项也可单独配置优先与全局 | |
+| baseRowStyle | `object` | - | - | 配置所有 Row 的 style 样式 | |
+| labelWidth | `number , string` | - | - | 扩展 form 组件，增加 label 宽度，表单内所有组件适用，可以单独在某个项覆盖或者禁用 | |
+| labelAlign | `string` | - | `left`,`right` | label 布局 | |
+| mergeDynamicData | `object` | - | - | 额外传递到子组件的参数 values | |
+| autoFocusFirstItem | `boolean` | `false` | - | 是否聚焦第一个输入框，只在第一个表单项为 input 的时候作用 | |
+| compact | `boolean` | `false` | `true/false` | 紧凑类型表单，减少 margin-bottom | |
+| size | `string` | `default` | `'default' , 'small' , 'large'` | 向表单内所有组件传递 size 参数,自定义组件需自行实现 size 接收 | |
+| disabled | `boolean` | `false` | `true/false` | 向表单内所有组件传递 disabled 属性，自定义组件需自行实现 disabled 接收 | |
+| autoSetPlaceHolder | `boolean` | `true` | ` true/false` | 自动设置表单内组件的 placeholder，自定义组件需自行实现 | |
+| autoSubmitOnEnter | `boolean` | `false` | ` true/false` | 在 input 中输入时按回车自动提交 | 2.4.0 |
+| rulesMessageJoinLabel | `boolean` | `false` | `true/false` | 如果表单项有校验，会自动生成校验信息，该参数控制是否将字段中文名字拼接到自动生成的信息后方 | |
 | showActionButtonGroup | `boolean` | `true` | `true/false` | 是否显示操作按钮(重置/提交) | |
-| actionColOptions | `Partial<ColEx>` | - | - | 操作按钮外层 Col 组件配置，具体见下方 actionColOptions |  |
-| showResetButton | `boolean` | `true` | - | 是否显示重置按钮 |  |
-| resetButtonOptions | `object` |  | - | 重置按钮配置见下方 ActionButtonOption |  |
-| showSubmitButton | `boolean` | `true` | - | 是否显示提交按钮 |  |
-| submitButtonOptions | `object` |  | - | 确认按钮配置见下方 ActionButtonOption |  |
-| resetFunc | ` () => Promise<void>` |  | - | 自定义重置按钮逻辑`() => Promise<void>;` |  |
-| submitFunc | ` () => Promise<void>` |  | - | 自定义提交按钮逻辑`() => Promise<void>;` |  |
-| fieldMapToTime | `[string, [string, string], string?][]` |  | - | 用于将表单内时间区域的应设成 2 个字段,见下方说明 |  |
+| actionColOptions | `Partial<ColEx>` | - | - | 操作按钮外层 Col 组件配置，具体见下方 actionColOptions | |
+| showResetButton | `boolean` | `true` | - | 是否显示重置按钮 | |
+| resetButtonOptions | `object` | | - | 重置按钮配置见下方 ActionButtonOption | |
+| showSubmitButton | `boolean` | `true` | - | 是否显示提交按钮 | |
+| submitButtonOptions | `object` | | - | 确认按钮配置见下方 ActionButtonOption | |
+| resetFunc | ` () => Promise<void>` | | - | 自定义重置按钮逻辑`() => Promise<void>;` | |
+| submitFunc | ` () => Promise<void>` | | - | 自定义提交按钮逻辑`() => Promise<void>;` | |
+| fieldMapToTime | `[string, [string, string], string?][]` | | - | 用于将表单内时间区域的应设成 2 个字段,见下方说明 | |
+
+| enableCustomFilter | `boolean` | `false` | - | 是否启用自定义筛选项（字段显隐与排序） | 2.0.4 |
+| formId | `string` | - | - | 表单唯一标识，用于区分和缓存不同表单的筛选配置 | 2.0.4 |
+| customFilterButtonText | `string` | `"自定义筛选"` | - | 自定义筛选按钮文本（开启时显示） | 2.0.4 |
+| customFilterModalTitle | `string` | `"自定义筛选项"` | - | 自定义筛选弹窗标题 | 2.0.4 |
+| showCustomFilterReset | `boolean` | `true` | - | 弹窗内是否显示“重置为默认”按钮 | 2.0.4 |
 
 ### ActionButtonOption
+
 ```js
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 ```
@@ -304,51 +352,58 @@ useForm({
 
 ### FormSchema
 
-| 属性 | 类型 | 默认值 | 可选值 | 说明 |
-| --- | --- | --- | --- | --- |
-| field | `string` | - | - | 字段名 |
-| label | `string` | - | - | 标签名 |
-| subLabel | `string` | - | - | 二级标签名灰色 |
-| suffix | `string , number , ((values: RenderCallbackParams) => string / number);` | - | - | 组件后面的内容 |
-| changeEvent | `string` | - | - | 表单更新事件名称 |
-| helpMessage | `string , string[]` | - | - | 标签名左侧温馨提示 |
-| helpComponentProps | `HelpComponentProps` | - | - | 标签名左侧温馨提示组件 props,见下方 HelpComponentProps |
-| labelWidth | `string , number` | - | - | 覆盖统一设置的 labelWidth |
-| disabledLabelWidth | `boolean` | false | true/false | 禁用 form 全局设置的 labelWidth,自己手动设置 labelCol 和 wrapperCol |
-| component | `string` | - | - | 组件类型，见下方 ComponentType |
-| componentProps | `any,()=>{}` | - | - | 所渲染的组件的 props |
-| rules | `ValidationRule[]` | - | - | 校验规则,见下方 ValidationRule |
-| required | `boolean` | - | - | 简化 rules 配置，为 true 则转化成 [{required:true}]。`2.4.0`之前的版本只支持string类型的值 |
-| rulesMessageJoinLabel | `boolean` | false | - | 校验信息是否加入 label |
-| itemProps | `any` | - | - | 参考下方 FormItem |
-| colProps | `ColEx` | - | - | 参考上方 actionColOptions |
-| defaultValue | `object` | - | - | 所渲渲染组件的初始值 |
-| render | `(renderCallbackParams: RenderCallbackParams) => VNode / VNode[] / string` | - | - | 自定义渲染组件 |
-| renderColContent | `(renderCallbackParams: RenderCallbackParams) => VNode / VNode[] / string` | - | - | 自定义渲染组件（需要自行包含 formItem） |
-| renderComponentContent | `(renderCallbackParams: RenderCallbackParams) => any / string` | - | - | 自定义渲染组内部的 slot |
-| slot | `string` | - | - | 自定义 slot，渲染组件 |
-| colSlot | `string` | - | - | 自定义 slot，渲染组件 （需要自行包含 formItem） |
-| show | ` boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)` | - | - | 动态判断当前组件是否显示，css 控制，不会删除 dom |
-| ifShow | ` boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)` | - | - | 动态判断当前组件是否显示，js 控制，会删除 dom |
-| dynamicDisabled | `boolean / ((renderCallbackParams: RenderCallbackParams) => boolean) ` | - | - | 动态判断当前组件是否禁用 |
-| dynamicRules | `boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)` | - | - | 动态判返当前组件你校验规则 |
+| 属性                   | 类型                                                                       | 默认值 | 可选值     | 说明                                                                                         |
+| ---------------------- | -------------------------------------------------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------- |
+| field                  | `string`                                                                   | -      | -          | 字段名                                                                                       |
+| label                  | `string`                                                                   | -      | -          | 标签名                                                                                       |
+| subLabel               | `string`                                                                   | -      | -          | 二级标签名灰色                                                                               |
+| suffix                 | `string , number , ((values: RenderCallbackParams) => string / number);`   | -      | -          | 组件后面的内容                                                                               |
+| changeEvent            | `string`                                                                   | -      | -          | 表单更新事件名称                                                                             |
+| helpMessage            | `string , string[]`                                                        | -      | -          | 标签名左侧温馨提示                                                                           |
+| helpComponentProps     | `HelpComponentProps`                                                       | -      | -          | 标签名左侧温馨提示组件 props,见下方 HelpComponentProps                                       |
+| labelWidth             | `string , number`                                                          | -      | -          | 覆盖统一设置的 labelWidth                                                                    |
+| disabledLabelWidth     | `boolean`                                                                  | false  | true/false | 禁用 form 全局设置的 labelWidth,自己手动设置 labelCol 和 wrapperCol                          |
+| component              | `string`                                                                   | -      | -          | 组件类型，见下方 ComponentType                                                               |
+| componentProps         | `any,()=>{}`                                                               | -      | -          | 所渲染的组件的 props                                                                         |
+| rules                  | `ValidationRule[]`                                                         | -      | -          | 校验规则,见下方 ValidationRule                                                               |
+| required               | `boolean`                                                                  | -      | -          | 简化 rules 配置，为 true 则转化成 [{required:true}]。`2.4.0`之前的版本只支持 string 类型的值 |
+| rulesMessageJoinLabel  | `boolean`                                                                  | false  | -          | 校验信息是否加入 label                                                                       |
+| itemProps              | `any`                                                                      | -      | -          | 参考下方 FormItem                                                                            |
+| colProps               | `ColEx`                                                                    | -      | -          | 参考上方 actionColOptions                                                                    |
+| defaultValue           | `object`                                                                   | -      | -          | 所渲渲染组件的初始值                                                                         |
+| render                 | `(renderCallbackParams: RenderCallbackParams) => VNode / VNode[] / string` | -      | -          | 自定义渲染组件                                                                               |
+| renderColContent       | `(renderCallbackParams: RenderCallbackParams) => VNode / VNode[] / string` | -      | -          | 自定义渲染组件（需要自行包含 formItem）                                                      |
+| renderComponentContent | `(renderCallbackParams: RenderCallbackParams) => any / string`             | -      | -          | 自定义渲染组内部的 slot                                                                      |
+| slot                   | `string`                                                                   | -      | -          | 自定义 slot，渲染组件                                                                        |
+| colSlot                | `string`                                                                   | -      | -          | 自定义 slot，渲染组件 （需要自行包含 formItem）                                              |
+| show                   | ` boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)`     | -      | -          | 动态判断当前组件是否显示，css 控制，不会删除 dom                                             |
+| ifShow                 | ` boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)`     | -      | -          | 动态判断当前组件是否显示，js 控制，会删除 dom                                                |
+| dynamicDisabled        | `boolean / ((renderCallbackParams: RenderCallbackParams) => boolean) `     | -      | -          | 动态判断当前组件是否禁用                                                                     |
+| dynamicRules           | `boolean / ((renderCallbackParams: RenderCallbackParams) => boolean)`      | -      | -          | 动态判返当前组件你校验规则                                                                   |
+
+新增与自定义筛选相关的可选字段：
+
+-   `formFilterLabel: string` 自定义在“自定义筛选项”弹窗中的展示名称（默认使用 `label`）。
+-   `alwaysVisible: boolean` 设为 `true` 时，该字段在筛选项中不可被移除且始终展示。
 
 **RenderCallbackParams**
+
 ```js
 export interface RenderCallbackParams {
-  schema: FormSchema;
-  values: any;
-  model: any;
-  field: string;
+    schema: FormSchema;
+    values: any;
+    model: any;
+    field: string;
 }
 ```
 
 **componentProps**
-- 当值为对象类型时,该对象将作为component所对应组件的的 props 传入组件
-- 当值为一个函数时候
+
+-   当值为对象类型时,该对象将作为 component 所对应组件的的 props 传入组件
+-   当值为一个函数时候
 
 参数有 3 个:
-`schema`: 表单的整个 schemas  
+`schema`: 表单的整个 schemas
 
 `formActionType`: 操作表单的函数。与 useForm 返回的操作函数一致
 
@@ -373,70 +428,47 @@ export interface RenderCallbackParams {
 ```
 
 **HelpComponentProps**
+
 ```js
 export interface HelpComponentProps {
-  maxWidth: string;
-  // 是否显示序号
-  showIndex: boolean;
-  // 文本列表
-  text: any;
-  // 颜色
-  color: string;
-  // 字体大小
-  fontSize: string;
-  icon: string;
-  absolute: boolean;
-  // 定位
-  position: any;
+    maxWidth: string;
+    // 是否显示序号
+    showIndex: boolean;
+    // 文本列表
+    text: any;
+    // 颜色
+    color: string;
+    // 字体大小
+    fontSize: string;
+    icon: string;
+    absolute: boolean;
+    // 定位
+    position: any;
 }
 ```
 
 **ComponentType**
 
 schema 内组件的可选类型
+
 ```js
-export type ComponentType =
-  | 'Input'
-  | 'InputGroup'
-  | 'InputPassword'
-  | 'InputSearch'
-  | 'InputTextArea'
-  | 'InputNumber'
-  | 'Select'
-  | 'TreeSelect'
-  | 'RadioButtonGroup'
-  | 'RadioGroup'
-  | 'Checkbox'
-  | 'CheckboxGroup'
-  | 'Cascader'
-  | 'DatePicker'
-  | 'MonthPicker'
-  | 'RangePicker'
-  | 'WeekPicker'
-  | 'TimePicker'
-  | 'Switch'
-  | 'Upload'
-  | 'Icon'
-  | 'Render'
-  | 'Slider'
-  | 'Rate'
-  | 'Divider'
-  | 'Text'
-  | 'Link'
+export type ComponentType = 'Input' | 'InputGroup' | 'InputPassword' | 'InputSearch' | 'InputTextArea' | 'InputNumber' | 'Select' | 'TreeSelect' | 'RadioButtonGroup' | 'RadioGroup' | 'Checkbox' | 'CheckboxGroup' | 'Cascader' | 'DatePicker' | 'MonthPicker' | 'RangePicker' | 'WeekPicker' | 'TimePicker' | 'Switch' | 'Upload' | 'Icon' | 'Render' | 'Slider' | 'Rate' | 'Divider' | 'Text' | 'Link';
 ```
 
-### Divider schema说明
+### Divider schema 说明
 
-Divider类型用于在schemas中占位，将会渲染成一个分割线（始终占一整行的版面），可以用于较长表单的版面分隔。请只将Divider类型的schema当作一个分割线，而不是一个常规的表单字段。
+Divider 类型用于在 schemas 中占位，将会渲染成一个分割线（始终占一整行的版面），可以用于较长表单的版面分隔。请只将 Divider 类型的 schema 当作一个分割线，而不是一个常规的表单字段。
 
-- Divider 使用schema中的label以及helpMessage来渲染分割线中的提示内容
-- Divider 可以使用componentProps来设置除type之外的props
-- Divider 不会渲染AFormItem，因此schema中除label、componentProps、helpMessage、helpComponentProps以外的属性不会被用到
+-   Divider 使用 schema 中的 label 以及 helpMessage 来渲染分割线中的提示内容
+-   Divider 可以使用 componentProps 来设置除 type 之外的 props
+-   Divider 不会渲染 AFormItem，因此 schema 中除 label、componentProps、helpMessage、helpComponentProps 以外的属性不会被用到
 
 ## 添加自定义组件
+
 在 src/components/Form/src/componentMap.ts 内，添加需要的组件，并在上方 ComponentType 添加相应的类型 key
 
-### 方式1
+### 方式 1
+
 这种写法适用与适用频率较高的组件
 
 ```js
@@ -446,11 +478,13 @@ componentMap.set('componentName', 组件);
 export type ComponentType = xxxx | 'componentName';
 ```
 
-### 方式2
+### 方式 2
+
 使用 `useComponentRegister` 进行注册
 ::: warning
 这种写法只能在当前页使用，页面销毁之后会从 componentMap 删除相应的组件
-::: 
+:::
+
 ```js
 import { useComponentRegister } from '@quantum-design/vue3-antd-pc-ui';
 
@@ -464,196 +498,206 @@ useComponentRegister('StrengthMeter', StrengthMeter);
 :::
 
 ### render
-自定义渲染内容, 通过jsx方式
+
+自定义渲染内容, 通过 jsx 方式
 ::: details 点击查看代码
+
 ```vue
 <template>
-  <div >
-    <QForm @register="register" @submit="handleSubmit" />
-  </div>
+    <div>
+        <QForm @register="register" @submit="handleSubmit" />
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent, h } from 'vue';
-  import { QForm, FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
-  import { useMessage } from '@/hooks';
-  const schemas: FormSchema[] = [
+import { defineComponent, h } from 'vue';
+import { QForm, FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
+import { useMessage } from '@/hooks';
+const schemas: FormSchema[] = [
     {
-      field: 'field1',
-      component: 'Input',
-      label: '字段1',
-      colProps: {
-        span: 8,
-      },
-      rules: [{ required: true }],
-      render: ({ model, field }) => {
-        return h(Input, {
-          placeholder: '请输入',
-          value: model[field],
-          onChange: (e: ChangeEvent) => {
-            model[field] = e.target.value;
-          },
-        });
-      },
+        field: 'field1',
+        component: 'Input',
+        label: '字段1',
+        colProps: {
+            span: 8,
+        },
+        rules: [{ required: true }],
+        render: ({ model, field }) => {
+            return h(Input, {
+                placeholder: '请输入',
+                value: model[field],
+                onChange: (e: ChangeEvent) => {
+                    model[field] = e.target.value;
+                },
+            });
+        },
     },
     {
-      field: 'field2',
-      component: 'Input',
-      label: '字段2',
-      colProps: {
-        span: 8,
-      },
-      rules: [{ required: true }],
-      renderComponentContent: () => {
-        return {
-          suffix: () => 'suffix',
-        };
-      },
+        field: 'field2',
+        component: 'Input',
+        label: '字段2',
+        colProps: {
+            span: 8,
+        },
+        rules: [{ required: true }],
+        renderComponentContent: () => {
+            return {
+                suffix: () => 'suffix',
+            };
+        },
     },
-  ];
-  export default defineComponent({
+];
+export default defineComponent({
     components: { QForm },
     setup() {
-      const { createMessage } = useMessage();
-      const [register, { setProps }] = useForm({
-        labelWidth: 120,
-        schemas,
-        actionColOptions: {
-          span: 24,
-        },
-      });
-      return {
-        register,
-        schemas,
-        handleSubmit: (values: any) => {
-          createMessage.success('click search,values:' + JSON.stringify(values));
-        },
-        setProps,
-      };
+        const { createMessage } = useMessage();
+        const [register, { setProps }] = useForm({
+            labelWidth: 120,
+            schemas,
+            actionColOptions: {
+                span: 24,
+            },
+        });
+        return {
+            register,
+            schemas,
+            handleSubmit: (values: any) => {
+                createMessage.success('click search,values:' + JSON.stringify(values));
+            },
+            setProps,
+        };
     },
-  });
+});
 </script>
 ```
+
 :::
 
 ### slot
+
 自定义渲染内容, 通过插槽方式
 ::: details 点击查看代码
+
 ```vue
 <template>
-  <div class="m-4">
-    <QForm @register="register">
-      <template #customSlot="{ model, field }">
-        <a-input v-model:value="model[field]" />
-      </template>
-    </QForm>
-  </div>
+    <div class="m-4">
+        <QForm @register="register">
+            <template #customSlot="{ model, field }">
+                <a-input v-model:value="model[field]" />
+            </template>
+        </QForm>
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'compatible-vue';
-  import { QForm, useForm } from '@quantum-design/vue3-antd-pc-ui/index';
-  import { BasicModal } from '@/components/modal/index';
-  export default defineComponent({
+import { defineComponent } from 'compatible-vue';
+import { QForm, useForm } from '@quantum-design/vue3-antd-pc-ui/index';
+import { BasicModal } from '@/components/modal/index';
+export default defineComponent({
     name: 'FormDemo',
     setup(props) {
-      const [register] = useForm({
-        labelWidth: 100,
-        actionColOptions: {
-          span: 24,
-        },
-        schemas: [
-          {
-            field: 'field1',
-            label: '字段1',
-            slot: 'customSlot',
-          },
-        ],
-      });
-      return {
-        register,
-      };
+        const [register] = useForm({
+            labelWidth: 100,
+            actionColOptions: {
+                span: 24,
+            },
+            schemas: [
+                {
+                    field: 'field1',
+                    label: '字段1',
+                    slot: 'customSlot',
+                },
+            ],
+        });
+        return {
+            register,
+        };
     },
-  });
+});
 </script>
 ```
+
 :::
 
 ### ifShow/show/dynamicDisabled
+
 自定义显示/禁用
 ::: details 点击查看代码
+
 ```vue
 <template>
-  <div class="m-4">
-    <QForm @register="register" />
-  </div>
+    <div class="m-4">
+        <QForm @register="register" />
+    </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { QForm, FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
-  const schemas: FormSchema[] = [
+import { defineComponent } from 'vue';
+import { QForm, FormSchema, useForm } from '@quantum-design/vue3-antd-pc-ui';
+const schemas: FormSchema[] = [
     {
-      field: 'field1',
-      component: 'Input',
-      label: '字段1',
-      colProps: {
-        span: 8,
-      },
-      show: ({ values }) => {
-        return !!values.field5;
-      },
+        field: 'field1',
+        component: 'Input',
+        label: '字段1',
+        colProps: {
+            span: 8,
+        },
+        show: ({ values }) => {
+            return !!values.field5;
+        },
     },
     {
-      field: 'field2',
-      component: 'Input',
-      label: '字段2',
-      colProps: {
-        span: 8,
-      },
-      ifShow: ({ values }) => {
-        return !!values.field6;
-      },
+        field: 'field2',
+        component: 'Input',
+        label: '字段2',
+        colProps: {
+            span: 8,
+        },
+        ifShow: ({ values }) => {
+            return !!values.field6;
+        },
     },
     {
-      field: 'field3',
-      component: 'DatePicker',
-      label: '字段3',
-      colProps: {
-        span: 8,
-      },
-      dynamicDisabled: ({ values }) => {
-        return !!values.field7;
-      },
+        field: 'field3',
+        component: 'DatePicker',
+        label: '字段3',
+        colProps: {
+            span: 8,
+        },
+        dynamicDisabled: ({ values }) => {
+            return !!values.field7;
+        },
     },
-  ];
+];
 
-  export default defineComponent({
+export default defineComponent({
     components: { QForm },
     setup() {
-      const [register, { setProps }] = useForm({
-        labelWidth: 120,
-        schemas,
-        actionColOptions: {
-          span: 24,
-        },
-      });
-      return {
-        register,
-        schemas,
-        setProps,
-      };
+        const [register, { setProps }] = useForm({
+            labelWidth: 120,
+            schemas,
+            actionColOptions: {
+                span: 24,
+            },
+        });
+        return {
+            register,
+            schemas,
+            setProps,
+        };
     },
-  });
+});
 </script>
 ```
+
 :::
 
-
 ## Slots
-| 名称          | 说明         |
-| ------------- | ------------ |
-| formFooter    | 表单底部区域 |
-| formHeader    | 表单顶部区域 |
-| resetBefore   | 重置按钮前   |
-| submitBefore  | 提交按钮前   |
+
+| 名称               | 说明                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| formFooter         | 表单底部区域                                                 |
+| formHeader         | 表单顶部区域                                                 |
+| resetBefore        | 重置按钮前                                                   |
+| submitBefore       | 提交按钮前                                                   |
+| customFilterButton | 自定义“自定义筛选项”按钮（开启 `enableCustomFilter` 时可用） |
 
 ## RadioButtonGroup
 
@@ -663,11 +707,11 @@ Radio Button 风格的选择按钮
 
 ```ts
 const schemas: FormSchema[] = [
-  {
-    field: 'field',
-    component: 'RadioButtonGroup',
-    label: '字段',
-  },
+    {
+        field: 'field',
+        component: 'RadioButtonGroup',
+        label: '字段',
+    },
 ];
 ```
 

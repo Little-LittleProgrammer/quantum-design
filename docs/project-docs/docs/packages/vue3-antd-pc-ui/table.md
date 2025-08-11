@@ -488,6 +488,17 @@ export default defineComponent({
 | fullScreen | 是否启用全屏按钮     | `boolean` | `true`  |
 | floating   | 是否启用悬浮设置     | `boolean` | `false` |
 
+开启 `floating` 后，表格右上角的设置面板将以“悬浮”形态展示，并可拖拽调整位置。例如：
+
+```ts
+const [registerTable, { setProps }] = useTable({
+    tableSetting: { floating: true },
+});
+
+// 动态切换
+setProps({ tableSetting: { floating: false } });
+```
+
 ## BasicColumn
 
 除 参考官方 [Column 配置](https://2x.antdv.com/components/table-cn/#Column)外，扩展以下参数
@@ -536,20 +547,21 @@ export type CellFormat = string | ((text: string, record: Recordable, index: num
 
 :::
 
-| 事件             | 回调参数                                | 说明                                  |
-| ---------------- | --------------------------------------- | ------------------------------------- |
-| fetch-success    | `Function({items,total})`               | 接口请求成功后触发                    |
-| fetch-error      | `Function(error)`                       | 错误信息                              |
-| selection-change | `Function({keys，rows})`                | 勾选事件触发                          |
-| row-click        | `Function(record, index, event)`        | 行点击触发                            |
-| row-dbClick      | `Function(record, index, event)`        | 行双击触发                            |
-| row-contextmenu  | `Function(record, index, event)`        | 行右键触发                            |
-| row-mouseenter   | `Function(record, index, event)`        | 行移入触发                            |
-| row-mouseleave   | `Function(record, index, event)`        | 行移出触发                            |
-| edit-end         | `Function({record, index, key, value})` | 单元格编辑完成触发                    |
-| edit-cancel      | `Function({record, index, key, value})` | 单元格取消编辑触发                    |
-| edit-row-end     | `Function()`                            | 行编辑结束触发                        |
-| edit-change      | `Function({column,value,record})`       | 单元格编辑组件的 value 发生变化时触发 |
+| 事件                   | 回调参数                                | 说明                                                                        |
+| ---------------------- | --------------------------------------- | --------------------------------------------------------------------------- | ----- |
+| fetch-success          | `Function({items,total})`               | 接口请求成功后触发                                                          |
+| fetch-error            | `Function(error)`                       | 错误信息                                                                    |
+| selection-change       | `Function({keys，rows})`                | 勾选事件触发                                                                |
+| row-click              | `Function(record, index, event)`        | 行点击触发                                                                  |
+| row-dbClick            | `Function(record, index, event)`        | 行双击触发                                                                  |
+| row-contextmenu        | `Function(record, index, event)`        | 行右键触发                                                                  |
+| row-mouseenter         | `Function(record, index, event)`        | 行移入触发                                                                  |
+| row-mouseleave         | `Function(record, index, event)`        | 行移出触发                                                                  |
+| edit-end               | `Function({record, index, key, value})` | 单元格编辑完成触发                                                          |
+| edit-cancel            | `Function({record, index, key, value})` | 单元格取消编辑触发                                                          |
+| edit-row-end           | `Function()`                            | 行编辑结束触发                                                              |
+| edit-change            | `Function({column,value,record})`       | 单元格编辑组件的 value 发生变化时触发                                       |
+| formCustomFilterChange | `Function(config)`                      | 当表单自定义筛选配置变更时触发（配合 `formConfig.enableCustomFilter` 使用） | 2.0.4 |
 
 ::: tip edit-change 说明
 
@@ -586,7 +598,7 @@ function onEditChange({ column, record }) {
 
 ## Form-Slots
 
-当开启 form 表单后。以`form-xxxx`为前缀的 slot 会被视为 form 的 slot
+当开启 form 表单后。以`form-xxxx`为前缀的 slot 会被视为 form 的 slot。同时支持表单的自定义筛选按钮插槽：`form-customFilterButton`。
 
 xxxx 为 form 组件的 slot。具体参考[form 组件文档](./form.md#Slots)
 
@@ -594,6 +606,7 @@ e.g
 
 ```
 form-submitBefore
+form-customFilterButton
 ```
 
 ## ColumnSetting 组件

@@ -1,5 +1,11 @@
 # qm-product-analysis
 
+## 0.0.3
+
+### Patch Changes
+
+-   @quantum-design/ai-hub@0.0.3
+
 ## 0.0.3-beta.0
 
 ### Patch Changes
