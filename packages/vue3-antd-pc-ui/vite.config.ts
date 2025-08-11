@@ -41,6 +41,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
                 'dayjs',
                 'lodash-es',
                 'pinia',
+                'sortablejs',
+                'moveable',
             ],
         },
         buildOptions: {
