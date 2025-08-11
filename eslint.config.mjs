@@ -1,5 +1,5 @@
 // @ts-check
 
-import {defineEslintConfig} from '@quantum-design-configs/eslint';
+import { defineEslintConfig } from '@quantum-design-configs/eslint';
 
 export default defineEslintConfig();

@@ -2,10 +2,16 @@
     "name": "@quantum-design/vue3-antd-pc-ui",
     "version": "2.0.4",
     "description": "vue3,antd组件库",
+    "keywords": [
+        "quantum",
+        "monorepo",
+        "vue3",
+        "antd",
+        "turborepo"
+    ],
+    "license": "MIT",
+    "author": "Evan Wu",
     "type": "module",
-    "main": "dist/lib/index.cjs",
-    "module": "dist/es/index.js",
-    "typings": "dist/index.d.ts",
     "scripts": {
         "build": "vite build",
         "test": "vitest run",
@@ -14,13 +20,9 @@
     "files": [
         "dist"
     ],
-    "keywords": [
-        "quantum",
-        "monorepo",
-        "vue3",
-        "antd",
-        "turborepo"
-    ],
+    "main": "dist/lib/index.cjs",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -53,40 +55,38 @@
         },
         "./*": "./*"
     },
-    "author": "Evan Wu",
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "@quantum-design/hooks": "workspace:*",
-        "@quantum-design/shared": "workspace:*",
-        "@quantum-design/utils": "workspace:*",
-        "@quantum-design/vue3-pc-ui": "workspace:*",
-        "@quantum-design/styles": "workspace:*",
-        "lodash-es": "catalog:",
-        "moveable": "catalog:",
-        "sortablejs": "catalog:"
-    },
-    "devDependencies": {
-        "@quantum-design-configs/vite": "workspace:*",
-        "@quantum-design/types": "workspace:*",
-        "@types/lodash-es": "catalog:",
-        "sass": "catalog:",
-        "vue": "catalog:",
-        "pinia": "catalog:",
-        "@vue/test-utils": "catalog:",
-        "@ant-design/icons-vue": "catalog:",
-        "ant-design-vue": "catalog:",
-        "vue-router": "catalog:",
-        "vue-types": "catalog:",
-        "dayjs": "catalog:",
-        "csstype": "catalog:"
     },
     "peerDependencies": {
         "pinia": "^2.2.2",
         "vue": "^3.5.0",
         "vue-router": "^4.4.0"
+    },
+    "dependencies": {
+        "@quantum-design/hooks": "workspace:*",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/styles": "workspace:*",
+        "@quantum-design/utils": "workspace:*",
+        "@quantum-design/vue3-pc-ui": "workspace:*",
+        "lodash-es": "catalog:",
+        "moveable": "catalog:",
+        "sortablejs": "catalog:"
+    },
+    "devDependencies": {
+        "@ant-design/icons-vue": "catalog:",
+        "@quantum-design-configs/vite": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@types/lodash-es": "catalog:",
+        "@vue/test-utils": "catalog:",
+        "ant-design-vue": "catalog:",
+        "csstype": "catalog:",
+        "dayjs": "catalog:",
+        "pinia": "catalog:",
+        "sass": "catalog:",
+        "vue": "catalog:",
+        "vue-router": "catalog:",
+        "vue-types": "catalog:"
     }
 }

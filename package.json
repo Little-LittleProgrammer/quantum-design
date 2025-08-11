@@ -1,7 +1,8 @@
 {
     "name": "qm-monorepo",
-    "private": true,
     "version": "0.0.0",
+    "private": true,
+    "type": "module",
     "scripts": {
         "build": "turbo run build",
         "build:lib": "turbo run build:lib",
@@ -12,38 +13,47 @@
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "commit": "czg",
         "prepare": "husky",
-        "migrator": "sass-migrator module packages/**/*.scss"
+        "migrator": "sass-migrator module packages/**/*.scss",
+        "postinstall": "turbo run stub"
     },
     "devDependencies": {
-        "sass-migrator": "catalog:",
-        "@changesets/cli": "catalog:",
-        "@quantum-design-configs/eslint": "workspace:*",
+        "@changesets/cli": "^2.29.5",
         "@quantum-design-configs/commitlint": "workspace:*",
+        "@quantum-design-configs/eslint": "workspace:*",
+        "@quantum-design-configs/prettier": "workspace:*",
         "@quantum-design-configs/tsconfig": "workspace:*",
         "@types/node": "catalog:",
         "@vitest/coverage-v8": "catalog:",
         "@vitest/ui": "catalog:",
-        "lint-staged": "catalog:",
         "husky": "catalog:",
         "jsdom": "catalog:",
+        "lint-staged": "catalog:",
+        "sass-migrator": "catalog:",
         "tslib": "catalog:",
         "turbo": "catalog:",
         "typescript": "catalog:",
         "vite": "catalog:",
         "vitest": "catalog:"
     },
-    "packageManager": "pnpm@10.10.0",
     "engines": {
-        "npm": ">=8.0.0",
-        "node": ">=18.0.0"
+        "npm": ">=9.0.0",
+        "node": ">=20.19.0"
+    },
+    "packageManager": "pnpm@10.10.0",
+    "volta": {
+        "node": "20.19.4",
+        "pnpm": "10.13.1"
     },
     "pnpm": {
-        "overrides": {
-            "eslint": "~8.57.1"
-        }
-    },
-    "volta": {
-        "node": "20.18.1",
-        "pnpm": "10.10.0"
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "eslint": "*",
+                "oxlint": "*"
+            }
+        },
+        "neverBuiltDependencies": [
+            "canvas",
+            "node-gyp"
+        ]
     }
 }

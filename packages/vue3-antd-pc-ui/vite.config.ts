@@ -1,20 +1,20 @@
 /// <reference types="vitest" />
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
-import {vite_common_lib_config} from '@quantum-design-configs/vite';
-import {resolve} from 'path';
+import { vite_common_lib_config } from '@quantum-design-configs/vite';
+import { resolve } from 'path';
+import process from 'process';
 
 function path_resolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
-export default ({ command, mode }: ConfigEnv):UserConfig => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
     const _common = vite_common_lib_config({
         entry: './index.ts',
         name: 'qmComponents',
         outDir: 'dist',
         isComponentsBuild: true,
-        target: 'modules',
         rollupOptions: {
             external: [
                 'vue',
@@ -40,16 +40,16 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
                 '@quantum-design/hooks/vue/use-priority-value',
                 'dayjs',
                 'lodash-es',
-                'pinia'
-            ]
+                'pinia',
+            ],
         },
         buildOptions: {
             cssCodeSplit: true,
-            minify: true
+            minify: true,
         },
         dtsOptions: {
-            entryRoot: resolve(__dirname)
-        }
+            entryRoot: resolve(__dirname),
+        },
     });
     _common.plugins?.splice(2, 1);
     return {
@@ -57,18 +57,18 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: "@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;"
-                }
-            }
+                    additionalData: "@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;",
+                },
+            },
         },
         resolve: {
             alias: {
-                '@vue3-antd/': path_resolve('src') + '/'
-            }
+                '@vue3-antd/': path_resolve('src') + '/',
+            },
         },
         test: {
-            environment: 'jsdom'
+            environment: 'jsdom',
         },
-        plugins: _common.plugins
+        plugins: _common.plugins,
     };
 };
