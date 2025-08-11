@@ -29,7 +29,7 @@
         "dev:build": "nuxi build playground",
         "dev:start": "node playground/.output/server/index.mjs",
         "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-        "lint": "eslint . --fix --ext .ts,.vue,.js",
+        "lint": "oxlint --fix && eslint . --fix --ext .ts,.vue,.js",
         "lint:test": "eslint . --ext .ts,.vue,.js --max-warnings 0"
     },
     "dependencies": {

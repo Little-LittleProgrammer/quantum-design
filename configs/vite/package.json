@@ -25,20 +25,20 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "@quantum-design/utils": "workspace:*",
-        "@quantum-design/shared": "workspace:*",
         "@quantum-design-configs/vite-sentry": "workspace:*",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/utils": "workspace:*",
         "@vitejs/plugin-vue": "catalog:",
         "@vitejs/plugin-vue-jsx": "catalog:",
         "postcss-pxtorem": "catalog:",
         "unplugin-vue-components": "catalog:",
         "vite-plugin-compression2": "catalog:",
         "vite-plugin-dts": "catalog:",
-        "vite-plugin-pwa": "catalog:"
+        "vite-plugin-pwa": "^1.0.2"
     },
     "devDependencies": {
-        "@sentry/vite-plugin": "catalog:",
         "@quantum-design-configs/rollup": "workspace:*",
+        "@sentry/vite-plugin": "catalog:",
         "@types/postcss-pxtorem": "catalog:",
         "rollup": "catalog:"
     },

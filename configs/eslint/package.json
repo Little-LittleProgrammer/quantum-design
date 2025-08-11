@@ -2,35 +2,57 @@
     "name": "@quantum-design-configs/eslint",
     "version": "2.0.3",
     "description": "代码eslint统一文件",
-    "main": "index.js",
-    "scripts": {},
-    "author": "Evan Wu",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
     "keywords": [
         "quantum-configs",
         "monorepo",
         "eslint",
         "turborepo"
     ],
-    "files": [
-        "eslint-base.js",
-        "eslint-vue.js",
-        "eslint-tslib.js"
-    ],
     "license": "MIT",
+    "author": "Evan Wu",
+    "scripts": {
+        "stub": "pnpm unbuild --stub",
+        "build": "pnpm unbuild"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "catalog:",
-        "@typescript-eslint/parser": "catalog:",
         "eslint-config-turbo": "catalog:",
-        "eslint-plugin-vue": "catalog:"
+        "eslint-plugin-oxlint": "catalog:"
     },
     "devDependencies": {
-        "eslint": "catalog:"
-    },
-    "peerDependencies": {
-        "eslint": "^8.0.0"
+        "@eslint/js": "catalog:",
+        "@types/eslint": "catalog:",
+        "@typescript-eslint/eslint-plugin": "catalog:",
+        "@typescript-eslint/parser": "catalog:",
+        "eslint": "catalog:",
+        "eslint-plugin-jsdoc": "catalog:",
+        "eslint-plugin-jsonc": "catalog:",
+        "eslint-plugin-n": "catalog:",
+        "eslint-plugin-no-only-tests": "catalog:",
+        "eslint-plugin-prettier": "catalog:",
+        "eslint-plugin-regexp": "catalog:",
+        "eslint-plugin-unused-imports": "catalog:",
+        "eslint-plugin-vitest": "catalog:",
+        "eslint-plugin-vue": "catalog:",
+        "globals": "catalog:",
+        "jsonc-eslint-parser": "catalog:",
+        "oxlint": "catalog:",
+        "unbuild": "catalog:",
+        "vue-eslint-parser": "catalog:"
     }
 }
