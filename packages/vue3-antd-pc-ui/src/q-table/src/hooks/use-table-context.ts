@@ -7,6 +7,7 @@ const key = Symbol('basic-table');
 type Instance = TableActionType & {
     wrapRef: Ref<Nullable<HTMLElement>>;
     getBindValues: ComputedRef<Recordable>;
+    tableElRef: Ref<Nullable<HTMLElement>>;
 };
 
 export type RetInstance = Omit<Instance, 'getBindValues'> & {

@@ -1,48 +1,64 @@
 <!--  -->
 <template>
-    <a-form
-        v-bind="getBindValue"
-        id="q-form"
-        class="q-form"
-        :class="getFormClass"
-        ref="formElRef"
-        :model="formModel"
-        @keypress.enter="handle_enter_press"
-    >
+    <a-form v-bind="getBindValue" id="q-form" class="q-form" :class="getFormClass" ref="formElRef" :model="formModel" @keypress.enter="handle_enter_press">
         <a-row class="row" v-bind="getRow">
             <slot name="formHeader"></slot>
-            <template v-for="schema in getSchema" :key="schema.field">
-                <form-item
-                    :formActionType="formActionType"
-                    :schema="schema"
-                    :formProps="getProps"
-                    :allDefaultValues="defaultValueRef"
-                    :formModel="formModel"
-                    :setFormModel="set_form_model"
-                    :blurEvent="blur_event"
-                    :tableAction="tableAction"
-                >
+            <template v-for="schema in (displaySchemas as unknown as FormSchema[])" :key="schema.field">
+                <form-item :formActionType="formActionType" :schema="schema" :formProps="getProps" :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="set_form_model" :blurEvent="blur_event" :tableAction="tableAction">
                     <template #[item]="data" v-for="item in Object.keys($slots)">
                         <slot :name="item" v-bind="data || {}"></slot>
                     </template>
                 </form-item>
             </template>
             <form-action v-bind="getProps">
-                <template
-                    #[item]="data"
-                    v-for="item in ['resetBefore', 'submitBefore', 'submitAfter', 'advanceBefore', 'advanceAfter']"
-                >
+                <template #[item]="data" v-for="item in ['resetBefore', 'submitBefore']">
+                    <slot :name="item" v-bind="data || {}"></slot>
+                </template>
+
+                <template #submitAfter>
+                    <!-- 自定义筛选按钮 -->
+                    <slot v-if="getProps.enableCustomFilter" name="customFilterButton" :openCustomModal="customFilter.openCustomModal">
+                        <a-button @click="customFilter.openCustomModal" class="ml">
+                            <setting-outlined />
+                            {{ getProps.customFilterButtonText }}
+                        </a-button>
+                    </slot>
+                    <slot name="submitAfter"></slot>
+                </template>
+
+                <template #[item]="data" v-for="item in ['advanceBefore', 'advanceAfter']">
                     <slot :name="item" v-bind="data || {}"></slot>
                 </template>
             </form-action>
             <slot name="formFooter"></slot>
         </a-row>
+
+        <!-- 自定义筛选弹窗（按需加载） -->
+        <Suspense v-if="getProps.enableCustomFilter">
+            <template #default>
+                <CustomFilterModal
+                    :visible="customFilter.modalVisible.value"
+                    :title="getProps.customFilterModalTitle"
+                    :schemas="getSchema"
+                    :initial-selected-fields="customFilter.customConfig.value?.selectedFields ? [...customFilter.customConfig.value.selectedFields] : undefined"
+                    :initial-field-order="customFilter.customConfig.value?.fieldOrder ? [...customFilter.customConfig.value.fieldOrder] : undefined"
+                    :show-reset-button="getProps.showCustomFilterReset"
+                    @confirm="handleCustomFilterConfirm"
+                    @reset="handleCustomFilterReset"
+                    @update:visible="(value: boolean) => customFilter.modalVisible.value = value"
+                />
+            </template>
+            <template #fallback>
+                <!-- 加载中的占位符，通常不会显示因为组件很小 -->
+                <div style="display: none">加载中...</div>
+            </template>
+        </Suspense>
     </a-form>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
-import { computed, defineComponent, onMounted, reactive, type Ref, ref, unref, watch} from 'vue';
+import { computed, defineAsyncComponent, defineComponent, onMounted, reactive, type Ref, ref, unref, watch } from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
 import type { FormActionType, FormProps, FormSchema } from './types/form';
@@ -51,9 +67,13 @@ import formAction from './components/form-action.vue';
 import { use_form_values } from './hooks/use-form-values';
 import { type EmitType, use_form_events } from './hooks/use-form-events';
 import { create_form_context } from './hooks/use-form-context';
-import { Form as AForm, Row as ARow } from 'ant-design-vue';
+import { Form as AForm, Row as ARow, Button as AButton } from 'ant-design-vue';
 import './style/form.scss';
 import dayjs from 'dayjs';
+import { useCustomFilter } from './hooks/use-custom-filter';
+import { SettingOutlined } from '@ant-design/icons-vue';
+// 按需引入自定义筛选弹窗组件
+const CustomFilterModal = defineAsyncComponent(() => import('./components/custom-filter-modal.vue'));
 
 export default defineComponent({
     name: 'QAntdForm',
@@ -62,8 +82,8 @@ export default defineComponent({
         ...basicProps
     },
     // 提交给父组件的, reset, 清空
-    emits: ['reset', 'submit', 'register', 'change', 'blur'],
-    components: {formItem, formAction, AForm, ARow},
+    emits: ['reset', 'submit', 'register', 'change', 'blur', 'customFilterChange'],
+    components: { formItem, formAction, AForm, ARow, AButton, CustomFilterModal, SettingOutlined },
     setup(props, { emit, attrs }) {
         const formModel = reactive<Record<string, any>>({});
         const schemaRef = ref<Nullable<FormSchema[]>>(null);
@@ -77,11 +97,10 @@ export default defineComponent({
             return unref(getProps).compact ? 'compact' : '';
         });
         // a-from 所需的api, 可能会多传, 但是无所谓
-        const getBindValue = computed(
-            () => ({ ...attrs, ...props, ...unref(getProps) } as Record<string, any>)
-        );
+        const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) } as Record<string, any>));
         // 父组件传入的props + 通过 useForm暴露出去的 setProps() 设置的props合集
         const getProps = computed((): FormProps => {
+            console.log('getProps', unref(propsRef));
             return { ...props, ...unref(propsRef) } as FormProps;
         });
 
@@ -114,33 +133,32 @@ export default defineComponent({
             return schemas as FormSchema[];
         });
 
+        // 自定义筛选功能（条件性初始化）
+        const customFilter = useCustomFilter(getSchema, {
+            getProps,
+            onConfigChange: (config) => {
+                emit('customFilterChange', config);
+                console.log('自定义筛选配置已更新:', config);
+            }
+        });
+
+        // 获取显示的 schemas（经过自定义筛选处理）
+        const displaySchemas = ref<FormSchema[]>([]);
+
         // 初始化数据, 数据处理
         const { handle_form_values, init_default } = use_form_values({
             getProps,
             defaultValueRef,
-            getSchema,
+            getSchema: displaySchemas,
             formModel
         });
 
         // 暴露出基本的 api, 供 useForm 以及本页面使用使用
-        const {
-            handleSubmit,
-            setFieldsValue,
-            clearValidate,
-            validate,
-            validateFields,
-            getFieldsValue,
-            updateSchema,
-            resetSchema,
-            appendSchemaByField,
-            removeSchemaByFiled,
-            resetFields,
-            scrollToField
-        } = use_form_events({
+        const { handleSubmit, setFieldsValue, clearValidate, validate, validateFields, getFieldsValue, updateSchema, resetSchema, appendSchemaByField, removeSchemaByFiled, resetFields, scrollToField } = use_form_events({
             emit: emit as EmitType,
             getProps,
             formModel,
-            getSchema,
+            getSchema: displaySchemas,
             defaultValueRef,
             formElRef: formElRef as Ref<FormActionType>,
             schemaRef: schemaRef as Ref<FormSchema[]>,
@@ -169,7 +187,7 @@ export default defineComponent({
         watch(
             () => unref(getProps).schemas,
             (schemas) => {
-                resetSchema((unref(schemas) ?? []) as unknown as FormSchema<Record<string, any>, ''>);
+                resetSchema((unref(schemas) ?? []) as FormSchema[]);
             }
         );
 
@@ -186,6 +204,24 @@ export default defineComponent({
                     isInitedDefaultRef.value = true;
                 }
             }
+        );
+
+        // 监听schemas变化并更新显示
+        watch(
+            [() => getProps.value.enableCustomFilter, getSchema, () => customFilter.displaySchemas.value],
+            () => {
+                try {
+                    if (getProps.value.enableCustomFilter) {
+                        displaySchemas.value = [...(customFilter.displaySchemas.value || [])];
+                    } else {
+                        displaySchemas.value = [...(getSchema.value || [])];
+                    }
+                } catch (error) {
+                    console.warn('更新显示schemas失败:', error);
+                    displaySchemas.value = [...(getSchema.value || [])];
+                }
+            },
+            { immediate: true, deep: true }
         );
 
         // 暴露给 useForm 用于更改传递 prop
@@ -244,6 +280,33 @@ export default defineComponent({
             scrollToField: scrollToField
         };
 
+        // 处理自定义筛选弹窗事件
+        const handleCustomFilterConfirm = async(config: { selectedFields: string[]; fieldOrder: string[] }) => {
+            if (!getProps.value.enableCustomFilter) return;
+            try {
+                // 确保传递的是纯对象
+                const pureConfig = {
+                    selectedFields: [...config.selectedFields], // 创建纯数组副本
+                    fieldOrder: [...config.fieldOrder], // 创建纯数组副本
+                    timestamp: Date.now() // 添加时间戳
+                };
+                await customFilter.saveConfig(pureConfig);
+                console.log('自定义筛选配置保存成功:', pureConfig);
+            } catch (error) {
+                console.error('保存自定义筛选配置失败:', error);
+            }
+        };
+
+        const handleCustomFilterReset = async() => {
+            if (!getProps.value.enableCustomFilter) return;
+            try {
+                await customFilter.resetConfig();
+                console.log('自定义筛选配置重置成功');
+            } catch (error) {
+                console.error('重置自定义筛选配置失败:', error);
+            }
+        };
+
         onMounted(() => {
             init_default();
             emit('register', formActionType);
@@ -262,6 +325,11 @@ export default defineComponent({
             formElRef,
             handle_form_values,
             blur_event,
+            // 自定义筛选相关
+            customFilter,
+            handleCustomFilterConfirm,
+            handleCustomFilterReset,
+            displaySchemas,
             // 方便暴露给useForm
             ...formActionType
         };

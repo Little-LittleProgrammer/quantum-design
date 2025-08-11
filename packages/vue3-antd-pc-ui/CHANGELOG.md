@@ -1,5 +1,24 @@
 # @quantum-design/vue3-antd-pc-ui
 
+## 2.0.4
+
+### Patch Changes
+
+-   40d821c: form 增加自定义筛选项功能,表格增加操作按钮悬浮功能
+-   Updated dependencies [38c1fee]
+    -   @quantum-design/utils@2.0.4
+    -   @quantum-design/hooks@2.0.4
+    -   @quantum-design/vue3-pc-ui@2.0.4
+
+## 2.0.4-beta.0
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @quantum-design/utils@2.0.4-beta.0
+    -   @quantum-design/hooks@2.0.4-beta.0
+    -   @quantum-design/vue3-pc-ui@2.0.4-beta.0
+
 ## 2.0.3
 
 ### Patch Changes

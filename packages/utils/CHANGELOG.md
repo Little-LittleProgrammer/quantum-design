@@ -1,5 +1,18 @@
 # @quantum-design/utils
 
+## 2.0.4
+
+### Patch Changes
+
+-   38c1fee: 更新 parse 方法
+-   更新 indexeddb 方法
+
+## 2.0.4-beta.0
+
+### Patch Changes
+
+-   更新 parse 方法
+
 ## 2.0.3
 
 ### Patch Changes

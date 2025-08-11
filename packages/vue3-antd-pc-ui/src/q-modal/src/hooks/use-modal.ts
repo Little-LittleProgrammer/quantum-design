@@ -28,38 +28,38 @@ export function useQAntdModal<TParentModalProps extends ModalProps = ModalProps>
     // Modal一般会抽离出来，所以如果有传入 connectedComponent，则表示为外部调用，与内部组件进行连接
     // 外部的Modal通过provide/inject传递api
     const id = useId();
-    const { connectedComponent, } = options;
+    const { connectedComponent } = options;
     if (connectedComponent) {
         const extendedApi = reactive({});
         const isModalReady = ref(true);
         const QAntdModal = defineComponent(
-            (props: TParentModalProps, { attrs, slots, }) => {
+            (props: TParentModalProps, { attrs, slots }) => {
                 provide(USER_MODAL_INJECT_KEY, {
                     extendApi(api: ExtendedModalApi) {
                         // 不能直接给 reactive 赋值，会丢失响应
                         // 不能用 Object.assign,会丢失 api 的原型函数
                         Object.setPrototypeOf(extendedApi, api);
                     },
-                    options,
+                    options
                 });
                 checkProps(extendedApi as ExtendedModalApi, {
                     ...props,
                     ...attrs,
-                    ...slots,
+                    ...slots
                 });
                 return () =>
                     h(
                         isModalReady.value ? connectedComponent : 'div',
                         {
                             ...props,
-                            ...attrs,
+                            ...attrs
                         },
                         slots
                     );
             },
             {
                 inheritAttrs: false,
-                name: 'QAntdParentModal',
+                name: 'QAntdParentModal'
             }
         );
         return [QAntdModal, extendedApi as ExtendedModalApi] as const;
@@ -70,7 +70,7 @@ export function useQAntdModal<TParentModalProps extends ModalProps = ModalProps>
     const mergedOptions = {
         ...DEFAULT_MODAL_PROPS,
         ...injectData.options,
-        ...options,
+        ...options
     } as ModalApiOptions;
 
     mergedOptions.onOpenChange = (isOpen: boolean) => {
@@ -80,7 +80,7 @@ export function useQAntdModal<TParentModalProps extends ModalProps = ModalProps>
 
     const api = new ModalApi({
         ...mergedOptions,
-        id,
+        id
     });
 
     const extendedApi: ExtendedModalApi = api as never;
@@ -90,21 +90,21 @@ export function useQAntdModal<TParentModalProps extends ModalProps = ModalProps>
     };
 
     const Modal = defineComponent(
-        (props: ModalProps, { attrs, slots, }) => {
+        (props: ModalProps, { attrs, slots }) => {
             return () =>
                 h(
                     QAntdModal,
                     {
                         ...props,
                         ...attrs,
-                        modalApi: extendedApi,
+                        modalApi: extendedApi
                     },
                     slots
                 );
         },
         {
             inheritAttrs: false,
-            name: 'QAntdModal',
+            name: 'QAntdModal'
         }
     );
     injectData.extendApi?.(extendedApi);

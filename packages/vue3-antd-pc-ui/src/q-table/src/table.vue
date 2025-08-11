@@ -2,7 +2,7 @@
 <template>
     <div ref="wrapRef" :class="getWrapperClass">
         <card size="small" class="g-mb" v-if="getBindValues.useSearchForm">
-            <q-antd-form ref="formRef" submitOnReset v-bind="getFormProps" :tableAction="tableAction" @register="registerForm" @submit="handleSearchInfoChange">
+            <q-antd-form ref="formRef" submitOnReset v-bind="getFormProps" :tableAction="tableAction" @register="registerForm" @submit="handleSearchInfoChange" @customFilterChange="handle_custom_filter_change">
                 <template #[replaceFormSlotKey(item)]="data" v-for="item in getFormSlotKeys">
                     <slot :name="item" v-bind="data || {}"></slot>
                 </template>
@@ -64,7 +64,7 @@ defineOptions({
 });
 
 const props = defineProps(basicProps);
-const emit = defineEmits(['fetch-success', 'fetch-error', 'selection-change', 'register', 'row-click', 'row-dbClick', 'row-contextmenu', 'row-mouseenter', 'row-mouseleave', 'edit-end', 'edit-cancel', 'edit-row-end', 'edit-change', 'expanded-rows-change', 'change', 'columns-change']);
+const emit = defineEmits(['fetch-success', 'fetch-error', 'selection-change', 'register', 'row-click', 'row-dbClick', 'row-contextmenu', 'row-mouseenter', 'row-mouseleave', 'edit-end', 'edit-cancel', 'edit-row-end', 'edit-change', 'expanded-rows-change', 'change', 'columns-change', 'formCustomFilterChange']);
 const attrs = useAttrs();
 const slots = useSlots();
 
@@ -73,7 +73,7 @@ const tableData = ref([]);
 const summaryData = ref([]);
 const columns = ref([]);
 
-const wrapRef = ref<Element | null>(null);
+const wrapRef = ref<HTMLElement | null>(null);
 const formRef = ref(null);
 const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -219,6 +219,10 @@ const getEmptyDataIsShowTable = computed(() => {
 function setProps(props: Partial<BasicTableProps>) {
     innerPropsRef.value = { ...unref(innerPropsRef), ...props };
 }
+const handle_custom_filter_change = (config: any) => {
+    redoHeight();
+    emit('formCustomFilterChange', config);
+};
 
 const tableAction: TableActionType = {
     reload,
@@ -260,7 +264,7 @@ const tableAction: TableActionType = {
     exportData,
 };
 
-createTableContext({ ...tableAction, wrapRef, getBindValues });
+createTableContext({ ...tableAction, wrapRef, getBindValues, tableElRef });
 
 defineExpose(tableAction);
 

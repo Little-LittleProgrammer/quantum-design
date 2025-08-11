@@ -1,31 +1,14 @@
 <!-- 动态加载组件 rich-text  -->
 <template>
     <div class="q-rich-text" :style="{ width: containerWidth }">
-        <textarea
-            :id="tinymceId"
-            ref="elRef"
-            :style="{ visibility: 'hidden' }"
-            v-if="canUse && !initOptions.inline"
-        ></textarea>
+        <textarea :id="tinymceId" ref="elRef" :style="{ visibility: 'hidden' }" v-if="canUse && !initOptions.inline"></textarea>
         <slot v-else></slot>
     </div>
 </template>
 
 <script lang="ts" setup>
-import {
-    ref,
-    type PropType,
-    computed,
-    unref,
-    watch,
-    onBeforeUnmount,
-    useAttrs
-} from 'vue';
-import {
-    bindHandlers,
-    plugins as defaultPlugins,
-    toolbar as defaultToolbar
-} from './tinymce';
+import { ref, type PropType, computed, unref, watch, onBeforeUnmount, useAttrs } from 'vue';
+import { bindHandlers, plugins as defaultPlugins, toolbar as defaultToolbar } from './tinymce';
 import { isNumber, js_utils_get_uuid } from '@quantum-design/utils';
 defineOptions({
     name: 'RichText'
@@ -41,7 +24,7 @@ async function load_tinymic() {
         canUse.value = true;
     } catch (error) {
         canUse.value = false;
-        console.log('skip tinymce');
+        console.log('skip tinymce', error);
     }
 }
 load_tinymic();
@@ -167,7 +150,7 @@ function init_tinymic_plugins() {
         });
     } catch (error) {
         canUse.value = false;
-        console.log('skip tinymce');
+        console.log('skip tinymce', error);
     }
 }
 
@@ -204,12 +187,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits([
-    'change',
-    'update:value',
-    'inited',
-    'init-error'
-]);
+const emit = defineEmits(['change', 'update:value', 'inited', 'init-error']);
 
 const tinymceId = ref('tiny-vue' + js_utils_get_uuid(4));
 
@@ -253,6 +231,7 @@ const initOptions = computed(() => {
         link_title: false,
         object_resizing: false,
         skin: skinName.value,
+        fontsize_formats: '10px 12px 14px 16px 18px 24px 36px 48px',
         ...options,
         setup: (editor: any) => {
             editorRef.value = editor;
@@ -289,26 +268,15 @@ function initSetup(e: any) {
     bindHandlers(e, attrs, unref(editorRef));
 }
 
-function setValue(
-    editor: Record<string, any>,
-    val?: string,
-    prevVal?: string
-) {
-    if (
-        editor &&
-			typeof val === 'string' &&
-			val !== prevVal &&
-			val !== editor.getContent({ format: attrs.outputFormat })
-    ) {
+function setValue(editor: Record<string, any>, val?: string, prevVal?: string) {
+    if (editor && typeof val === 'string' && val !== prevVal && val !== editor.getContent({ format: attrs.outputFormat })) {
         editor.setContent(val);
     }
 }
 
 function bindModelHandlers(editor: any) {
     const modelEvents = attrs.modelEvents ? attrs.modelEvents : null;
-    const normalizedEvents = Array.isArray(modelEvents)
-        ? modelEvents.join(' ')
-        : modelEvents;
+    const normalizedEvents = Array.isArray(modelEvents) ? modelEvents.join(' ') : modelEvents;
 
     watch(
         () => props.value,
@@ -320,16 +288,13 @@ function bindModelHandlers(editor: any) {
         }
     );
 
-    editor.on(
-        normalizedEvents || 'change keyup undo redo',
-        () => {
-            const content = editor.getContent({
-                format: attrs.outputFormat
-            });
-            emit('update:value', content);
-            emit('change', content);
-        }
-    );
+    editor.on(normalizedEvents || 'change keyup undo redo', () => {
+        const content = editor.getContent({
+            format: attrs.outputFormat
+        });
+        emit('update:value', content);
+        emit('change', content);
+    });
 
     editor.on('FullscreenStateChanged', (e) => {
         fullscreen.value = e.state;
@@ -345,16 +310,16 @@ onBeforeUnmount(() => {
     destory();
 });
 </script>
-<style lang="scss" >
-    @import './style/content.min.css';
-    @import './style/skin.min.css';
-	.q-code-text {
-		position: relative;
-		line-height: normal;
+<style lang="scss">
+@import './style/content.min.css';
+@import './style/skin.min.css';
+.q-code-text {
+    position: relative;
+    line-height: normal;
 
-		textarea {
-			visibility: hidden;
-			z-index: -1;
-		}
-	}
+    textarea {
+        visibility: hidden;
+        z-index: -1;
+    }
+}
 </style>

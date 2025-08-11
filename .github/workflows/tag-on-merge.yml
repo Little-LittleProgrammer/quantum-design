@@ -1,0 +1,59 @@
+name: Tag on Merge to main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Derive tag name from PR if possible
+        id: vars
+        run: |
+          # 通过关联 PR 获取 head 分支名
+          PR_NUM=$(git log -1 --pretty=%B | sed -n 's/Merge pull request #\([0-9]\+\).*/\1/p' | tr -d '\n')
+          if [ -n "$PR_NUM" ]; then
+            echo "Detected PR: #$PR_NUM"
+            API_URL="https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUM"
+            HEAD_REF=$(curl -sSL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github+json" "$API_URL" | jq -r '.head.ref')
+            TAG="$HEAD_REF"
+          fi
+          # 如果没有检测到 PR 或 API 失败，尝试从 merge commit message 中提取
+          if [ -z "$TAG" ]; then
+            MSG=$(git log -1 --pretty=%B)
+            TAG=$(echo "$MSG" | sed -n 's/.*from [^/]*\/\(.*\)/\1/p' | tr -d '\n')
+          fi
+          # 兜底
+          if [ -z "$TAG" ]; then
+            TAG="$(date +%Y%m%d)-${GITHUB_SHA::7}"
+          fi
+          # 清理 tag 前缀，如 feature/
+          TAG="${TAG#feature/}"
+          TAG="${TAG#fix/}"
+          TAG="${TAG#release/}"
+          TAG="${TAG#hotfix/}"
+          # 保底前缀
+          if [ -z "$TAG" ]; then
+            TAG="build-${GITHUB_SHA::7}"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Create tag if not exists
+        run: |
+          TAG=${{ steps.vars.outputs.tag }}
+          echo "Tag to create: $TAG"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping"
+            exit 0
+          fi
+          git tag "$TAG"
+          git push origin "$TAG"
+

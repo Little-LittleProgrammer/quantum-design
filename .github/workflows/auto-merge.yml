@@ -1,0 +1,23 @@
+name: Auto Merge PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  enable-auto-merge:
+    if: >-
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable GitHub Auto-merge (squash)
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: squash
+

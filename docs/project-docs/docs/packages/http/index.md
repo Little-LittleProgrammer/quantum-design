@@ -1,14 +1,15 @@
-
 # axios 配置
 
 ## 版本
- 本目录主要是提供公共的http方法
-- npm包名称 `@quantum-design/http`
-- 当前版本: 1.0.2
+
+本目录主要是提供公共的 http 方法
+
+-   npm 包名称 `@quantum-design/http`
+-   当前版本: 2.0.4
 
 ## 方法
 
-二次封装的 `axios` 暴露出了 4个方法
+二次封装的 `axios` 暴露出了 4 个方法
 
 ```js
 export declare abstract class CustomAxiosTransform {
@@ -28,6 +29,7 @@ export declare abstract class CustomAxiosTransform {
 ```
 
 ### 使用案例
+
 ```js
 
 enum Api {
@@ -50,6 +52,7 @@ export function api_manage_role_list() {
 ### index.ts 配置说明
 
 ::: details 点击展开代码
+
 ```ts
 // 以下是默认配置
 export const defHttp = createAxios({
@@ -58,9 +61,9 @@ export const defHttp = createAxios({
         customRequest: custom_request,
         customRequestError: custom_request_error,
         customResponse: custom_response,
-        customResponseError: custom_response_error
+        customResponseError: custom_response_error,
     },
-    headers: {'Content-Type': ContentTypeEnum.JSON},
+    headers: { 'Content-Type': ContentTypeEnum.JSON },
     requestOptions: {
         // 默认将prefix 添加到url
         joinPrefix: true,
@@ -82,10 +85,11 @@ export const defHttp = createAxios({
         apiUrl: '',
         uploadUrl: '',
         // 接口拼接地址
-        urlPrefix: 'api'
-    }
+        urlPrefix: 'api',
+    },
 });
 ```
+
 :::
 
 ### 多个接口地址
@@ -100,9 +104,8 @@ export const defHttp = createAxios();
 
 // other api url
 export const otherHttp = createAxios({
-  requestOptions: {
-    apiUrl: 'xxx',
-  },
+    requestOptions: {
+        apiUrl: 'xxx',
+    },
 });
 ```
-

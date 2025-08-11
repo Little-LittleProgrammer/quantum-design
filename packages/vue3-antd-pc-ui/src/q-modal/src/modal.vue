@@ -138,34 +138,7 @@ const uniqueClass = `${componentModalClass}-${id}`;
 
 provide('DISMISSABLE_MODAL_ID', id);
 const state = computed(() => props.modalApi?.useStore()?.getState);
-const {
-    appendToMain,
-    bordered,
-    closeOnPressEscape,
-    cancelText,
-    centered,
-    class: modalClass,
-    closable,
-    maskClosable,
-    confirmDisabled,
-    confirmLoading,
-    okText,
-    contentClass,
-    description,
-    draggable,
-    footer: showFooter,
-    footerClass, fullscreen,
-    fullscreenButton, header,
-    headerClass,
-    loading: showLoading,
-    mask, showCancelButton,
-    showConfirmButton,
-    submitting,
-    title,
-    titleTooltip,
-    zIndex,
-    destroyOnClose
-} = usePriorityValues(props, state);
+const { appendToMain, bordered, closeOnPressEscape, cancelText, centered, class: modalClass, closable, maskClosable, confirmDisabled, confirmLoading, okText, contentClass, description, draggable, footer: showFooter, footerClass, fullscreen, fullscreenButton, header, headerClass, loading: showLoading, mask, showCancelButton, showConfirmButton, submitting, title, titleTooltip, zIndex, destroyOnClose } = usePriorityValues(props, state);
 
 const shouldFullscreen = computed(() => fullscreen.value && header.value);
 
@@ -190,7 +163,9 @@ watch(
             dialogRef.value = innerContentRef;
             const { offsetX, offsetY } = transform;
             dialogRef.value.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            props.modalApi?.onOpened();
         }
+        props.modalApi?.onOpenChange(v);
     }
 );
 
