@@ -7,7 +7,7 @@
         "build": "turbo run build",
         "build:lib": "turbo run build:lib",
         "dev": "turbo run dev",
-        "lint": "turbo run lint",
+        "lint": "pnpm dlx oxlint && eslint",
         "test": "turbo run test",
         "test:coverage": "turbo run test:coverage",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
