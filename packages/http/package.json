@@ -2,32 +2,33 @@
     "name": "@quantum-design/http",
     "version": "2.0.4",
     "description": " `http` 通讯 方法封装",
-    "main": "dist/http.cjs.min.js",
-    "module": "dist/http.esm.min.js",
-    "typings": "dist/types/index.d.ts",
-    "scripts": {
-        "build": "rollup -c --environment TYPES:true"
-    },
-    "files": [
-        "dist"
-    ],
     "keywords": [
         "quantum",
         "monorepo",
         "http",
         "turborepo"
     ],
+    "license": "ISC",
     "author": "Evan Wu",
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "dist/http.cjs.min.js",
+    "module": "dist/http.esm.min.js",
+    "typings": "dist/types/index.d.ts",
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "license": "ISC",
+    "peerDependencies": {},
     "dependencies": {
-        "crypto-js": "catalog:",
         "@quantum-design/shared": "workspace:*",
         "@quantum-design/utils": "workspace:*",
         "axios": "catalog:",
+        "crypto-js": "catalog:",
         "lodash-es": "catalog:",
         "qs": "catalog:"
     },
@@ -37,6 +38,5 @@
         "@types/lodash-es": "catalog:",
         "@types/qs": "catalog:",
         "rollup": "catalog:"
-    },
-    "peerDependencies": {}
+    }
 }

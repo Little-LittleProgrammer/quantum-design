@@ -1,31 +1,42 @@
 # 项目规范
 
 ## 开发规范
+
 1. setup语法糖尽量不要应用于业务页面(即会出现在侧边菜单栏的页面),因为keepalive要识别name属性
 2. 尽量不要使用this, 类除外
 
 ## 命名规范
+
 [点击链接查看](http://wiki.km.com/pages/viewpage.action?pageId=62329239)
 
 ## ts开发规范
+
 1. 类型推测上, 尽量不要使用any
 2. ts已经开启严格模式, 会更精准的提示报错
 3. http请求配置时,尽量配置返回类型, 这样在使用时,可以更加精准的给予提示
+
 ```js
 // Result<ISelectObj> 为返回数据的类型
 export function api_get_adv_dsp_data_select() {
-    return defHttp.get<Result<ISelectObj>>({
-        url: Api.dspDataSelect
-    });
+    return (
+        defHttp.get <
+        Result <
+        ISelectObj >>
+            {
+                url: Api.dspDataSelect,
+            }
+    );
 }
 ```
 
 ## ts公共类型(type, interface)
-::: warning 提示
-如果已有的声明涉及的不全, 可以根据自己的业务去补充和更改
-:::
+
+::: warning 提示如果已有的声明涉及的不全, 可以根据自己的业务去补充和更改 :::
+
 ### 业务类型
+
 以下为业务中常用的类型, 已全局声明, 不需要导入
+
 ```js
 // 编写业务时,用到的常用接口类型
 import { ColumnProps } from 'ant-design-vue/lib/table/interface';
@@ -80,10 +91,12 @@ declare global {
 
 
 ```
+
 ### 公用类型转换
-以下为公用类型转换方法, 已全局声明, 不需要导入
-详情请看[packages/types](/packages/types/index.md)
-```js
+
+以下为公用类型转换方法, 已全局声明, 不需要导入详情请看[packages/types](/packages/types/index.md)
+
+````js
 // 全局处理逻辑时用到的接口类型
 
 /**
@@ -150,10 +163,12 @@ declare type IntervalHandle = ReturnType<typeof setInterval>;
 
 
 
-```
+````
 
 ### http返回
+
 http返回, 以下是请求中常用的类型
+
 ```js
 // http请求
 declare interface Result<T = any> {
@@ -177,20 +192,28 @@ declare interface UploadFileParams {
 ```
 
 ## ESLint规范
-**.eslintrc.js配置**
-```js
-// equire.resolve('@quantum-design-configs//eslint/eslint-vue') 继承 packages下的规范
-module.exports = {
-    extends: [require.resolve('@quantum-design-configs/eslint/eslint-vue')],
-    rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-    }
-};
 
+使用 Flat Config，统一在仓库根目录创建 `eslint.config.mjs`：
+
+```js
+import { defineEslintConfig } from '@quantum-design-configs/eslint';
+
+export default await defineEslintConfig([
+    {
+        rules: {
+            'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+            'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        },
+    },
+]);
 ```
 
+说明：
+
+- 不再使用 `.eslintrc.*`；子项目默认继承根配置。
+
 ## tsconfig.json规范
+
 ```js
 {
     "extends": "@quantum-design-configs/tsconfig/vue.json", // 继承 packages下的配置

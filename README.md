@@ -20,8 +20,8 @@
 
 ### 3.0.0
 
-[] vite升级 7 [] 去除 eslint 使用 oxlint@1.11.1 代替 [] nuxt升级 nuxt4
+[] vite升级 7 [] 重构 eslint 配置 [] nuxt升级 nuxt4 [] css 使用 Tailwind
 
 ### 4.0.0
 
-[] 升级 vue3.6 [] antd-table 升级 vxe-table [] antd 替换使用 shadcn-vue [] css 使用 Tailwind
+[] 升级 vue3.6 [] antd-table 升级 vxe-table [] antd 替换使用 shadcn-vue

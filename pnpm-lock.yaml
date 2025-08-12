@@ -617,6 +617,9 @@ importers:
       eslint-plugin-oxlint:
         specifier: 'catalog:'
         version: 1.11.1
+      globals:
+        specifier: 'catalog:'
+        version: 16.3.0
     devDependencies:
       '@eslint/js':
         specifier: 'catalog:'
@@ -660,9 +663,6 @@ importers:
       eslint-plugin-vue:
         specifier: 'catalog:'
         version: 9.33.0(eslint@9.33.0(jiti@2.5.1))
-      globals:
-        specifier: 'catalog:'
-        version: 16.3.0
       jsonc-eslint-parser:
         specifier: 'catalog:'
         version: 2.4.0

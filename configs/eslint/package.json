@@ -30,9 +30,27 @@
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "dependencies": {
+    "peerDependencies": {
+        "@eslint/js": "catalog:",
+        "@typescript-eslint/eslint-plugin": "catalog:",
+        "@typescript-eslint/parser": "catalog:",
+        "eslint": "catalog:",
         "eslint-config-turbo": "catalog:",
-        "eslint-plugin-oxlint": "catalog:"
+        "eslint-plugin-jsdoc": "catalog:",
+        "eslint-plugin-jsonc": "catalog:",
+        "eslint-plugin-n": "catalog:",
+        "eslint-plugin-no-only-tests": "catalog:",
+        "eslint-plugin-oxlint": "catalog:",
+        "eslint-plugin-prettier": "catalog:",
+        "eslint-plugin-regexp": "catalog:",
+        "eslint-plugin-unused-imports": "catalog:",
+        "eslint-plugin-vitest": "catalog:",
+        "eslint-plugin-vue": "catalog:",
+        "jsonc-eslint-parser": "catalog:",
+        "vue-eslint-parser": "catalog:"
+    },
+    "dependencies": {
+        "globals": "catalog:"
     },
     "devDependencies": {
         "@eslint/js": "catalog:",
@@ -49,7 +67,6 @@
         "eslint-plugin-unused-imports": "catalog:",
         "eslint-plugin-vitest": "catalog:",
         "eslint-plugin-vue": "catalog:",
-        "globals": "catalog:",
         "jsonc-eslint-parser": "catalog:",
         "oxlint": "catalog:",
         "unbuild": "catalog:",
