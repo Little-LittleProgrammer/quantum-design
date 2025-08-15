@@ -1,8 +1,9 @@
 packages:
   # 配置/规范相关
   - "configs/*"
-  # 内部共享包（工具、组件等）
+  # 内部共享包（工具、组件等），排除 @vue3-antd-pc-ui-nuxt/ 和 @vue3-pc-ui-nuxt/
   - "packages/*"
+  - "!**/*-ui-nuxt/**"
   # 文档站点与文档工程
   - "docs/*"
   # CLI 工具集合
@@ -62,7 +63,7 @@ catalog:
   "vite-plugin-dts": "^4.5.4"
   "vite-plugin-compression2": "^2.2.0"
   "unplugin-vue-components": "^29.0.0"
-  "vitepress": "^1.6.4"
+  "vitepress": "^2.0.0-alpha.11"
   "unplugin": "^2.3.5"
   "rollup": "^4.46.2"
   "@rollup/plugin-node-resolve": "^16.0.1"
@@ -98,7 +99,7 @@ catalog:
   # UI 组件与可视化
   "ant-design-vue": "^4.2.6"
   "@ant-design/icons-vue": "^7.0.1"
-  "echarts": "^5.4.2"
+  "echarts": "^6.0.0"
   "monaco-editor": "^0.52.2"
   "tinymce": "^5.10.9"
   "highlight.js": "^11.4.0"

@@ -1,46 +1,3 @@
-<template>
-    <div>
-        <div>
-            <a-button @click="reloadTable"> 还原 </a-button>
-            <a-button @click="changeLoading"> 开启loading </a-button>
-            <a-button @click="changeColumns"> 更改Columns </a-button>
-            <a-button @click="getColumn"> 获取Columns </a-button>
-            <a-button @click="getTableData"> 获取表格数据 </a-button>
-            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
-            <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
-            <a-button @click="getSelectRowList"> 获取选中行 </a-button>
-            <a-button @click="getSelectRowKeyList"> 获取选中行Key </a-button>
-            <a-button @click="setSelectedRowKeyList"> 设置选中行 </a-button>
-            <a-button @click="clearSelect"> 清空选中行 </a-button>
-            <a-button @click="getPagination"> 获取分页信息 </a-button>
-            <a-button @click="collapseAll"> 展开 </a-button>
-            <a-button @click="updateSetting"> 操作按钮悬浮切换 </a-button>
-        </div>
-        <q-antd-table @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit" @formExpandChange="handle_form_expand_change" @change="handle_table_change" @formCustomFilterChange="handle_form_custom_filter_change">
-            <template #form-slot> 12312312312 </template>
-            <!-- <template #headerTop>
-                <alert type="info" show-icon>
-                    <template #message>
-                        <span v-if="getSelectRows().length > 0">已选中{{ getSelectRows().length }}项</span>
-                        <span v-else>未选中任何项目</span>
-                    </template>
-                </alert>
-            </template> -->
-            <template #bodyCell="{ column, record }">
-                <template v-if="column.key === 'action'">
-                    <q-antd-table-action :actions="createActions(record, column)" />
-                </template>
-            </template>
-            <template #paginationButton>
-                <a-button>这是按钮A</a-button>
-                <a-button>这是按钮BBBB</a-button>
-                <a-button>这是长按钮啦啦啦啦</a-button>
-            </template>
-        </q-antd-table>
-        <edit @register="registerDrawer"></edit>
-        <BaseModal />
-    </div>
-</template>
 <script lang="ts" setup>
 import { computed, h, ref, reactive } from 'vue';
 import { useTable, useDrawer, QAntdTable, QAntdTableAction, useQAntdModal, type ColumnChangeParam } from '@quantum-design/vue3-antd-pc-ui';
@@ -60,7 +17,7 @@ function onChange() {
 
 const [BaseModal, baseModalApi] = useQAntdModal({
     // 连接抽离的组件
-    connectedComponent: BaseDemo
+    connectedComponent: BaseDemo,
 });
 
 const data = reactive({
@@ -68,23 +25,23 @@ const data = reactive({
         access_mode_list: [
             {
                 label: '1',
-                value: '1'
+                value: '1',
             },
             {
                 label: '2',
-                value: '2'
-            }
-        ]
-    }
+                value: '2',
+            },
+        ],
+    },
 });
 
 const testSelectObj = ref({
     access_mode_list: [
         {
             label: '1',
-            value: '1'
-        }
-    ]
+            value: '1',
+        },
+    ],
 });
 
 const schemas = computed(() => {
@@ -94,15 +51,16 @@ const schemas = computed(() => {
             label: '日期',
             field: 'duration',
             component: 'RangePicker',
-            defaultValue: defaultDuration
+            defaultValue: defaultDuration,
+            alwaysVisible: true,
         },
         {
             label: '接入模式',
             field: 'access_mode',
             component: 'Select',
             componentProps: {
-                options: data.selectObj.access_mode_list
-            }
+                options: data.selectObj.access_mode_list,
+            },
         },
         {
             label: '操作时间',
@@ -115,8 +73,8 @@ const schemas = computed(() => {
                 placeholder: ['开始日期', '结束日期'],
                 onChange: (_value: any) => {
                     reload();
-                }
-            }
+                },
+            },
         },
         {
             label: '授权渠道',
@@ -127,9 +85,9 @@ const schemas = computed(() => {
                 options: testSelectObj.value.access_mode_list,
                 allowClear: true,
                 class: 'w-250',
-                showSearch: true
-            }
-        }
+                showSearch: true,
+            },
+        },
     ];
 });
 
@@ -145,13 +103,13 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
         layout: 'inline',
         schemas,
         enableCustomFilter: true,
-        formId: 'form-table'
+        formId: 'form-table',
         // fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]],
     },
     resizable: true,
     tableSetting: {
         cache: true,
-        floating: floating.value
+        floating: floating.value,
     },
     columnsConfig: {
         widthData: {
@@ -159,13 +117,13 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
             auth_result: 180,
             check_result: 180,
             lock_result: 180,
-            reader_cp_name: 180
+            reader_cp_name: 180,
         },
         fixedData: {
             operateTime: 'left',
             partner_cp_name: 'left',
-            reader_cp_name: 'left'
-        }
+            reader_cp_name: 'left',
+        },
     },
 
     scroll: { x: true },
@@ -173,7 +131,7 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
     dataSource: getBasicData(),
     autoCreateKey: true,
     summaryConfig: {
-        fixed: 'top'
+        fixed: 'top',
     },
     expandedRowRender(_record) {
         return h('div', '123123123');
@@ -181,7 +139,7 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
     showTableSetting: true,
     onChange,
     rowSelection: {
-        type: 'checkbox'
+        type: 'checkbox',
     },
     onColumnsChange: (data: ColumnChangeParam[]) => {
         console.log('ColumnsChanged', data);
@@ -190,10 +148,10 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
         {
             component: 'CustomExtraComp',
             componentProps: {
-                text: '外部传入：自定义注册组件，查看表格数据'
-            }
-        }
-    ]
+                text: '外部传入：自定义注册组件，查看表格数据',
+            },
+        },
+    ],
 });
 
 const [registerDrawer, { openDrawer }] = useDrawer();
@@ -218,7 +176,7 @@ function reloadTable() {
     //     showIndexColumn: true
     // });
     reload({
-        page: 1
+        page: 1,
     });
 }
 
@@ -244,7 +202,7 @@ function getPagination() {
 
 function setPaginationInfo() {
     setPagination({
-        current: 2
+        current: 2,
     });
     reload();
 }
@@ -278,14 +236,14 @@ function createActions(record: any, _column: any) {
                 label: '弹窗',
                 onClick: () => {
                     baseModalApi.open();
-                }
+                },
             },
             {
                 label: '抽屉',
                 onClick: () => {
                     openDrawer();
-                }
-            }
+                },
+            },
         ];
     }
     return [
@@ -294,7 +252,7 @@ function createActions(record: any, _column: any) {
             onClick: () => {
                 record.onSubmit();
                 console.log('保存');
-            }
+            },
         },
         {
             label: '取消',
@@ -303,15 +261,15 @@ function createActions(record: any, _column: any) {
                 confirm: () => {
                     record.onCancel();
                     console.log('取消');
-                }
-            }
-        }
+                },
+            },
+        },
     ];
 }
 
 function collapseAll() {
     setProps({
-        ellipsis: false
+        ellipsis: false,
     });
 }
 
@@ -322,8 +280,8 @@ function handle_form_expand_change(expandStatus: boolean) {
 function updateSetting() {
     setProps({
         tableSetting: {
-            floating: !floating.value
-        }
+            floating: !floating.value,
+        },
     });
     floating.value = !floating.value;
 }
@@ -336,3 +294,46 @@ function handle_form_custom_filter_change(config: any) {
     console.log('handle_form_custom_filter_change', config);
 }
 </script>
+<template>
+    <div>
+        <div>
+            <a-button @click="reloadTable"> 还原 </a-button>
+            <a-button @click="changeLoading"> 开启loading </a-button>
+            <a-button @click="changeColumns"> 更改Columns </a-button>
+            <a-button @click="getColumn"> 获取Columns </a-button>
+            <a-button @click="getTableData"> 获取表格数据 </a-button>
+            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
+            <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
+            <a-button @click="getSelectRowList"> 获取选中行 </a-button>
+            <a-button @click="getSelectRowKeyList"> 获取选中行Key </a-button>
+            <a-button @click="setSelectedRowKeyList"> 设置选中行 </a-button>
+            <a-button @click="clearSelect"> 清空选中行 </a-button>
+            <a-button @click="getPagination"> 获取分页信息 </a-button>
+            <a-button @click="collapseAll"> 展开 </a-button>
+            <a-button @click="updateSetting"> 操作按钮悬浮切换 </a-button>
+        </div>
+        <QAntdTable @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit" @formExpandChange="handle_form_expand_change" @change="handle_table_change" @formCustomFilterChange="handle_form_custom_filter_change">
+            <template #form-slot> 12312312312 </template>
+            <!-- <template #headerTop>
+                <alert type="info" show-icon>
+                    <template #message>
+                        <span v-if="getSelectRows().length > 0">已选中{{ getSelectRows().length }}项</span>
+                        <span v-else>未选中任何项目</span>
+                    </template>
+                </alert>
+            </template> -->
+            <template #bodyCell="{ column, record }">
+                <template v-if="column.key === 'action'">
+                    <QAntdTableAction :actions="createActions(record, column)" />
+                </template>
+            </template>
+            <template #paginationButton>
+                <a-button>这是按钮A</a-button>
+                <a-button>这是按钮BBBB</a-button>
+                <a-button>这是长按钮啦啦啦啦</a-button>
+            </template>
+        </QAntdTable>
+        <edit @register="registerDrawer"></edit>
+        <BaseModal />
+    </div>
+</template>

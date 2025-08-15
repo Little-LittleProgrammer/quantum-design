@@ -54,6 +54,11 @@
         "neverBuiltDependencies": [
             "canvas",
             "node-gyp"
-        ]
+        ],
+        "overrides": {
+            "eslint": "catalog:",
+            "vite": "catalog:",
+            "typescript": "catalog:"
+        }
     }
 }

@@ -97,11 +97,7 @@ function getFormFilterCacheKey(formId?: string): string | null {
 // 创建表单过滤器数据库实例
 const configDB = FormFilterDB.getInstance();
 
-export function useCustomFilter(originalSchemas: Ref<FormSchema[]>, {
-    getProps,
-    alwaysVisibleFields,
-    onConfigChange
-}: IUseCustomFilterOptions): IUseCustomFilterReturn {
+export function useCustomFilter(originalSchemas: Ref<FormSchema[]>, { getProps, alwaysVisibleFields, onConfigChange }: IUseCustomFilterOptions): IUseCustomFilterReturn {
     // 当前选中的字段
     const selectedFields = ref<string[]>([]);
     // 字段排序
@@ -159,7 +155,7 @@ export function useCustomFilter(originalSchemas: Ref<FormSchema[]>, {
         const config: ICustomFilterConfig = inputConfig || {
             selectedFields: selectedFields.value,
             fieldOrder: fieldOrder.value,
-            timestamp: Date.now()
+            timestamp: Date.now(),
         };
 
         // 更新内部状态
@@ -225,17 +221,16 @@ export function useCustomFilter(originalSchemas: Ref<FormSchema[]>, {
         // 按照字段顺序添加选中的字段
         for (const field of order) {
             if (selected.includes(field) && schemaMap.has(field)) {
-                result.push(schemaMap.get(field)!);
+                result.push(schemaMap.get(field) as FormSchema);
             }
         }
 
         // 添加不在排序中但被选中的字段
         for (const field of selected) {
             if (!order.includes(field) && schemaMap.has(field)) {
-                result.push(schemaMap.get(field)!);
+                result.push(schemaMap.get(field) as FormSchema);
             }
         }
-
         return result;
     });
 
@@ -251,6 +246,6 @@ export function useCustomFilter(originalSchemas: Ref<FormSchema[]>, {
         resetConfig,
         updateSelectedFields,
         updateFieldOrder,
-        openCustomModal
+        openCustomModal,
     };
 }
