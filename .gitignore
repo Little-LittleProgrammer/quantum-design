@@ -51,6 +51,8 @@ vite.config.ts.*
 cache
 /cache/**/*
 .temp
+**/.vitepress/cache/**/*
+@cache/
 
 # Nuxt dev/build outputs
 .output
@@ -61,3 +63,4 @@ cache
 
 # cursor
 .cursor/mcp.json
+
