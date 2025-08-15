@@ -157,3 +157,24 @@ catalog:
   "@modelcontextprotocol/sdk": "^1.17.2"
   "@larksuiteoapi/node-sdk": "^1.54.0"
 
+  # 内部包
+  "@quantum-design-configs/eslint": "^2.1.0"
+  "@quantum-design-configs/tsconfig": "^2.1.0"
+  "@quantum-design-configs/prettier": "^1.0.0"
+  "@quantum-design-configs/commitlint": "^1.1.0"
+  "@quantum-design-configs/rollup": "^2.1.0"
+  "@quantum-design-configs/vite": "^2.1.0"
+  "@quantum-design-configs/sentry": "^2.1.0"
+  "@quantum-design/ai-hub": "^0.0.3"
+  "@quantum-design/shared": "^2.1.0"
+  "@quantum-design/utils": "^2.1.0"
+  "@quantum-design/types": "^2.1.0"
+  "@quantum-design/hooks": "^2.1.0"
+  "@quantum-design/http": "^2.1.0"
+  "@quantum-design/styles": "^2.1.0"
+  "@quantum-design/vue3-antd-pc-ui": "^2.1.0"
+  "@quantum-design/vue3-pc-ui": "^2.1.0"
+
+
+
+

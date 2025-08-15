@@ -1,9 +1,9 @@
-$text-color-backup-first: #999;   // 文本备份色1
-$text-color-backup-second: #BBB; // 文本备份色2
-$disabled-color: #EEEEEE; // 失效色
-$border-color-base: #D4D4D4; // 边框色
-$body-bg: #F5F5F5; // 全站背景色
-$primary-color: #FF9000; // 全局主色
+$text-color-backup-first: #999; // 文本备份色1
+$text-color-backup-second: #bbb; // 文本备份色2
+$disabled-color: #eeeeee; // 失效色
+$border-color-base: #d4d4d4; // 边框色
+$body-bg: #f5f5f5; // 全站背景色
+$primary-color: #ff9000; // 全局主色
 $header-tabs-color: #222222; // tab文字颜色
 
 // 滚动条样式
@@ -45,4 +45,24 @@ $header-tabs-color: #222222; // tab文字颜色
 @function calc-width-percentage($width, $overall-width) {
     // 当前宽度 总宽度
     @return calc($width / $overall-width * 100%);
+}
+
+.image-container {
+    .image-src {
+        border-radius: 10px;
+        width: 80px;
+        height: 80px;
+        // 让图片整体暗一点，使用滤镜降低亮度
+        filter: brightness(0.85);
+
+        &:hover {
+            filter: brightness(1);
+        }
+    }
+}
+
+.container {
+    .logo {
+        border-radius: 4px;
+    }
 }
