@@ -14,7 +14,10 @@
         "commit": "czg",
         "prepare": "husky",
         "migrator": "sass-migrator module packages/**/*.scss",
-        "postinstall": "turbo run stub"
+        "postinstall": "turbo run stub",
+        "tauri": "turbo run tauri",
+        "tauri:dev": "turbo run tauri:dev",
+        "tauri:build": "turbo run tauri:build"
     },
     "devDependencies": {
         "@changesets/cli": "^2.29.5",
@@ -57,8 +60,8 @@
         ],
         "overrides": {
             "eslint": "catalog:",
-            "vite": "catalog:",
-            "typescript": "catalog:"
+            "typescript": "catalog:",
+            "vite": "catalog:"
         }
     }
 }
