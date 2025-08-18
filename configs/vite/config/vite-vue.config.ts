@@ -3,6 +3,7 @@ import { loadEnv } from 'vite';
 import { outputDir, vite_utils_create_proxy, vite_utils_wrapper_env } from '../utils';
 import { vite_create_plugins } from '../plugins';
 import type { CommonOptions } from '../types';
+import process from 'process';
 
 // https://vitejs.dev/config/
 export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: CommonOptions): UserConfig {
@@ -10,14 +11,20 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
         outDir: outputDir,
         rollupOptions: {},
         buildOptions: {},
-        ...(options || {})
+        ...(options || {}),
     };
     const root = process.cwd();
     const env = loadEnv(mode, root);
     const viteEnv = vite_utils_wrapper_env(env);
     const isBuild = command === 'build';
     const { VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE, VITE_BASE_PATH, VITE_USE_PWA } = viteEnv;
-    let plugin = vite_create_plugins(viteEnv, isBuild, options?.pluginsOption);
+    let plugin = vite_create_plugins(viteEnv, isBuild, {
+        ...options?.pluginsOption,
+        printInfoMap: {
+            ...options?.pluginsOption?.printInfoMap,
+            'Quantum Design Docs': 'https://little-littleprogrammer.github.io/quantum-design/docs/',
+        },
+    });
     if (options && options.customPlugins) {
         plugin = plugin.concat(options.customPlugins);
     }
@@ -27,11 +34,12 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
             host: true,
             port: VITE_PORT,
             open: true,
-            proxy: vite_utils_create_proxy(VITE_PROXY)
+            proxy: vite_utils_create_proxy(VITE_PROXY),
         },
-        // esbuild: {
-        //     pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
-        // },
+        esbuild: {
+            pure: VITE_DROP_CONSOLE ? ['console.log', 'console.warn', 'console.info', 'console.error', 'console.debug'] : [],
+            drop: VITE_DROP_CONSOLE ? ['debugger'] : [],
+        },
         build: {
             target: 'es2015',
             outDir: getOptions.outDir,
@@ -63,16 +71,16 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
                                 return 'vendor-crypto-js';
                             }
                         }
-                    }
+                    },
                 },
                 external: VITE_USE_PWA ? [] : ['virtual:pwa-register/vue'],
-                ...getOptions.rollupOptions
+                ...getOptions.rollupOptions,
             },
             reportCompressedSize: false,
             chunkSizeWarningLimit: 2000,
             sourcemap: viteEnv.VITE_USE_SENTRY && viteEnv.VITE_USE_SOURCEMAP,
-            ...getOptions.buildOptions
+            ...getOptions.buildOptions,
         },
-        plugins: plugin
+        plugins: plugin,
     };
 }

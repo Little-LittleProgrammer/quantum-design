@@ -1,11 +1,3 @@
-<template>
-    <a-config-provider :locale="locale" :theme="getThemeMode">
-        <div id="app">
-            <router-view></router-view>
-        </div>
-    </a-config-provider>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
@@ -29,7 +21,7 @@ export default defineComponent({
         const sysStore = useSysStore();
         const { getThemeMode } = useThemeSetting();
         const go = useGo();
-        const get_menus_data = async() => {
+        const get_menus_data = async () => {
             const _res = import('@/menus/index');
             const _list = (await _res).default;
             sysStore.initMenuData = '/demo/form';
@@ -38,14 +30,14 @@ export default defineComponent({
             const curUrlInfo = js_utils_get_current_url();
             if (!curUrlInfo) {
                 go({
-                    path: sysStore.initMenuData
+                    path: sysStore.initMenuData,
                 });
                 return;
             }
             console.log('curUrlInfo', curUrlInfo);
             if (!curUrlInfo?.hash || curUrlInfo?.hash === '#/') {
                 go({
-                    path: sysStore.initMenuData
+                    path: sysStore.initMenuData,
                 });
             }
         };
@@ -56,11 +48,19 @@ export default defineComponent({
             getThemeMode,
             userStore,
             globalStore,
-            sysStore
+            sysStore,
         };
-    }
+    },
 });
 </script>
+
+<template>
+    <a-config-provider :locale="locale" :theme="getThemeMode">
+        <div id="app">
+            <router-view></router-view>
+        </div>
+    </a-config-provider>
+</template>
 <style data-type="start">
 .style-start-load {
     text-align: center;

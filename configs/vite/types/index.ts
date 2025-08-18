@@ -39,19 +39,27 @@ export interface CommonOptions {
     entry?: string;
     name?: string;
     target?: string;
-    formats?: ('es' | 'cjs' | 'umd' | 'iife')[],
-    outDir?: string,
+    formats?: ('es' | 'cjs' | 'umd' | 'iife')[];
+    outDir?: string;
     rollupOptions?: RollupOptions;
     buildOptions?: Omit<BuildOptions, 'rollupOptions'>;
     isComponentsBuild?: boolean;
     customPlugins?: any[];
     dtsOptions?: PluginOptions;
-    pluginsOption?: IPluginsCommonOptions
+    pluginsOption?: IPluginsCommonOptions;
 }
 
 export interface IPluginsCommonOptions {
-    sentry?:SentryVitePluginOptions;
-    pwa?:Partial<VitePWAOptions>;
+    printInfoMap?: Record<string, string | undefined>;
+    sentry?: SentryVitePluginOptions;
+    pwa?: Partial<VitePWAOptions>;
     compress?: any; // pelease see；
     resolvers?: any[]; // see https://github.com/unplugin/unplugin-vue-components
+}
+
+export interface PrintPluginOptions {
+    /**
+     * 打印的数据
+     */
+    infoMap?: Record<string, string | undefined>;
 }

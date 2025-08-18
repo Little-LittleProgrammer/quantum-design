@@ -9,19 +9,17 @@ import { vite_plugin_compress } from './compress';
 import { vite_plugin_pwa } from './pwa';
 import { vite_plugin_sentry } from '@quantum-design-configs/vite-sentry/cli';
 import { vite_plugin_component } from './component';
+import { vite_plugin_print } from './print';
 
 export { vite_plugin_postcss_pxtorem } from './postcss-pxtorem';
 
 export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?: IPluginsCommonOptions) {
-    const {
-        VITE_BUILD_COMPRESS,
-        VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
-    } = viteEnv;
+    const { VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
     const _vitePlugins: (PluginOption | PluginOption[])[] = [
         // have to
         vue(),
         // have to
-        vueJsx()
+        vueJsx(),
         // 按需引入antd组件和样式, 特别好用,
         // 因为本项目是使用scss的, 并且使用了主题切换功能, 所以使用此功能, 会导致样式重复添加
         // ViteComponents({
@@ -40,6 +38,8 @@ export function vite_create_plugins(viteEnv: ViteEnv, isBuild: boolean, options?
         _vitePlugins.push(vite_plugin_pwa(viteEnv, options?.pwa));
         // @sentry/vite-plugin
         _vitePlugins.push(vite_plugin_sentry(viteEnv, options?.sentry));
+    } else {
+        _vitePlugins.push(vite_plugin_print({ infoMap: options?.printInfoMap || {} }));
     }
     return _vitePlugins;
 }
