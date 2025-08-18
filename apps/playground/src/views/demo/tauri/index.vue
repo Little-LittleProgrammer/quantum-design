@@ -1,3 +1,49 @@
+<template>
+    <a-card>
+        <main class="container">
+            <h1>Welcome to Tauri + Vue</h1>
+
+            <form class="row" @submit.prevent="greet">
+                <input id="greet-input" v-model="name" placeholder="Enter a name..." />
+                <button type="submit">Greet</button>
+            </form>
+            <p>{{ greetMsg }}</p>
+
+            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px; align-items: center">
+                <div style="width: 100%; max-width: 720px; display: grid; grid-template-columns: 140px 1fr; gap: 8px; align-items: center">
+                    <label>Endpoint</label>
+                    <input v-model="endpoint" />
+                    <label>API Key</label>
+                    <input v-model="apiKey" placeholder="Bearer ..." />
+                    <label>Model</label>
+                    <input v-model="model" />
+                    <label>Prompt</label>
+                    <input v-model="userPrompt" />
+                </div>
+                <div style="display: flex; gap: 8px">
+                    <button :disabled="streaming" @click="streamFetch">开始流式请求</button>
+                    <button @click="jsonFetch">JSON Fetch</button>
+                </div>
+                <div style="width: 100%; max-width: 720px; text-align: left">
+                    <p v-if="streaming">状态: 流式传输中…</p>
+                    <p v-else>状态: {{ streamStatus ?? '-' }}</p>
+                    <pre style="white-space: pre-wrap; word-break: break-word; background: #00000010; padding: 8px; border-radius: 6px; min-height: 120px">{{ streamOutput }}</pre>
+                </div>
+
+                <div style="height: 1px; background: #ddd; width: 100%; max-width: 720px; margin: 12px 0"></div>
+
+                <h3>系统功能 Demo</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center">
+                    <button @click="demoOpenUrl">打开 URL</button>
+                    <button @click="demoOpenAppConfigDir">文件系统读写</button>
+                    <button @click="demoRevealInFinder">在 Finder 中显示</button>
+                    <button @click="demoRunCommand">运行命令 uname -a</button>
+                </div>
+            </div>
+        </main>
+    </a-card>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { invoke } from '@tauri-apps/api/core';
@@ -7,7 +53,6 @@ import { isPermissionGranted, requestPermission, sendNotification } from '@tauri
 import { exists, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { readTextFile, writeTextFile, create, readDir } from '@tauri-apps/plugin-fs';
 import { openUrl, revealItemInDir, openPath } from '@tauri-apps/plugin-opener';
-import { appDataDir } from '@tauri-apps/api/path';
 
 const greetMsg = ref('');
 const name = ref('');
@@ -93,8 +138,8 @@ async function streamFetch() {
                 title: '流式请求完成',
                 body: `${preview}${streamOutput.value.length > 80 ? '…' : ''}`,
             });
-        } catch (err) {
-            console.warn('发送通知失败', err);
+        } catch {
+            console.log('流式请求完成，但发送通知失败');
         }
     }
 }
@@ -185,6 +230,7 @@ async function jsonFetch() {
     const res = await fetch('https://httpbin.org/json');
     const json = await res.json();
     console.log('jsonFetch', json);
+    alert(JSON.stringify(json, null, 2));
 }
 
 async function checkFileExists() {
@@ -207,15 +253,13 @@ async function demoOpenAppConfigDir() {
         console.log('AppData entries', entries);
     } catch (err) {
         console.error('操作文件时发生错误:', err);
-        const message = err instanceof Error ? err.message : String(err);
-        alert('操作文件时发生错误: ' + message);
+        alert('操作文件时发生错误: ' + (err?.message || err));
     }
 }
 
 async function demoRevealInFinder() {
     // 在 Finder 中显示应用数据目录
-    const dir = await appDataDir();
-    await revealItemInDir(`${dir}demo.txt`);
+    await revealItemInDir('demo.txt', { baseDir: BaseDirectory.AppData });
 }
 
 async function demoRunCommand() {
@@ -224,58 +268,129 @@ async function demoRunCommand() {
         const permission = await requestPermission();
         permissionGranted = permission === 'granted';
     }
-    const res = await invoke<{ stdout?: string; stderr?: string }>('run_command', { program: 'uname', args: ['-a'] });
-    const macosVersion = await invoke<{ stdout?: string; stderr?: string }>('run_command', { program: 'sw_vers', args: ['-productVersion'] });
-    const systemProfiler = await invoke<{ stdout?: string; stderr?: string }>('run_command', { program: 'system_profiler', args: ['SPSoftwareDataType'] });
-    console.log('demoRunCommand', res, macosVersion, systemProfiler);
-    await sendNotification({ title: '系统信息', body: `${systemProfiler.stdout || systemProfiler.stderr}`.replace(/\n/g, ' ') });
+    const res = await invoke('run_command', { program: 'uname', args: ['-a'] });
+    console.log('demoRunCommand', res);
+    await sendNotification({ title: '系统信息', body: `${res.stdout || res.stderr}` });
 }
 </script>
 
-<template>
-    <div>
-        <a-card size="small" title="Welcome to Tauri + Vue"> </a-card>
-        <a-card class="g-mt" size="small" title="与rust通讯，并实现响应式">
-            <div class="row">
-                <a-input class="g-w-300" id="greet-input" v-model:value="name" placeholder="Enter a name..." />
-                <a-button class="g-ml" type="primary" @click.prevent="greet">Greet</a-button>
-                <p class="g-mt-10">{{ greetMsg }}</p>
-            </div>
-        </a-card>
-        <a-card class="g-mt" size="small" title="系统功能 Demo">
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center">
-                <a-button @click="demoOpenUrl">打开 URL</a-button>
-                <a-button @click="demoOpenAppConfigDir">文件系统读写</a-button>
-                <a-button @click="demoRevealInFinder">在 Finder 中显示</a-button>
-                <a-button @click="demoRunCommand">运行命令 查看电脑信息，结果发送系统通知</a-button>
-            </div>
-        </a-card>
-        <a-card class="g-mt" size="small" title="跨域调用接口，流式传输">
-            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px; align-items: center">
-                <div style="width: 100%; max-width: 720px; display: grid; grid-template-columns: 140px 1fr; gap: 8px; align-items: center">
-                    <label>Endpoint</label>
-                    <input v-model="endpoint" />
-                    <label>API Key</label>
-                    <input v-model="apiKey" placeholder="Bearer ..." />
-                    <label>Model</label>
-                    <input v-model="model" />
-                    <label>Prompt</label>
-                    <input v-model="userPrompt" />
-                </div>
-                <div style="display: flex; gap: 8px">
-                    <a-button :disabled="streaming" @click="streamFetch">开始流式请求</a-button>
-                    <a-button @click="jsonFetch">JSON Fetch</a-button>
-                </div>
-                <div style="width: 100%; max-width: 720px; text-align: left">
-                    <p v-if="streaming">状态: 流式传输中…</p>
-                    <p v-else>状态: {{ streamStatus ?? '-' }}</p>
-                    <pre style="white-space: pre-wrap; word-break: break-word; background: #00000010; padding: 8px; border-radius: 6px; min-height: 120px">{{ streamOutput }}</pre>
-                </div>
+<style scoped>
+.logo.vite:hover {
+    filter: drop-shadow(0 0 2em #747bff);
+}
 
-                <div style="height: 1px; background: #ddd; width: 100%; max-width: 720px; margin: 12px 0"></div>
-            </div>
-        </a-card>
-    </div>
-</template>
+.logo.vue:hover {
+    filter: drop-shadow(0 0 2em #249b73);
+}
+</style>
+<style>
+:root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
 
-<style scoped></style>
+    color: #0f0f0f;
+    background-color: #f6f6f6;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+.container {
+    margin: 0;
+    padding-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: 0.75s;
+}
+
+.logo.tauri:hover {
+    filter: drop-shadow(0 0 2em #24c8db);
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #535bf2;
+}
+
+h1 {
+    text-align: center;
+}
+
+input,
+button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    color: #0f0f0f;
+    background-color: #ffffff;
+    transition: border-color 0.25s;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    border-color: #396cd8;
+}
+button:active {
+    border-color: #396cd8;
+    background-color: #e8e8e8;
+}
+
+input,
+button {
+    outline: none;
+}
+
+#greet-input {
+    margin-right: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color: #f6f6f6;
+        background-color: #2f2f2f;
+    }
+
+    a:hover {
+        color: #24c8db;
+    }
+
+    input,
+    button {
+        color: #ffffff;
+        background-color: #0f0f0f98;
+    }
+    button:active {
+        background-color: #0f0f0f69;
+    }
+}
+</style>

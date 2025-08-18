@@ -10,9 +10,17 @@ function pathResolve(dir: string) {
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
     const _common = vite_common_vue_config({ command, mode });
+    // 判断是否是 Tauri 环境
+    const isTauri = !!process.env.TAURI_ENV_PLATFORM || process.env.TAURI_PLATFORM;
+    // 根据环境设置不同的 base 路径
+    const base = isTauri ? './' : '/quantum-design/playground/';
     return {
         ..._common,
-        base: '/quantum-design/playground/',
+        base,
+        define: {
+            'import.meta.env.VITE_BASE_PATH': JSON.stringify(base),
+            'import.meta.env.VITE_IS_TAURI': isTauri,
+        },
         css: {
             preprocessorOptions: {
                 scss: {
