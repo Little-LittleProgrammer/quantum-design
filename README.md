@@ -108,9 +108,10 @@ pnpm commit
 
 ### 3.0.0（进行中）
 
-- [ ] Vite 升级到 v7，并同步更新 `configs/vite` 的 peer 依赖与适配。
-- [ ] 重构 ESLint 配置（`configs/eslint`），统一各工作区规则与插件版本。
+- [x] Vite 升级到 v7，并同步更新 `configs/vite` 的 peer 依赖与适配。
+- [x] 重构 ESLint 配置（`configs/eslint`），统一各工作区规则与插件版本。
 - [ ] Nuxt 升级到 Nuxt 4，并验证 `*-nuxt` 集成包的兼容性。
+- [x] 支持 tarui
 
 ### 4.0.0（规划）
 

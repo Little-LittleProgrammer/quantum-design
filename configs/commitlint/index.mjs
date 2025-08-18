@@ -32,7 +32,7 @@ const userConfig = {
     extends: ['@commitlint/config-conventional'],
     plugins: ['commitlint-plugin-function-rules'],
     prompt: {
-    /** @use `pnpm commit :f` */
+        /** @use `pnpm commit :f` */
         alias: {
             b: 'build: bump dependencies',
             c: 'chore: update config',
@@ -47,8 +47,8 @@ const userConfig = {
         defaultScope: scopeComplete,
         // English
         typesAppend: [
-            { name: 'workflow: workflow improvements', value: 'workflow', },
-            { name: 'types:    type definition file changes', value: 'types', }
+            { name: 'workflow: workflow improvements', value: 'workflow' },
+            { name: 'types:    type definition file changes', value: 'types' },
         ],
 
         // 中英文对照版
@@ -65,44 +65,44 @@ const userConfig = {
             confirmCommit: '是否提交或修改commit ?',
         },
         types: [
-            { value: 'feat', name: 'feat:     新增功能', },
-            { value: 'fix', name: 'fix:      修复缺陷', },
-            { value: 'docs', name: 'docs:     文档变更', },
-            { value: 'style', name: 'style:    代码格式', },
-            { value: 'refactor', name: 'refactor: 代码重构', },
-            { value: 'perf', name: 'perf:     性能优化', },
-            { value: 'test', name: 'test:     添加疏漏测试或已有测试改动', },
-            { value: 'build', name: 'build:    构建流程、外部依赖变更 (如升级 npm 包、修改打包配置等)', },
-            { value: 'ci', name: 'ci:       修改 CI 配置、脚本', },
-            { value: 'revert', name: 'revert:   回滚 commit', },
-            { value: 'chore', name: 'chore:    对构建过程或辅助工具和库的更改 (不影响源文件、测试用例)', },
-            { value: 'wip', name: 'wip:      正在开发中', },
-            { value: 'workflow', name: 'workflow: 工作流程改进', },
-            { value: 'types', name: 'types:    类型定义文件修改', }
+            { value: 'feat', name: 'feat:     新增功能' },
+            { value: 'fix', name: 'fix:      修复缺陷' },
+            { value: 'docs', name: 'docs:     文档变更' },
+            { value: 'style', name: 'style:    代码格式' },
+            { value: 'refactor', name: 'refactor: 代码重构' },
+            { value: 'perf', name: 'perf:     性能优化' },
+            { value: 'test', name: 'test:     添加疏漏测试或已有测试改动' },
+            { value: 'build', name: 'build:    构建流程、外部依赖变更 (如升级 npm 包、修改打包配置等)' },
+            { value: 'ci', name: 'ci:       修改 CI 配置、脚本' },
+            { value: 'revert', name: 'revert:   回滚 commit' },
+            { value: 'chore', name: 'chore:    对构建过程或辅助工具和库的更改 (不影响源文件、测试用例)' },
+            { value: 'wip', name: 'wip:      正在开发中' },
+            { value: 'workflow', name: 'workflow: 工作流程改进' },
+            { value: 'types', name: 'types:    类型定义文件修改' },
         ],
         emptyScopesAlias: 'empty:      不填写',
         customScopesAlias: 'custom:     自定义',
     },
     rules: {
-    /**
-     * type[scope]: [function] description
-     *
-     * ^^^^^^^^^^^^^^ empty line.
-     * - Something here
-     */
+        /**
+         * type[scope]: [function] description
+         *
+         * ^^^^^^^^^^^^^^ empty line.
+         * - Something here
+         */
         'body-leading-blank': [2, 'always'],
         /**
-     * type[scope]: [function] description
-     *
-     * - something here
-     *
-     * ^^^^^^^^^^^^^^
-     */
+         * type[scope]: [function] description
+         *
+         * - something here
+         *
+         * ^^^^^^^^^^^^^^
+         */
         'footer-leading-blank': [1, 'always'],
         /**
-     * type[scope]: [function] description
-     *      ^^^^^
-     */
+         * type[scope]: [function] description
+         *      ^^^^^
+         */
         // 'function-rules/scope-enum': [
         //   2, // level: error
         //   'always',
@@ -115,9 +115,9 @@ const userConfig = {
         //   }
         // ],
         /**
-     * type[scope]: [function] description [No more than 108 characters]
-     *      ^^^^^
-     */
+         * type[scope]: [function] description [No more than 108 characters]
+         *      ^^^^^
+         */
         'header-max-length': [2, 'always', 108],
 
         'scope-enum': [0],
@@ -125,28 +125,10 @@ const userConfig = {
         'subject-empty': [2, 'never'],
         'type-empty': [2, 'never'],
         /**
-     * type[scope]: [function] description
-     * ^^^^
-     */
-        'type-enum': [
-            2,
-            'always',
-            [
-                'feat',
-                'fix',
-                'perf',
-                'style',
-                'docs',
-                'test',
-                'refactor',
-                'build',
-                'ci',
-                'chore',
-                'revert',
-                'types',
-                'release'
-            ]
-        ],
+         * type[scope]: [function] description
+         * ^^^^
+         */
+        'type-enum': [2, 'always', ['feat', 'fix', 'perf', 'style', 'docs', 'test', 'refactor', 'build', 'ci', 'chore', 'revert', 'types', 'release', 'wip']],
     },
 };
 
