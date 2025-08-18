@@ -7,31 +7,25 @@
             </a-tooltip>
             <span>{{ props.title }}</span>
         </div>
-        <Switch
-            v-bind = "getBindValue"
-            @change="handle_change"
-            :disabled="props.disabled"
-            checked-children="开"
-            un-checked-children="关"
-        ></Switch>
+        <a-switch v-bind="getBindValue" @change="handle_change" :disabled="props.disabled" checked-children="开" un-checked-children="关"></a-switch>
     </div>
 </template>
 
-<script lang='ts' setup>
-import { onMounted, type PropType, computed} from 'vue';
+<script lang="ts" setup>
+import { onMounted, type PropType, computed } from 'vue';
 import { HandleEnum } from '../enums/enum';
 import { propTypes } from '@quantum-design/types/vue/types';
-import { Switch, Tooltip as ATooltip } from 'ant-design-vue';
+import { Switch as ASwitch, Tooltip as ATooltip } from 'ant-design-vue';
 import { set_handler } from '../tools/handler';
-import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
+import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 const props = defineProps({
     event: {
-        type: Number as PropType<HandleEnum>
+        type: Number as PropType<HandleEnum>,
     },
     disabled: propTypes.bool.def(false),
     title: propTypes.string.def(''),
     default: propTypes.bool.def(false),
-    tooltip: propTypes.string.def('')
+    tooltip: propTypes.string.def(''),
 });
 const getBindValue = computed(() => {
     return props.default ? { checked: props.default } : {};
@@ -39,10 +33,6 @@ const getBindValue = computed(() => {
 function handle_change(e: number) {
     (props.event || props.event === 0) && set_handler(props.event, e);
 }
-onMounted(() => {
-});
-
+onMounted(() => {});
 </script>
-<style lang='scss' scoped>
-
-</style>
+<style lang="scss" scoped></style>

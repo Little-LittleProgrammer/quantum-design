@@ -3,36 +3,36 @@
     <div>
         <qm-header :environmentData="globalStore.environmentData" :systemName="globalStore.systemName" :initMenu="sysStore.initMenuData" :menuData="sysStore.mainMenuData">
             <template #header-function>
-                <div v-if="getSearchButton" class="g-flex-center search-container" @click="change_search_modal">
-                    <a-tooltip v-if="getSearchButton">
+                <div v-if="isUseSearchButton" class="g-flex-center search-container" @click="change_search_modal">
+                    <a-tooltip v-if="isUseSearchButton">
                         <template #title>
                             <span>搜索</span>
                         </template>
                         <a-button type="link">
                             <template #icon>
-                                <QAntdIcon class="search-icon" type="SearchOutlined" />
+                                <q-antd-icon class="search-icon" type="SearchOutlined" />
                             </template>
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-antd-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-antd-theme-mode-button>
+                <q-antd-theme-mode-button v-if="isUseThemeSwitch" class="g-flex-center search-container"></q-antd-theme-mode-button>
                 <q-antd-setting class="g-flex-center search-container" :defaultSetting="setting"></q-antd-setting>
             </template>
         </qm-header>
         <div class="wrapper">
             <qm-aside :menuData="sysStore.asideMenuData"></qm-aside>
             <div class="main js-layout-main">
-                <div class="main-header sticky-header" v-if="getBreadCrumb || getShowCacheTabsSetting" size="small">
+                <div class="main-header sticky-header" v-if="isUseBreadCrumb || isUseCacheTabsSetting" size="small">
                     <div class="g-flex">
-                        <q-breadcrumb v-if="getBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!getShowCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
-                        <q-antd-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="getCacheCanDrag" :showQuick="getShowQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
-                        <div class="reload" v-if="getShowReloadButton">
+                        <q-breadcrumb v-if="isUseBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!isUseCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
+                        <q-antd-keep-alive-tabs v-if="isUseCacheTabsSetting" :canDrag="isUseCacheCanDrag" :showQuick="isUseQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
+                        <div class="reload" v-if="isUseReloadButton">
                             <a-tooltip>
                                 <template #title>
                                     <span>刷新页面</span>
                                 </template>
                                 <a-button size="small" type="link" @click="reload_page">
-                                    <template #icon><QAntdIcon type="RedoOutlined" :spin="data.reloadLoading" /></template>
+                                    <template #icon><q-antd-icon type="RedoOutlined" :spin="data.reloadLoading" /></template>
                                 </a-button>
                             </a-tooltip>
                         </div>
@@ -41,9 +41,9 @@
                 <div class="layout-content">
                     <router-view>
                         <template #default="{ Component, route }">
-                            <q-loading :loading="getShowPageLoading ? globalStore.pageLoading : false" size="large">
+                            <q-loading :loading="isUsePageLoading ? globalStore.pageLoading : false" size="large">
                                 <transition :name="getTransName" mode="out-in" appear>
-                                    <keep-alive v-if="getShowCacheTabsSetting && getOpenKeepAlive" :include="cacheList">
+                                    <keep-alive v-if="isUseCacheTabsSetting && isUseKeepAlive" :include="cacheList">
                                         <component :is="Component" :key="route.fullPath"></component>
                                     </keep-alive>
                                     <component v-else :is="Component" :key="route.fullPath"></component>
@@ -54,14 +54,15 @@
                 </div>
             </div>
         </div>
-        <back-top v-if="getBackTop" :target="getTarget"></back-top>
+        <back-top v-if="isUseBackTop" :target="getTarget"></back-top>
         <q-antd-search :visible="data.modalVisible" :mainMenuData="sysStore.mainMenuData" @cancel="change_search_modal"></q-antd-search>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive, computed, ref, watch, nextTick } from 'vue';
-import { useProjectSetting, QAntdIcon, QAntdSetting, QAntdSearch, QAntdKeepAliveTabs, QAntdThemeModeButton, setGlobalTableSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
+import { QAntdIcon, QAntdSetting, QAntdSearch, QAntdKeepAliveTabs, QAntdThemeModeButton, setGlobalTableSetting } from '@quantum-design/vue3-antd-pc-ui';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
@@ -69,7 +70,6 @@ import { useRouter } from 'vue-router';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
 import { routerData } from '@/router';
-import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import setting from '@/enums/projectEnum';
 import { BackTop } from 'ant-design-vue';
 import { useParamsAliveRoot } from '@quantum-design/hooks/vue/use-params-alive';
@@ -77,14 +77,14 @@ import { QLoading, QBreadcrumb } from '@quantum-design/vue3-pc-ui';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const { getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanDrag, getShowQuick, getCacheCanCache, getTableCacheSetting } = useProjectSetting();
-const { setThemeMode } = useThemeSetting();
+const { initProjectConfig, isUseSearchButton, isUseThemeSwitch, isUseReloadButton, isUseTransition, isUseCacheTabsSetting, isUseBreadCrumb, isUseBackTop, isUsePageLoading, isUseKeepAlive, isUseCacheCanDrag, isUseQuick, isUseCacheCanCache, isUseTableCacheSetting } = useProjectSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
     reloadLoading: false,
-    width: ''
+    width: '',
 });
+initProjectConfig({});
 // watch(route, (to, from) => {
 //     if (to.path == from.path && !to.query.no_refresh) {
 //         data.routeRefresh = 0;
@@ -98,7 +98,7 @@ const change_search_modal = () => {
     data.modalVisible = !data.modalVisible;
 };
 const getTransName = computed(() => {
-    if (getShowTransition.value) {
+    if (isUseTransition.value) {
         return 'fade-slide';
     }
     return '';
@@ -112,7 +112,7 @@ let funcObj: any = {};
 function register(obj: any) {
     funcObj = obj;
 }
-const reload_page = async() => {
+const reload_page = async () => {
     data.reloadLoading = true;
     await funcObj.refreshPage(router);
     setTimeout(() => {
@@ -125,43 +125,33 @@ const reload_page = async() => {
 useParamsAliveRoot({
     aliveTabs: cacheList,
     projectSetting: {
-        cache: getCacheCanCache,
-        keepalive: getOpenKeepAlive,
-        show: getShowCacheTabsSetting
-    }
+        cache: isUseCacheCanCache,
+        keepalive: isUseKeepAlive,
+        show: isUseCacheTabsSetting,
+    },
 });
 
-// 设置主题
-const themePorxy = computed<'dark' | 'light'>({
-    get() {
-        return globalStore.getThemeMode;
-    },
-    set(val: 'dark' | 'light') {
-        setThemeMode(val);
-    }
-});
-setThemeMode(themePorxy.value);
 watch(
-    () => getBreadCrumb.value,
+    () => isUseBreadCrumb.value,
     (val) => {
         nextTick(() => {
-            if (getShowCacheTabsSetting.value && val) {
+            if (isUseCacheTabsSetting.value && val) {
                 const _erd = elementResizeDetectorMaker();
-                _erd.listenTo(document.getElementsByClassName('breadcrumb')[0] as HTMLElement, function(e) {
-                    const $dom = document.getElementsByClassName('main-header')[0];
+                _erd.listenTo(document.getElementsByClassName('breadcrumb')[0] as HTMLElement, function (e) {
+                    const $dom = document.getElementsByClassName('main-header')[0]!;
                     data.width = `width: ${$dom.clientWidth - e.clientWidth - 74}px`; // 当开启tabs配置与面包屑配置时, 要动态计算下tabs的宽度
                 });
-            } else if (getShowCacheTabsSetting.value && !val) {
-                const $dom = document.getElementsByClassName('main-header')[0];
+            } else if (isUseCacheTabsSetting.value && !val) {
+                const $dom = document.getElementsByClassName('main-header')[0]!;
                 data.width = `width: ${$dom.clientWidth - 40}px`; // 当开启tabs配置与面包屑配置时, 要动态计算下tabs的宽度
             }
         });
     },
-    { immediate: true }
+    { immediate: true },
 );
-watch(getTableCacheSetting, (val) => {
+watch(isUseTableCacheSetting, (val) => {
     setGlobalTableSetting({
-        cache: val
+        cache: val,
     });
 });
 </script>

@@ -6,29 +6,26 @@
     </div>
 </template>
 
-<script lang='ts' setup>
+<script lang="ts" setup>
 import { js_create_local_storage } from '@quantum-design/utils/extra';
-import { onMounted, type PropType} from 'vue';
-import type { IProjectConfig } from '../type';
-import { useProjectSetting } from '../hooks/use-project-setting';
-import {Button as AButton} from 'ant-design-vue';
+import { onMounted, type PropType } from 'vue';
+import { useProjectSetting, type IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
+import { Button as AButton } from 'ant-design-vue';
 
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,
-        default: () => {}
-    }
+        default: () => {},
+    },
 });
 const projectStore = useProjectSetting();
 const ls = js_create_local_storage();
 function reset() {
-    projectStore.setRootSetting(props.defaultSetting);
+    projectStore.resetProjectConfig();
 }
 function log_out() {
     ls?.clear();
     location.reload();
 }
-onMounted(() => {
-});
-
+onMounted(() => {});
 </script>

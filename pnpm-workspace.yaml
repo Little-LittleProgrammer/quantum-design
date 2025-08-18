@@ -137,6 +137,8 @@ catalog:
   "csstype": "^3.1.3"
   "sortablejs": "^1.15.0"
   "@types/sortablejs": "^1.15.0"
+  "theme-colors": "^0.1.0"
+  "@ctrl/tinycolor": "^4.1.0"
 
   # Node/脚手架与通用工具
   "fs-extra": "^11.3.1"

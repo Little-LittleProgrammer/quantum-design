@@ -17,7 +17,7 @@ import { useParamsAliveRoot } from '@quantum-design/hooks/vue/use-params-alive';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const { getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanDrag, getShowQuick, getCacheCanCache, getTableCacheSetting } = useProjectSetting();
+const { getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, isUseOpenKeepAlive, isUseCacheCanDrag, isUseQuick, isUseCacheCanCache, isUseTableCacheSetting } = useProjectSetting();
 const { setThemeMode } = useThemeSetting();
 const data = reactive({
     // routeRefresh: 1,
@@ -64,8 +64,8 @@ const reload_page = async () => {
 useParamsAliveRoot({
     aliveTabs: cacheList,
     projectSetting: {
-        cache: getCacheCanCache,
-        keepalive: getOpenKeepAlive,
+        cache: isUseCacheCanCache,
+        keepalive: isUseOpenKeepAlive,
         show: getShowCacheTabsSetting,
     },
 });
@@ -100,7 +100,7 @@ watch(
 );
 
 // 同步表格缓存设置
-watch(getTableCacheSetting, (val) => {
+watch(isUseTableCacheSetting, (val) => {
     setGlobalTableSetting({
         cache: val,
     });
@@ -133,7 +133,7 @@ watch(getTableCacheSetting, (val) => {
                 <div class="main-header sticky-header" v-if="getBreadCrumb || getShowCacheTabsSetting" size="small">
                     <div class="g-flex">
                         <q-breadcrumb v-if="getBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!getShowCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
-                        <q-antd-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="getCacheCanDrag" :showQuick="getShowQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
+                        <q-antd-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="isUseCacheCanDrag" :showQuick="isUseQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
                         <div class="reload" v-if="getShowReloadButton">
                             <a-tooltip>
                                 <template #title>
@@ -151,7 +151,7 @@ watch(getTableCacheSetting, (val) => {
                         <template #default="{ Component, route }">
                             <q-loading :loading="getShowPageLoading ? globalStore.pageLoading : false" size="large">
                                 <transition :name="getTransName" mode="out-in" appear>
-                                    <keep-alive v-if="getShowCacheTabsSetting && getOpenKeepAlive" :include="cacheList">
+                                    <keep-alive v-if="getShowCacheTabsSetting && isUseOpenKeepAlive" :include="cacheList">
                                         <component :is="Component" :key="route.fullPath"></component>
                                     </keep-alive>
                                     <component v-else :is="Component" :key="route.fullPath"></component>

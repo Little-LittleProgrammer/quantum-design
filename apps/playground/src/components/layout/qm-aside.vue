@@ -60,9 +60,10 @@
 
 <script lang="ts">
 import { Layout, Menu as AMenu } from 'ant-design-vue';
-import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
+import type { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 import { useSysStore } from '@/store/modules/systemManage';
-import { useProjectSetting, QAntdIcon } from '@quantum-design/vue3-antd-pc-ui';
+import { QAntdIcon } from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 interface DataProps {
     openKeys: number[];
@@ -73,7 +74,7 @@ interface DataProps {
 
 export default defineComponent({
     name: 'QmAside',
-    components: { 'a-layout-sider': Layout.Sider }
+    components: { ALayoutSider: Layout.Sider },
 });
 </script>
 
@@ -88,29 +89,29 @@ const props = defineProps({
         required: true,
         default: () => {
             return [];
-        }
-    }
+        },
+    },
 });
 
 const go = useGo();
 const route = useRoute();
 const sysStore = useSysStore();
-const { getShowCacheTabsSetting, getBreadCrumb, getAsideRepeatClick } = useProjectSetting();
+const { isUseCacheTabsSetting, isUseBreadCrumb, isUseAsideRepeatClick } = useProjectSetting();
 const refAsideMenu = ref<Nullable<typeof Layout>>(null);
 const data: DataProps = reactive({
     openKeys: [],
     selectedKeys: [],
     init: true, //  初始化
-    isShow: true
+    isShow: true,
 });
 const getClass = computed(() => {
-    if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
+    if (isUseCacheTabsSetting.value || isUseBreadCrumb.value) {
         return 'qm-aside-arrow-btn-has';
     }
     return 'qm-aside-arrow-btn-no-has';
 });
 const getArrow = computed(() => {
-    if (getShowCacheTabsSetting.value || getBreadCrumb.value) {
+    if (isUseCacheTabsSetting.value || isUseBreadCrumb.value) {
         return ['MenuFoldOutlined', 'MenuUnfoldOutlined'];
     }
     return ['CaretLeftOutlined', 'CaretRightOutlined'];
@@ -186,20 +187,20 @@ watch(
                 }, 500);
             }
         }, 300);
-    }
+    },
 );
 const jump_page = (item: MenuInfo) => {
     const _path = sysStore.getFormatIdRouteList[item.key as unknown as number].path || '/';
-    const _query = getAsideRepeatClick.value
+    const _query = isUseAsideRepeatClick.value
         ? {
-            t: Date.now()
-        }
+              t: Date.now(),
+          }
         : {};
     // 外链可以直接跳转
     if (!(_path.includes('http://') || _path.includes('https://') || _path.match(/^\/\//) != null)) {
         go({
             path: _path,
-            query: _query
+            query: _query,
         });
     }
 };

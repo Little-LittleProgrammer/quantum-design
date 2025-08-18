@@ -2,33 +2,41 @@
     "name": "@quantum-design/shared",
     "version": "2.0.3",
     "description": "",
-    "main": "index.js",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
+    "license": "MIT",
+    "author": "Evan Wu",
     "scripts": {
         "build": "rollup -c --environment TYPES:true"
-    },
-    "module": "dist/shared.esm.min.js",
-    "exports": {
-        "./enums": {
-            "require": "./dist/enums.cjs.min.js",
-            "import": "./dist/enums.esm.min.js",
-            "types": "./dist/types/enums.d.ts"
-        },
-        "./dist/*": "./dist/*",
-        "./package.json": "./package.json"
     },
     "files": [
         "dist"
     ],
-    "author": "Evan Wu",
-    "license": "MIT",
-    "devDependencies": {
-        "@quantum-design/types": "workspace:*",
-        "@quantum-design-configs/rollup": "workspace:*",
-        "rollup": "catalog:"
+    "main": "index.js",
+    "module": "dist/shared.esm.min.js",
+    "exports": {
+        "./enums": {
+            "types": "./dist/types/enums.d.ts",
+            "import": "./dist/enums.esm.min.js",
+            "require": "./dist/enums.cjs.min.js"
+        },
+        "./color": {
+            "types": "./dist/types/color.d.ts",
+            "import": "./dist/color.esm.min.js",
+            "require": "./dist/color.cjs.min.js"
+        },
+        "./dist/*": "./dist/*",
+        "./package.json": "./package.json"
     },
-    "dependencies": {}
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "dependencies": {
+        "@ctrl/tinycolor": "catalog:",
+        "theme-colors": "catalog:"
+    },
+    "devDependencies": {
+        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "rollup": "catalog:"
+    }
 }

@@ -20,5 +20,5 @@ export function usePermission() {
             return systemStore.getPermCodeList.includes(code);
         }
     }
-    return {hasPermission};
+    return { hasPermission };
 }

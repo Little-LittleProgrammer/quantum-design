@@ -112,6 +112,8 @@ pnpm commit
 - [x] 重构 ESLint 配置（`configs/eslint`），统一各工作区规则与插件版本。
 - [ ] Nuxt 升级到 Nuxt 4，并验证 `*-nuxt` 集成包的兼容性。
 - [x] 支持 tarui
+- [x] 重构 项目偏好设置，支持 css variables 模式， 多主题
+- [ ] 样式库重构，改成 css variables 模式， [TODO] antd design tokens 模式
 
 ### 4.0.0（规划）
 

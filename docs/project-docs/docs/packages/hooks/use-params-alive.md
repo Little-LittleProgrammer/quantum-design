@@ -9,14 +9,14 @@
 ```js
 import { useParamsAliveRoot } from '@quantum-design/hooks/vue';
 
-const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanCache, getCacheCanDrag, getShowQuick} = useProjectSetting(); // 项目全局动态配置, 如没有, 直接使用 enums/project-enum.ts 也可
+const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, isUseOpenKeepAlive, isUseCacheCanCache, isUseCacheCanDrag, isUseQuick} = useProjectSetting(); // 项目全局动态配置, 如没有, 直接使用 enums/project-enum.ts 也可
 
 
 useParamsAliveRoot({
     aliveTabs: cacheList, // 绑定开启的tabs
     projectSetting: { // 绑定项目全局配置
-        cache: getCacheCanCache, // 开启时, 会缓存已经开启的所有tab
-        keepalive: getOpenKeepAlive, // 开启时, 会缓存当前页面状态
+        cache: isUseCacheCanCache, // 开启时, 会缓存已经开启的所有tab
+        keepalive: isUseOpenKeepAlive, // 开启时, 会缓存当前页面状态
         show: getShowCacheTabsSetting // 开启时, 会打开 tab 
     }
 });

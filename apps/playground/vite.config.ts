@@ -1,6 +1,6 @@
 import { ConfigEnv, UserConfig } from 'vite';
 import { vite_common_vue_config } from '@quantum-design-configs/vite';
-import { antdCssData, baseScssFile } from './config/antd';
+import { baseScssFile } from './config/antd';
 import { resolve } from 'path';
 import process from 'process';
 
@@ -13,9 +13,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     return {
         ..._common,
         base: '/quantum-design/playground/',
-        define: {
-            cssData: antdCssData,
-        },
         css: {
             preprocessorOptions: {
                 scss: {

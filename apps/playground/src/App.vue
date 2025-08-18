@@ -1,3 +1,11 @@
+<template>
+    <a-config-provider :locale="locale" :theme="getThemeMode">
+        <div id="app">
+            <router-view></router-view>
+        </div>
+    </a-config-provider>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
@@ -5,7 +13,7 @@ import { get_net_router } from '@quantum-design/vue3-antd-pc-ui';
 import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
-import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
@@ -17,16 +25,16 @@ export default defineComponent({
         const locale = zhCN;
         const userStore = useUserStore();
         const globalStore = useGlobalStore();
-        const { getSearchButton } = useProjectSetting();
+        const { isUseSearchButton, theme } = useProjectSetting();
+        const { getThemeMode } = useThemeSetting(theme);
         const sysStore = useSysStore();
-        const { getThemeMode } = useThemeSetting();
         const go = useGo();
         const get_menus_data = async () => {
             const _res = import('@/menus/index');
             const _list = (await _res).default;
             sysStore.initMenuData = '/demo/form';
             sysStore.set_format_route_list(_list);
-            getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
+            isUseSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
             const curUrlInfo = js_utils_get_current_url();
             if (!curUrlInfo) {
                 go({
@@ -54,13 +62,6 @@ export default defineComponent({
 });
 </script>
 
-<template>
-    <a-config-provider :locale="locale" :theme="getThemeMode">
-        <div id="app">
-            <router-view></router-view>
-        </div>
-    </a-config-provider>
-</template>
 <style data-type="start">
 .style-start-load {
     text-align: center;

@@ -5,7 +5,7 @@ interface IStorageParams {
     prefixKey: string;
     storage: Storage;
     timeout?: number | null;
-    hasEncrypt: boolean
+    hasEncrypt: boolean;
 }
 
 type Options = Partial<IStorageParams>;
@@ -17,9 +17,9 @@ class WebStorage {
     hasEncrypt: boolean;
     encryption: Encryption;
     prefixKey: string;
-    timeout:number | null
+    timeout: number | null;
 
-    constructor(storage:Storage, prefixKey:string, hasEncrypt: boolean, encryption:Encryption, timeout:number | null) {
+    constructor(storage: Storage, prefixKey: string, hasEncrypt: boolean, encryption: Encryption, timeout: number | null) {
         this.storage = storage;
         this.prefixKey = prefixKey;
         this.hasEncrypt = hasEncrypt;
@@ -35,7 +35,7 @@ class WebStorage {
         const stringData = JSON.stringify({
             value,
             time: Date.now(),
-            expire: !isNullOrUndef(expire) ? new Date().getTime() + expire * 1000 : null
+            expire: !isNullOrUndef(expire) ? new Date().getTime() + expire * 1000 : null,
         });
         const storageData = this.hasEncrypt ? this.encryption.encryptByAES(stringData) : stringData;
         this.storage.setItem(this.getKey(key), storageData);
@@ -67,17 +67,12 @@ class WebStorage {
     }
 }
 
-export { WebStorage};
+export { WebStorage };
 
-export const js_create_storage = ({
-    prefixKey = '',
-    storage = localStorage,
-    timeout = null,
-    hasEncrypt = false
-}: Options) => {
+export const js_create_storage = ({ prefixKey = '', storage = localStorage, timeout = null, hasEncrypt = false }: Options) => {
     const encryption = new Encryption({
         key: '1F1F1F1E1E1E1D1D',
-        iv: '1A1A1A1B1B1B1C1C'
+        iv: '1A1A1A1B1B1B1C1C',
     });
     return new WebStorage(storage, prefixKey, hasEncrypt, encryption, timeout);
 };
@@ -89,14 +84,14 @@ const createOptions = (storage: Storage, options: Options = {}): Options => {
         storage,
         prefixKey: '',
         timeout: defaultCacheTime,
-        ...options
+        ...options,
     };
 };
 
 export const js_create_session_storage = (options: Options = {}) => {
-    return js_create_storage(createOptions(sessionStorage, { ...options, prefixKey: 'session'}));
+    return js_create_storage(createOptions(sessionStorage, { ...options, prefixKey: 'session' }));
 };
 
 export const js_create_local_storage = (options: Options = {}) => {
-    return js_create_storage(createOptions(localStorage, { ...options, prefixKey: 'local'}));
+    return js_create_storage(createOptions(localStorage, { ...options, prefixKey: 'local' }));
 };

@@ -1,8 +1,8 @@
-import {gRegEnum} from '@quantum-design/shared/enums';
+import { gRegEnum } from '@quantum-design/shared/enums';
 
 const toString = Object.prototype.toString;
 function user_agent() {
-    return typeof window !== 'undefined' && window.navigator && window.navigator.userAgent || 'server';
+    return (typeof window !== 'undefined' && window.navigator && window.navigator.userAgent) || 'server';
 }
 
 export function jsIs(val: unknown, type: string) {
@@ -147,13 +147,13 @@ export function isUrl(path: string): boolean {
 // 判断文件后缀是否为图片
 export function isImage(fileName: string): boolean {
     const _types = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'];
-    return _types.some(item => fileName.toLowerCase().includes(item));
+    return _types.some((item) => fileName.toLowerCase().includes(item));
 }
 
 // 判断文件后缀是否为视频
 export function isVideo(fileName: string): boolean {
     const _types = ['mp4', 'avi', 'wmv', 'mkv', 'mov', 'flv', 'webm'];
-    return _types.some(item => fileName.toLowerCase().includes(item));
+    return _types.some((item) => fileName.toLowerCase().includes(item));
 }
 
 // 判断当前浏览器环境
@@ -177,6 +177,10 @@ export function isIpad(): boolean {
     return /ipad/i.test(user_agent());
 }
 
+export function isMacOs(): boolean {
+    return /macintosh|mac os x/i.test(user_agent());
+}
+
 export function isWechat(): boolean {
     return /MicroMessenger/i.test(user_agent());
 }
@@ -192,9 +196,7 @@ export function isSafariBrowser(): boolean {
 export function isBaiduBrowser(): boolean {
     return /Baidu/i.test(user_agent());
 }
-export function js_utils_get_first_non_empty<T>(
-    ...values: (null | T | undefined)[]
-): T | undefined {
+export function getFirstNonEmpty<T>(...values: (null | T | undefined)[]): T | undefined {
     for (const value of values) {
         if (value !== undefined && value !== null) {
             return value;
