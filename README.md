@@ -110,14 +110,15 @@ pnpm commit
 
 - [x] Vite 升级到 v7，并同步更新 `configs/vite` 的 peer 依赖与适配。
 - [x] 重构 ESLint 配置（`configs/eslint`），统一各工作区规则与插件版本。
-- [ ] Nuxt 升级到 Nuxt 4，并验证 `*-nuxt` 集成包的兼容性。
 - [x] 支持 tarui
-- [x] 重构 项目偏好设置，支持 css variables 模式， 多主题
-- [ ] 样式库重构，改成 css variables 模式， [TODO] antd design tokens 模式
+- [x] 重构 项目偏好设置，支持 css variables 模式，多主题，支持系统主题获取
+- [x] 增加主题切换动画，视觉上降低卡顿效果
+- [x] 样式库重构，替换了 SCSS 变量为 CSS 变量
+- [ ] 样式体系切换到 Tailwind（与现有 SCSS 共存/迁移策略）。
+- [ ] Nuxt 升级到 Nuxt 4，并验证 `*-nuxt` 集成包的兼容性。
 
 ### 4.0.0（规划）
 
 - [ ] 升级 Vue 3.6。
 - [ ] 表格组件从 AntD Table 迁移到 `vxe-table`。
 - [ ] AntD 替换为 `shadcn-vue`（或提供可插拔主题方案）。
-- [ ] 样式体系切换到 Tailwind（与现有 SCSS 共存/迁移策略）。
