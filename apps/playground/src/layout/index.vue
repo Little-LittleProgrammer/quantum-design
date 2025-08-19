@@ -77,14 +77,13 @@ import { QLoading, QBreadcrumb } from '@quantum-design/vue3-pc-ui';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const { initProjectConfig, isUseSearchButton, isUseThemeSwitch, isUseReloadButton, isUseTransition, isUseCacheTabsSetting, isUseBreadCrumb, isUseBackTop, isUsePageLoading, isUseKeepAlive, isUseCacheCanDrag, isUseQuick, isUseCacheCanCache, isUseTableCacheSetting } = useProjectSetting();
+const { isUseSearchButton, isUseThemeSwitch, isUseReloadButton, isUseTransition, isUseCacheTabsSetting, isUseBreadCrumb, isUseBackTop, isUsePageLoading, isUseKeepAlive, isUseCacheCanDrag, isUseQuick, isUseCacheCanCache, isUseTableCacheSetting } = useProjectSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
     reloadLoading: false,
     width: '',
 });
-initProjectConfig({});
 // watch(route, (to, from) => {
 //     if (to.path == from.path && !to.query.no_refresh) {
 //         data.routeRefresh = 0;
@@ -158,8 +157,8 @@ watch(isUseTableCacheSetting, (val) => {
 <style lang="scss" scoped>
 .main-header {
     height: 40px;
-    padding-left: $space + 14;
-    @include bg-color(aside-bg);
+    padding-left: calc(var(--space) + 14px);
+    background-color: var(--aside-bg);
     .g-flex {
         width: 100%;
         height: 100%;
@@ -176,8 +175,7 @@ watch(isUseTableCacheSetting, (val) => {
             height: 28px;
             text-align: center;
             line-height: 30px;
-            border-left: 1px solid;
-            @include border-color(border-color, 'left');
+            border-left: 1px solid var(--border-color-base);
         }
     }
 }
@@ -195,7 +193,7 @@ watch(isUseTableCacheSetting, (val) => {
         font-size: 18px;
     }
     &:hover {
-        background: $header-tabs-hover-bg;
+        background: var(--header-tabs-hover-bg);
     }
 }
 

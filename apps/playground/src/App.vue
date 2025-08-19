@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :locale="locale" :theme="getThemeMode">
+    <a-config-provider :locale="locale" :theme="getThemeToken">
         <div id="app">
             <router-view></router-view>
         </div>
@@ -18,6 +18,7 @@ import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
 import { js_utils_get_current_url } from '@quantum-design/utils';
+import defaultSetting from './enums/projectEnum';
 
 export default defineComponent({
     name: 'App',
@@ -25,8 +26,9 @@ export default defineComponent({
         const locale = zhCN;
         const userStore = useUserStore();
         const globalStore = useGlobalStore();
-        const { isUseSearchButton, theme } = useProjectSetting();
-        const { getThemeMode } = useThemeSetting(theme);
+        const { isUseSearchButton, theme, initProjectConfig } = useProjectSetting();
+        initProjectConfig({ ...defaultSetting });
+        const { getThemeToken } = useThemeSetting(theme);
         const sysStore = useSysStore();
         const go = useGo();
         const get_menus_data = async () => {
@@ -53,7 +55,7 @@ export default defineComponent({
 
         return {
             locale,
-            getThemeMode,
+            getThemeToken,
             userStore,
             globalStore,
             sysStore,
@@ -75,7 +77,6 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
-@use '@quantum-design/styles/antd/antd.scss';
 @use '@quantum-design/styles/base/index.scss';
 .table-nowrap {
     .ant-table-cell {

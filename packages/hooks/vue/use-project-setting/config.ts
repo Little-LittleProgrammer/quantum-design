@@ -15,7 +15,7 @@ const defaultSetting: IProjectConfig = {
         colorSuccess: 'hsl(149, 82%, 38%)',
         colorWarning: 'hsl(36, 100%, 49%)',
         colorError: 'hsl(5, 90%, 55%)',
-        radius: '0.5',
+        radius: '0.1',
     },
     // 功能配置
     func: {

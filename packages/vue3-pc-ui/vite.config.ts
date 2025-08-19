@@ -61,13 +61,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     _common.plugins?.splice(2, 1);
     return {
         ..._common,
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    additionalData: "@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;",
-                },
-            },
-        },
         test: {
             environment: 'jsdom',
         },

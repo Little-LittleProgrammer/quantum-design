@@ -1,5 +1,5 @@
 <template>
-    <Modal
+    <modal
         :keyboard="closeOnPressEscape"
         :mask="mask"
         ref="contentRef"
@@ -40,9 +40,9 @@
                     <slot name="title">
                         {{ title }}
                         <slot v-if="titleTooltip" name="titleTooltip">
-                            <Tooltip :title="titleTooltip">
-                                <QuestionCircleOutlined class="modal-tooltip" />
-                            </Tooltip>
+                            <tooltip :title="titleTooltip">
+                                <question-circle-outlined class="modal-tooltip" />
+                            </tooltip>
                         </slot>
                     </slot>
                 </div>
@@ -98,12 +98,16 @@
                 <component :is="originVNode" />
             </div>
         </template>
-    </Modal>
+    </modal>
 </template>
 
 <script lang="ts" setup>
 defineOptions({
-    name: 'QAntdModal'
+    name: 'QAntdModal',
+});
+const props = withDefaults(defineProps<Props>(), {
+    appendToMain: false,
+    modalApi: undefined,
 });
 import { h, onBeforeUnmount } from 'vue';
 import { Modal, Tooltip } from 'ant-design-vue';
@@ -120,11 +124,6 @@ import { useModalDraggable } from './hooks/use-modal-draggable';
 interface Props extends ModalProps {
     modalApi?: ExtendedModalApi;
 }
-
-const props = withDefaults(defineProps<Props>(), {
-    appendToMain: false,
-    modalApi: undefined
-});
 
 const contentRef = ref();
 const wrapperRef = ref<HTMLElement>();
@@ -148,7 +147,7 @@ const { dragging, transform } = useModalDraggable(dialogRef, headerRef, shouldDr
 
 watch(
     () => state?.value?.isOpen,
-    async(v) => {
+    async (v) => {
         if (v) {
             await nextTick();
             if (!contentRef.value) return;
@@ -166,7 +165,7 @@ watch(
             props.modalApi?.onOpened();
         }
         props.modalApi?.onOpenChange(v);
-    }
+    },
 );
 
 watch(
@@ -175,16 +174,16 @@ watch(
         if ((s || l) && wrapperRef.value) {
             wrapperRef.value.scrollTo({
                 // behavior: 'smooth',
-                top: 0
+                top: 0,
             });
         }
-    }
+    },
 );
 
 function handleFullscreen() {
     console.log('getAppendTo', getAppendTo.value);
     props.modalApi?.setState({
-        fullscreen: !fullscreen.value
+        fullscreen: !fullscreen.value,
     });
 }
 
@@ -221,8 +220,7 @@ onBeforeUnmount(() => {
                 .modal-header {
                     padding: 16px 20px;
                     &--bordered {
-                        border-bottom: 1px solid;
-                        @include border-color(border-color, bottom);
+                        border-bottom: 1px solid var(--border-color-base);
                     }
                     &--hidden {
                         display: none;
@@ -256,8 +254,7 @@ onBeforeUnmount(() => {
                     cursor: pointer;
 
                     &:hover {
-                        background-color: var(--accent-color);
-                        color: var(--accent-foreground-color);
+                        color: var(--primary-color);
                         opacity: 1;
                     }
 
@@ -289,11 +286,11 @@ onBeforeUnmount(() => {
             }
         }
         @media (min-width: 640px) {
-            border-radius: var(--radius);
+            border-radius: var(--border-radius-base);
         }
 
         &--bordered {
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-color-base);
         }
 
         &--shadow {
@@ -336,7 +333,7 @@ onBeforeUnmount(() => {
         padding: 8px;
 
         &--bordered {
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color-base);
         }
     }
 }

@@ -10,8 +10,6 @@ export function useAntdDesignTokens() {
         colorBgBase: '',
         colorBgContainer: '',
         colorBgElevated: '',
-        colorBgLayout: '',
-        colorBgMask: '',
         colorBorder: '',
         colorBorderSecondary: '',
         colorError: '',
@@ -20,7 +18,10 @@ export function useAntdDesignTokens() {
         colorSuccess: '',
         colorTextBase: '',
         colorWarning: '',
-        zIndexPopupBase: 2000, // 调整基础弹层层级，避免下拉等组件被弹窗或者最大化状态下的表格遮挡
+        colorLink: '',
+        colorPrimaryHover: '',
+        colorLinkHover: '',
+        colorTextDisabled: '',
     });
 
     const getCssVariableValue = (variable: string, trim: boolean = true) => {
@@ -41,23 +42,22 @@ export function useAntdDesignTokens() {
 
             tokens.colorSuccess = getCssVariableValue('--success-color');
 
+            tokens.colorLink = getCssVariableValue('--link-color');
+
+            tokens.colorPrimaryHover = getCssVariableValue('--hover-link-color');
+
+            tokens.colorLinkHover = getCssVariableValue('--hover-link-color');
+
             tokens.colorTextBase = getCssVariableValue('--text-color');
-
-            // 不再需要获取 --primary-foreground
-
+            tokens.colorTextDisabled = getCssVariableValue('--disabled-color');
             tokens.colorBorderSecondary = tokens.colorBorder = getCssVariableValue('--border-color-base');
-
-            // 使用合适的背景色变量
             tokens.colorBgElevated = getCssVariableValue('--aside-bg');
 
             tokens.colorBgContainer = getCssVariableValue('--aside-bg');
 
             tokens.colorBgBase = getCssVariableValue('--body-bg');
 
-            const radius = Number.parseFloat(getCssVariableValue('--border-radius-base'));
-            tokens.borderRadius = radius * 16;
-
-            tokens.colorBgLayout = getCssVariableValue('--body-bg');
+            tokens.borderRadius = getCssVariableValue('--body-bg');
         },
         { immediate: true },
     );

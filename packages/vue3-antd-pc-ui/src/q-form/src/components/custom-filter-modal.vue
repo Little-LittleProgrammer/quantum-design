@@ -84,7 +84,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<ICustomFilterModalProps>(), {
     title: '自定义筛选项',
-    showResetButton: true
+    showResetButton: true,
 });
 
 const emit = defineEmits<Emits>();
@@ -192,7 +192,7 @@ const onCheckAllChange = (e: any) => {
 };
 
 // 初始化拖拽排序
-const initSortable = async() => {
+const initSortable = async () => {
     await nextTick();
     if (!sortableContainer.value) return;
 
@@ -216,7 +216,7 @@ const initSortable = async() => {
                     fieldOrder.value.splice(newIndex, 0, movedField);
                 }
             }
-        }
+        },
     });
 };
 
@@ -257,14 +257,14 @@ watch(
             });
         }
     },
-    { immediate: true }
+    { immediate: true },
 );
 
 // 事件处理
 const handleConfirm = () => {
     emit('confirm', {
         selectedFields: [...selectedFields.value], // 创建纯数组副本
-        fieldOrder: [...fieldOrder.value] // 创建纯数组副本
+        fieldOrder: [...fieldOrder.value], // 创建纯数组副本
     });
     emit('update:visible', false);
 };
@@ -293,7 +293,7 @@ export default {
         AModal,
         AButton,
         ASpace,
-        HolderOutlined
-    }
+        HolderOutlined,
+    },
 };
 </script>

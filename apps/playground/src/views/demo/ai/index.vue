@@ -83,7 +83,7 @@ import { createAliyunProvider, AliyunModels, type AIMessage, type AliyunProvider
 import { useForm, QAntdForm, type FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 
 defineOptions({
-    name: 'AiDemo'
+    name: 'AiDemo',
 });
 
 // 消息数据
@@ -114,7 +114,7 @@ const modelOptions = [
     { label: '通义千问 3 235B', value: AliyunModels.QWen3_235B_Instruct },
     { label: 'DeepSeek V3', value: AliyunModels.DeepSeekV3 },
     { label: 'DeepSeek R1', value: AliyunModels.DeepSeekR1 },
-    { label: 'QVQ Max (图片理解)', value: AliyunModels.QvqMax }
+    { label: 'QVQ Max (图片理解)', value: AliyunModels.QvqMax },
 ];
 
 // 表单配置 schemas
@@ -126,9 +126,9 @@ const schemas = computed<FormSchema[]>(() => [
         colProps: { span: 12 },
         componentProps: {
             placeholder: '请输入阿里云 DashScope API Key',
-            disabled: loading.value
+            disabled: loading.value,
         },
-        required: true
+        required: true,
     },
     {
         field: 'modelName',
@@ -138,9 +138,9 @@ const schemas = computed<FormSchema[]>(() => [
         componentProps: {
             placeholder: '选择模型',
             disabled: loading.value,
-            options: modelOptions
+            options: modelOptions,
         },
-        required: true
+        required: true,
     },
     {
         field: 'bailianAppId',
@@ -149,8 +149,8 @@ const schemas = computed<FormSchema[]>(() => [
         colProps: { span: 8 },
         componentProps: {
             placeholder: '百炼应用 ID',
-            disabled: loading.value
-        }
+            disabled: loading.value,
+        },
     },
     {
         field: 'temperature',
@@ -161,8 +161,8 @@ const schemas = computed<FormSchema[]>(() => [
             min: 0,
             max: 1,
             step: 0.1,
-            disabled: loading.value
-        }
+            disabled: loading.value,
+        },
     },
     {
         field: 'maxTokens',
@@ -173,8 +173,8 @@ const schemas = computed<FormSchema[]>(() => [
             min: 1,
             max: 4000,
             disabled: loading.value,
-            style: { width: '100%' }
-        }
+            style: { width: '100%' },
+        },
     },
     {
         field: 'streamMode',
@@ -182,9 +182,9 @@ const schemas = computed<FormSchema[]>(() => [
         component: 'Switch',
         colProps: { span: 8 },
         componentProps: {
-            disabled: loading.value
-        }
-    }
+            disabled: loading.value,
+        },
+    },
 ]);
 
 // 表单注册
@@ -194,7 +194,7 @@ const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     baseColProps: { span: 24 },
     showSubmitButton: false,
     submitOnReset: false,
-    autoSubmitOnEnter: false
+    autoSubmitOnEnter: false,
 });
 
 // 计算属性
@@ -237,32 +237,32 @@ const initProvider = (values: any) => {
             bailianAppId: values.bailianAppId || undefined,
             timeout: 60000,
             maxRetries: 3,
-            baseURL: '/ai'
+            baseURL: '/ai',
         });
 
         statusInfo.value = {
             type: 'success',
             message: '提供商初始化成功',
-            description: `模型: ${values.modelName}${values.bailianAppId ? ', 百炼应用: ' + values.bailianAppId : ''}`
+            description: `模型: ${values.modelName}${values.bailianAppId ? ', 百炼应用: ' + values.bailianAppId : ''}`,
         };
     } catch (error) {
         statusInfo.value = {
             type: 'error',
             message: '提供商初始化失败',
-            description: error instanceof Error ? error.message : '未知错误'
+            description: error instanceof Error ? error.message : '未知错误',
         };
         throw error;
     }
 };
 
-const scrollToBottom = async() => {
+const scrollToBottom = async () => {
     await nextTick();
     if (messagesContainer.value) {
         messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
     }
 };
 
-const sendMessage = async() => {
+const sendMessage = async () => {
     if (!canSend.value) return;
 
     try {
@@ -277,7 +277,7 @@ const sendMessage = async() => {
 
         const userMessage: AIMessage = {
             role: 'user',
-            content: inputMessage.value.trim()
+            content: inputMessage.value.trim(),
         };
 
         // 添加用户消息
@@ -296,7 +296,7 @@ const sendMessage = async() => {
             for await (const chunk of provider!.generateStream({
                 messages: allMessages,
                 temperature: values.temperature,
-                maxTokens: values.maxTokens
+                maxTokens: values.maxTokens,
             })) {
                 assistantContent += chunk.content;
                 streamContent.value = assistantContent;
@@ -318,7 +318,7 @@ const sendMessage = async() => {
             const assistantMessage: AIMessage & { usage?: any } = {
                 role: 'assistant',
                 content: assistantContent,
-                usage
+                usage,
             };
 
             if (assistantReasoningContent) {
@@ -333,13 +333,13 @@ const sendMessage = async() => {
             const response = await provider!.generate({
                 messages: allMessages,
                 temperature: values.temperature,
-                maxTokens: values.maxTokens
+                maxTokens: values.maxTokens,
             });
 
             const assistantMessage: AIMessage & { usage?: any } = {
                 role: 'assistant',
                 content: response.content,
-                usage: response.usage
+                usage: response.usage,
             };
 
             if (response.reasoning_content) {
@@ -356,7 +356,7 @@ const sendMessage = async() => {
         statusInfo.value = {
             type: 'error',
             message: '发送消息失败',
-            description: error instanceof Error ? error.message : '未知错误'
+            description: error instanceof Error ? error.message : '未知错误',
         };
         message.error('发送消息失败');
     } finally {
@@ -384,7 +384,7 @@ onMounted(() => {
     // 添加欢迎消息
     messages.value.push({
         role: 'system',
-        content: '欢迎使用 AI Hub Demo！请先配置 API Key 和选择模型，然后开始对话。'
+        content: '欢迎使用 AI Hub Demo！请先配置 API Key 和选择模型，然后开始对话。',
     });
 
     // 设置表单初始值
@@ -394,7 +394,7 @@ onMounted(() => {
         bailianAppId: '',
         temperature: 0.7,
         maxTokens: 1000,
-        streamMode: true
+        streamMode: true,
     });
 });
 </script>
@@ -407,7 +407,7 @@ onMounted(() => {
 
     .demo-card {
         .config-section {
-            background: #fafafa;
+            background: var(--body-bg);
             padding: 16px;
             border-radius: 6px;
             margin-bottom: 16px;
@@ -427,7 +427,7 @@ onMounted(() => {
                 border-radius: 6px;
                 padding: 16px;
                 margin-bottom: 16px;
-                background: #ffffff;
+                background: var(--body-bg);
 
                 .message {
                     display: flex;
@@ -444,7 +444,7 @@ onMounted(() => {
 
                         .message-content {
                             order: 1;
-                            background: #1890ff;
+                            background: var(--primary-color);
                             color: white;
                             margin-right: 8px;
                         }
@@ -467,8 +467,8 @@ onMounted(() => {
                         }
 
                         .message-content {
-                            background: #f6f6f6;
-                            color: #333;
+                            background: var(--body-bg);
+                            color: var(--text-color);
                             margin-left: 8px;
                         }
                     }
@@ -477,9 +477,9 @@ onMounted(() => {
                         justify-content: center;
 
                         .message-content {
-                            background: #fff7e6;
-                            color: #d46b08;
-                            border: 1px solid #ffd591;
+                            background: var(--body-bg);
+                            color: var(--text-color);
+                            border: 1px solid var(--border-color-base);
                         }
                     }
 
@@ -502,9 +502,9 @@ onMounted(() => {
 
                         .reasoning-content {
                             margin-bottom: 12px;
-                            border: 1px solid #e8f4fd;
+                            border: 1px solid var(--border-color-base);
                             border-radius: 6px;
-                            background: #f8fcff;
+                            background: var(--body-bg);
 
                             .reasoning-text {
                                 white-space: pre-wrap;
@@ -520,7 +520,7 @@ onMounted(() => {
                             :deep(.ant-collapse-ghost > .ant-collapse-item > .ant-collapse-header) {
                                 padding: 8px 12px;
                                 font-size: 13px;
-                                color: #1890ff;
+                                color: var(--primary-color);
                                 font-weight: 500;
                             }
 
@@ -577,16 +577,16 @@ onMounted(() => {
 }
 
 .chat-messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--body-bg);
     border-radius: 3px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: var(--border-color-base);
     border-radius: 3px;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: var(--border-color-base);
 }
 </style>

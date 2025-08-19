@@ -2,7 +2,7 @@
 <template>
     <div class="q-loading-page-container">
         <div class="loading-container" v-if="loading">
-            <div class="loading" ref="ref-loading" :class="size">
+            <div class="loading" :class="size">
                 <template v-if="mode == 'four-part'">
                     <div class="loading-back-four-part">
                         <div class="back1"></div>
@@ -37,14 +37,14 @@
 import { reactive, onBeforeMount, watch, onBeforeUnmount } from 'vue';
 import { loadingProps } from './loadingTypes';
 defineOptions({
-    name: 'QLoading'
+    name: 'QLoading',
 });
 
 const props = defineProps(loadingProps);
 
 let timeout: ReturnType<typeof setTimeout>;
 const data = reactive({
-    height: 0
+    height: 0,
 });
 onBeforeMount(() => {
     clearInterval(timeout);
@@ -82,7 +82,7 @@ watch(
             clearInterval(timeout);
         }
     },
-    { immediate: true }
+    { immediate: true },
 );
 onBeforeUnmount(() => {
     clearInterval(timeout);
@@ -357,7 +357,7 @@ onBeforeUnmount(() => {
                     display: inline-block;
                     height: 50%;
                     width: 50%;
-                    background-color: $header-environment-color;
+                    background-color: var(--header-environment-color);
                 }
                 .back1 {
                     border-top-left-radius: 10px;
@@ -388,7 +388,7 @@ onBeforeUnmount(() => {
                     display: inline-block;
                     height: 100%;
                     width: 34%;
-                    background-color: $header-environment-color;
+                    background-color: var(--header-environment-color);
                 }
                 .back1 {
                     left: -1000%;
@@ -414,7 +414,7 @@ onBeforeUnmount(() => {
                 width: 100%;
                 border-radius: 10px;
                 font-size: 0;
-                background-color: $header-environment-color;
+                background-color: var(--header-environment-color);
                 animation: rotate 1.5s infinite;
             }
             .loading-back-wave {
@@ -425,12 +425,12 @@ onBeforeUnmount(() => {
                 font-size: 0;
                 top: 0;
                 overflow: hidden;
-                background-color: $header-environment-color;
+                background-color: var(--header-environment-color);
                 .wave {
                     position: absolute;
                     height: 200%;
                     width: 200%;
-                    @include bg-color(aside-bg);
+                    background-color: var(--aside-bg);
                     border-radius: 30px;
                     left: -50%;
                     animation: wave 1.5s linear infinite;

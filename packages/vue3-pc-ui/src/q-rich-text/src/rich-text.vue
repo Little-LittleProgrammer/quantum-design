@@ -1,4 +1,11 @@
 <!-- 动态加载组件 rich-text  -->
+<template>
+    <div class="q-rich-text" :style="{ width: containerWidth }">
+        <textarea :id="tinymceId" ref="elRef" :style="{ visibility: 'hidden' }" v-if="canUse && !initOptions.inline"></textarea>
+        <slot v-else></slot>
+    </div>
+</template>
+
 <script lang="ts" setup>
 import { ref, type PropType, computed, unref, watch, onBeforeUnmount, useAttrs } from 'vue';
 import { bindHandlers, plugins as defaultPlugins, toolbar as defaultToolbar } from './tinymce';
@@ -303,13 +310,6 @@ onBeforeUnmount(() => {
     destory();
 });
 </script>
-
-<template>
-    <div class="q-rich-text" :style="{ width: containerWidth }">
-        <textarea :id="tinymceId" ref="elRef" :style="{ visibility: 'hidden' }" v-if="canUse && !initOptions.inline"></textarea>
-        <slot v-else></slot>
-    </div>
-</template>
 <style lang="scss">
 @use './style/content.min.css';
 @use './style/skin.min.css';

@@ -1,12 +1,21 @@
-import type { IProjectConfig } from '@quantum-design/vue3-antd-pc-ui';
+import type { IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
 
 const setting: IProjectConfig = {
     // 主题配置
     theme: {
+        // 内置主题类型
+        builtinType: 'default',
+        // 当前主题
+        mode: 'light',
         // 是否展示主题切换按钮
         showDarkModeToggle: true,
         // 是否开启网站灰色模式，悼念的日期开启(4.4, 4.5, 12.13)
-        grayMode: false
+        grayMode: false,
+        colorPrimary: 'hsl(41, 79%, 50%)',
+        colorSuccess: 'hsl(149, 82%, 38%)',
+        colorWarning: 'hsl(36, 100%, 49%)',
+        colorError: 'hsl(5, 90%, 55%)',
+        radius: '0.5',
     },
     // 功能配置
     func: {
@@ -23,7 +32,7 @@ const setting: IProjectConfig = {
         // 是否显示刷新按钮
         showReloadButton: true,
         // 是否开启表格缓存
-        tableCache: true
+        tableCache: true,
     },
     cacheTabsSetting: {
         // 是否展示
@@ -35,7 +44,7 @@ const setting: IProjectConfig = {
         // 是否可以拖拽
         canDrag: true,
         // 刷新后是否保留已经打开的标签页
-        cache: false
+        cache: false,
     },
     // 动画配置
     transition: {
@@ -44,9 +53,8 @@ const setting: IProjectConfig = {
         // 是否打开页面切换loading
         openPageLoading: true,
         // 是否打开页面切换顶部进度条
-        openNProgress: true
-    }
-
+        openNProgress: true,
+    },
 };
 
 export default setting;

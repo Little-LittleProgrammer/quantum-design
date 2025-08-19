@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <a-input disabled :style="{width}" placeholder="点击选择图标" v-model:value="data.currentSelect">
+    <a-input disabled :style="{ width }" placeholder="点击选择图标" v-model:value="data.currentSelect">
         <template #addonAfter>
             <a-popover placement="bottomRight" trigger="click" v-model="data.visible" overlayClassName="icon-popover">
                 <template #title>
@@ -12,78 +12,61 @@
                     <div v-if="getPaginationList.length" class="icon-context">
                         <div class="icon-table">
                             <ul class="table-row">
-                                <li
-                                    v-for="icon in getPaginationList"
-                                    class="table-element"
-                                    :key="icon"
-                                    :class="data.currentSelect === icon ? 'selected': ''"
-                                    @click="handle_click(icon)"
-                                    :title="icon"
-                                >
-                                    <Icon :type="icon as 'default'"/>
+                                <li v-for="icon in getPaginationList" class="table-element" :key="icon" :class="data.currentSelect === icon ? 'selected' : ''" @click="handle_click(icon)" :title="icon">
+                                    <icon :type="icon as 'default'" />
                                 </li>
                             </ul>
                         </div>
 
                         <div class="icon-pagination" v-if="getTotal >= pageSize">
-                            <a-pagination
-                                size="small"
-                                :pageSize="pageSize"
-                                :showSizeChanger="false"
-                                :total="getTotal"
-                                @change="handle_page_change"
-                            />
+                            <a-pagination size="small" :pageSize="pageSize" :showSizeChanger="false" :total="getTotal" @change="handle_page_change" />
                         </div>
                     </div>
                     <template v-else>
                         <a-empty></a-empty>
                     </template>
                 </template>
-                <Icon :type="(data.currentSelect || 'AppstoreOutlined') as 'AppstoreOutlined'" class="qm-cursor-style-point"></Icon>
+                <icon :type="(data.currentSelect || 'AppstoreOutlined') as 'AppstoreOutlined'" class="qm-cursor-style-point"></icon>
             </a-popover>
         </template>
     </a-input>
 </template>
 
-<script lang='ts' setup>
-import { reactive, onMounted, watch, watchEffect, ref} from 'vue';
+<script lang="ts" setup>
+import { reactive, onMounted, watch, watchEffect, ref } from 'vue';
 import { icons } from '../data/icons-data';
 import { js_utils_throttle_event } from '@quantum-design/utils';
 import { usePagination } from '@quantum-design/hooks/vue';
-import {Icon} from './icon';
+import { Icon } from './icon';
 import { iconPickProps } from './types';
-import {Input as AInput, Pagination as APagination, Popover as APopover, Empty as AEmpty} from 'ant-design-vue';
+import { Input as AInput, Pagination as APagination, Popover as APopover, Empty as AEmpty } from 'ant-design-vue';
 import './style/icon-picker.scss';
 defineOptions({
-    name: 'QAntdIconPicker'
+    name: 'QAntdIconPicker',
 });
 
+const props = defineProps(iconPickProps);
+const emit = defineEmits(['change', 'update:value']);
 interface DataProps {
     currentSelect: string; // 当前选择的图标
     visible: boolean; // 图标选择可视
 }
-const props = defineProps(iconPickProps);
-
-const emit = defineEmits(['change', 'update:value']);
 const data: DataProps = reactive({
     currentSelect: '',
-    visible: false
+    visible: false,
 });
 const currentList = ref(icons);
 
-const { getPaginationList, getTotal, setCurrentPage } = usePagination(
-    currentList,
-    props.pageSize
-);
+const { getPaginationList, getTotal, setCurrentPage } = usePagination(currentList, props.pageSize);
 
-function throttle_event_search(e:ChangeEvent) {
+function throttle_event_search(e: ChangeEvent) {
     js_utils_throttle_event(handle_search_change, {
         time: 100,
-        args: [e]
+        args: [e],
     });
 }
 
-function handle_page_change(page:number) {
+function handle_page_change(page: number) {
     setCurrentPage(page);
 }
 
@@ -93,10 +76,10 @@ watchEffect(() => {
 
 watch(
     () => data.currentSelect,
-    (val:string) => {
+    (val: string) => {
         emit('update:value', val);
         return emit('change', val);
-    }
+    },
 );
 
 function handle_search_change(e: ChangeEvent) {
@@ -118,7 +101,5 @@ function handle_click(icon: string) {
         data.currentSelect = icon;
     }
 }
-onMounted(() => {
-});
-
+onMounted(() => {});
 </script>

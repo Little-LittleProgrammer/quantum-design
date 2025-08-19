@@ -1,17 +1,10 @@
 <!--  -->
 <template>
     <div class="q-upload q-card-upload">
-        <a-upload
-            listType="picture-card"
-            class="avatar-uploader"
-            :showUploadList="false"
-            :accept="accept"
-            :before-upload="before_upload"
-            :customRequest="upload_file"
-            @change="handle_change">
-            <div v-if="!data.uploadLoading && data.imageUrl" class="show-img" :class="{hover: data.getHover}" @mouseenter="set_class(true)" @mouseleave="set_class(false)">
+        <a-upload listType="picture-card" class="avatar-uploader" :showUploadList="false" :accept="accept" :before-upload="before_upload" :customRequest="upload_file" @change="handle_change">
+            <div v-if="!data.uploadLoading && data.imageUrl" class="show-img" :class="{ hover: data.getHover }" @mouseenter="set_class(true)" @mouseleave="set_class(false)">
                 <video :src="data.fullUrl || data.imageUrl" v-if="data.fileType === 'video'"></video>
-                <img :src="data.fullUrl || data.imageUrl" alt="avatar" v-else-if="data.fileType === 'image'"/>
+                <img :src="data.fullUrl || data.imageUrl" alt="avatar" v-else-if="data.fileType === 'image'" />
                 <div class="file-desc" v-else>
                     <q-icon type="FileOutlined"></q-icon>
                     <p>{{ data.fileName }}</p>
@@ -40,17 +33,17 @@
         </a-upload>
         <slot name="right" v-if="props.rightShow">
             <div class="upload-right">
-                <span v-if="isString(markWord)">{{markWord}}</span>
+                <span v-if="isString(markWord)">{{ markWord }}</span>
                 <template v-else>
                     <div v-for="item in markWord" :key="item">
-                        <span>{{item}}</span>
+                        <span>{{ item }}</span>
                     </div>
                 </template>
             </div>
         </slot>
         <a-modal class="preview" :open="data.modalVisible" :footer="null" @cancel="close_modal">
-            <video style="width: 100%; height: 100%;" controls muted :src="data.modalImageUrl" v-if="data.fileType === 'video'"></video>
-            <img style="width: 100%; height: 100%;" v-else :src="data.modalImageUrl" alt="">
+            <video style="width: 100%; height: 100%" controls muted :src="data.modalImageUrl" v-if="data.fileType === 'video'"></video>
+            <img style="width: 100%; height: 100%" v-else :src="data.modalImageUrl" alt="" />
         </a-modal>
     </div>
 </template>
@@ -60,24 +53,13 @@ import { useMessage } from '@quantum-design/hooks/vue/use-message';
 import { propTypes } from '@quantum-design/types/vue/types';
 import { isFunction, isString, isImage, isVideo } from '@quantum-design/utils';
 import { type PropType, reactive, watch } from 'vue';
-import {Upload as AUpload, Modal as AModal, Button as AButton} from 'ant-design-vue';
-import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
+import { Upload as AUpload, Modal as AModal, Button as AButton } from 'ant-design-vue';
+import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 import './style/card-upload.scss';
 import type { ILimit } from './types';
 defineOptions({
-    name: 'QAntdCardUpload'
+    name: 'QAntdCardUpload',
 });
-interface DataProps {
-    uploadLoading: boolean
-    imageUrl: string
-    imgFlag: boolean
-    fileType: '' | 'image' | 'video' | 'other'
-    fileName: string
-    getHover: boolean
-    modalImageUrl: string
-    modalVisible: boolean
-    fullUrl: string
-}
 const props = defineProps({
     markWord: propTypes.any.def('格式要求PNG'),
     value: propTypes.string.def(''),
@@ -87,22 +69,33 @@ const props = defineProps({
     maxSize: propTypes.number.def(0),
     maxSizeMessage: propTypes.string.def(''),
     limit: {
-        type: Object as PropType<ILimit>
+        type: Object as PropType<ILimit>,
     },
     rightShow: propTypes.bool.def(false),
     uploadApi: {
-        type: Function as PropType<(params: UploadFileParams)=> any>,
-        default: () => {}
+        type: Function as PropType<(params: UploadFileParams) => any>,
+        default: () => {},
     },
     curstomApiParams: {
         type: Object,
-        default: () => {}
+        default: () => {},
     },
     customBeforeUpload: {
-        type: Function as PropType<(file: File) => boolean | Promise<any>>
-    }
+        type: Function as PropType<(file: File) => boolean | Promise<any>>,
+    },
 });
 const emit = defineEmits(['update:value', 'change', 'validatedFile']);
+interface DataProps {
+    uploadLoading: boolean;
+    imageUrl: string;
+    imgFlag: boolean;
+    fileType: '' | 'image' | 'video' | 'other';
+    fileName: string;
+    getHover: boolean;
+    modalImageUrl: string;
+    modalVisible: boolean;
+    fullUrl: string;
+}
 const { createMessage } = useMessage();
 const data: DataProps = reactive({
     uploadLoading: false,
@@ -113,7 +106,7 @@ const data: DataProps = reactive({
     getHover: false,
     modalVisible: false,
     modalImageUrl: '',
-    fullUrl: ''
+    fullUrl: '',
 });
 function set_class(flag: boolean) {
     data.getHover = flag;
@@ -138,7 +131,7 @@ async function before_upload(file: File) {
     }
     // 校验文件大小
     if (props.maxSize !== 0 && file.size > props.maxSize * 1024) {
-        createMessage.error(props.maxSizeMessage || `上传文件的大小不得大于${props.maxSize >= 1024 ? (props.maxSize / 1024) + 'M' : props.maxSize + 'K'}`);
+        createMessage.error(props.maxSizeMessage || `上传文件的大小不得大于${props.maxSize >= 1024 ? props.maxSize / 1024 + 'M' : props.maxSize + 'K'}`);
         return false;
     }
     // 校验文件宽高
@@ -167,7 +160,7 @@ function check_image_wh(file: File, limit: ILimit) {
         _fileReader.onload = (e: any) => {
             const _src = e.target.result;
             const _image = new Image();
-            _image.onload = function() {
+            _image.onload = function () {
                 if (limit.type === 'size') {
                     if (limit.width && limit.height) {
                         return _image.width === limit.width && _image.height === limit.height ? resolve(_image) : resolve(false);
@@ -185,7 +178,7 @@ function check_image_wh(file: File, limit: ILimit) {
                         return _image.height <= limit.height ? resolve(_image) : resolve(false);
                     }
                 } else {
-                    return (_image.width / _image.height) === (Number(limit.width) / Number(limit.height)) ? resolve(_image) : resolve(false);
+                    return _image.width / _image.height === Number(limit.width) / Number(limit.height) ? resolve(_image) : resolve(false);
                 }
             };
             _image.onerror = reject;
@@ -195,7 +188,7 @@ function check_image_wh(file: File, limit: ILimit) {
 }
 // 校验视频宽高或时长
 function check_video_valide(file: File, limit: ILimit) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         const _url = URL.createObjectURL(file);
         const _video = document.createElement('video');
         _video.onloadedmetadata = (e: any) => {
@@ -221,17 +214,15 @@ function check_video_valide(file: File, limit: ILimit) {
                     return e.target.videoHeight <= limit.height ? resolve(e.target) : resolve(false);
                 }
             } else {
-                return (e.target.videoWidth / e.target.videoHeight) === (Number(limit.width) / Number(limit.height)) ? resolve(e.target) : resolve(false);
+                return e.target.videoWidth / e.target.videoHeight === Number(limit.width) / Number(limit.height) ? resolve(e.target) : resolve(false);
             }
         };
         _video.src = _url;
         _video.load();
-    }).catch(
-        () => {
-            createMessage.error('上传视频时长不符合要求');
-            return Promise.reject();
-        }
-    );
+    }).catch(() => {
+        createMessage.error('上传视频时长不符合要求');
+        return Promise.reject();
+    });
 }
 async function upload_file(option: UploadFileParams) {
     data.imgFlag = true;
@@ -241,7 +232,7 @@ async function upload_file(option: UploadFileParams) {
     const _req = {
         action: 'upload',
         file: _file,
-        ...props.curstomApiParams
+        ...props.curstomApiParams,
     };
     option.onProgress(); // 进度条
     try {
@@ -295,33 +286,42 @@ function remove_img(e: ChangeEvent) {
     emit('change', '');
 }
 
-watch(() => props.value, (val) => {
-    if (data.imgFlag) {
-        if (val.includes('http')) {
-            data.imageUrl = val || '';
-            data.fileType = isImage(val) ? 'image' : (isVideo(val) ? 'video' : 'other');
-            data.fileName = val.split('/').at(-1) || '';
-        } else {
-            data.imageUrl = val || '';
+watch(
+    () => props.value,
+    (val) => {
+        if (data.imgFlag) {
+            if (val.includes('http')) {
+                data.imageUrl = val || '';
+                data.fileType = isImage(val) ? 'image' : isVideo(val) ? 'video' : 'other';
+                data.fileName = val.split('/').at(-1) || '';
+            } else {
+                data.imageUrl = val || '';
+            }
         }
-    }
-    if (!val) {
-        data.imageUrl = '';
-    }
-}, {
-    immediate: true
-});
+        if (!val) {
+            data.imageUrl = '';
+        }
+    },
+    {
+        immediate: true,
+    },
+);
 
-watch(() => props.fullUrl, (val) => {
-    if (val) {
-        data.fullUrl = val;
-        data.fileType = isImage(val) ? 'image' : (isVideo(val) ? 'video' : 'other');
-        data.fileName = val.split('/').at(-1) || '';
-    }
-}, {immediate: true});
+watch(
+    () => props.fullUrl,
+    (val) => {
+        if (val) {
+            data.fullUrl = val;
+            data.fileType = isImage(val) ? 'image' : isVideo(val) ? 'video' : 'other';
+            data.fileName = val.split('/').at(-1) || '';
+        }
+    },
+    { immediate: true },
+);
 
 // 对父组件暴露图片/视频校验方法，可用于自定义校验规则
 defineExpose({
-    check_image_wh, check_video_valide
+    check_image_wh,
+    check_video_valide,
 });
 </script>

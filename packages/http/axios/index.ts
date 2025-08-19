@@ -5,25 +5,12 @@ import type { AxiosResponse } from 'axios';
 import type { AxiosTransform, CreateAxiosOptions } from './axios-transform';
 import { VAxios } from './axios';
 import { check_status } from './check-status';
-import {
-    gContentTypeEnum,
-    gRequestEnum,
-    gResultEnum
-} from '@quantum-design/shared/enums';
-import {
-    js_utils_deep_merge,
-    isString,
-    isService
-} from '@quantum-design/utils';
-import {
-    joinTimestamp,
-    joinEnvToUrl,
-    joinCookieToUrl,
-    dealToken
-} from './helper';
+import { gContentTypeEnum, gRequestEnum, gResultEnum } from '@quantum-design/shared/enums';
+import { js_utils_deep_merge, isString, isService } from '@quantum-design/utils';
+import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from './helper';
 import { AxiosRetry } from './axios-retry';
 
-const { setTokenToHeader, setTokenToLs, } = dealToken();
+const { setTokenToHeader, setTokenToLs } = dealToken();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -35,7 +22,7 @@ export const defaultTransform: AxiosTransform = {
      * @param options
      */
     beforeRequestHook: (config, options) => {
-        const { apiUrl, urlPrefix, joinTime = true, env = () => '', joinPrefix, joinCookie = true, } = options;
+        const { apiUrl, urlPrefix, joinTime = true, env = () => '', joinPrefix, joinCookie = true } = options;
         const params = config.params || {};
         const data = config.data || false;
 
@@ -122,7 +109,7 @@ export const defaultTransform: AxiosTransform = {
             setTokenToLs(options.requestOptions?.withToken || true, res);
             if (!isService) {
                 window.location.reload();
-            } 
+            }
             return res;
         } else if (res.data.code == gResultEnum.LOGIN) {
             if (!isService) {
@@ -177,7 +164,7 @@ export const defaultTransform: AxiosTransform = {
 
         // 添加自动重试机制
         const retry = new AxiosRetry();
-        const { isOpenRetry, } = options.requestOptions?.retryRequest || {};
+        const { isOpenRetry } = options.requestOptions?.retryRequest || {};
         // 重试请求只针对get
         if (error && error.config?.method && error.config?.method?.toUpperCase() === gRequestEnum.GET) {
             if (isOpenRetry) {
@@ -197,7 +184,7 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                 // authenticationScheme: 'Bearer',
                 authenticationScheme: '',
                 timeout: 60 * 1000,
-                headers: { 'Content-Type': gContentTypeEnum.FORM_URLENCODED, },
+                headers: { 'Content-Type': gContentTypeEnum.FORM_URLENCODED },
                 defaultTransform,
                 customTransform: {},
                 // 配置项，下面的选项都可以在独立的接口请求中覆盖
@@ -230,11 +217,10 @@ export function createAxios(opt?: Omit<Partial<CreateAxiosOptions>, 'defaultTran
                     errorPage: '/backend/error',
                 },
             },
-            opt || {}
-        )
+            opt || {},
+        ),
     );
 }
-
 
 // other api url
 // export const otherHttp = createAxios({

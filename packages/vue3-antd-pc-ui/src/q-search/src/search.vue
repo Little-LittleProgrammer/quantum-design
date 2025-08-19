@@ -7,9 +7,9 @@
             </template>
         </a-input>
         <q-loading :loading="data.loading">
-            <template v-if="data.formList.length>0">
+            <template v-if="data.formList.length > 0">
                 <a-card size="small" class="mt qm-card" v-for="item in data.formList" :key="item.id">
-                    <a-button type="link" @click="open_page(item)" >{{item.title}}</a-button>
+                    <a-button type="link" @click="open_page(item)">{{ item.title }}</a-button>
                 </a-card>
             </template>
             <div class="mt" v-else>
@@ -18,40 +18,39 @@
         </q-loading>
     </a-modal>
 </template>
-<script lang='ts' setup>
-import { reactive, onBeforeMount, onMounted, watch, nextTick, type PropType} from 'vue';
-import {Icon as QIcon} from '@vue3-antd/q-icon/src/icon';
+<script lang="ts" setup>
+import { reactive, onBeforeMount, onMounted, watch, nextTick, type PropType } from 'vue';
+import { Icon as QIcon } from '@vue3-antd/q-icon/src/icon';
 import { find_search_route, type ICacheObj } from './search';
 import { js_utils_throttle_event } from '@quantum-design/utils';
 import { useRouter } from 'vue-router';
 import { QLoading } from '@quantum-design/vue3-pc-ui';
 import type { IMenuData } from '@quantum-design/types/vue/router';
-import {Modal as AModal, Input as AInput, Card as ACard, Empty as AEmpty} from 'ant-design-vue';
+import { Modal as AModal, Input as AInput, Card as ACard, Empty as AEmpty } from 'ant-design-vue';
 
 defineOptions({
-    name: 'QAntdSearch'
+    name: 'QAntdSearch',
 });
 
-interface IData {
-    searchText: string,
-    formList: ICacheObj[],
-    loading: boolean
-}
 const props = defineProps({
     visible: {
-        type: Boolean
+        type: Boolean,
     },
     mainMenuData: {
         type: Array as PropType<IMenuData[]>,
-        default: () => []
-    }
+        default: () => [],
+    },
 });
 const emit = defineEmits(['cancel']);
-
-const data:IData = reactive({
+interface IData {
+    searchText: string;
+    formList: ICacheObj[];
+    loading: boolean;
+}
+const data: IData = reactive({
     searchText: '',
     formList: [],
-    loading: false
+    loading: false,
 });
 const router = useRouter();
 const input_focus = () => {
@@ -60,17 +59,18 @@ const input_focus = () => {
         _el?.focus();
     }
 };
-watch(() => props.visible, (val) => {
-    if (val) {
-        nextTick(() => {
-            input_focus();
-        });
-    }
-});
-onBeforeMount(() => {
-});
-onMounted(() => {
-});
+watch(
+    () => props.visible,
+    (val) => {
+        if (val) {
+            nextTick(() => {
+                input_focus();
+            });
+        }
+    },
+);
+onBeforeMount(() => {});
+onMounted(() => {});
 const commit_cancel = () => {
     emit('cancel');
     data.searchText = '';
@@ -78,14 +78,14 @@ const commit_cancel = () => {
 };
 const search_route = () => {
     data.loading = true;
-    js_utils_throttle_event(find_search_route, {time: 800, args: [data.searchText]})?.then(res => {
+    js_utils_throttle_event(find_search_route, { time: 800, args: [data.searchText] })?.then((res) => {
         data.loading = false;
         data.formList = res as ICacheObj[];
     });
 };
-const open_page = (item:ICacheObj) => {
+const open_page = (item: ICacheObj) => {
     router.push({
-        path: item.path
+        path: item.path,
     });
     commit_cancel();
 };

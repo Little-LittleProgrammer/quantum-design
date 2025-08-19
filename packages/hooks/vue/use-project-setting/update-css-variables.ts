@@ -7,6 +7,8 @@ export function isDarkMode(theme: string) {
     let dark = theme === 'dark';
     if (theme === 'system') {
         dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const dom = document.documentElement;
+        dom.dataset.system = dark ? 'dark' : 'light';
     }
     return dark;
 }
@@ -43,7 +45,6 @@ function updateMainColorVariables(config: IProjectConfig) {
             document.documentElement.style.setProperty(targetVar, colorValue);
         }
     });
-
     executeUpdateCSSVariables(colorVariables);
 }
 
@@ -53,16 +54,18 @@ export function updateCssVariables(config: IProjectConfig) {
 
     const { builtinType, mode, radius } = config.theme;
 
+    // html 设置 dark 类
+    if (Reflect.has(config.theme, 'mode')) {
+        const dark = isDarkMode(mode);
+        root.classList.toggle('dark', dark);
+    }
+
+    // html 设置 data-theme=[builtinType] 主题色
     if (Reflect.has(config.theme, 'builtinType')) {
         const rootTheme = root.dataset.theme;
         if (rootTheme !== builtinType) {
             root.dataset.theme = builtinType;
         }
-    }
-
-    if (Reflect.has(config.theme, 'mode')) {
-        const dark = isDarkMode(mode);
-        root.classList.toggle('dark', dark);
     }
 
     // 获取当前的内置主题

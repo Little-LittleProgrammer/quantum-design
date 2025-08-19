@@ -214,11 +214,11 @@ const show_hide_aside = () => {
 </script>
 <style lang="scss">
 .qm-aside {
-    @include bg-color(aside-bg);
+    background-color: var(--aside-bg);
     position: relative;
-    width: $aside-width !important;
-    min-width: $aside-width !important;
-    max-width: $aside-width !important;
+    width: var(--aside-width) !important;
+    min-width: var(--aside-width) !important;
+    max-width: var(--aside-width) !important;
     transition: all 0.5s ease 0s;
     &:before {
         content: '';
@@ -229,8 +229,8 @@ const show_hide_aside = () => {
         height: 100%;
         z-index: 5;
         overflow: hidden;
-        border-right: 1px solid $aside-right-border-color;
-        @include border-color(border-color, right);
+        border-right: 1px solid var(--aside-right-border-color);
+        border-right-color: var(--border-color-base);
     }
     &-tabs {
         position: relative;
@@ -252,13 +252,13 @@ const show_hide_aside = () => {
         }
     }
     &-arrow-btn {
-        @include bg-color(aside-bg);
+        background-color: var(--aside-bg);
         cursor: pointer;
         position: absolute;
         border-left: 0 none;
         z-index: 5;
         .arrow-btn {
-            @include text-color(text-color);
+            color: var(--text-color);
         }
     }
     &-arrow-btn-no-has {
@@ -269,8 +269,8 @@ const show_hide_aside = () => {
         border-bottom-right-radius: 20px;
         transform: translate(0, -50%);
         top: 50%;
-        border: 1px solid $aside-right-border-color;
-        @include border-color(border-color);
+        border: 1px solid var(--aside-right-border-color);
+        border-color: var(--border-color-base);
         border-left: transparent;
         .anticon {
             position: absolute;
@@ -300,7 +300,7 @@ const show_hide_aside = () => {
         right: -19px;
         width: 21px;
         height: 40px;
-        @include border-color(border-color);
+        border-color: var(--border-color-base);
         border-left: 0 none;
         top: 0px;
         display: flex;
@@ -315,11 +315,11 @@ const show_hide_aside = () => {
         font-weight: bold;
         border-radius: 0;
         display: block;
-        line-height: $aside-height;
-        height: $aside-height;
-        font-size: $aside-tabs-size;
+        line-height: var(--aside-height);
+        height: var(--aside-height);
+        font-size: var(--aside-tabs-size);
         &-sub {
-            @include text-color(text-color);
+            color: var(--text-color);
         }
     }
     &-link {
@@ -335,16 +335,15 @@ const show_hide_aside = () => {
                 margin: 0;
             }
             &-selected {
-                color: $primary-color !important;
+                color: var(--primary-color) !important;
             }
         }
         .ant-menu-item {
-            line-height: $aside-height;
-            height: $aside-height;
+            line-height: var(--aside-height);
+            height: var(--aside-height);
             margin: 0;
-            font-size: $aside-tabs-size;
-            color: $aside-tabs-color;
-            @include text-color(text-color);
+            font-size: var(--aside-tabs-size);
+            color: var(--text-color);
             box-sizing: border-box;
             &:after {
                 display: none;
@@ -355,18 +354,18 @@ const show_hide_aside = () => {
             }
             &:not(.ant-menu-item-selected) {
                 &:hover {
-                    background: $aside-tabs-hover-bg;
+                    background: var(--aside-tabs-hover-bg);
                     span {
-                        color: $aside-tabs-hover-color;
+                        color: var(--aside-tabs-hover-color);
                     }
                 }
             }
             &.ant-menu-item-selected {
-                background: $aside-tabs-cur-bg;
+                background: var(--aside-tabs-cur-bg);
                 font-weight: bold;
-                color: $aside-tabs-cur-color;
+                color: var(--aside-tabs-cur-color);
                 .qm-aside-title {
-                    color: $aside-tabs-cur-color;
+                    color: var(--aside-tabs-cur-color);
                 }
             }
         }

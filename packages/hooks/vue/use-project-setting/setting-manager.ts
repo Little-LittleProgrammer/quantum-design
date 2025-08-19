@@ -46,13 +46,13 @@ class SettingManager {
 
     async initConfig(overrideConfig: IProjectConfig) {
         if (this.isInitialized) return;
-        this.isInitialized = true;
         this.initialConfig = js_utils_deep_merge(this.initialConfig, overrideConfig);
         const mergedConfig = js_utils_deep_merge(this.initialConfig, this.loadConfig() || {});
 
         this.updateConfig(mergedConfig);
         this.setupWatcher();
         this.initPlatform();
+        this.isInitialized = true;
     }
 
     resetConfig() {
@@ -64,7 +64,6 @@ class SettingManager {
 
     updateConfig(config: IProjectConfig) {
         const _config = js_utils_deep_merge(this.state, config);
-
         Object.assign(this.state, _config);
 
         // 根据更新的键值执行相应的操作
@@ -90,6 +89,8 @@ class SettingManager {
         // 监听系统主题偏好设置变化
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
             if (this.state.theme?.mode === 'system') {
+                const dom = document.documentElement;
+                dom.dataset.system = isDark ? 'dark' : 'light';
                 this.updateConfig({
                     theme: { mode: isDark ? 'dark' : 'light' },
                 });
@@ -112,7 +113,7 @@ class SettingManager {
     }
 
     private loadCacheConfig() {
-        return this.cache?.get(STORAGE_KEY_THEME) as IProjectConfig;
+        return this.cache?.get(STORAGE_KEY) as IProjectConfig;
     }
     /**
      * 保存设置

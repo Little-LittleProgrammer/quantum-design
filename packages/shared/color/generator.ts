@@ -23,7 +23,7 @@ function generatorColorVariables(colorItems: ColorItem[]) {
                 const colorValue = colorsMap[key];
 
                 if (colorValue) {
-                    const hslColor = convertToHslCssVar(colorValue);
+                    const hslColor = `hsl(${convertToHslCssVar(colorValue)})`;
                     colorVariables[`--${name}-${key}`] = hslColor;
                     if (alias) {
                         colorVariables[`--${alias}-${key}`] = hslColor;

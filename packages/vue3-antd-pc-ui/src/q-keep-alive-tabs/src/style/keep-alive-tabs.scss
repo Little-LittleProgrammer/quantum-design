@@ -26,7 +26,7 @@ $multiple-height: 30px;
             height: $multiple-height - 2px;
             padding-right: 12px;
             line-height: $multiple-height - 2px;
-            @include text-color(text-color);
+            color: var(--text-color);
             transition: none;
             border-radius: 3px;
 
@@ -58,18 +58,18 @@ $multiple-height: 30px;
             }
 
             svg {
-                @include text-color(text-color);
+                color: var(--text-color);
             }
         }
         .ant-tabs-tab:not(.ant-tabs-tab-active) {
             &:hover {
-                color: $primary-color;
+                color: var(--primary-color);
             }
         }
         .ant-tabs-tab-active {
             position: relative;
             padding-left: 18px;
-            background: $primary-color;
+            background: var(--primary-color);
             border: 0;
             transition: none;
             span {
@@ -118,14 +118,13 @@ $multiple-height: 30px;
         width: 36px;
         height: $multiple-height;
         line-height: $multiple-height;
-        @include text-color(text-color-secondary);
+        color: var(--text-color-secondary);
         text-align: center;
         cursor: pointer;
-        border-left: 1px solid;
-        @include border-color(border-color, 'left');
+        border-left: 1px solid var(--border-color-base);
 
         &:hover {
-            @include text-color(text-color);
+            color: var(--text-color);
         }
     }
 

@@ -3,7 +3,7 @@
         <a-tooltip :title="getTitle">
             <a-button size="small" type="link">
                 <template #icon>
-                    <svg v-if="getThemeMode == 'dark'" t="1629981701741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2109" width="22" height="22">
+                    <svg v-if="getThemeMode == 'light'" t="1629981701741" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2109" width="22" height="22">
                         <path
                             d="M241.49333333 175.36L223.57333333 157.86666666c-17.49333333-17.49333333-46.08-17.49333333-64 0l-0.42666666 0.42666667c-17.49333333 17.49333333-17.49333333 46.08 0 64l17.49333333 17.49333333c17.49333333 17.49333333 46.08 17.49333333 63.57333333 0l0.42666667-0.42666666c18.34666667-17.49333333 18.34666667-46.08 0.85333333-64zM102.82666667 465.06666666H56.74666667c-24.74666667 0-45.22666667 20.05333333-45.22666667 45.22666667v0.85333333c0 24.74666667 20.05333333 45.22666667 45.22666667 45.22666667h46.08c24.74666667 0 45.22666667-20.05333333 45.22666666-45.22666667v-0.85333333c0-25.17333333-20.48-45.22666667-45.22666666-45.22666667z m409.6-452.69333333h-0.85333334c-24.74666667 0-45.22666667 20.05333333-45.22666666 45.22666667v43.94666666c0 24.74666667 20.05333333 45.22666667 45.22666666 45.22666667h0.85333334c24.74666667 0 45.22666667-20.05333333 45.22666666-45.22666667V57.6c0-25.17333333-20.48-45.22666667-45.22666666-45.22666667z m352 145.92c-17.92-17.92-46.50666667-17.92-64-0.42666667l-17.49333334 17.49333334c-17.49333333 17.49333333-17.49333333 46.08 0 64l0.42666667 0.42666666c17.49333333 17.49333333 46.08 17.49333333 64 0l17.49333333-17.49333333c17.49333333-17.92 17.49333333-46.50666667-0.42666666-64z m-82.34666667 687.36l17.92 17.92c17.49333333 17.92 46.50666667 17.92 64 0 17.49333333-17.49333333 17.49333333-46.50666667 0-64l-17.92-17.92c-17.49333333-17.49333333-46.08-17.49333333-64 0-17.49333333 17.92-17.49333333 46.50666667 0 64z m93.86666667-335.36v0.85333333c0 24.74666667 20.05333333 45.22666667 45.22666666 45.22666667h46.08c24.74666667 0 45.22666667-20.05333333 45.22666667-45.22666667v-0.85333333c0-24.74666667-20.05333333-45.22666667-45.22666667-45.22666667h-46.08c-24.74666667 0-45.22666667 20.05333333-45.22666666 45.22666667zM512 237.65333333c-150.61333333 0-273.06666667 122.45333333-273.06666667 273.06666667s122.45333333 273.06666667 273.06666667 273.06666666 273.06666667-122.45333333 273.06666667-273.06666666-122.45333333-273.06666667-273.06666667-273.06666667z m-0.42666667 771.41333333h0.85333334c24.74666667 0 45.22666667-20.05333333 45.22666666-45.22666666v-43.94666667c0-24.74666667-20.05333333-45.22666667-45.22666666-45.22666667h-0.85333334c-24.74666667 0-45.22666667 20.05333333-45.22666666 45.22666667v43.94666667c0 24.74666667 20.48 45.22666667 45.22666666 45.22666666z m-352.42666666-146.34666666c17.92 17.92 46.50666667 17.92 64.42666666 0l17.92-17.92c17.49333333-17.49333333 17.49333333-46.08 0-64l-0.42666666-0.42666667c-17.49333333-17.49333333-46.50666667-17.49333333-64 0l-17.92 17.92c-17.49333333 18.34666667-17.49333333 46.93333333 0 64.42666667z"
                             fill="#fff"
@@ -33,13 +33,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 defineOptions({
     name: 'QAntdThemeModeButton',
 });
 import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
 const { updateProjectConfig, getThemeMode } = useProjectSetting();
-const modeList = ['dark', 'light', 'system'];
+const modeList = ['system', 'light', 'dark'];
+
+// 动画状态管理，防止重复触发
+const isAnimating = ref(false);
 
 const getTitle = computed(() => {
     if (getThemeMode.value === 'system') {
@@ -47,12 +50,99 @@ const getTitle = computed(() => {
     }
     return `${getThemeMode.value === 'dark' ? '暗黑' : '亮色'}主题`;
 });
-const change_theme = () => {
+const change_theme = async (event: MouseEvent) => {
+    // 防止动画进行中的重复触发
+    if (isAnimating.value) {
+        return;
+    }
     const _mode = modeList[(modeList.indexOf(getThemeMode.value) + 1) % modeList.length];
-    updateProjectConfig({
-        theme: {
-            mode: _mode as 'dark' | 'light' | 'system',
-        },
-    });
+    const dom = document.documentElement;
+
+    const isNeedAnimation = (getThemeMode.value === 'system' && dom.dataset.system === 'dark') || (getThemeMode.value === 'dark' && dom.dataset.system === 'light') || getThemeMode.value === 'light';
+
+    const isAppearanceTransition =
+        // @ts-expect-error
+        document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 如果不支持动画或者是系统模式，直接切换主题
+    if (!isAppearanceTransition || !event || !isNeedAnimation) {
+        console.log('直接切换主题', _mode);
+        updateProjectConfig({
+            theme: {
+                mode: _mode as 'dark' | 'light' | 'system',
+            },
+        });
+        return;
+    }
+
+    // 设置动画状态
+    isAnimating.value = true;
+
+    // 获取点击位置坐标
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+    try {
+        // 监听动画完成和中断的重置函数
+        const resetAnimatingState = () => {
+            isAnimating.value = false;
+            // 移除动画标记类
+            dom.classList.remove('view-transition-active');
+        };
+
+        // 创建圆形展开动画路径
+        const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`];
+
+        // 在开始动画前，给文档添加标记类，用于控制过渡效果
+        dom.classList.add('view-transition-active');
+
+        // @ts-ignore startViewTransition
+        const transition = document.startViewTransition(async () => {
+            // 在这里进行主题切换，View Transition API 会自动捕获前后状态
+            updateProjectConfig({
+                theme: {
+                    mode: _mode as 'dark' | 'light' | 'system',
+                },
+            });
+            // 等待 DOM 更新完成
+            await nextTick();
+        });
+
+        // 当过渡准备就绪时，立即开始自定义圆形展开动画
+        transition.ready.then(() => {
+            const animation = document.documentElement.animate(
+                {
+                    clipPath: clipPath,
+                },
+                {
+                    duration: 650,
+                    easing: 'ease-out',
+                    pseudoElement: '::view-transition-new(root)',
+                },
+            );
+
+            // 监听动画事件
+            animation.addEventListener('finish', resetAnimatingState);
+            animation.addEventListener('cancel', resetAnimatingState);
+        });
+
+        // 额外的安全保障：最多 600ms 后重置状态
+        setTimeout(resetAnimatingState, 600);
+
+        // 监听过渡完成
+        transition.finished.finally(resetAnimatingState);
+    } catch (error) {
+        // 如果动画失败，降级到直接切换
+        console.warn('Theme transition animation failed:', error);
+        updateProjectConfig({
+            theme: {
+                mode: _mode as 'dark' | 'light' | 'system',
+            },
+        });
+        isAnimating.value = false;
+        // 确保移除动画标记类
+        dom.classList.remove('view-transition-active');
+    }
 };
 </script>

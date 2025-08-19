@@ -1,4 +1,22 @@
 <!--  -->
+<template>
+    <div class="q-keep-alive-tabs" id="q-keep-alive-tabs">
+        <a-tabs type="editable-card" :animated="false" :hideAdd="true" size="small" :tabBarGutter="3" :activeKey="activeKey" @change="handle_change" @edit="handle_edit">
+            <template v-for="item in store.getTabList" :key="item.query ? item.fullPath : item.path">
+                <a-tab-pane :closable="!(item.fullPath == initPath)">
+                    <template #tab>
+                        <tab-content :tabItem="item" />
+                    </template>
+                </a-tab-pane>
+            </template>
+            <template #rightExtra v-if="showQuick">
+                <slot name="rightExtra"></slot>
+                <tab-content isExtra :tabItem="$route" v-if="showQuick" />
+            </template>
+        </a-tabs>
+    </div>
+</template>
+
 <script lang="ts">
 import { defineComponent, reactive, toRefs, watch, unref, computed, getCurrentInstance, onMounted } from 'vue';
 import { useGo } from '@quantum-design/hooks/vue';
@@ -87,21 +105,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<template>
-    <div class="q-keep-alive-tabs" id="q-keep-alive-tabs">
-        <ATabs type="editable-card" :animated="false" :hideAdd="true" size="small" :tabBarGutter="3" :activeKey="activeKey" @change="handle_change" @edit="handle_edit">
-            <template v-for="item in store.getTabList" :key="item.query ? item.fullPath : item.path">
-                <ATabPane :closable="!(item.fullPath == initPath)">
-                    <template #tab>
-                        <TabContent :tabItem="item" />
-                    </template>
-                </ATabPane>
-            </template>
-            <template #rightExtra v-if="showQuick">
-                <slot name="rightExtra"></slot>
-                <TabContent isExtra :tabItem="$route" v-if="showQuick" />
-            </template>
-        </ATabs>
-    </div>
-</template>
