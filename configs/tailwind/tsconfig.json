@@ -1,0 +1,7 @@
+{
+    "extends": "@quantum-design-configs/tsconfig/lib.json",
+    "compilerOptions": {
+        "declaration": false
+    },
+    "include": ["*.ts", "**/*.ts"]
+}
