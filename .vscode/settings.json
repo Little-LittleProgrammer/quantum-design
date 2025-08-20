@@ -1,5 +1,6 @@
 {
-    "tailwindCSS.experimental.configFile": "internal/tailwind-config/src/index.ts",
+    "tailwindCSS.experimental.configFile": "configs/tailwind/src/index.ts",
+    "tailwindCSS.files.exclude": ["**/node_modules/**", "**/cli/**", "**/docs/**", "**/server/**", "**/dist/**", "**/.git/**", "**/packages/vue3-antd-pc-ui-nuxt/**", "**/packages/vue3-pc-ui-nuxt/**"],
     // workbench
     "workbench.list.smoothScrolling": true,
     "workbench.startupEditor": "newUntitledFile",

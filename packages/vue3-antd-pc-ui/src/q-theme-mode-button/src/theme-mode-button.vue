@@ -113,12 +113,12 @@ const change_theme = async (event: MouseEvent) => {
         transition.ready.then(() => {
             const animation = document.documentElement.animate(
                 {
-                    clipPath: clipPath,
+                    clipPath: _mode === 'dark' ? clipPath.reverse() : clipPath,
                 },
                 {
                     duration: 650,
-                    easing: 'ease-out',
-                    pseudoElement: '::view-transition-new(root)',
+                    easing: 'ease-in',
+                    pseudoElement: _mode === 'dark' ? '::view-transition-old(root)' : '::view-transition-new(root)',
                 },
             );
 

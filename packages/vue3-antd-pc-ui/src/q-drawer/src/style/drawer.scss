@@ -1,7 +1,7 @@
 $header-height: 60px;
 $detail-header-height: 40px;
 
-.q-drawer.container.drawer-container.add-weight {
+.q-drawer.drawer-container.add-weight {
     .ant-drawer-wrapper-body {
         overflow: hidden;
     }
@@ -28,8 +28,7 @@ $detail-header-height: 40px;
     .q-drawer-footer {
         position: absolute;
         bottom: 0;
-        width: 100%;
-        padding: 0 12px 0 20px;
+        right: 10px;
         text-align: right;
         border-top: 1px solid var(--border-color-base);
     }
@@ -55,7 +54,7 @@ $detail-header-height: 40px;
         }
     }
 }
-.q-drawer.container.drawer-container.add-weight.q-drawer-detail {
+.q-drawer.drawer-container.add-weight.q-drawer-detail {
     position: absolute;
 
     .ant-drawer-header {
@@ -86,7 +85,7 @@ $detail-header-height: 40px;
 .dark,
 .dark[data-theme='custom'],
 .dark[data-theme='default'] {
-    .q-drawer.container.drawer-container.add-weight {
+    .q-drawer.drawer-container.add-weight {
         .ant-drawer-body {
             .q-drawer-content {
                 background-color: #000;

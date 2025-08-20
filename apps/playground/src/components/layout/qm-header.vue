@@ -141,9 +141,9 @@ onMounted(() => {});
         font-weight: bold;
         line-height: var(--header-height);
         white-space: nowrap;
-        padding-left: math.div(var(--space), 2);
+        padding-left: calc(var(--space) / 2);
         em {
-            padding-left: math.div(var(--space), 2);
+            padding-left: calc(var(--space) / 2);
         }
     }
     &-tabs {

@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    *,
+    ::after,
+    ::before {
+        box-sizing: content-box;
+        border-style: solid;
+        border-width: 0;
+    }
+    /* View Transition 动画样式优化 */
+    ::view-transition-new(root),
+    ::view-transition-old(root) {
+        @apply animate-none mix-blend-normal;
+        /* 避免动画过程中的混合模式干扰 */
+        mix-blend-mode: normal;
+    }
+
+    /* 默认情况下：old(当前页面) 在下层，new(新主题) 在上层 */
+    ::view-transition-old(root) {
+        @apply z-[1];
+    }
+
+    ::view-transition-new(root) {
+        @apply z-[2147483646];
+    }
+
+    /* 暗色模式下：反转层级，old 在上层进行收缩，new 在下层进行展开 */
+    html.dark::view-transition-old(root) {
+        @apply z-[2147483646];
+    }
+
+    html.dark::view-transition-new(root) {
+        @apply z-[1];
+    }
+
+    /* 禁用默认的淡入淡出动画，完全使用自定义动画 */
+    ::view-transition-group(root) {
+        animation-duration: 0.45s;
+        animation-timing-function: ease-out;
+        animation: none;
+    }
+
+    /* 减少动画期间的重排和重绘 */
+    ::view-transition-new(root),
+    ::view-transition-old(root) {
+        transform: translateZ(0);
+        will-change: clip-path;
+        backface-visibility: hidden;
+        contain: layout style paint;
+        /* 确保动画过程中保持内容稳定 */
+        overflow: hidden;
+    }
+
+    /* 确保主题切换时的平滑过渡 */
+    :root {
+        /* 为CSS变量添加过渡效果，但只在非动画状态下生效 */
+        transition: none;
+    }
+
+    :root:not(.view-transition-active) {
+        transition:
+            --primary-color 0.3s ease,
+            --success-color 0.3s ease,
+            --warning-color 0.3s ease,
+            --error-color 0.3s ease;
+    }
+}
+
+@layer components {
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+
+    .flex-col-center {
+        @apply flex flex-col items-center justify-center;
+    }
+
+    /* 页面切换动画 */
+    .fade-slide-enter-active,
+    .fade-slide-leave-active {
+        @apply transition-all duration-300;
+    }
+
+    .fade-slide-enter-from {
+        @apply -translate-x-8 opacity-0;
+    }
+
+    .fade-slide-leave-to {
+        @apply translate-x-8 opacity-0;
+    }
+}

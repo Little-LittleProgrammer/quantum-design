@@ -37,7 +37,7 @@
         "./*": "./*"
     },
     "peerDependencies": {
-        "tailwindcss": "^3.4.3"
+        "tailwindcss": "catalog:"
     },
     "dependencies": {
         "@manypkg/get-packages": "catalog:",
@@ -51,6 +51,7 @@
         "tailwindcss-animate": "catalog:"
     },
     "devDependencies": {
-        "@types/postcss-import": "catalog:"
+        "@types/postcss-import": "catalog:",
+        "unbuild": "catalog:"
     }
 }

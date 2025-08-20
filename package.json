@@ -24,6 +24,7 @@
         "@quantum-design-configs/commitlint": "workspace:*",
         "@quantum-design-configs/eslint": "workspace:*",
         "@quantum-design-configs/prettier": "workspace:*",
+        "@quantum-design-configs/tailwind": "workspace:*",
         "@quantum-design-configs/tsconfig": "workspace:*",
         "@types/node": "catalog:",
         "@vitest/coverage-v8": "catalog:",

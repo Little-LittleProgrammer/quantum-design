@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div ref="wrapRef" :class="getWrapperClass">
-        <card size="small" class="g-mb" v-if="getBindValues.useSearchForm">
+        <card size="small" class="mb-2.5" v-if="getBindValues.useSearchForm">
             <q-antd-form ref="formRef" submitOnReset v-bind="getFormProps" :tableAction="tableAction" @register="registerForm" @submit="handleSearchInfoChange" @customFilterChange="handle_custom_filter_change">
                 <template #[replaceFormSlotKey(item)]="data" v-for="item in getFormSlotKeys">
                     <slot :name="item" v-bind="data || {}"></slot>
@@ -9,7 +9,7 @@
             </q-antd-form>
         </card>
         <card size="small">
-            <Table ref="tableElRef" v-bind="getBindValues" :rowClassName="getRowClassName" v-show="getEmptyDataIsShowTable" @change="handle_table_change" @resizeColumn="handle_resize_change">
+            <antd-table ref="tableElRef" v-bind="getBindValues" :rowClassName="getRowClassName" v-show="getEmptyDataIsShowTable" @change="handle_table_change" @resizeColumn="handle_resize_change">
                 <template #headerCell="{ column }">
                     <header-cell :column="column" />
                 </template>
@@ -26,7 +26,7 @@
                         </table-summary-row>
                     </table-summary>
                 </template>
-            </Table>
+            </antd-table>
         </card>
     </div>
 </template>
@@ -35,7 +35,7 @@
 import { computed, ref, toRaw, unref, useAttrs, useSlots } from 'vue';
 import { basicProps } from './props';
 import QAntdForm, { useForm } from '@vue3-antd/q-form';
-import { Card, Table, TableSummaryRow, TableSummaryCell, TableSummary } from 'ant-design-vue';
+import { Card, Table as AntdTable, TableSummaryRow, TableSummaryCell, TableSummary } from 'ant-design-vue';
 import type { BasicTableProps, ColumnChangeParam, InnerHandlers, SizeType, TableActionType } from './types/table';
 
 import { usePagination } from './hooks/use-pagination';
@@ -60,7 +60,7 @@ import { useTableExpand } from './hooks/use-table-expand';
 import HeaderCell from './components/header/header-cell.vue';
 
 defineOptions({
-    name: 'QAntdTable'
+    name: 'QAntdTable',
 });
 
 const props = defineProps(basicProps);
@@ -108,9 +108,9 @@ const { handleTableChange, getDataSourceRef, exportData, getDataSource, getRawDa
         clearSelectedRowKeys,
         columns,
         summaryData,
-        setColumns
+        setColumns,
     },
-    emit
+    emit,
 );
 
 const { getScrollRef, redoHeight } = useTableScroll(getProps, tableElRef, getColumnsRef, getRowSelectionRef, getDataSourceRef, wrapRef, formRef);

@@ -17,7 +17,7 @@ export async function node(): Promise<Linter.Config[]> {
                 'n/no-extraneous-import': [
                     'error',
                     {
-                        allowModules: ['unbuild', '@vben/vite-config', 'vitest', 'vite', '@vue/test-utils', '@vben/tailwind-config', '@playwright/test'],
+                        allowModules: ['unbuild', '@quantum-design-configs/vite', 'vitest', 'vite', '@vue/test-utils', '@quantum-design-configs/tailwind', '@playwright/test'],
                     },
                 ],
                 'n/no-new-require': 'error',
@@ -37,7 +37,7 @@ export async function node(): Promise<Linter.Config[]> {
             },
         },
         {
-            files: ['scripts/**/*.?([cm])[jt]s?(x)', 'internal/**/*.?([cm])[jt]s?(x)'],
+            files: ['scripts/**/*.?([cm])[jt]s?(x)', 'configs/**/*.?([cm])[jt]s?(x)'],
             rules: {
                 'n/prefer-global/process': 'off',
             },

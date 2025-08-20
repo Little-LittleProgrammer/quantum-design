@@ -2,4 +2,4 @@
     "extends": "./playground/.nuxt/tsconfig.json",
     "include": ["src", "build.config.ts", "node_modules/@qu/types/**/*.d.ts"],
     "exclude": ["dist", "node_modules"]
-  }
+}

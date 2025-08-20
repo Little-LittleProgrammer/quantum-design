@@ -305,7 +305,7 @@ const show_hide_aside = () => {
         top: 0px;
         display: flex;
         align-items: center;
-        z-index: 1000;
+        z-index: 980;
         .anticon {
             font-size: 16px;
             margin-left: 4px;

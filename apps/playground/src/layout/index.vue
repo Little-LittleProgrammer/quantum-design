@@ -3,30 +3,30 @@
     <div>
         <qm-header :environmentData="globalStore.environmentData" :systemName="globalStore.systemName" :initMenu="sysStore.initMenuData" :menuData="sysStore.mainMenuData">
             <template #header-function>
-                <div v-if="isUseSearchButton" class="g-flex-center search-container" @click="change_search_modal">
+                <div v-if="isUseSearchButton" class="flex-center h-full w-11 cursor-pointer hover:bg-[var(--header-tabs-hover-bg)]" @click="change_search_modal">
                     <a-tooltip v-if="isUseSearchButton">
                         <template #title>
                             <span>搜索</span>
                         </template>
                         <a-button type="link">
                             <template #icon>
-                                <q-antd-icon class="search-icon" type="SearchOutlined" />
+                                <q-antd-icon class="line-height-1 text-lg text-white" type="SearchOutlined" />
                             </template>
                         </a-button>
                     </a-tooltip>
                 </div>
-                <q-antd-theme-mode-button v-if="isUseThemeSwitch" class="g-flex-center search-container"></q-antd-theme-mode-button>
-                <q-antd-setting class="g-flex-center search-container" :defaultSetting="setting"></q-antd-setting>
+                <q-antd-theme-mode-button v-if="isUseThemeSwitch" class="flex-center h-full w-11 cursor-pointer hover:bg-[var(--header-tabs-hover-bg)]"></q-antd-theme-mode-button>
+                <q-antd-setting class="flex-center h-full w-11 cursor-pointer hover:bg-[var(--header-tabs-hover-bg)]" :defaultSetting="setting"></q-antd-setting>
             </template>
         </qm-header>
         <div class="wrapper">
             <qm-aside :menuData="sysStore.asideMenuData"></qm-aside>
             <div class="main js-layout-main">
-                <div class="main-header sticky-header" v-if="isUseBreadCrumb || isUseCacheTabsSetting" size="small">
-                    <div class="g-flex">
-                        <q-breadcrumb v-if="isUseBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!isUseCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
-                        <q-antd-keep-alive-tabs v-if="isUseCacheTabsSetting" :canDrag="isUseCacheCanDrag" :showQuick="isUseQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
-                        <div class="reload" v-if="isUseReloadButton">
+                <div class="main-header sticky top-0 z-[970] h-10 bg-[var(--aside-bg)] pl-[calc(var(--space)+14px)]" v-if="isUseBreadCrumb || isUseCacheTabsSetting" size="small">
+                    <div class="flex-center h-full w-full">
+                        <q-breadcrumb v-if="isUseBreadCrumb" class="mr-2.5 whitespace-nowrap text-sm" :router-list="routerData" :class="!isUseCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
+                        <q-antd-keep-alive-tabs v-if="isUseCacheTabsSetting" :canDrag="isUseCacheCanDrag" :showQuick="isUseQuick" :init-path="sysStore.initMenuData" class="flex-1" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
+                        <div class="h-7 w-9 border-l border-[var(--border-color-base)] text-center leading-[30px]" v-if="isUseReloadButton">
                             <a-tooltip>
                                 <template #title>
                                     <span>刷新页面</span>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layout-content">
+                <div class="relative box-border h-[calc(100%-40px)] pl-2.5 pt-2.5">
                     <router-view>
                         <template #default="{ Component, route }">
                             <q-loading :loading="isUsePageLoading ? globalStore.pageLoading : false" size="large">
@@ -124,9 +124,9 @@ const reload_page = async () => {
 useParamsAliveRoot({
     aliveTabs: cacheList,
     projectSetting: {
-        cache: isUseCacheCanCache,
-        keepalive: isUseKeepAlive,
-        show: isUseCacheTabsSetting,
+        cache: isUseCacheCanCache.value ?? false,
+        keepalive: isUseKeepAlive.value ?? false,
+        show: isUseCacheTabsSetting.value ?? false,
     },
 });
 
@@ -154,69 +154,4 @@ watch(isUseTableCacheSetting, (val) => {
     });
 });
 </script>
-<style lang="scss" scoped>
-.main-header {
-    height: 40px;
-    padding-left: calc(var(--space) + 14px);
-    background-color: var(--aside-bg);
-    .g-flex {
-        width: 100%;
-        height: 100%;
-        .breadcrumb {
-            font-size: 14px;
-            margin-right: 10px;
-            white-space: nowrap;
-        }
-        .keep-alive {
-            flex: 1;
-        }
-        .reload {
-            width: 36px;
-            height: 28px;
-            text-align: center;
-            line-height: 30px;
-            border-left: 1px solid var(--border-color-base);
-        }
-    }
-}
-.sticky-header {
-    position: sticky;
-    top: 0px;
-    z-index: 999;
-}
-.search-container {
-    width: 44px;
-    height: 100%;
-    cursor: pointer;
-    .search-icon {
-        color: #fff;
-        font-size: 18px;
-    }
-    &:hover {
-        background: var(--header-tabs-hover-bg);
-    }
-}
-
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-    transition: all 0.3s;
-}
-.fade-slide-enter-from {
-    opacity: 0;
-    transform: translateX(-30px);
-}
-
-.fade-slide-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
-}
-.js-layout-main {
-}
-.layout-content {
-    height: calc(100% - 40px);
-    box-sizing: border-box;
-    position: relative;
-    padding-top: 10px;
-    padding-left: 10px;
-}
-</style>
+<!-- 使用 Tailwind CSS 类替代了所有 SCSS 样式，无需单独的 style 块 -->

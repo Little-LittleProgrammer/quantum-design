@@ -6,9 +6,9 @@ import { register_glob_comp } from './antd';
 import { setup_outer_guard } from './router/setup-router';
 import App from './App.vue';
 import 'dayjs/locale/zh-cn';
-import setting from './enums/projectEnum';
 import dayjs from 'dayjs';
 import { install_monaco } from './monaco';
+import '@quantum-design/styles/base/global.css';
 
 // 时间组件中文
 dayjs.locale('zh-cn');

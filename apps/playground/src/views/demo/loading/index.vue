@@ -1,6 +1,6 @@
 <template>
     <div class="loading-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-2.5">
             <div class="loading-section">
                 <div class="demo-item">
                     <h4>默认加载</h4>
@@ -26,7 +26,7 @@
             </div>
         </a-card>
 
-        <a-card title="不同动画模式" class="g-mt">
+        <a-card title="不同动画模式" class="mt-2.5">
             <div class="loading-section">
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px">
                     <div class="demo-item">
@@ -49,7 +49,7 @@
             </div>
         </a-card>
 
-        <a-card title="控制加载状态" class="g-mt">
+        <a-card title="控制加载状态" class="mt-2.5">
             <div class="loading-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -68,7 +68,7 @@
             </div>
         </a-card>
 
-        <a-card title="实际使用场景" class="g-mt">
+        <a-card title="实际使用场景" class="mt-2.5">
             <div class="loading-section">
                 <h4>模拟数据加载</h4>
                 <div style="margin-bottom: 16px">
@@ -97,7 +97,7 @@ import { QLoading } from '@quantum-design/vue3-pc-ui';
 import { Card as ACard, Button as AButton, Space as ASpace } from 'ant-design-vue';
 
 defineOptions({
-    name: 'LoadingDemo'
+    name: 'LoadingDemo',
 });
 
 const isLoading = ref(false);
@@ -112,7 +112,7 @@ const mockData = ref([
     { id: 2, name: '项目B', description: '后端API开发' },
     { id: 3, name: '项目C', description: '移动端应用' },
     { id: 4, name: '项目D', description: '数据分析平台' },
-    { id: 5, name: '项目E', description: '用户管理系统' }
+    { id: 5, name: '项目E', description: '用户管理系统' },
 ]);
 
 function toggleLoading() {
@@ -157,7 +157,7 @@ function loadData() {
         mockData.value = [
             { id: Date.now() + 1, name: '新项目A', description: '新的前端项目' },
             { id: Date.now() + 2, name: '新项目B', description: '新的后端项目' },
-            { id: Date.now() + 3, name: '新项目C', description: '新的全栈项目' }
+            { id: Date.now() + 3, name: '新项目C', description: '新的全栈项目' },
         ];
     }, 2000);
 }

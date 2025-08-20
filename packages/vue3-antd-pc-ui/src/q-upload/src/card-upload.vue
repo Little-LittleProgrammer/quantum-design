@@ -9,7 +9,7 @@
                     <q-icon type="FileOutlined"></q-icon>
                     <p>{{ data.fileName }}</p>
                 </div>
-                <div class="mask g-flex-center" v-if="data.getHover">
+                <div class="mask flex-center" v-if="data.getHover">
                     <a-button type="link" @click="open_modal">
                         <template #icon>
                             <q-icon type="EyeOutlined"></q-icon>

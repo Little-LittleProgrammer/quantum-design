@@ -3,7 +3,7 @@
     <div class="q-project-setting-switch-item">
         <div>
             <a-tooltip v-if="props.tooltip" :title="props.tooltip">
-                <q-icon class="g-mr" type="QuestionCircleOutlined"></q-icon>
+                <q-icon class="mr-2.5" type="QuestionCircleOutlined"></q-icon>
             </a-tooltip>
             <span>{{ props.title }}</span>
         </div>

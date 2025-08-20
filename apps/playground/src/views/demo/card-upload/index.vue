@@ -1,6 +1,6 @@
 <template>
     <div class="card-upload-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-[10px]">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <p>基本的卡片式文件上传组件：</p>
@@ -14,7 +14,7 @@
             </div>
         </a-card>
 
-        <a-card title="图片上传" class="g-mt">
+        <a-card title="图片上传" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <p>专门用于图片上传，支持预览和格式限制：</p>
@@ -28,7 +28,7 @@
             </div>
         </a-card>
 
-        <a-card title="拖拽上传" class="g-mt">
+        <a-card title="拖拽上传" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -48,7 +48,7 @@
             </div>
         </a-card>
 
-        <a-card title="文件类型限制" class="g-mt">
+        <a-card title="文件类型限制" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space wrap>
@@ -70,7 +70,7 @@
             </div>
         </a-card>
 
-        <a-card title="文件大小限制" class="g-mt">
+        <a-card title="文件大小限制" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -93,7 +93,7 @@
             </div>
         </a-card>
 
-        <a-card title="自定义上传逻辑" class="g-mt">
+        <a-card title="自定义上传逻辑" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -111,7 +111,7 @@
             </div>
         </a-card>
 
-        <a-card title="批量操作" class="g-mt">
+        <a-card title="批量操作" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -144,7 +144,7 @@
             </div>
         </a-card>
 
-        <a-card title="上传状态展示" class="g-mt">
+        <a-card title="上传状态展示" class="mt-2.5">
             <div class="upload-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -182,7 +182,7 @@ import { Card as ACard, Space as ASpace, Switch as ASwitch, RadioGroup as ARadio
 import { PlusOutlined, CameraOutlined, InboxOutlined, FileAddOutlined, CloudUploadOutlined, RocketOutlined, FolderAddOutlined, FileOutlined, LoadingOutlined, UploadOutlined } from '@ant-design/icons-vue';
 
 defineOptions({
-    name: 'CardUploadDemo'
+    name: 'CardUploadDemo',
 });
 
 // 基础上传
@@ -203,7 +203,7 @@ const fileTypeConfig = {
     image: { accept: 'image/*', text: '图片文件' },
     document: { accept: '.pdf,.doc,.docx,.txt', text: '文档文件' },
     video: { accept: 'video/*', text: '视频文件' },
-    all: { accept: '*', text: '所有文件' }
+    all: { accept: '*', text: '所有文件' },
 };
 
 const currentAccept = computed(() => fileTypeConfig[fileType.value].accept);
@@ -269,7 +269,7 @@ function beforeUpload(file) {
         image: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
         document: ['application/pdf', 'application/msword', 'text/plain'],
         video: ['video/mp4', 'video/avi', 'video/quicktime'],
-        all: []
+        all: [],
     };
 
     if (fileType.value !== 'all' && allowedTypes[fileType.value].length > 0) {
@@ -314,7 +314,7 @@ function customUpload({ file, onProgress, onSuccess }) {
             setTimeout(() => {
                 onSuccess({
                     url: `https://example.com/files/${file.name}`,
-                    status: 'done'
+                    status: 'done',
                 });
                 message.success(`${file.name} 上传成功！`);
                 uploadProgress.value = 0;
@@ -326,7 +326,7 @@ function customUpload({ file, onProgress, onSuccess }) {
         abort() {
             clearInterval(interval);
             uploadProgress.value = 0;
-        }
+        },
     };
 }
 
@@ -385,7 +385,7 @@ function simulateUploadSuccess() {
         uid: Date.now().toString(),
         name: `success-file-${Date.now()}.jpg`,
         status: 'uploading',
-        percent: 0
+        percent: 0,
     };
 
     statusFileList.value.push(mockFile);
@@ -409,7 +409,7 @@ function simulateUploadError() {
         uid: Date.now().toString(),
         name: `error-file-${Date.now()}.jpg`,
         status: 'uploading',
-        percent: 0
+        percent: 0,
     };
 
     statusFileList.value.push(mockFile);

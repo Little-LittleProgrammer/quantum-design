@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <a-drawer class="q-drawer drawer-container add-weight container" v-bind="getBindValues" @close="on_close">
+    <a-drawer class="q-drawer drawer-container add-weight" v-bind="getBindValues" @close="on_close">
         <template #title v-if="!slots.title">
             <drawer-header :title="getMergeProps.title" :is-detail="isDetail" :show-detail-back="showDetailBack" @close="on_close">
                 <template #titleToolbar>

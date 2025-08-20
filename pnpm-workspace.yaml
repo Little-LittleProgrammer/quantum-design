@@ -292,23 +292,14 @@ catalog:
   "@tauri-apps/plugin-opener": "^2"
 
   # Tailwind/PostCSS
-  # @manypkg/get-packages: 多包仓库包信息获取工具
-  "@manypkg/get-packages": "^3.1.0"
-  # tailwindcss: 原子化 CSS 框架
-  "tailwindcss": "^4.1.12"
-  # autoprefixer: CSS 自动补全前缀
+  "@manypkg/get-packages": "^2.2.2"
+  "@tailwindcss/typography": "^0.5.16"
   "autoprefixer": "^10.4.20"
-  # cssnano: CSS 压缩工具
-  "cssnano": "^7.0.1"
-  # postcss: CSS 处理工具
+  "cssnano": "^7.0.6"
   "postcss": "^8.5.3"
-  # postcss-import: CSS @import 支持
-  "postcss-import": "^16.1.0"
-  # postcss-preset-env: 现代 CSS 特性支持
-  "postcss-preset-env": "^10.1.0"
-  # tailwindcss-animate: Tailwind 动画插件
-  "tailwindcss-animate": "^1.0.7"
-  # postcss-antd-fixes: Antd 相关 PostCSS 修复插件
   "postcss-antd-fixes": "^0.2.0"
-  # @types/postcss-import: 类型定义
+  "postcss-import": "^16.1.0"
+  "postcss-preset-env": "^10.1.5"
+  "tailwindcss": "^3.4.17"
+  "tailwindcss-animate": "^1.0.7"
   "@types/postcss-import": "^14.0.3"

@@ -289,10 +289,6 @@ onBeforeUnmount(() => {
             border-radius: var(--border-radius-base);
         }
 
-        &--bordered {
-            border: 1px solid var(--border-color-base);
-        }
-
         &--shadow {
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }

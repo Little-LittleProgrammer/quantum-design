@@ -90,10 +90,6 @@
     /* 项目选择背景色 */
     --aside-project-select-bg: hsl(0, 0%, 91%);
 
-    /* dark */
-    --dark-disabled-text-color: hsl(0 0% 100% / 30%);
-    --dark-text-color: hsl(0 0% 100% / 85%);
-
     /* blur */
     --blue-color: hsl(209, 100%, 45%);
 
