@@ -69,7 +69,6 @@
     "devDependencies": {
         "@quantum-design-configs/vite": "workspace:*",
         "@quantum-design/types": "workspace:*",
-        "@vue/test-utils": "catalog:",
         "monaco-editor": "catalog:",
         "sass": "catalog:",
         "tinymce": "catalog:",

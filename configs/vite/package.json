@@ -25,20 +25,20 @@
         "access": "public"
     },
     "peerDependencies": {
-        "vite": "^6.0.5",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitejs/plugin-vue-jsx": "catalog:",
+        "unplugin-vue-components": "catalog:",
+        "vite": "^6.0.5 || ^7.0.0",
+        "vite-plugin-dts": "catalog:",
         "vue": "^3.4.0"
     },
     "dependencies": {
         "@quantum-design-configs/vite-sentry": "workspace:*",
         "@quantum-design/shared": "workspace:*",
         "@quantum-design/utils": "workspace:*",
-        "@vitejs/plugin-vue": "catalog:",
-        "@vitejs/plugin-vue-jsx": "catalog:",
         "postcss-pxtorem": "catalog:",
-        "unplugin-vue-components": "catalog:",
         "vite-plugin-compression2": "catalog:",
-        "vite-plugin-dts": "catalog:",
-        "vite-plugin-pwa": "^1.0.2"
+        "vite-plugin-pwa": "catalog:"
     },
     "devDependencies": {
         "@quantum-design-configs/rollup": "workspace:*",
