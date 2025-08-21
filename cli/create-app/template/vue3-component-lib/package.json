@@ -4,6 +4,7 @@
     "description": "vue3-pc端组件库",
     "license": "MIT",
     "author": "Evan Wu",
+    "type": "module",
     "scripts": {
         "build": "vite build",
         "test": "vitest run",
@@ -53,6 +54,8 @@
     "devDependencies": {
         "@changesets/cli": "^2.29.5",
         "@quantum-design-configs/eslint": "~3.0.0",
+        "@quantum-design-configs/prettier": "~3.0.0",
+        "@quantum-design-configs/tailwind": "~3.0.0",
         "@quantum-design-configs/tsconfig": "~3.0.0",
         "@quantum-design-configs/vite": "~3.0.0",
         "@quantum-design/types": "~3.0.0",

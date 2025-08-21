@@ -1,37 +1,57 @@
 {
     "name": "qm-monorepo",
     "private": true,
+    "type": "module",
     "scripts": {
         "build": "turbo run build",
         "build:lib": "turbo run build:lib",
         "dev": "turbo run dev",
-        "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "lint": "pnpm dlx oxlint && eslint",
+        "test": "turbo run test",
+        "test:coverage": "turbo run test:coverage",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "commit": "czg",
+        "prepare": "husky"
     },
     "devDependencies": {
+        "@quantum-design-configs/commitlint": "catalog:",
         "@quantum-design-configs/eslint": "catalog:",
+        "@quantum-design-configs/prettier": "catalog:",
+        "@quantum-design-configs/tailwind": "catalog:",
         "@quantum-design-configs/tsconfig": "catalog:",
         "@types/node": "catalog:",
-        "eslint": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitejs/plugin-vue-jsx": "catalog:",
+        "@vitest/ui": "catalog:",
+        "husky": "catalog:",
+        "jsdom": "catalog:",
         "lint-staged": "catalog:",
-        "typescript": "catalog:",
         "tslib": "catalog:",
         "turbo": "catalog:",
-        "vite": "catalog:"
+        "typescript": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:"
     },
     "engines": {
-        "npm": ">=8.0.0",
-        "node": ">=18.0.0"
+        "npm": ">=9.0.0",
+        "node": ">=20.19.0"
     },
-    "packageManager": "pnpm@9.15.7",
-    "pnpm": {
-        "overrides": {
-            "@sentry/cli": "catalog:",
-            "eslint": "catalog:"
-        }
-    },
+    "packageManager": "pnpm@10.13.1",
     "volta": {
-        "node": "18.18.2",
-        "pnpm": "9.15.7"
+        "node": "20.19.4",
+        "pnpm": "10.13.1"
+    },
+    "pnpm": {
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "eslint": "*",
+                "oxlint": "*"
+            }
+        },
+        "overrides": {
+            "eslint": "catalog:",
+            "typescript": "catalog:",
+            "vite": "catalog:"
+        }
     }
 }

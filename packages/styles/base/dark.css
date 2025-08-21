@@ -8,5 +8,6 @@
     --text-color: hsl(210, 18%, 82%);
     --text-color-secondary: hsl(212, 8%, 62%);
     --heading-color: hsl(0 0% 100% / 85%);
+    --disabled-text-color: hsl(0 0% 100% / 0.3);
     color-scheme: dark;
 }

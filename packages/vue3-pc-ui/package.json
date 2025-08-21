@@ -1,6 +1,6 @@
 {
     "name": "@quantum-design/vue3-pc-ui",
-    "version": "2.0.4",
+    "version": "3.0.0-beta.0",
     "description": "vue3-pc端组件库",
     "keywords": [
         "quantum",

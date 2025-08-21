@@ -61,8 +61,5 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     _common.plugins?.splice(2, 1);
     return {
         ..._common,
-        test: {
-            environment: 'jsdom',
-        },
     };
 };

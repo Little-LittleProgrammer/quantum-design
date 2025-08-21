@@ -1,20 +1,4 @@
 import { defineConfig, DefaultTheme } from 'vitepress';
-import fs from 'fs';
-import path from 'path';
-
-const antdCssStrTemp = (
-    fs
-        .readFileSync(path.resolve('node_modules/@quantum-design/styles/base/base.scss'), 'utf-8')
-        .toString()
-        .split('// antdend')[0]
-        .match(/\$(.*);/g) || []
-)
-    .join(',')
-    .replace(/;,/g, '",')
-    .replace(/;/g, '"')
-    .replace(/: /g, '": "')
-    .replace(/\$/g, '"');
-const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
 
 export default defineConfig({
     base: '/quantum-design/docs/',
@@ -54,10 +38,6 @@ export default defineConfig({
         base: '/quantum-design/docs/',
         css: {
             preprocessorOptions: {
-                less: {
-                    javascriptEnabled: true,
-                    modifyVars: antdCssData,
-                },
                 scss: {
                     // additionalData: baseScssFile,
                 },
@@ -74,7 +54,6 @@ function createNav(): DefaultTheme.NavItem[] {
     return [
         {
             text: '开发手册',
-            link: '/help-code/standard/',
             items: [
                 {
                     text: '规范',
@@ -84,11 +63,18 @@ function createNav(): DefaultTheme.NavItem[] {
                     text: '开发',
                     link: '/help-code/develop/docs',
                 },
+                {
+                    text: '项目结构',
+                    link: '/help-code/develop/project-structure',
+                },
+                {
+                    text: '工程化工具链',
+                    link: '/help-code/develop/toolchain',
+                },
             ],
         },
         {
             text: '组件与方法',
-            link: '/packages/',
             items: [
                 {
                     text: 'hooks',
@@ -118,12 +104,19 @@ function createNav(): DefaultTheme.NavItem[] {
                     text: 'vue3-pc-ui',
                     link: '/packages/vue3-pc-ui/',
                 },
+                {
+                    text: 'ai-hub',
+                    link: '/packages/ai-hub/',
+                },
             ],
         },
         {
             text: '配置',
-            link: '/configs/',
             items: [
+                {
+                    text: '总览',
+                    link: '/configs/',
+                },
                 {
                     text: 'eslint',
                     link: '/configs/eslint/',
@@ -140,33 +133,34 @@ function createNav(): DefaultTheme.NavItem[] {
                     text: 'vite',
                     link: '/configs/vite/',
                 },
-            ],
-        },
-        {
-            text: 'vite项目指南',
-            link: '/guide/introduction/',
-            items: [
                 {
-                    text: '指南',
-                    link: '/guide/introduction/introduction',
-                },
-                {
-                    text: '深入',
-                    link: '/guide/introduction/dep/dark',
+                    text: 'tailwind',
+                    link: '/configs/tailwind/',
                 },
             ],
         },
         {
-            text: 'nuxt3指南',
-            link: '/nuxt3/',
+            text: 'CLI工具',
+            link: '/cli/',
+        },
+        {
+            text: '项目指南',
             items: [
                 {
-                    text: '指南',
+                    text: 'Vue3/Vite',
+                    link: '/guide/introduction/',
+                },
+                {
+                    text: 'Nuxt3',
                     link: '/nuxt3/introduction/',
                 },
                 {
-                    text: '深入',
-                    link: '/nuxt3/dep/',
+                    text: 'Tauri',
+                    link: '/guide/introduction/tauri',
+                },
+                {
+                    text: 'Tailwind CSS',
+                    link: '/guide/dep/tailwind',
                 },
             ],
         },
@@ -193,7 +187,7 @@ function createSidebar(): DefaultTheme.Sidebar {
                         link: '/help-code/standard/commit',
                     },
                     {
-                        text: '* 版本与发版',
+                        text: '版本与发版',
                         link: '/help-code/standard/publish',
                     },
                     {
@@ -218,13 +212,45 @@ function createSidebar(): DefaultTheme.Sidebar {
                         link: '/help-code/develop/project',
                     },
                     {
+                        text: '项目结构',
+                        link: '/help-code/develop/project-structure',
+                    },
+                    {
+                        text: '依赖管理',
+                        link: '/help-code/develop/dependencies',
+                    },
+                    {
+                        text: '工程化工具链',
+                        link: '/help-code/develop/toolchain',
+                    },
+                    {
                         text: '云效流水线',
                         link: '/help-code/develop/flow',
                     },
                 ],
             },
         ],
+        '/cli/': [
+            {
+                text: 'CLI工具',
+                items: [
+                    {
+                        text: '总览',
+                        link: '/cli/',
+                    },
+                ],
+            },
+        ],
         '/configs/': [
+            {
+                text: '配置总览',
+                items: [
+                    {
+                        text: '介绍',
+                        link: '/configs/',
+                    },
+                ],
+            },
             {
                 text: 'eslint',
                 items: [
@@ -261,14 +287,36 @@ function createSidebar(): DefaultTheme.Sidebar {
                     },
                 ],
             },
+            {
+                text: 'tailwind',
+                items: [
+                    {
+                        text: '介绍',
+                        link: '/configs/tailwind/',
+                    },
+                ],
+            },
         ],
         '/packages/': [
+            {
+                text: '组件与方法',
+                items: [
+                    {
+                        text: '总览',
+                        link: '/packages/',
+                    },
+                ],
+            },
             {
                 text: 'hooks',
                 items: [
                     {
                         text: '总览',
                         link: '/packages/hooks/',
+                    },
+                    {
+                        text: '设计令牌',
+                        link: '/packages/hooks/use-design-tokens',
                     },
                     {
                         text: 'echarts',
@@ -291,16 +339,16 @@ function createSidebar(): DefaultTheme.Sidebar {
                         link: '/packages/hooks/use-pagination',
                     },
                     {
-                        text: '拖拽',
-                        link: '/packages/hooks/use-sortable',
+                        text: '刷新保存页面参数',
+                        link: '/packages/hooks/use-params-alive',
                     },
                     {
                         text: '插槽',
                         link: '/packages/hooks/use-slots',
                     },
                     {
-                        text: '刷新保存页面参数',
-                        link: '/packages/hooks/use-params-alive',
+                        text: '拖拽',
+                        link: '/packages/hooks/use-sortable',
                     },
                 ],
             },
@@ -389,6 +437,15 @@ function createSidebar(): DefaultTheme.Sidebar {
                 ],
             },
             {
+                text: 'ai-hub',
+                items: [
+                    {
+                        text: '总览',
+                        link: '/packages/ai-hub/',
+                    },
+                ],
+            },
+            {
                 text: 'vue3-pc-ui',
                 items: [
                     {
@@ -417,20 +474,20 @@ function createSidebar(): DefaultTheme.Sidebar {
                         link: '/packages/vue3-antd-pc-ui/',
                     },
                     {
-                        text: 'q-from表单',
-                        link: '/packages/vue3-antd-pc-ui/form',
+                        text: 'q-card-upload卡片上传',
+                        link: '/packages/vue3-antd-pc-ui/card-upload',
                     },
                     {
                         text: 'q-drawer抽屉',
                         link: '/packages/vue3-antd-pc-ui/drawer',
                     },
                     {
-                        text: 'q-card-upload卡片上传',
-                        link: '/packages/vue3-antd-pc-ui/card-upload',
-                    },
-                    {
                         text: 'q-dropdown下拉快捷栏',
                         link: '/packages/vue3-antd-pc-ui/dropdown',
+                    },
+                    {
+                        text: 'q-from表单',
+                        link: '/packages/vue3-antd-pc-ui/form',
                     },
                     {
                         text: 'q-icon图标',
@@ -453,6 +510,10 @@ function createSidebar(): DefaultTheme.Sidebar {
                         link: '/packages/vue3-antd-pc-ui/table',
                     },
                     {
+                        text: 'q-theme-mode-button主题切换',
+                        link: '/packages/vue3-antd-pc-ui/theme-mode-button',
+                    },
+                    {
                         text: 'q-transfer穿梭框',
                         link: '/packages/vue3-antd-pc-ui/transfer',
                     },
@@ -461,7 +522,7 @@ function createSidebar(): DefaultTheme.Sidebar {
         ],
         '/guide/': [
             {
-                text: '指南',
+                text: 'Vue3/Vite项目',
                 items: [
                     {
                         text: '开始',
@@ -502,34 +563,50 @@ function createSidebar(): DefaultTheme.Sidebar {
                 ],
             },
             {
-                text: '深入',
+                text: '高级特性',
                 items: [
+                    {
+                        text: 'Tauri桌面应用',
+                        link: '/guide/introduction/tauri',
+                    },
+                    {
+                        text: 'Tailwind CSS',
+                        link: '/guide/dep/tailwind',
+                    },
+                    {
+                        text: '暗黑主题',
+                        link: '/guide/dep/dark',
+                    },
                     {
                         text: '跨域处理',
                         link: '/guide/dep/cors',
-                    },
-                    {
-                        text: '黑暗主题',
-                        link: '/guide/dep/dark',
                     },
                 ],
             },
         ],
         '/nuxt3/': [
             {
-                text: '指南',
+                text: 'Nuxt3项目',
                 items: [
                     {
                         text: '介绍',
                         link: '/nuxt3/introduction/index.md',
                     },
+                    {
+                        text: '基础',
+                        link: '/nuxt3/introduction/base.md',
+                    },
+                    {
+                        text: 'HTTP通讯',
+                        link: '/nuxt3/introduction/http.md',
+                    },
                 ],
             },
             {
-                text: '深入',
+                text: '高级特性',
                 items: [
                     {
-                        text: '介绍',
+                        text: '依赖管理',
                         link: '/nuxt3/dep/index.md',
                     },
                 ],
@@ -537,14 +614,3 @@ function createSidebar(): DefaultTheme.Sidebar {
         ],
     };
 }
-
-// /**
-//  * @type {(namespace:string,items:string[])=>string[]}
-//  */
-// function urlWrapper(namespace, items) {
-//   return items.map((item) => namespace + item);
-// }
-
-// function getGuildNav() {
-//   return urlWrapper('/guide', ['/']);
-// }

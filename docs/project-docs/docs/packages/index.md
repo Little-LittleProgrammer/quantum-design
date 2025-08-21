@@ -22,5 +22,8 @@
 
 7. [丰富的 vue3 antd 组件](/packages/vue3-antd-pc-ui/)
 
-`8. [丰富的 vue3 element组件](/packages/vue3-ele-pc-ui/)`
+8. [丰富的 styles 样式库](/packages/styles/)
 
+9. [强大的 AI 集成库](/packages/ai-hub/)
+
+`10. [丰富的 vue3 element组件](/packages/vue3-ele-pc-ui/)`

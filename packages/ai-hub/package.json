@@ -1,23 +1,7 @@
 {
     "name": "@quantum-design/ai-hub",
-    "version": "0.0.3",
+    "version": "1.0.0-beta.0",
     "description": "整合主流 ai 供应商和模型",
-    "main": "dist/ai-hub.cjs.min.js",
-    "module": "dist/ai-hub.esm.min.js",
-    "typings": "dist/types/index.d.ts",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
-    "scripts": {
-        "build": "rollup -c",
-        "build:types": "tsc --emitDeclarationOnly",
-        "dev": "rollup -c -w"
-    },
-    "files": [
-        "dist",
-        "README.md"
-    ],
     "keywords": [
         "ai",
         "artificial-intelligence",
@@ -28,8 +12,25 @@
         "llm",
         "chat"
     ],
-    "author": "Evan Wu",
     "license": "ISC",
+    "author": "Evan Wu",
+    "scripts": {
+        "build": "rollup -c",
+        "build:types": "tsc --emitDeclarationOnly",
+        "dev": "rollup -c -w"
+    },
+    "files": [
+        "README.md",
+        "dist"
+    ],
+    "main": "dist/ai-hub.cjs.min.js",
+    "module": "dist/ai-hub.esm.min.js",
+    "typings": "dist/types/index.d.ts",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "peerDependencies": {},
     "dependencies": {
         "@quantum-design/shared": "workspace:*",
         "@quantum-design/utils": "workspace:*",
@@ -45,6 +46,5 @@
         "@types/qs": "catalog:",
         "rollup": "catalog:",
         "typescript": "catalog:"
-    },
-    "peerDependencies": {}
+    }
 }

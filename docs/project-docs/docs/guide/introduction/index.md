@@ -3,9 +3,8 @@
 本文会帮助你从头启动项目
 
 ::: warning 注意
-- 文档前加 `*`的文档 必须查看和严格执行
-:::
 
+- 文档前加 `*`的文档 必须查看和严格执行 :::
 
 ## 环境准备
 
@@ -13,7 +12,7 @@
 
 ::: warning 注意
 
-- [Node.js](http://nodejs.org/) 版本要求`14.18` 以上，且不能为`15.x`版本，这里推荐 `14.19.1`。
+- [Node.js](http://nodejs.org/) 版本要求`20.19` 以上，这里推荐 `20.19.4`。
 
 :::
 
@@ -91,6 +90,7 @@ pnpm i
 ```
 
 ## 运行
+
 首次运行需要打包本地依赖
 
 ```bash
@@ -99,6 +99,7 @@ pnpm build --filter @quantum-design/http
 ```
 
 #### 项目运行命令
+
 ```bash
 pnpm dev --filter xxxx
 ```
@@ -132,8 +133,7 @@ pnpm dev --filter xxxx
 
 ### 重新安装依赖
 
-- `pnpm run reinstall`
-该命令会先删除 `node_modules`、`yarn.lock`、`package.lock.json` 后再进行依赖重新安装（安装速度会明显变慢）。
+- `pnpm run reinstall` 该命令会先删除 `node_modules`、`yarn.lock`、`package.lock.json` 后再进行依赖重新安装（安装速度会明显变慢）。
 
 接下来你可以修改代码进行业务开发了。我们内建了模拟数据、HMR 实时预览、状态管理、国际化、全局路由等各种实用的功能辅助开发，请阅读其他章节了解更多。
 
@@ -155,7 +155,7 @@ pnpm dev --filter xxxx
 │   │   ├── vue # 用于vue项目
 │   │   ├── React # 用于React项目
 │   │   ├── package.json # package.json
-│   ├── shared # 公共资源 
+│   ├── shared # 公共资源
 │   │   ├── enums # 公共枚举
 │   │   └── style # 公共样式
 │   │   ├── package.json # package.json

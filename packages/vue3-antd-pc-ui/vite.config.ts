@@ -35,6 +35,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
                 '@quantum-design/hooks/vue/use-message',
                 '@quantum-design/hooks/vue/use-page',
                 '@quantum-design/hooks/vue/use-pagination',
+                '@quantum-design/hooks/vue/use-project-setting',
+                '@quantum-design/hooks/vue/use-design-tokens',
                 '@quantum-design/hooks/vue/use-slots',
                 '@quantum-design/vue3-pc-ui',
                 '@quantum-design/hooks/vue/use-priority-value',
@@ -60,9 +62,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             alias: {
                 '@vue3-antd/': path_resolve('src') + '/',
             },
-        },
-        test: {
-            environment: 'jsdom',
         },
         plugins: _common.plugins,
     };
