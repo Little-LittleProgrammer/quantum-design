@@ -4,7 +4,7 @@
     "license": "MIT",
     "type": "module",
     "files": [
-        "dist"
+        "index.mjs"
     ],
     "main": "./index.mjs",
     "module": "./index.mjs",
@@ -12,6 +12,10 @@
         ".": {
             "default": "./index.mjs"
         }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
     "dependencies": {
         "prettier": "catalog:",

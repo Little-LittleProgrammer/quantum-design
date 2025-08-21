@@ -1,9 +1,6 @@
 ---
-description: CloudBase AI 开发规则指南 - 提供场景化的最佳实践，确保开发质量
-globs: *
-alwaysApply: true
+alwaysApply: false
 ---
-
 # 📋 CloudBase AI 开发规则指南
 
 ## 🎯 开发流程规范 - 场景识别与最佳实践
