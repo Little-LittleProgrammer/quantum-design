@@ -10,8 +10,8 @@ describe('utils.ts', () => {
                 d: /123/,
                 e: new Map(),
                 f: new Set(),
-                g: [1, 2, 3]
-            }
+                g: [1, 2, 3],
+            },
         };
         expect(js_utils_deep_copy(_value).toString() == _value.toString()).toBeTruthy();
         const _deepValue = js_utils_deep_copy(_value);
@@ -27,17 +27,19 @@ describe('utils.ts', () => {
         const _valueA = {
             a: 1,
             b: 2,
-            c: {}
+            c: {},
         };
         const _valueB = {
             a: 3,
             b: 4,
             c: {
-                d: 1
-            }
+                d: 1,
+            },
         };
         expect(js_utils_deep_merge(_valueA, _valueB)).toEqual({
-            a: 3, b: 4, c: {d: 1}
+            a: 3,
+            b: 4,
+            c: { d: 1 },
         });
     });
     it('js_utils_quick_sort', () => {
@@ -47,7 +49,7 @@ describe('utils.ts', () => {
         expect(js_utils_format_money_num(123456)).toEqual('123,456.00');
     });
     it('js_utils_attr', () => {
-        const _obj = {a: {b: {c: {d: {e: 5}}}}};
+        const _obj = { a: { b: { c: { d: { e: 5 } } } } };
         expect(js_utils_find_attr(_obj, 'a.b.c.d.e')).toEqual(5);
         js_utils_edit_attr('a.b.c.d.e', 6, _obj);
         expect(_obj.a.b.c.d.e).toEqual(6);

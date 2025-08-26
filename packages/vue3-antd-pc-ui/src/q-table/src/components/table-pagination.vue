@@ -14,15 +14,14 @@ import type { PaginationProps } from '../types/pagination';
 import { Pagination as APagination } from 'ant-design-vue';
 import { isBoolean } from '@quantum-design/utils';
 defineOptions({
-    name: 'QAntdTablePagination'
+    name: 'QAntdTablePagination',
 });
-const emit = defineEmits(['change']);
 const props = defineProps({
     pageOption: {
-        type: Object as PropType<PaginationProps | boolean>
-    }
+        type: Object as PropType<PaginationProps | boolean>,
+    },
 });
-
+const emit = defineEmits(['change']);
 const getPageOption = computed(() => {
     return {
         showTotal: (count: number) => `总共 ${count} 条`,
@@ -30,7 +29,7 @@ const getPageOption = computed(() => {
         pageSize: 10,
         current: 1,
         total: 0,
-        ...(props.pageOption as PaginationProps)
+        ...(props.pageOption as PaginationProps),
     };
 });
 
@@ -46,17 +45,8 @@ function handle_pagination_change(page: number, pageSize: number) {
         showQuickJumper: props.pageOption?.showQuickJumper,
         showSizeChanger: props.pageOption?.showSizeChanger,
         total: props.pageOption?.total,
-        size: props.pageOption?.size
+        size: props.pageOption?.size,
     });
 }
 </script>
-<style lang="scss">
-.q-table-pagination {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-    .pagination-button {
-        flex: 1;
-    }
-}
-</style>
+<style lang="scss"></style>

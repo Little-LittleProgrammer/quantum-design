@@ -16,7 +16,7 @@ import type { LocationQuery, Router } from 'vue-router';
 import { type IBreadcrumb, breadcrumbProps } from './types';
 import { flatten } from './utils';
 defineOptions({
-    name: 'QAntdBreadcrumb',
+    name: 'QBreadcrumb',
 });
 
 const props = defineProps(breadcrumbProps);

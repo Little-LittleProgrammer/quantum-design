@@ -5,34 +5,37 @@
     </q-antd-drawer>
 </template>
 
-<script lang='ts' setup>
+<script lang="ts" setup>
 import { computed } from 'vue';
-import { useDrawerInner, useForm, type FormSchema, QAntdForm, QAntdDrawer } from '@quantum-design/vue3-antd-pc-ui';
+import { useDrawerInner, useForm, type FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 import type { IExampleData } from '../interface';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 
 const emits = defineEmits(['ok', 'register']);
-const {createMessage, } = useMessage();
-const [registerDrawer, {closeDrawer, changeOkLoading, changeLoading, setDrawerProps, }] = useDrawerInner((obj: IExampleData) => {
+const { createMessage } = useMessage();
+const [registerDrawer, { closeDrawer, changeOkLoading, changeLoading, setDrawerProps }] = useDrawerInner((obj: IExampleData) => {
     setFieldsValue({
         ...obj,
     });
 });
-const schemas = computed<FormSchema<IExampleData>[]>(() => [{
-    label: '名字',
-    field: 'name',
-    required: true,
-    component: 'Input',
-}, {
-    label: '年龄',
-    field: 'age',
-    required: true,
-    component: 'InputNumber',
-}]);
-const [registerForm, {setFieldsValue, validate, resetFields, }] = useForm({
+const schemas = computed<FormSchema<IExampleData>[]>(() => [
+    {
+        label: '名字',
+        field: 'name',
+        required: true,
+        component: 'Input',
+    },
+    {
+        label: '年龄',
+        field: 'age',
+        required: true,
+        component: 'InputNumber',
+    },
+]);
+const [registerForm, { setFieldsValue, validate, resetFields }] = useForm({
     schemas,
     labelWidth: 110,
-    baseColProps: { span: 20, },
+    baseColProps: { span: 20 },
     showActionButtonGroup: false,
 });
 
@@ -48,5 +51,4 @@ function edit_cancel() {
     resetFields();
 }
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

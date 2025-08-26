@@ -1,4 +1,3 @@
-
 import { describe, it, expect } from 'vitest';
 import { stringToBoolean, parseSchemas, serializeToString } from '../src/parse';
 
@@ -56,30 +55,30 @@ describe('parse.ts', () => {
                 user: {
                     isActive: 'true',
                     profile: {
-                        isPublic: 'false'
-                    }
-                }
+                        isPublic: 'false',
+                    },
+                },
             };
             const result = parseSchemas(obj);
             expect(result).toEqual({
                 user: {
                     isActive: true,
                     profile: {
-                        isPublic: false
-                    }
-                }
+                        isPublic: false,
+                    },
+                },
             });
         });
 
         it('应该处理数组', () => {
             const obj = {
                 flags: ['true', 'false', 'hello'],
-                nested: [{ active: 'true' }]
+                nested: [{ active: 'true' }],
             };
             const result = parseSchemas(obj);
             expect(result).toEqual({
                 flags: [true, false, 'hello'],
-                nested: [{ active: true }]
+                nested: [{ active: true }],
             });
         });
 
@@ -88,7 +87,7 @@ describe('parse.ts', () => {
                 normalFunc: '() => { return 1; }',
                 arrowFunc: 'x => x * 2',
                 dangerousFunc: 'function() { require("fs"); }',
-                regularString: 'not a function'
+                regularString: 'not a function',
             };
             const result = parseSchemas(obj);
 
@@ -116,7 +115,7 @@ describe('parse.ts', () => {
             const obj = {
                 date: date,
                 regex: regex,
-                func: () => 'hello'
+                func: () => 'hello',
             };
 
             const result = parseSchemas(obj);
@@ -151,8 +150,10 @@ describe('parse.ts', () => {
         it('应该序列化函数为字符串', () => {
             const obj = {
                 name: 'test',
-                handler: function() { return 'hello'; },
-                arrow: () => 'world'
+                handler: function () {
+                    return 'hello';
+                },
+                arrow: () => 'world',
             };
 
             const result = serializeToString(obj);
@@ -166,7 +167,7 @@ describe('parse.ts', () => {
         it('应该序列化正则表达式', () => {
             const obj = {
                 pattern: /test/gi,
-                name: 'regex test'
+                name: 'regex test',
             };
 
             const result = serializeToString(obj);
@@ -181,10 +182,10 @@ describe('parse.ts', () => {
                     name: 'test',
                     permissions: {
                         read: true,
-                        write: false
-                    }
+                        write: false,
+                    },
                 },
-                settings: ['option1', 'option2']
+                settings: ['option1', 'option2'],
             };
 
             const result = serializeToString(obj);
@@ -213,7 +214,7 @@ describe('parse.ts', () => {
                 zeroValue: 0,
                 emptyString: '',
                 emptyArray: [],
-                emptyObject: {}
+                emptyObject: {},
             };
 
             const result = serializeToString(obj);
@@ -238,7 +239,9 @@ describe('parse.ts', () => {
         it('应该处理类实例', () => {
             class TestClass {
                 name = 'test';
-                getValue() { return 'value'; }
+                getValue() {
+                    return 'value';
+                }
             }
 
             const instance = new TestClass();
@@ -250,4 +253,3 @@ describe('parse.ts', () => {
         });
     });
 });
-

@@ -4,7 +4,9 @@ import { js_create_local_storage } from '../src/storage';
 describe('storage.ts', () => {
     const _key = 'abc';
     const _value = {
-        a: 1, b: 2, c: 3
+        a: 1,
+        b: 2,
+        c: 3,
     };
     beforeEach(() => {
         // 告诉 vitest 我们使用模拟时间
@@ -26,7 +28,7 @@ describe('storage.ts', () => {
     });
     it('过期时间正常', () => {
         const _ls = js_create_local_storage({
-            timeout: 60 * 60 * 24
+            timeout: 60 * 60 * 24,
         });
         // 将时间设置在工作时间之内
         _ls.set(_key, _value);
@@ -36,7 +38,7 @@ describe('storage.ts', () => {
     });
     it('加密测试正常', () => {
         const _ls = js_create_local_storage({
-            timeout: 60 * 60 * 24
+            timeout: 60 * 60 * 24,
         });
         // 将时间设置在工作时间之内
         _ls.set(_key, _value);

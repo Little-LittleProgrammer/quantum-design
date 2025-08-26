@@ -3,7 +3,7 @@
     <div>
         <a-card class="g-mt">
             <q-antd-form @register="registerForm2">
-                <template #extra="{model, field}">
+                <template #extra="{ model, field }">
                     <p>aaaa{{ model[field] }}</p>
                 </template>
             </q-antd-form>
@@ -11,9 +11,8 @@
     </div>
 </template>
 
-<script lang='ts' setup>
-import {computed, onMounted, onUnmounted} from 'vue';
-import {QCodeEditor, QRichText} from '@quantum-design/vue3-pc-ui';
+<script lang="ts" setup>
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useForm, type FormSchema, useComponentRegister, delComponentRegister } from '@quantum-design/vue3-antd-pc-ui';
 defineOptions({
     name: 'UseForm',
@@ -22,7 +21,7 @@ defineOptions({
 useComponentRegister('CodeEditor', QCodeEditor);
 useComponentRegister('RichText', QRichText);
 
-interface Test{
+interface Test {
     name: string;
     sub: {
         name: string;
@@ -30,62 +29,70 @@ interface Test{
             name: string;
             date: string;
             code: string;
-            rich: string
-        }
-    }
+            rich: string;
+        };
+    };
 }
 
-const schemas = computed<FormSchema<Test, 'CodeEditor' | 'RichText'>[]>(() => [{
-    label: '姓名',
-    field: 'name',
-    component: 'Input',
-    required: true,
-}, {
-    label: 'sub姓名',
-    field: 'sub.name',
-    component: 'Input',
-    required: true,
-    componentProps: ({formModel, }) => {
-        return {
-            onChange: () => {
-                console.log(formModel);
-                formModel.sub.sub.name = '11111';
-            },
-        };
+const schemas = computed<FormSchema<Test, 'CodeEditor' | 'RichText'>[]>(() => [
+    {
+        label: '姓名',
+        field: 'name',
+        component: 'Input',
+        required: true,
     },
-}, {
-    label: 'sub下的sub姓名',
-    field: 'sub.sub.name',
-    component: 'Input',
-    required: true,
-}, {
-    label: '日期',
-    field: 'sub.sub.date',
-    component: 'DatePicker',
-}, {
-    label: '重要提示: 以下代码和富文本组件会报错，如需使用，请在 package.json 中添加以下依赖 "monaco-editor": "catalog:"，"tinymce": "catalog:"',
-    field: 'text',
-    component: 'Divider',
-}, {
-    label: '代码',
-    field: 'sub.sub.code',
-    component: 'CodeEditor',
-    colProps: {
-        span: 24,
+    {
+        label: 'sub姓名',
+        field: 'sub.name',
+        component: 'Input',
+        required: true,
+        componentProps: ({ formModel }) => {
+            return {
+                onChange: () => {
+                    console.log(formModel);
+                    formModel.sub.sub.name = '11111';
+                },
+            };
+        },
     },
-    componentProps: {
-        style: {height: '800px', },
+    {
+        label: 'sub下的sub姓名',
+        field: 'sub.sub.name',
+        component: 'Input',
+        required: true,
     },
-}, {
-    label: '富文本',
-    field: 'sub.sub.rich',
-    component: 'RichText',
-    colProps: {
-        span: 24,
+    {
+        label: '日期',
+        field: 'sub.sub.date',
+        component: 'DatePicker',
     },
-}]);
+    {
+        label: '重要提示: 以下代码和富文本组件会报错，如需使用，请在 package.json 中添加以下依赖 "monaco-editor": "catalog:"，"tinymce": "catalog:"',
+        field: 'text',
+        component: 'Divider',
+    },
+    {
+        label: '代码',
+        field: 'sub.sub.code',
+        component: 'CodeEditor',
+        colProps: {
+            span: 24,
+        },
+        componentProps: {
+            style: { height: '800px' },
+        },
+    },
+    {
+        label: '富文本',
+        field: 'sub.sub.rich',
+        component: 'RichText',
+        colProps: {
+            span: 24,
+        },
+    },
+]);
 
-const [registerForm2, {getFieldsValue, setFieldsValue, validateFields, }] = useForm({
+const [registerForm2, { getFieldsValue, setFieldsValue, validateFields }] = useForm({
     schemas,
     labelWidth: 130,
     baseColProps: {
@@ -100,13 +107,13 @@ const [registerForm2, {getFieldsValue, setFieldsValue, validateFields, }] = useF
     resetButtonOptions: {
         title: '取消',
     },
-    submitFunc: async() => {
+    submitFunc: async () => {
         await validateFields();
         console.log(getFieldsValue());
     },
 });
 
-onMounted(async() => {
+onMounted(async () => {
     await setFieldsValue({
         name: '张三',
         sub: {
@@ -121,7 +128,5 @@ onMounted(async() => {
 onUnmounted(() => {
     delComponentRegister('CodeEditor');
 });
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

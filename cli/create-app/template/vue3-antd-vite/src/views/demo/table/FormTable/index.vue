@@ -1,12 +1,12 @@
 <template>
-    <div >
-        <div >
+    <div>
+        <div>
             <a-button @click="reloadTable"> 还原 </a-button>
             <a-button @click="changeLoading"> 开启loading </a-button>
             <a-button @click="changeColumns"> 更改Columns </a-button>
             <a-button @click="getColumn"> 获取Columns </a-button>
             <a-button @click="getTableData"> 获取表格数据 </a-button>
-            <a-button  @click="getTableRawData"> 获取接口原始数据 </a-button>
+            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
             <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
         </div>
         <div class="mb-4">
@@ -18,9 +18,7 @@
             <a-button @click="collapseAll"> 展开 </a-button>
         </div>
         <q-antd-table @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit">
-            <template #form-slot>
-                12312312312
-            </template>
+            <template #form-slot> 12312312312 </template>
             <template #headerTop>
                 <alert type="info" show-icon>
                     <template #message>
@@ -39,59 +37,44 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, reactive } from 'vue';
-import {Alert} from 'ant-design-vue';
+import { Alert } from 'ant-design-vue';
 import { useTable, useDrawer } from '@quantum-design/vue3-antd-pc-ui';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
-import {api_partner_list, api_partner_select} from '@/http/api/cp-management';
+import { api_partner_list, api_partner_select } from '@/http/api/cp-management';
 import edit from './components/edit.vue';
 import dayjs from 'dayjs';
 import { gDateFormatEnum } from '@quantum-design/shared/enums';
 export default defineComponent({
     name: 'FormTable',
-    components: { Alert, edit,},
+    components: { Alert, Edit: edit },
     setup() {
-        const { createMessage, } = useMessage();
+        const { createMessage } = useMessage();
         function onChange() {
             console.log('onChange', arguments);
         }
         const data = reactive({
-            selectObj: {}, });
-        const schemas = computed(() => {
-            return [{field: `key_word`,
-                label: `Slot示例`,
-                component: 'Input',
-                slot: 'slot',
-            }, {
-                label: '日期',
-                field: 'duration',
-                component: 'RangePicker',
-                defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')],
-            }, {
-                label: '接入模式',
-                field: 'access_mode',
-                component: 'Select',
-                componentProps: {
-                    options: data.selectObj.access_mode_list,
-                },
-            }];
+            selectObj: {},
         });
-        const [
-            registerTable,
-            {
-                setLoading,
-                setProps,
-                getColumns,
-                getDataSource,
-                getRawDataSource,
-                reload,
-                getPaginationRef,
-                setPagination,
-                getSelectRows,
-                getSelectRowKeys,
-                setSelectedRowKeys,
-                clearSelectedRowKeys,
-            }
-        ] = useTable({
+        const schemas = computed(() => {
+            return [
+                { field: `key_word`, label: `Slot示例`, component: 'Input', slot: 'slot' },
+                {
+                    label: '日期',
+                    field: 'duration',
+                    component: 'RangePicker',
+                    defaultValue: [dayjs().subtract(7, 'day').startOf('month'), dayjs().subtract(1, 'day')],
+                },
+                {
+                    label: '接入模式',
+                    field: 'access_mode',
+                    component: 'Select',
+                    componentProps: {
+                        options: data.selectObj.access_mode_list,
+                    },
+                },
+            ];
+        });
+        const [registerTable, { setLoading, setProps, getColumns, getDataSource, getRawDataSource, reload, getPaginationRef, setPagination, getSelectRows, getSelectRowKeys, setSelectedRowKeys, clearSelectedRowKeys }] = useTable({
             canResize: true,
             title: 'QTable示例',
             titleHelpMessage: '使用useTable调用表格内方法',
@@ -103,7 +86,7 @@ export default defineComponent({
                 schemas,
                 fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]],
             },
-            scroll: {x: 2000, },
+            scroll: { x: 2000 },
             // columns: getBasicColumns(),
             // dataSource: getBasicData(),
             autoCreateKey: true,
@@ -116,15 +99,18 @@ export default defineComponent({
                     name: 200,
                 },
             },
-            columns: [{
-                key: 'name',
-                helpMessage: '你好',
-                editRow: true,
-            }, {
-                key: 'access_mode_txt',
-                edit: true,
-                editComponent: 'Input',
-            }],
+            columns: [
+                {
+                    key: 'name',
+                    helpMessage: '你好',
+                    editRow: true,
+                },
+                {
+                    key: 'access_mode_txt',
+                    edit: true,
+                    editComponent: 'Input',
+                },
+            ],
             fetchSetting: {
                 totalField: 'pagination.count',
             },
@@ -136,10 +122,9 @@ export default defineComponent({
             onColumnsChange: (data: ColumnChangeParam[]) => {
                 console.log('ColumnsChanged', data);
             },
-
         });
 
-        const [registerDrawer, {openDrawer, }] = useDrawer();
+        const [registerDrawer, { openDrawer }] = useDrawer();
 
         async function init_select() {
             const _res = await api_partner_select();
@@ -158,46 +143,47 @@ export default defineComponent({
         function changeColumns() {
             const _column = [
                 {
-                    'title': '合作平台ID',
-                    'key': 'partner_id',
-                    'dataIndex': 'partner_id',
-                    'width': 150,
-                    'resizable': true,
-                    'align': 'center',
-                    'fixed': '',
-                    'sorter': true,
-                    'customCell': null,
-                    'ellipsis': true,
+                    title: '合作平台ID',
+                    key: 'partner_id',
+                    dataIndex: 'partner_id',
+                    width: 150,
+                    resizable: true,
+                    align: 'center',
+                    fixed: '',
+                    sorter: true,
+                    customCell: null,
+                    ellipsis: true,
                     children: [
                         {
-                            'title': '合作平台Code',
-                            'key': 'partner_code',
-                            'dataIndex': 'partner_code',
-                            'width': 150,
-                            'resizable': true,
-                            'align': 'center',
-                            'fixed': '',
-                            'sorter': false,
-                            'customCell': null,
-                            'ellipsis': true,
+                            title: '合作平台Code',
+                            key: 'partner_code',
+                            dataIndex: 'partner_code',
+                            width: 150,
+                            resizable: true,
+                            align: 'center',
+                            fixed: '',
+                            sorter: false,
+                            customCell: null,
+                            ellipsis: true,
                         },
                         {
-                            'title': '合作平台名称',
-                            'key': 'name',
-                            'dataIndex': 'name',
-                            'width': 200,
-                            'resizable': true,
-                            'align': 'center',
-                            'fixed': '',
-                            'sorter': false,
-                            'customCell': null,
-                            'editRule': true,
-                            'helpMessage': '你好',
-                            'editRow': true,
-                            'editComponent': 'Input',
-                            'ellipsis': true,
-                        } ],
-                }
+                            title: '合作平台名称',
+                            key: 'name',
+                            dataIndex: 'name',
+                            width: 200,
+                            resizable: true,
+                            align: 'center',
+                            fixed: '',
+                            sorter: false,
+                            customCell: null,
+                            editRule: true,
+                            helpMessage: '你好',
+                            editRow: true,
+                            editComponent: 'Input',
+                            ellipsis: true,
+                        },
+                    ],
+                },
             ];
             setProps({
                 columns: _column,
@@ -269,12 +255,13 @@ export default defineComponent({
                             record.onEdit();
                             console.log('编辑');
                         },
-                    }, {
+                    },
+                    {
                         label: '编辑2',
                         onClick: () => {
                             openDrawer();
                         },
-                    }
+                    },
                 ];
             }
             return [
@@ -294,7 +281,7 @@ export default defineComponent({
                             console.log('取消');
                         },
                     },
-                }
+                },
             ];
         }
 
@@ -327,4 +314,3 @@ export default defineComponent({
     },
 });
 </script>
-
