@@ -378,6 +378,30 @@ export default defineComponent({
 
 说明: 获取勾选框信息
 
+**scrollToIndex**
+
+类型：`(index: number, align?: 'top' | 'center' | 'bottom') => void`
+
+说明: 虚拟滚动时滚动到指定索引位置，align可选'top'（顶部对齐）、'center'（居中）、'bottom'（底部对齐）
+
+**scrollToRow**
+
+类型：`(rowKey: string | number, align?: 'top' | 'center' | 'bottom') => void`
+
+说明: 虚拟滚动时根据行键值滚动到对应行，align参数同上
+
+**getVirtualScrollInfo**
+
+类型：`() => { start: number; end: number; currentOffset: number; count: number; totalCount: number } | null`
+
+说明: 获取当前虚拟滚动状态信息，包括起始索引、结束索引、当前偏移量、可视行数和总行数
+
+**updateVirtualConfig**
+
+类型：`(config: Partial<VirtualScrollConfig>) => void`
+
+说明: 动态更新虚拟滚动配置
+
 **updateTableData**
 
 类型：`(index: number, key: string, value: any)=>void`
@@ -424,8 +448,8 @@ export default defineComponent({
 
 ::: tip 温馨提醒
 
--   除以下参数外，官方文档内的 props 也都支持，具体可以参考 [antv table](https://2x.antdv.com/components/table-cn/#API)
--   注意：`defaultExpandAllRows`、`defaultExpandedRowKeys` 属性在 basicTable 中不受支持，并且在`antv table` v2.2.0 之后也被移除。
+- 除以下参数外，官方文档内的 props 也都支持，具体可以参考 [antv table](https://2x.antdv.com/components/table-cn/#API)
+- 注意：`defaultExpandAllRows`、`defaultExpandedRowKeys` 属性在 basicTable 中不受支持，并且在`antv table` v2.2.0 之后也被移除。
 
 :::
 
@@ -439,6 +463,8 @@ export default defineComponent({
 | striped                 | `boolean`                                                                               | `true`      | -      | 斑马纹                                                                                                      |       |
 | inset                   | `boolean`                                                                               | `false`     | -      | 取消表格的默认 padding                                                                                      |       |
 | autoCreateKey           | `boolean`                                                                               | `true`      | -      | 是否自动生成 key                                                                                            |       |
+| virtual                 | `boolean`                                                                               | `false`     | -      | 是否开启虚拟滚动，开启后可显著提升大数据量表格（30条以上）的性能                                            |       |
+| virtualConfig           | `VirtualScrollConfig`                                                                   | -           | -      | 虚拟滚动配置，见下方 VirtualScrollConfig                                                                    |       |
 | showSummary             | `boolean`                                                                               | `false`     | -      | 是否显示合计行                                                                                              |       |
 | summaryData             | `any[]`                                                                                 | -           | -      | 自定义合计数据。如果有则显示该数据                                                                          |       |
 | emptyDataIsShowTable    | `boolean`                                                                               | `true`      | -      | 在启用搜索表单的前提下，是否在表格没有数据的时候显示表格                                                    |       |
@@ -488,7 +514,7 @@ export default defineComponent({
 | fullScreen | 是否启用全屏按钮     | `boolean` | `true`  |
 | floating   | 是否启用悬浮设置     | `boolean` | `false` |
 
-开启 `floating` 后，表格右上角的设置面板将以“悬浮”形态展示，并可拖拽调整位置。例如：
+开启 `floating` 后，表格右上角的设置面板将以"悬浮"形态展示，并可拖拽调整位置。例如：
 
 ```ts
 const [registerTable, { setProps }] = useTable({
@@ -497,6 +523,31 @@ const [registerTable, { setProps }] = useTable({
 
 // 动态切换
 setProps({ tableSetting: { floating: false } });
+```
+
+### VirtualScrollConfig
+
+虚拟滚动配置项，开启 `virtual=true` 时生效。用于优化大量数据下的表格性能。
+
+| 参数            | 说明                 | 类型      | 默认值 |
+| --------------- | -------------------- | --------- | ------ |
+| itemHeight      | 每行高度（像素）     | `number`  | `54`   |
+| bufferSize      | 缓冲区行数           | `number`  | `5`    |
+| containerHeight | 可视区域高度         | `number`  | `400`  |
+| enabled         | 是否启用虚拟滚动     | `boolean` | `true` |
+| throttleDelay   | 滚动节流延迟（毫秒） | `number`  | `16`   |
+
+使用示例：
+
+```ts
+const [registerTable] = useTable({
+    virtual: true, // 开启虚拟滚动
+    virtualConfig: {
+        itemHeight: 60, // 自定义行高
+        bufferSize: 10, // 增加缓冲区大小，滚动更流畅
+        containerHeight: 500, // 设置容器高度
+    },
+});
 ```
 
 ## BasicColumn
@@ -608,6 +659,106 @@ e.g
 form-submitBefore
 form-customFilterButton
 ```
+
+## 虚拟滚动
+
+表格组件支持虚拟滚动功能，用于处理大量数据时提升性能。当表格数据超过30条时，建议开启虚拟滚动以获得更流畅的体验。
+
+### 基础使用示例
+
+```vue
+<template>
+    <div class="p-4">
+        <q-antd-table title="虚拟滚动示例" :columns="columns" :dataSource="dataSource" :virtual="true" :virtualConfig="virtualConfig" :scroll="{ y: 400 }" ref="tableRef" />
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, onMounted, unref } from 'vue';
+import { BasicColumn, TableActionType } from '@/components/Table';
+
+export default defineComponent({
+    setup() {
+        // 表格引用
+        const tableRef = ref<TableActionType>();
+
+        // 创建大量数据
+        const dataSource = ref<any[]>([]);
+        const generateData = (count: number) => {
+            const data = [];
+            for (let i = 0; i < count; i++) {
+                data.push({
+                    id: `${i}`,
+                    name: `用户名 ${i}`,
+                    age: Math.floor(Math.random() * 100),
+                    address: `地址信息 ${i}`,
+                });
+            }
+            return data;
+        };
+
+        // 表格列定义
+        const columns: BasicColumn[] = [
+            {
+                title: 'ID',
+                dataIndex: 'id',
+                width: 80,
+            },
+            {
+                title: '姓名',
+                dataIndex: 'name',
+                width: 120,
+            },
+            {
+                title: '年龄',
+                dataIndex: 'age',
+                width: 80,
+            },
+            {
+                title: '地址',
+                dataIndex: 'address',
+            },
+        ];
+
+        // 虚拟滚动配置
+        const virtualConfig = {
+            itemHeight: 54, // 每行高度
+            bufferSize: 10, // 缓冲区大小，提升滚动流畅度
+        };
+
+        // 初始化数据
+        onMounted(() => {
+            // 生成1000条测试数据
+            dataSource.value = generateData(1000);
+
+            // 示例：滚动到指定行
+            setTimeout(() => {
+                const table = unref(tableRef);
+                if (table) {
+                    // 滚动到第100行，居中显示
+                    table.scrollToIndex(100, 'center');
+                }
+            }, 1000);
+        });
+
+        return {
+            columns,
+            dataSource,
+            virtualConfig,
+            tableRef,
+        };
+    },
+});
+</script>
+```
+
+### 虚拟滚动注意事项
+
+1. 虚拟滚动只在数据量较大（超过30条）时自动启用
+2. 需要设置 `scroll.y` 固定表格高度
+3. 建议为列设置固定宽度，以获得最佳性能和视觉效果
+4. 虚拟滚动与固定列、展开行等功能兼容，但过多的复杂特性可能影响滚动性能
+5. 对于更复杂的场景，可以通过 `updateVirtualConfig` 方法动态调整虚拟滚动配置
 
 ## ColumnSetting 组件
 
