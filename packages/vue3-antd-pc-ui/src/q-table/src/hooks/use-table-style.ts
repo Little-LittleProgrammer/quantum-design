@@ -4,9 +4,9 @@ import { isFunction } from '@quantum-design/utils';
 
 export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls: string) {
     function getRowClassName(record: TableCustomRecord, index: number) {
-        const {striped, rowClassName} = unref(propsRef);
+        const { striped, rowClassName, virtual } = unref(propsRef);
         const classNames: string[] = [];
-        if (striped) {
+        if (striped && !virtual) {
             classNames.push((index || 0) % 2 === 1 ? `${prefixCls}-row-striped` : '');
         }
         if (rowClassName && isFunction(rowClassName)) {
@@ -14,5 +14,5 @@ export function useTableStyle(propsRef: ComputedRef<BasicTableProps>, prefixCls:
         }
         return classNames.filter((cls) => !!cls).join(' ');
     }
-    return {getRowClassName};
+    return { getRowClassName };
 }

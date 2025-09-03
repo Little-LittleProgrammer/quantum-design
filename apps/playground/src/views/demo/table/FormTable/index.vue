@@ -1,3 +1,46 @@
+<template>
+    <div>
+        <div>
+            <a-button @click="reloadTable"> 还原 </a-button>
+            <a-button @click="changeLoading"> 开启loading </a-button>
+            <a-button @click="changeColumns"> 更改Columns </a-button>
+            <a-button @click="getColumn"> 获取Columns </a-button>
+            <a-button @click="getTableData"> 获取表格数据 </a-button>
+            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
+            <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
+            <a-button @click="getSelectRowList"> 获取选中行 </a-button>
+            <a-button @click="getSelectRowKeyList"> 获取选中行Key </a-button>
+            <a-button @click="setSelectedRowKeyList"> 设置选中行 </a-button>
+            <a-button @click="clearSelect"> 清空选中行 </a-button>
+            <a-button @click="getPagination"> 获取分页信息 </a-button>
+            <a-button @click="collapseAll"> 展开 </a-button>
+            <a-button @click="updateSetting"> 操作按钮悬浮切换 </a-button>
+        </div>
+        <q-antd-table @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit" @formExpandChange="handle_form_expand_change" @change="handle_table_change" @formCustomFilterChange="handle_form_custom_filter_change">
+            <template #form-slot> 12312312312 </template>
+            <!-- <template #headerTop>
+                <alert type="info" show-icon>
+                    <template #message>
+                        <span v-if="getSelectRows().length > 0">已选中{{ getSelectRows().length }}项</span>
+                        <span v-else>未选中任何项目</span>
+                    </template>
+                </alert>
+            </template> -->
+            <template #bodyCell="{ column, record }">
+                <template v-if="column.key === 'action'">
+                    <q-antd-table-action :actions="createActions(record, column)" />
+                </template>
+            </template>
+            <template #paginationButton>
+                <a-button>这是按钮A</a-button>
+                <a-button>这是按钮BBBB</a-button>
+                <a-button>这是长按钮啦啦啦啦</a-button>
+            </template>
+        </q-antd-table>
+        <edit @register="registerDrawer"></edit>
+        <base-modal />
+    </div>
+</template>
 <script lang="ts" setup>
 import { computed, h, ref, reactive } from 'vue';
 import { useTable, useDrawer, QAntdTable, QAntdTableAction, useQAntdModal, type ColumnChangeParam } from '@quantum-design/vue3-antd-pc-ui';
@@ -127,6 +170,7 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
     },
 
     scroll: { x: true },
+    virtual: true,
     columns: getBasicColumns(),
     dataSource: getBasicData(),
     autoCreateKey: true,
@@ -294,46 +338,3 @@ function handle_form_custom_filter_change(config: any) {
     console.log('handle_form_custom_filter_change', config);
 }
 </script>
-<template>
-    <div>
-        <div>
-            <a-button @click="reloadTable"> 还原 </a-button>
-            <a-button @click="changeLoading"> 开启loading </a-button>
-            <a-button @click="changeColumns"> 更改Columns </a-button>
-            <a-button @click="getColumn"> 获取Columns </a-button>
-            <a-button @click="getTableData"> 获取表格数据 </a-button>
-            <a-button @click="getTableRawData"> 获取接口原始数据 </a-button>
-            <a-button @click="setPaginationInfo"> 跳转到第2页 </a-button>
-            <a-button @click="getSelectRowList"> 获取选中行 </a-button>
-            <a-button @click="getSelectRowKeyList"> 获取选中行Key </a-button>
-            <a-button @click="setSelectedRowKeyList"> 设置选中行 </a-button>
-            <a-button @click="clearSelect"> 清空选中行 </a-button>
-            <a-button @click="getPagination"> 获取分页信息 </a-button>
-            <a-button @click="collapseAll"> 展开 </a-button>
-            <a-button @click="updateSetting"> 操作按钮悬浮切换 </a-button>
-        </div>
-        <QAntdTable @register="registerTable" @edit-end="handlerEdit" @edit-row-end="handlerEdit" @formExpandChange="handle_form_expand_change" @change="handle_table_change" @formCustomFilterChange="handle_form_custom_filter_change">
-            <template #form-slot> 12312312312 </template>
-            <!-- <template #headerTop>
-                <alert type="info" show-icon>
-                    <template #message>
-                        <span v-if="getSelectRows().length > 0">已选中{{ getSelectRows().length }}项</span>
-                        <span v-else>未选中任何项目</span>
-                    </template>
-                </alert>
-            </template> -->
-            <template #bodyCell="{ column, record }">
-                <template v-if="column.key === 'action'">
-                    <QAntdTableAction :actions="createActions(record, column)" />
-                </template>
-            </template>
-            <template #paginationButton>
-                <a-button>这是按钮A</a-button>
-                <a-button>这是按钮BBBB</a-button>
-                <a-button>这是长按钮啦啦啦啦</a-button>
-            </template>
-        </QAntdTable>
-        <edit @register="registerDrawer"></edit>
-        <BaseModal />
-    </div>
-</template>

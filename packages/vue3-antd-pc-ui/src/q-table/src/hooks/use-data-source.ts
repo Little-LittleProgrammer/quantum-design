@@ -1,10 +1,10 @@
-
 import type { PaginationProps } from '../types/pagination';
-import { type ComputedRef, type Ref, computed, onMounted, reactive, ref, unref, watch, watchEffect } from 'vue';
+import { type ComputedRef, type Ref, computed, nextTick, onMounted, reactive, ref, unref, watch, watchEffect } from 'vue';
 import type { BasicColumn, BasicTableProps, FetchParams, SorterResult, Recordable } from '../types/table';
 import { isArray, isBoolean, isFunction, isObject, js_utils_get_table_header_columns, js_utils_get_uuid } from '@quantum-design/utils';
 import { FETCH_SETTING, PAGE_SIZE, ROW_KEY } from '../enums/const';
 import { cloneDeep, get, merge } from 'lodash-es';
+import { usePagination } from '@quantum-design/hooks/vue/use-pagination';
 
 interface ActionType {
     getPaginationInfo: ComputedRef<boolean | PaginationProps>;
@@ -15,7 +15,6 @@ interface ActionType {
     tableData: Ref<Recordable[]>;
     columns: Ref<Recordable[]>;
     summaryData: Ref<Recordable[]>;
-    setColumns: (columns: BasicColumn[]) => void;
 }
 
 interface SearchState {
@@ -23,30 +22,26 @@ interface SearchState {
     filterInfo: Record<string, string[]>;
 }
 
-export function useDataSource(
-    propsRef: ComputedRef<BasicTableProps>,
-    {
-        getPaginationInfo,
-        setPagination,
-        setLoading,
-        getFieldsValue,
-        clearSelectedRowKeys,
-        tableData,
-        columns,
-        summaryData,
-        setColumns
-    }: ActionType,
-    emit: EmitType
-) {
+export function useDataSource(propsRef: ComputedRef<BasicTableProps>, { getPaginationInfo, setPagination, setLoading, getFieldsValue, clearSelectedRowKeys, tableData, columns, summaryData }: ActionType, emit: EmitType) {
     const searchState = reactive<SearchState>({
         sortInfo: {},
-        filterInfo: {}
+        filterInfo: {},
     });
     const columnsRef = ref<BasicColumn[]>([]);
-    const dataSourceRef = ref<Recordable[]>([]);
+    const dataSourceRef = ref<Recordable[]>([]); // 接口返回数据or外部传入的表格数据
     const rawDataSourceRef = ref<Recordable>({}); // 原始的 res 数据
 
+    // 判断是否为纯前端分页模式
+    const isPureClient = computed(() => {
+        const paginationInfo = unref(getPaginationInfo);
+        return isObject(paginationInfo) && (paginationInfo.onlyFrontControl === true || !unref(propsRef).api);
+    });
+    // 前端分页
+    const { pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
+    const { getPaginationList, getTotal, setCurrentPage, setPageSize } = usePagination(dataSourceRef, pageSize);
+
     watchEffect(() => {
+        // 在 columns 之后再初始化table数据
         tableData.value = unref(dataSourceRef);
     });
     watchEffect(() => {
@@ -56,24 +51,36 @@ export function useDataSource(
     watch(
         () => unref(propsRef).dataSource,
         () => {
-            const { dataSource, api } = unref(propsRef);
-            !api && dataSource && (dataSourceRef.value = dataSource);
+            nextTick(() => {
+                const { dataSource, api } = unref(propsRef);
+                if (dataSource && !api) {
+                    // 判断是否为前端分页模式
+                    dataSourceRef.value = dataSource;
+
+                    // 更新分页信息中的总数
+                    setPagination({
+                        total: getTotal.value,
+                    });
+                }
+                // 手动更新值时
+            });
         },
         {
-            immediate: true
-        }
+            immediate: true,
+        },
     );
 
-    function handleTableChange(
-        pagination: PaginationProps,
-        filters: Partial<Recordable>,
-        sorter: SorterResult
-    ) {
+    function handleTableChange(pagination: PaginationProps, filters: Partial<Recordable>, sorter: SorterResult) {
         const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef);
         if (clearSelectOnPageChange) {
             clearSelectedRowKeys();
         }
+        // 更新分页信息
         setPagination(pagination);
+        if (isPureClient.value) {
+            setCurrentPage(pagination.current || 1);
+            setPageSize(pagination.pageSize || PAGE_SIZE);
+        }
 
         const params: Recordable = {};
 
@@ -89,7 +96,8 @@ export function useDataSource(
         }
 
         const paginationConfig = unref(getPaginationInfo);
-        if ((isObject(paginationConfig) && !(paginationConfig as PaginationProps).onlyFrontControl)) {
+        if (isObject(paginationConfig) && !isPureClient.value) {
+            // 调用 API 获取数据
             fetch(params);
         }
     }
@@ -123,14 +131,15 @@ export function useDataSource(
         if (!_dataSource || _dataSource.length === 0) {
             return unref(dataSourceRef);
         }
-        if (unref(getAutoCreateKey)) {
-            const _firstItem = _dataSource[0];
-            const _lastItem = _dataSource[_dataSource.length - 1];
+        // 自动创建 rowkey
+        function autoCreateKey(data: Recordable[]) {
+            const _firstItem = data[0];
+            const _lastItem = data[data.length - 1];
 
             if (_firstItem && _lastItem) {
                 if (!_firstItem[ROW_KEY] || !_lastItem[ROW_KEY]) {
-                    const _data = cloneDeep((unref(dataSourceRef)));
-                    _data.forEach(item => {
+                    const _data = cloneDeep(data);
+                    _data.forEach((item) => {
                         if (!item[ROW_KEY]) {
                             item[ROW_KEY] = js_utils_get_uuid(8);
                         }
@@ -138,9 +147,19 @@ export function useDataSource(
                             setTableKey(item.children);
                         }
                     });
-                    dataSourceRef.value = _data;
+                    return _data;
                 }
             }
+            return data;
+        }
+        // 如果是纯前端分页模式，使用前端分页数据
+        if (unref(isPureClient)) {
+            return autoCreateKey(getPaginationList.value || []);
+        }
+
+        if (unref(getAutoCreateKey)) {
+            const _data = autoCreateKey(_dataSource);
+            dataSourceRef.value = _data;
         }
         return unref(dataSourceRef);
     });
@@ -173,10 +192,7 @@ export function useDataSource(
     }
 
     // 插入表格行，根据 index 插入, 纯前端更新
-    function insertTableDataRecord(
-        record: Recordable | Recordable[],
-        index: number
-    ): Recordable[] | undefined {
+    function insertTableDataRecord(record: Recordable | Recordable[], index: number): Recordable[] | undefined {
         // if (!dataSourceRef.value || dataSourceRef.value.length == 0) return;
         index = index ?? dataSourceRef.value?.length;
         const _record = isObject(record) ? [record as Recordable] : (record as Recordable[]);
@@ -187,8 +203,8 @@ export function useDataSource(
     // 更新表格行，根据 index 更新, 纯前端更新
     async function updateTableData(index: number, key: string, value: any) {
         const _record = dataSourceRef.value?.[index];
-        if (_record) {
-            dataSourceRef.value[index]![key] = value;
+        if (_record && dataSourceRef.value[index]) {
+            dataSourceRef.value[index][key] = value;
         }
         return getDataSourceRef.value?.[index];
     }
@@ -213,14 +229,14 @@ export function useDataSource(
 
         const { childrenColumnName = 'children' } = unref(propsRef);
 
-        function deleteRow(data:any, key:string | number) {
+        function deleteRow(data: any, key: string | number) {
             const row: { index: number; data: [] } = findRow(data, key);
             if (row === null || row.index === -1) {
                 return;
             }
             row.data.splice(row.index, 1);
 
-            function findRow(data:any, key:string | number):any {
+            function findRow(data: any, key: string | number): any {
                 if (data === null || data === undefined) {
                     return null;
                 }
@@ -249,23 +265,16 @@ export function useDataSource(
             deleteRow(unref(propsRef).dataSource, key);
         }
         setPagination({
-            total: unref(propsRef).dataSource?.length
+            total: unref(propsRef).dataSource?.length,
         });
     }
 
-    // 根据 api 获取表格数据
-    async function fetch(opt?: FetchParams): Promise<any>{
-        const {
-            api,
-            searchInfo,
-            defSort,
-            fetchSetting,
-            beforeFetch,
-            afterFetch,
-            useSearchForm,
-            pagination,
-            columnsConfig
-        } = unref(propsRef);
+    /**
+     * 根据 api 获取表格数据
+     * 如果是前端分页模式 (onlyFrontControl)，则不会调用 API
+     */
+    async function fetch(opt?: FetchParams): Promise<any> {
+        const { api, searchInfo, defSort, fetchSetting, beforeFetch, afterFetch, useSearchForm, pagination, columnsConfig } = unref(propsRef);
         if (!api || !isFunction(api)) {
             return;
         }
@@ -275,13 +284,13 @@ export function useDataSource(
             const { pageField, sizeField, listField, totalField, headerField, summaryField, sortHeaderField } = merge(
                 {},
                 FETCH_SETTING, // 默认映射关系
-                fetchSetting // 自定义映射关系
+                fetchSetting, // 自定义映射关系
             );
             let pageParams: Recordable = {};
 
             const { current = 1, pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
 
-            if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
+            if ((isBoolean(pagination) && !pagination) || isBoolean(unref(getPaginationInfo))) {
                 pageParams = {};
             } else {
                 pageParams[pageField] = (opt && opt.page) || current;
@@ -290,17 +299,7 @@ export function useDataSource(
 
             const { sortInfo = {}, filterInfo } = searchState; // 搜索项
 
-            let params: Recordable = merge(
-                pageParams,
-                useSearchForm ? getFieldsValue() : {},
-                searchInfo,
-                opt?.searchInfo ?? {},
-                defSort,
-                sortInfo,
-                filterInfo,
-                opt?.sortInfo ?? {},
-                opt?.filterInfo ?? {}
-            );
+            let params: Recordable = merge(pageParams, useSearchForm ? getFieldsValue() : {}, searchInfo, opt?.searchInfo ?? {}, defSort, sortInfo, filterInfo, opt?.sortInfo ?? {}, opt?.filterInfo ?? {});
             if (beforeFetch && isFunction(beforeFetch)) {
                 params = (await beforeFetch(params)) || params;
             }
@@ -314,7 +313,7 @@ export function useDataSource(
             const _isArrayResult = isArray(_res);
 
             let _resultItems: Recordable[] = _isArrayResult ? _res : get(_res, listField);
-            const _resultTotal: number = _isArrayResult ? _res.length : get(_res, totalField);
+            const _resultTotal: number = _isArrayResult ? _res.length : get(_res, totalField) || _resultItems.length;
             const _sortHeader = isArray(_res) ? [] : get(_res, sortHeaderField);
 
             // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
@@ -322,48 +321,55 @@ export function useDataSource(
                 const currentTotalPage = Math.ceil(_resultTotal / pageSize);
                 if (current > currentTotalPage) {
                     setPagination({
-                        current: currentTotalPage
+                        current: currentTotalPage,
                     });
+                    setCurrentPage(currentTotalPage);
                     return await fetch(opt);
                 }
             }
 
-            if (afterFetch && isFunction(afterFetch)) {
-                _resultItems = (await afterFetch(_resultItems)) || _resultItems;
-            }
-            dataSourceRef.value = _resultItems;
+            // 先处理和更新 columns
             if (!_isArrayResult && get(_res, headerField)) {
                 const _header = get(_res, headerField);
                 const _columns = isArray(_header) ? _header : js_utils_get_table_header_columns(_header, columnsConfig);
-                setColumns(_columns);
                 if (isArray(_sortHeader) && _sortHeader.length > 0) {
-                    setColumns(_sortHeader);
+                    _columns.sort((prev, next) => {
+                        return _sortHeader.indexOf(prev.dataIndex?.toString() as string) - _sortHeader.indexOf(next.dataIndex?.toString() as string);
+                    });
                 }
+                columnsRef.value = _columns;
             }
 
+            // 处理 summaryData
             if (!_isArrayResult && get(_res, summaryField)) {
                 const _data = get(_res, summaryField);
                 summaryData.value = isArray(_data) ? _data : [_data];
             }
 
+            // 最后再更新 dataSource
+            if (afterFetch && isFunction(afterFetch)) {
+                _resultItems = (await afterFetch(_resultItems)) || _resultItems;
+            }
+            dataSourceRef.value = _resultItems;
             setPagination({
-                total: _resultTotal || 0
+                total: _resultTotal || 0,
             });
             if (opt && opt.page) {
                 setPagination({
-                    current: opt.page || 1
+                    current: opt.page || 1,
                 });
+                setCurrentPage(opt.page || 1);
             }
             emit('fetch-success', {
                 list: unref(_resultItems),
-                total: _resultTotal
+                total: _resultTotal,
             });
             return _resultItems;
         } catch (err) {
             emit('fetch-error', err);
             dataSourceRef.value = [];
             setPagination({
-                total: 0
+                total: 0,
             });
         } finally {
             setLoading(false);
@@ -388,22 +394,11 @@ export function useDataSource(
     }
 
     async function exportData(opt?: FetchParams) {
-        const {
-            exportSetting,
-            defSort,
-            useSearchForm,
-            searchInfo
-        } = unref(propsRef);
+        const { exportSetting, defSort, useSearchForm, searchInfo } = unref(propsRef);
         if (!exportSetting?.api || !isFunction(exportSetting.api)) {
             return;
         }
-        let params = merge(
-            opt,
-            useSearchForm ? getFieldsValue() : {},
-            searchInfo,
-            opt?.searchInfo ?? {},
-            defSort
-        );
+        let params = merge(opt, useSearchForm ? getFieldsValue() : {}, searchInfo, opt?.searchInfo ?? {}, defSort);
         if (exportSetting.beforeFetch && isFunction(exportSetting.beforeFetch)) {
             params = (await exportSetting.beforeFetch(params)) || params;
         }
@@ -437,6 +432,6 @@ export function useDataSource(
         insertTableDataRecord,
         findTableDataRecord,
         handleTableChange,
-        exportData
+        exportData,
     };
 }

@@ -4,7 +4,7 @@ export function getBasicColumns(): BasicColumn[] {
             title: 'ID',
             dataIndex: 'id',
             fixed: 'left',
-            width: 50
+            width: 50,
         },
         {
             title: '姓名',
@@ -12,43 +12,43 @@ export function getBasicColumns(): BasicColumn[] {
             width: 150,
             filters: [
                 { text: 'Male', value: 'male' },
-                { text: 'Female', value: 'female' }
+                { text: 'Female', value: 'female' },
             ],
             key: 'name',
             editRule: true,
             helpMessage: '你好',
             editRow: true,
-            editComponent: 'Input'
+            editComponent: 'Input',
         },
         {
             title: '地址',
-            dataIndex: 'address'
+            dataIndex: 'address',
         },
         {
             title: '编号',
             dataIndex: 'no',
             width: 150,
             sorter: true,
-            defaultHidden: true
+            defaultHidden: true,
         },
         {
             title: '开始时间',
             width: 150,
             sorter: true,
-            dataIndex: 'beginTime'
+            dataIndex: 'beginTime',
         },
         {
             title: '结束时间',
             sorter: true,
-            dataIndex: 'endTime'
-        }
+            dataIndex: 'endTime',
+        },
     ];
 }
 
 export function getBasicData() {
     return (() => {
         const arr: any = [];
-        for (let index = 0; index < 40; index++) {
+        for (let index = 0; index < 100; index++) {
             arr.push({
                 id: `${index}`,
                 name: 'John Brown',
@@ -56,7 +56,7 @@ export function getBasicData() {
                 no: `${index + 10}`,
                 address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
                 beginTime: new Date().toLocaleString(),
-                endTime: new Date().toLocaleString()
+                endTime: new Date().toLocaleString(),
             });
         }
         return arr;
@@ -66,7 +66,7 @@ export function getBasicData() {
 export function getTreeTableData() {
     return (() => {
         const arr: any = [];
-        for (let index = 0; index < 40; index++) {
+        for (let index = 0; index < 100; index++) {
             arr.push({
                 id: `${index}`,
                 name: 'John Brown',
@@ -83,12 +83,11 @@ export function getTreeTableData() {
                         no: `${index + 10}`,
                         address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
                         beginTime: new Date().toLocaleString(),
-                        endTime: new Date().toLocaleString()
-                    }
-                ]
+                        endTime: new Date().toLocaleString(),
+                    },
+                ],
             });
         }
         return arr;
     })();
 }
-

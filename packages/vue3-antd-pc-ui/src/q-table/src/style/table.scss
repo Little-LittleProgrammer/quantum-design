@@ -137,3 +137,4 @@ $prefix-cls: 'q-table';
 @include meta.load-css('table-header.scss');
 @include meta.load-css('table-setting.scss');
 @include meta.load-css('table-pagination.scss');
+@include meta.load-css('virtual-scroll.scss');

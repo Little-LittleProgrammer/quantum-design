@@ -24,15 +24,18 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
     const configRef = ref<PaginationProps>({});
     const show = ref(true);
 
-    watch(() => refProps.value.pagination, (pagination) => {
-        console.log('watch pagination', pagination);
-        if (!isBoolean(pagination) && pagination) {
-            configRef.value = {
-                ...unref(configRef),
-                ...(pagination ?? {})
-            };
-        }
-    });
+    watch(
+        () => refProps.value.pagination,
+        (pagination) => {
+            console.log('watch pagination', pagination);
+            if (!isBoolean(pagination) && pagination) {
+                configRef.value = {
+                    ...unref(configRef),
+                    ...(pagination ?? {}),
+                };
+            }
+        },
+    );
 
     const getPaginationInfo = computed<PaginationProps | boolean>(() => {
         const { pagination } = unref(refProps);
@@ -50,7 +53,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
             itemRender: item_render,
             showQuickJumper: true,
             ...(isBoolean(pagination) ? {} : pagination),
-            ...unref(configRef)
+            ...unref(configRef),
         };
     });
 
@@ -58,7 +61,7 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
         const paginationInfo = unref(getPaginationInfo);
         configRef.value = {
             ...(!isBoolean(paginationInfo) ? paginationInfo : {}),
-            ...info
+            ...info,
         };
     }
 

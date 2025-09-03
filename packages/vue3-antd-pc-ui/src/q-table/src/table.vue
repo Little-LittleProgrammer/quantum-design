@@ -58,6 +58,7 @@ import { useTableHeader } from './hooks/use-table-header';
 import { useCustomRow } from './hooks/use-cuctom-row';
 import { useTableExpand } from './hooks/use-table-expand';
 import HeaderCell from './components/header/header-cell.vue';
+import { useVirtualScroll } from './hooks/use-virtual-scroll';
 
 defineOptions({
     name: 'QAntdTable',
@@ -161,6 +162,15 @@ const { getSummaryData } = useSummary(getProps, {
     summaryData,
 });
 
+// 虚拟滚动
+const virtualScroll = useVirtualScroll({
+    propsRef: getProps,
+    dataSource: computed(() => unref(getDataSourceRef)),
+    containerRef: tableElRef,
+    scrollRef: getScrollRef,
+    size: getProps.value.size,
+});
+
 const getWrapperClass = computed(() => {
     const values = unref(getBindValues);
     return [
@@ -184,7 +194,7 @@ const handlers: InnerHandlers = {
 const { getHeaderProps } = useTableHeader(getProps, slots, handlers);
 
 const getBindValues = computed(() => {
-    const dataSource = unref(getDataSourceRef);
+    const dataSource = virtualScroll.isVirtualEnabled.value ? virtualScroll.visibleData.value : unref(getDataSourceRef);
     let propsData: any = {
         ...attrs,
         customRow,
@@ -262,6 +272,12 @@ const tableAction: TableActionType = {
     },
     setCacheColumns,
     exportData,
+
+    // 虚拟滚动相关方法
+    scrollToIndex: virtualScroll.scrollToIndex,
+    scrollToRow: virtualScroll.scrollToRow,
+    getVirtualScrollInfo: () => virtualScroll.scrollInfo.value,
+    updateVirtualConfig: virtualScroll.updateConfig,
 };
 
 createTableContext({ ...tableAction, wrapRef, getBindValues, tableElRef });

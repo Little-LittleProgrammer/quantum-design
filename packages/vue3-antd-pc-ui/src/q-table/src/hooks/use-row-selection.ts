@@ -7,26 +7,37 @@ import { ROW_KEY } from '../enums/const';
 
 import { js_utils_find_node_all } from '@quantum-design/utils';
 
-export function useRowSelection(
-    propsRef: ComputedRef<BasicTableProps>,
-    tableData: Ref<Recordable[]>,
-    emit: EmitType
-) {
+export function useRowSelection(propsRef: ComputedRef<BasicTableProps>, tableData: Ref<Recordable[]>, emit: EmitType) {
     const selectedRowKeysRef = ref<string[]>([]);
     const selectedRowRef = ref<Recordable[]>([]);
 
     const getRowSelectionRef = computed<TableRowSelection | null>(() => {
-        const {rowSelection} = unref(propsRef);
+        const { rowSelection } = unref(propsRef);
 
         if (!rowSelection) {
             return null;
         }
         return {
             selectedRowKeys: unref(selectedRowKeysRef),
-            onChange: (selectedRowKeys: string[]) => {
-                set_selected_row_keys(selectedRowKeys);
+            onSelectAll(selected) {
+                let keys = [];
+                if (selected) {
+                    keys = unref(tableData).map((item) => item[unref(getRowKey) as string]);
+                } else {
+                    selectedRowKeysRef.value = [];
+                }
+                set_selected_row_keys(keys);
             },
-            ...omit(rowSelection, ['onChange'])
+            onSelect(record, selected) {
+                if (selected) {
+                    selectedRowKeysRef.value.push(record[unref(getRowKey) as string]);
+                    set_selected_row_keys(selectedRowKeysRef.value);
+                } else {
+                    selectedRowKeysRef.value = selectedRowKeysRef.value.filter((item) => item !== record[unref(getRowKey) as string]);
+                    set_selected_row_keys([]);
+                }
+            },
+            ...omit(rowSelection, ['onChange']),
         };
     });
 
@@ -34,27 +45,27 @@ export function useRowSelection(
         () => unref(propsRef).rowSelection?.selectedRowKeys,
         (v: string[]) => {
             set_selected_row_keys(v);
-        }
+        },
     );
 
     watch(
         () => unref(selectedRowKeysRef),
         () => {
             nextTick(() => {
-                const {rowSelection} = unref(propsRef);
+                const { rowSelection } = unref(propsRef);
                 if (rowSelection) {
-                    const {onChange} = rowSelection;
+                    const { onChange } = rowSelection;
                     if (onChange && isFunction(onChange)) {
                         onChange(get_select_row_keys(), get_select_rows());
                     }
                 }
                 emit('selection-change', {
                     keys: get_select_row_keys(),
-                    rows: get_select_rows()
+                    rows: get_select_rows(),
                 });
             });
         },
-        {deep: true}
+        { deep: true },
     );
 
     const getAutoCreateKey = computed(() => {
@@ -62,19 +73,15 @@ export function useRowSelection(
     });
 
     const getRowKey = computed(() => {
-        const {rowKey} = unref(propsRef);
+        const { rowKey } = unref(propsRef);
         return unref(getAutoCreateKey) ? ROW_KEY : rowKey;
     });
 
     function set_selected_row_keys(rowKeys: string[]) {
-        selectedRowKeysRef.value = rowKeys;
-        const _allSelectedRows: any[] = js_utils_find_node_all(
-            toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))),
-            (item: any) => rowKeys?.includes(item[unref(getRowKey) as string]),
-            {
-                children: propsRef.value.childrenColumnName ?? 'children'
-            }
-        );
+        selectedRowKeysRef.value = [...new Set([...selectedRowKeysRef.value, ...rowKeys])];
+        const _allSelectedRows: any[] = js_utils_find_node_all(toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))), (item: any) => rowKeys?.includes(item[unref(getRowKey) as string]), {
+            children: propsRef.value.childrenColumnName ?? 'children',
+        });
         const trueSelectedRows: any[] = [];
         rowKeys?.forEach((key: string) => {
             const found = _allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
@@ -110,7 +117,7 @@ export function useRowSelection(
     }
 
     function get_row_selection() {
-        return unref(getRowSelectionRef)!;
+        return unref(getRowSelectionRef);
     }
 
     return {
@@ -121,6 +128,6 @@ export function useRowSelection(
         setSelectedRowKeys: set_selected_row_keys,
         clearSelectedRowKeys: clear_selected_row_keys,
         deleteSelectRowByKey: delete_select_row_by_key,
-        setSelectedRows: set_selected_rows
+        setSelectedRows: set_selected_rows,
     };
 }
