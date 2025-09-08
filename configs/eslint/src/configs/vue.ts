@@ -1,5 +1,4 @@
 import type { Linter } from 'eslint';
-
 import { interopDefault } from '../util';
 
 export async function vue(): Promise<Linter.Config[]> {
@@ -9,65 +8,33 @@ export async function vue(): Promise<Linter.Config[]> {
         {
             files: ['**/*.vue'],
             languageOptions: {
-                // globals: {
-                //   computed: 'readonly',
-                //   defineEmits: 'readonly',
-                //   defineExpose: 'readonly',
-                //   defineProps: 'readonly',
-                //   onMounted: 'readonly',
-                //   onUnmounted: 'readonly',
-                //   reactive: 'readonly',
-                //   ref: 'readonly',
-                //   shallowReactive: 'readonly',
-                //   shallowRef: 'readonly',
-                //   toRef: 'readonly',
-                //   toRefs: 'readonly',
-                //   watch: 'readonly',
-                //   watchEffect: 'readonly',
-                // },
                 parser: parserVue,
                 parserOptions: {
-                    ecmaFeatures: {
-                        jsx: true,
-                    },
+                    ecmaFeatures: { jsx: true },
                     extraFileExtensions: ['.vue'],
                     parser: parserTs,
                     sourceType: 'module',
                 },
             },
-            plugins: {
-                vue: pluginVue,
-            },
+            plugins: { vue: pluginVue },
             processor: pluginVue.processors['.vue'],
             rules: {
                 ...pluginVue.configs.base.rules,
                 ...pluginVue.configs['vue3-essential'].rules,
                 ...pluginVue.configs['vue3-strongly-recommended'].rules,
                 ...pluginVue.configs['vue3-recommended'].rules,
-
                 'vue/attribute-hyphenation': 'off',
                 'vue/attributes-order': 'off',
-                'vue/block-order': [
-                    'error',
-                    {
-                        order: ['template', 'script', 'style'],
-                    },
-                ],
+                'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
                 'vue/component-name-in-template-casing': ['error', 'kebab-case'],
                 'vue/component-options-name-casing': ['error', 'PascalCase'],
                 'vue/custom-event-name-casing': ['error', 'camelCase'],
-                'vue/define-macros-order': [
-                    'error',
-                    {
-                        order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'],
-                    },
-                ],
+                'vue/define-macros-order': ['error', { order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'] }],
                 'vue/dot-location': 'off',
                 'vue/dot-notation': 'off',
                 'vue/eqeqeq': 'off',
                 'vue/html-closing-bracket-newline': 'off',
                 'vue/html-indent': 'off',
-                // 'vue/html-indent': ['error', 2],
                 'vue/html-quotes': 'off',
                 'vue/html-self-closing': 'off',
                 'vue/max-attributes-per-line': 'off',

@@ -2,17 +2,7 @@
  * 阿里云 AI 供应商实现
  */
 import { BaseAIProvider, type AIGenerateOptions, type AIResponse, type AIStreamResponse } from '../base';
-import {
-    type AliyunConfig,
-    type AliyunRequest,
-    type BailianRequest,
-    type AliyunResponse,
-    type BailianResponse,
-    type AliyunStreamChunk,
-    type BailianStreamChunk,
-    AliyunModels,
-    AliyunBaseURL
-} from './model';
+import { type AliyunConfig, type AliyunRequest, type BailianRequest, type AliyunResponse, type BailianResponse, type AliyunStreamChunk, type BailianStreamChunk, AliyunModels, AliyunBaseURL } from './model';
 
 export class AliyunProvider extends BaseAIProvider {
     private rawBaseURL: string;
@@ -26,7 +16,7 @@ export class AliyunProvider extends BaseAIProvider {
             modelName: config.modelName || AliyunModels.QWen3_32B_Instruct,
             baseURL: config.baseURL,
             timeout: config.timeout || 60000,
-            maxRetries: config.maxRetries || 3
+            maxRetries: config.maxRetries || 3,
         };
 
         super(baseConfig);
@@ -40,9 +30,7 @@ export class AliyunProvider extends BaseAIProvider {
     }
 
     private initClient(): void {
-        this.rawBaseURL = this.aliyunConfig.bailianAppId
-            ? `${this.aliyunBaseURL}/apps/${this.aliyunConfig.bailianAppId}/completion`
-            : `${this.aliyunBaseURL}/services/aigc/text-generation/generation`;
+        this.rawBaseURL = this.aliyunConfig.bailianAppId ? `${this.aliyunBaseURL}/apps/${this.aliyunConfig.bailianAppId}/completion` : `${this.aliyunBaseURL}/services/aigc/text-generation/generation`;
     }
 
     private async fetchWithRetry(url: string, options: RequestInit): Promise<Response> {
@@ -59,8 +47,8 @@ export class AliyunProvider extends BaseAIProvider {
                     headers: {
                         Authorization: `Bearer ${this.config.apiKey}`,
                         'Content-Type': 'application/json',
-                        ...options.headers
-                    }
+                        ...options.headers,
+                    },
                 });
 
                 clearTimeout(timeoutId);
@@ -121,13 +109,12 @@ export class AliyunProvider extends BaseAIProvider {
                 // 使用百炼应用接口
                 const prompt = this.messagesToPrompt(options.messages);
                 const requestData: BailianRequest = {
-                    input: { prompt, session_id: this.aliyunConfig.sessionId}
-
+                    input: { prompt, session_id: this.aliyunConfig.sessionId },
                 };
 
                 response = await this.fetchWithRetry(this.rawBaseURL, {
                     method: 'POST',
-                    body: JSON.stringify(requestData)
+                    body: JSON.stringify(requestData),
                 });
             } else {
                 // 使用通义千问接口
@@ -136,20 +123,20 @@ export class AliyunProvider extends BaseAIProvider {
                     input: {
                         messages: options.messages.map((msg) => ({
                             role: msg.role,
-                            content: msg.content
-                        }))
+                            content: msg.content,
+                        })),
                     },
                     parameters: {
                         temperature: options.temperature,
                         max_tokens: options.maxTokens,
                         stop: options.stop,
-                        result_format: options.resultFormat || 'message'
-                    }
+                        result_format: options.resultFormat || 'message',
+                    },
                 };
 
                 response = await this.fetchWithRetry(this.rawBaseURL, {
                     method: 'POST',
-                    body: JSON.stringify(requestData)
+                    body: JSON.stringify(requestData),
                 });
             }
 
@@ -164,10 +151,10 @@ export class AliyunProvider extends BaseAIProvider {
         }
     }
 
-    async* generateStream(options: AIGenerateOptions): AsyncGenerator<AIStreamResponse> {
+    async *generateStream(options: AIGenerateOptions): AsyncGenerator<AIStreamResponse> {
         try {
             const response = await this.createStreamRequest(options);
-            yield * this.processStreamResponse(response);
+            yield* this.processStreamResponse(response);
         } catch (error) {
             throw this.handleError(error);
         }
@@ -183,11 +170,11 @@ export class AliyunProvider extends BaseAIProvider {
             // 使用百炼应用流式接口
             const prompt = this.messagesToPrompt(options.messages);
             requestData = {
-                input: { prompt, session_id: this.aliyunConfig.sessionId},
+                input: { prompt, session_id: this.aliyunConfig.sessionId },
                 parameters: {
                     incremental_output: true,
-                    result_format: 'text'
-                }
+                    result_format: 'text',
+                },
             };
         } else {
             // 使用通义千问流式接口
@@ -196,16 +183,16 @@ export class AliyunProvider extends BaseAIProvider {
                 input: {
                     messages: options.messages.map((msg) => ({
                         role: msg.role,
-                        content: msg.content
-                    }))
+                        content: msg.content,
+                    })),
                 },
                 parameters: {
                     temperature: options.temperature,
                     max_tokens: options.maxTokens,
                     stop: options.stop,
                     result_format: options.resultFormat || 'message',
-                    incremental_output: true
-                }
+                    incremental_output: true,
+                },
             };
         }
 
@@ -213,8 +200,8 @@ export class AliyunProvider extends BaseAIProvider {
             method: 'POST',
             body: JSON.stringify(requestData),
             headers: {
-                'X-DashScope-SSE': 'enable'
-            }
+                'X-DashScope-SSE': 'enable',
+            },
         });
 
         if (!response.ok) {
@@ -227,7 +214,7 @@ export class AliyunProvider extends BaseAIProvider {
     /**
      * 处理流式响应
      */
-    private async* processStreamResponse(response: Response): AsyncGenerator<AIStreamResponse> {
+    private async *processStreamResponse(response: Response): AsyncGenerator<AIStreamResponse> {
         const reader = response.body?.getReader();
         if (!reader) {
             throw new Error('No response body reader available');
@@ -288,11 +275,11 @@ export class AliyunProvider extends BaseAIProvider {
                 done: parsed.output.finish_reason !== 'null',
                 usage: usage
                     ? {
-                        promptTokens: usage.input_tokens,
-                        completionTokens: usage.output_tokens,
-                        totalTokens: usage.input_tokens + usage.output_tokens
-                    }
-                    : undefined
+                          promptTokens: usage.input_tokens,
+                          completionTokens: usage.output_tokens,
+                          totalTokens: usage.input_tokens + usage.output_tokens,
+                      }
+                    : undefined,
             };
         } else {
             // 通义千问响应解析
@@ -327,11 +314,11 @@ export class AliyunProvider extends BaseAIProvider {
                 done: finishReason !== 'null' && finishReason !== null,
                 usage: parsed.usage
                     ? {
-                        promptTokens: parsed.usage.input_tokens,
-                        completionTokens: parsed.usage.output_tokens,
-                        totalTokens: parsed.usage.total_tokens
-                    }
-                    : undefined
+                          promptTokens: parsed.usage.input_tokens,
+                          completionTokens: parsed.usage.output_tokens,
+                          totalTokens: parsed.usage.total_tokens,
+                      }
+                    : undefined,
             };
         }
     }
@@ -394,10 +381,10 @@ export class AliyunProvider extends BaseAIProvider {
                 usage: {
                     promptTokens: response.usage.input_tokens,
                     completionTokens: response.usage.output_tokens,
-                    totalTokens: response.usage.total_tokens
+                    totalTokens: response.usage.total_tokens,
                 },
                 model: this.config.modelName,
-                finishReason
+                finishReason,
             };
         } else {
             // 百炼应用响应
@@ -414,13 +401,13 @@ export class AliyunProvider extends BaseAIProvider {
                 reasoning_content: response.output.reasoning_content,
                 usage: usage
                     ? {
-                        promptTokens: usage.input_tokens,
-                        completionTokens: usage.output_tokens,
-                        totalTokens: usage.input_tokens + usage.output_tokens
-                    }
+                          promptTokens: usage.input_tokens,
+                          completionTokens: usage.output_tokens,
+                          totalTokens: usage.input_tokens + usage.output_tokens,
+                      }
                     : undefined,
                 model: usage?.model_name || this.config.modelName,
-                finishReason: 'stop'
+                finishReason: 'stop',
             };
         }
     }
