@@ -230,8 +230,8 @@ export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef
     // 监听数据变化
     watch(
         () => unref(dataSource).length,
-        async () => {
-            if (!init.value) {
+        async (val) => {
+            if (!init.value && val > 0) {
                 await nextTick();
                 initVirtualList();
                 initDOMElements();

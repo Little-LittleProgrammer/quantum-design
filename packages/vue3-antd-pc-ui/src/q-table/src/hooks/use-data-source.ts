@@ -350,6 +350,7 @@ export function useDataSource(propsRef: ComputedRef<BasicTableProps>, { getPagin
             if (afterFetch && isFunction(afterFetch)) {
                 _resultItems = (await afterFetch(_resultItems)) || _resultItems;
             }
+            await nextTick();
             dataSourceRef.value = _resultItems;
             setPagination({
                 total: _resultTotal || 0,

@@ -153,7 +153,7 @@ export function useTableScroll(propsRef: ComputedRef<BasicTableProps>, tableElRe
 
         bodyEl.style.height = 'unset';
 
-        if (!unref(getCanResize) || !unref(tableData) || tableData.length === 0) return;
+        if (!unref(getCanResize) || !unref(tableData)) return;
 
         await nextTick();
         // Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
@@ -161,12 +161,10 @@ export function useTableScroll(propsRef: ComputedRef<BasicTableProps>, tableElRe
         const headEl = tableEl.querySelector('.ant-table-thead ');
 
         if (!headEl) return;
-
         const paginationHeight = caclPaginationHeight(tableEl);
         const footerHeight = caclFooterHeight(tableEl);
         const headerHeight = calcHeaderHeight(headEl);
         const { paddingHeight, bottomIncludeBody } = calcBottomAndPaddingHeight(tableEl, headEl);
-
         let height = bottomIncludeBody - (resizeHeightOffset || 0) - paddingHeight - paginationHeight - footerHeight - headerHeight;
         height = (height > (maxHeight || 0) ? (maxHeight as number) : height) ?? height;
         setHeight(height);
