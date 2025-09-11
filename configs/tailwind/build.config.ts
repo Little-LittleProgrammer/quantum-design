@@ -19,11 +19,11 @@ export default defineBuildConfig({
             if (process.env.NODE_ENV === 'stub') {
                 replaceContent = `packages.forEach((pkg) => {
     if (pkg.dir.includes('apps') || pkg.dir.includes('packages/vue3-antd-pc-ui') || pkg.dir.includes('packages/vue3-pc-ui') || pkg.dir.includes('packages/styles')) {
-        tailwindPackages.push(pkg.dir);
+        tailwindPackages.push(path.join(pkg.dir, 'src/**/*.{vue,js,ts,jsx,tsx,svelte,astro,html}'));
     }
 });`;
             } else {
-                replaceContent = `['./src/**/*.{vue,js,ts,jsx,tsx,html,css,scss}', './node_modules/@quantum-design/vue3-antd-pc-ui/**/*.{vue,js,ts,jsx,tsx,css,scss,html}', './node_modules/@quantum-design/vue3-pc-ui/**/*.{vue,js,ts,jsx,tsx,svelte,astro,html}', './node_modules/@quantum-design/styles/**/*.{css,scss}'].forEach((item) => {
+                replaceContent = `['./src/**/*.{vue,js,ts,jsx,tsx,html,css,scss}', './node_modules/@quantum-design/vue3-antd-pc-ui/dist/**/*.{vue,js,ts,jsx,tsx,css,scss,html}', './node_modules/@quantum-design/vue3-pc-ui/dist/**/*.{vue,js,ts,jsx,tsx,svelte,astro,html}', './node_modules/@quantum-design/styles/**/*.{css,scss}'].forEach((item) => {
     tailwindPackages.push(item);
 });`;
             }

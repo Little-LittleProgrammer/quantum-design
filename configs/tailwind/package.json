@@ -5,8 +5,8 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "stub": "pnpm unbuild --stub",
-        "build": "pnpm unbuild"
+        "stub": "NODE_ENV=stub pnpm unbuild --stub ",
+        "build": "NODE_ENV=production pnpm unbuild "
     },
     "files": [
         "dist"

@@ -18,6 +18,10 @@
         mix-blend-mode: normal;
     }
 
+    svg {
+        vertical-align: baseline;
+    }
+
     /* 默认情况下：old(当前页面) 在下层，new(新主题) 在上层 */
     ::view-transition-old(root) {
         @apply z-[1];

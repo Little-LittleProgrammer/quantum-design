@@ -12,7 +12,9 @@ const { packages } = getPackagesSync(process.cwd());
 const tailwindPackages: string[] = [];
 
 // 不同打包配置替换
-/** need-replace */
+['./src/**/*.{vue,js,ts,jsx,tsx,html,css,scss}', './node_modules/@quantum-design/vue3-antd-pc-ui/dist/**/*.{vue,js,ts,jsx,tsx,css,scss,html}', './node_modules/@quantum-design/vue3-pc-ui/dist/**/*.{vue,js,ts,jsx,tsx,svelte,astro,html}', './node_modules/@quantum-design/styles/**/*.{css,scss}'].forEach((item) => {
+    tailwindPackages.push(item);
+});
 
 const customColors = {
     green: {
@@ -41,7 +43,7 @@ const customColors = {
 };
 
 export default {
-    content: ['./index.html', ...tailwindPackages.map((item) => path.join(item, 'src/**/*.{vue,js,ts,jsx,tsx,svelte,astro,html}'))],
+    content: ['./index.html', ...tailwindPackages],
     darkMode: 'selector',
     plugins: [animate, enterAnimationPlugin],
     prefix: '',
