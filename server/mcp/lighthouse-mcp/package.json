@@ -1,7 +1,7 @@
 {
-    "name": "qm-workflow-mcp",
-    "version": "0.0.6",
-    "description": "工作流 mcp server",
+    "name": "qm-lighthouse-mcp",
+    "version": "0.1.3",
+    "description": "Lighthouse MCP",
     "keywords": [],
     "license": "ISC",
     "author": "Evan Wu",
@@ -12,31 +12,29 @@
     },
     "files": [
         "README.md",
-        "dist"
+        "dist",
+        "index.js"
     ],
     "bin": {
-        "qm-workflow-mcp": "index.js"
+        "qm-lighthouse-mcp": "index.js"
     },
     "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
+        "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/",
         "access": "public"
     },
     "dependencies": {
         "@modelcontextprotocol/sdk": "catalog:",
+        "chrome-launcher": "catalog:",
         "dotenv": "catalog:",
-        "express": "catalog:",
-        "qm-workflow": "workspace:*"
+        "lighthouse": "catalog:",
+        "zod": "catalog:"
     },
     "devDependencies": {
-        "@types/fs-extra": "catalog:",
         "@types/lodash-es": "catalog:",
         "@types/minimist": "catalog:",
-        "@types/prompts": "catalog:",
-        "fs-extra": "catalog:",
         "kolorist": "catalog:",
         "lodash-es": "catalog:",
         "minimist": "catalog:",
-        "prompts": "catalog:",
         "shx": "catalog:",
         "unbuild": "catalog:"
     }

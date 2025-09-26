@@ -1,6 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import { z } from 'zod';
 import { DocxClient, CodeupClient, AppStackClient } from 'qm-workflow';
 import { formatErrorMessage, Logger } from './utils/tools';
 import express, { Request, Response } from 'express';
@@ -19,7 +18,7 @@ function handleError(error: unknown, operation: string): any {
     Logger.error(`${operation}失败:`, error);
     const errorMessage = formatErrorMessage(error);
     return {
-        content: [{ type: 'text' as const, text: `${operation}失败: ${errorMessage}` }]
+        content: [{ type: 'text' as const, text: `${operation}失败: ${errorMessage}` }],
     };
 }
 
@@ -40,12 +39,12 @@ export class FeishuMcpServer {
             appId: options.feishuConfig.appId,
             appSecret: options.feishuConfig.appSecret,
             spaceName: options.feishuConfig.spaceName,
-            appUserToken: options.feishuConfig.appUserToken
+            appUserToken: options.feishuConfig.appUserToken,
         });
 
         this.server = new McpServer({
             name: 'qm-workflow-mcp-server',
-            version: '0.0.1'
+            version: '0.0.1',
         });
         this.registerTools();
     }
@@ -55,28 +54,45 @@ export class FeishuMcpServer {
             'get_feishu_doc',
             'Get the Feishu document based on the url in markdown format',
             {
-                url: z.string().describe('Feishu document url')
+                type: 'object',
+                properties: {
+                    url: {
+                        type: 'string',
+                        description: 'Feishu document url',
+                    },
+                },
+                required: ['url'],
             },
-            async({ url }) => {
+            async ({ url }) => {
                 try {
                     const res = await this.docxClient.getWikiDocs(url);
                     return {
-                        content: [{ type: 'text' as const, text: res }]
+                        content: [{ type: 'text' as const, text: res }],
                     };
                 } catch (error) {
                     return handleError(error, '获取飞书文档信息');
                 }
-            }
+            },
         );
 
         this.server.tool(
             'create_feishu_doc',
             'Create a Feishu document',
             {
-                markdown: z.string().describe('Feishu document context in markdown format'),
-                parent_node: z.string().describe('The folder where the created Feishu document belongs, the url splits the last item by /')
+                type: 'object',
+                properties: {
+                    markdown: {
+                        type: 'string',
+                        description: 'Feishu document context in markdown format',
+                    },
+                    parent_node: {
+                        type: 'string',
+                        description: 'The folder where the created Feishu document belongs, the url splits the last item by /',
+                    },
+                },
+                required: ['markdown', 'parent_node'],
             },
-            async({ markdown, parent_node }) => {
+            async ({ markdown, parent_node }) => {
                 try {
                     await this.docxClient.getWikiBase();
                     let token = parent_node;
@@ -86,81 +102,104 @@ export class FeishuMcpServer {
                     }
                     const res = await this.docxClient.createWikiDocsMarkdown(markdown, token);
                     return {
-                        content: [{ type: 'text' as const, text: JSON.stringify(res) }]
+                        content: [{ type: 'text' as const, text: JSON.stringify(res) }],
                     };
                 } catch (error) {
                     return handleError(error, '创建飞书文档');
                 }
-            }
+            },
         );
 
         this.server.tool(
             'create_merge_request',
             'Use cur branch to create a merge request to target branch',
             {
-                sourceBranch: z.string().describe('current branch'),
-                description: z.string().describe('Merge request description,  if user input empty, use ai to generate， according to the diff with master，')
+                type: 'object',
+                properties: {
+                    sourceBranch: {
+                        type: 'string',
+                        description: 'current branch',
+                    },
+                    description: {
+                        type: 'string',
+                        description: 'Merge request description, if user input empty, use ai to generate according to the diff with master',
+                    },
+                },
+                required: ['sourceBranch', 'description'],
             },
-            async({ sourceBranch, description }) => {
+            async ({ sourceBranch, description }) => {
                 try {
                     const codeupInstance = new CodeupClient(this.options.aliConfig, {
-                        sourceBranch: sourceBranch
+                        sourceBranch: sourceBranch,
                     });
                     await codeupInstance.getRepoInfo();
                     const mrInfo = await codeupInstance.getMergeRequest();
                     if (mrInfo) {
                         return {
-                            content: [{ type: 'text' as const, text: '当前 mr 已存在，无需创建' }]
+                            content: [{ type: 'text' as const, text: '当前 mr 已存在，无需创建' }],
                         };
                     }
                     const res = await codeupInstance.createMergeRequest(sourceBranch, description);
                     if (res.code === 200) {
                         return {
-                            content: [{ type: 'text' as const, text: 'ok' }]
+                            content: [{ type: 'text' as const, text: 'ok' }],
                         };
                     } else {
                         return {
-                            content: [{ type: 'text' as const, text: sourceBranch + codeupInstance.targetBranch + JSON.stringify(res) }]
+                            content: [{ type: 'text' as const, text: sourceBranch + codeupInstance.targetBranch + JSON.stringify(res) }],
                         };
                     }
                 } catch (error) {
                     return handleError(error, '创建 mr');
                 }
-            }
+            },
         );
 
         this.server.tool(
             'development_project',
             'Deploy the project remotely',
             {
-                runEnv: z.string().describe('deploy environment'),
-                project: z.string().describe('project name'),
-                branch: z.string().describe('branch name')
+                type: 'object',
+                properties: {
+                    runEnv: {
+                        type: 'string',
+                        description: 'deploy environment',
+                    },
+                    project: {
+                        type: 'string',
+                        description: 'project name',
+                    },
+                    branch: {
+                        type: 'string',
+                        description: 'branch name',
+                    },
+                },
+                required: ['runEnv', 'project', 'branch'],
             },
-            async({ runEnv, project, branch }) => {
+            async ({ runEnv, project, branch }) => {
                 try {
                     const appStackInstance = new AppStackClient(this.options.aliConfig);
                     await appStackInstance.getAppStack();
                     const res = appStackInstance.getWorkflows();
-                    const needApps = res.filter(item => item.name.includes(project!));
-                    const workflowList: {workflowSn: string, stageSn: string, stageName: string}[] = [];
-                    needApps.forEach(workflow => {
-                        workflow.releaseStages.forEach(stage => {
+                    const needApps = res.filter((item) => item.name.includes(project));
+                    const workflowList: { workflowSn: string; stageSn: string; stageName: string }[] = [];
+                    needApps.forEach((workflow) => {
+                        workflow.releaseStages.forEach((stage) => {
                             workflowList.push({
                                 workflowSn: workflow.sn,
                                 stageSn: stage.sn,
-                                stageName: stage.name
+                                stageName: stage.name,
                             });
                         });
                     });
                     await appStackInstance.ExecuteAppStack(runEnv, workflowList, branch);
                     return {
-                        content: [{ type: 'text' as const, text: 'ok' }]
+                        content: [{ type: 'text' as const, text: 'ok' }],
                     };
                 } catch (error) {
                     return handleError(error, '部署项目');
                 }
-            }
+            },
         );
     }
 
@@ -169,30 +208,20 @@ export class FeishuMcpServer {
         // 添加错误处理
         try {
             Logger.log = (...args: any[]) => {
-                try {
-                    this.server.server.sendLoggingMessage({ level: 'info', data: args });
-                } catch (error) {
-                    console.log(...args); // 降级到控制台日志
-                }
+                this.server.server.sendLoggingMessage({ level: 'info', data: args });
             };
 
             Logger.error = (...args: any[]) => {
-                try {
-                    this.server.server.sendLoggingMessage({ level: 'error', data: args });
-                } catch (error) {
-                    console.error(...args); // 降级到控制台日志
-                }
+                this.server.server.sendLoggingMessage({ level: 'error', data: args });
             };
         } catch (error) {
-            console.error('Logger initialization failed:', error);
+            return handleError(error, 'Logger initialization failed');
         }
-
-        console.log('Server connected and ready to process requests');
     }
 
     async startHttpServer(port?: number): Promise<void> {
         const app = express();
-        app.get('/__mcp/sse', async(_req: Request, res: Response) => {
+        app.get('/__mcp/sse', async (_req: Request, res: Response) => {
             try {
                 console.log('New SSE connection established');
                 const sseTransport = new SSEServerTransport('/__mcp/messages', res);
@@ -207,7 +236,7 @@ export class FeishuMcpServer {
             }
         });
 
-        app.post('/__mcp/messages', async(req: Request, res: Response) => {
+        app.post('/__mcp/messages', async (req: Request, res: Response) => {
             try {
                 const query = new URLSearchParams(req.url?.split('?').pop() || '');
                 const clientId = query.get('sessionId');

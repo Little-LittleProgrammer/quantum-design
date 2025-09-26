@@ -1,0 +1,1621 @@
+{
+  "performance-score": 0.7,
+  "first-contentful-paint": {
+    "id": "first-contentful-paint",
+    "title": "First Contentful Paint",
+    "description": "First Contentful Paint marks the time at which the first text or image is painted.",
+    "score": 0.77,
+    "numericValue": 2207.303,
+    "numericUnit": "millisecond",
+    "displayValue": "2.2 s"
+  },
+  "largest-contentful-paint": {
+    "id": "largest-contentful-paint",
+    "title": "Largest Contentful Paint",
+    "description": "Largest Contentful Paint marks the time at which the largest text or image is painted.",
+    "score": 0,
+    "numericValue": 10463.941499999997,
+    "numericUnit": "millisecond",
+    "displayValue": "10.5 s"
+  },
+  "total-blocking-time": {
+    "id": "total-blocking-time",
+    "title": "Total Blocking Time",
+    "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds.",
+    "score": 0.93,
+    "numericValue": 162,
+    "numericUnit": "millisecond",
+    "displayValue": "160 ms"
+  },
+  "cumulative-layout-shift": {
+    "id": "cumulative-layout-shift",
+    "title": "Cumulative Layout Shift",
+    "description": "Cumulative Layout Shift measures the movement of visible elements within the viewport.",
+    "score": 1,
+    "numericValue": 0.037039607044730104,
+    "numericUnit": "unitless",
+    "displayValue": "0.037"
+  },
+  "interactive": {
+    "id": "interactive",
+    "title": "Time to Interactive",
+    "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive.",
+    "score": 0.23,
+    "numericValue": 10565.523349999998,
+    "numericUnit": "millisecond",
+    "displayValue": "10.6 s"
+  },
+  "unused-javascript": {
+    "id": "unused-javascript",
+    "title": "Reduce unused JavaScript",
+    "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity.",
+    "score": 0,
+    "numericValue": 630,
+    "numericUnit": "millisecond",
+    "displayValue": "Est savings of 73 KiB",
+    "metricSavings": {
+      "FCP": 0,
+      "LCP": 650
+    },
+
+    "details": {
+        "type": "opportunity",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "subItemsHeading": {
+              "key": "source",
+              "valueType": "code"
+            },
+            "label": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "subItemsHeading": {
+              "key": "sourceBytes"
+            },
+            "label": "Transfer Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "subItemsHeading": {
+              "key": "sourceWastedBytes"
+            },
+            "label": "Est Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/mcp-search_f19f372.js",
+            "totalBytes": 56939,
+            "wastedBytes": 43292,
+            "wastedPercent": 76.03256976114344
+          },
+          {
+            "url": "https://ms.bdstatic.com/se/static/wiseindex/js/package/newsActivity_07abb89.js",
+            "totalBytes": 32903,
+            "wastedBytes": 31786,
+            "wastedPercent": 96.6069658194891
+          }
+        ],
+        "overallSavingsMs": 630,
+        "overallSavingsBytes": 75078,
+        "sortedBy": [
+          "wastedBytes"
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 630
+          }
+        }
+      }
+  },
+  "unused-css-rules": {
+        "id": "unused-css-rules",
+        "title": "Reduce unused CSS",
+        "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/).",
+        "score": 0.5,
+        "scoreDisplayMode": "metricSavings",
+        "numericValue": 0,
+        "numericUnit": "millisecond",
+        "displayValue": "Est savings of 35 KiB",
+        "metricSavings": {
+          "FCP": 0,
+          "LCP": 0
+        },
+        "details": {
+          "type": "opportunity",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Est Savings"
+            }
+          ],
+          "items": [
+            {
+              "url": "body,h1,h2,h3,p,div,ol,ul,input,button{margin:0;padding:0} …",
+              "wastedBytes": 21826,
+              "wastedPercent": 86.52224108658744,
+              "totalBytes": 25226
+            },
+            {
+              "url": ".tab_news{text-align:left;background:#fff} …",
+              "wastedBytes": 13775,
+              "wastedPercent": 99.62335216572504,
+              "totalBytes": 13827
+            }
+          ],
+          "overallSavingsMs": 0,
+          "overallSavingsBytes": 35601,
+          "sortedBy": [
+            "wastedBytes"
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "metricSavings": {
+              "FCP": 0,
+              "LCP": 0
+            }
+          }
+        },
+        "guidanceLevel": 1
+      },
+  "bootup-time": {
+    "id": "bootup-time",
+    "title": "JavaScript execution time",
+    "description": "Consider reducing the time spent parsing, compiling, and executing JS.",
+    "score": 1,
+    "numericValue": 641.3319999999985,
+    "numericUnit": "millisecond",
+    "displayValue": "0.6 s",
+    "metricSavings": {
+      "TBT": 150
+    },
+
+    "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "label": "URL"
+          },
+          {
+            "key": "total",
+            "granularity": 1,
+            "valueType": "ms",
+            "label": "Total CPU Time"
+          },
+          {
+            "key": "scripting",
+            "granularity": 1,
+            "valueType": "ms",
+            "label": "Script Evaluation"
+          },
+          {
+            "key": "scriptParseCompile",
+            "granularity": 1,
+            "valueType": "ms",
+            "label": "Script Parse"
+          }
+        ],
+        "items": [
+          {
+            "url": "https://www.baidu.com/",
+            "total": 376.25999999999965,
+            "scripting": 146.3999999999997,
+            "scriptParseCompile": 7.1959999999999935
+          },
+          {
+            "url": "https://www.baidu.com/?action=static&ms=1&version=css_page_2@0,css_callapp@0,css_weather@0,css_icon@0,css_plus@0,css_edit@0,css_modal@0,css_widget_sug@0,css_skin@0,js_esl@0,js_zepto@0,js_event@0,js_fastclick@0,js_utils@0,js_smartymonkey@0,js_index@0,js_banner_ctrl@0,js_inputlog@0,js_bdnow@0,js_nctips@0,js_widget_textinput@0,js_widget_sug@0,js_mp@0,js_hash_lib@0,js_skinRenderIndex@0,js_skinIphone@0,js_prefetch@0,js_sug@0,js_iscroll@0,js_superframe@0,js_init@0,js_geolocation@0,js_login@0,js_tab@0,js_md5@0,js_url@0,js_lswrite@0,js_modal@0,js_thirdparty@0,js_m_monitor@0,js_superstart@0,js_baiduloc@0,js_callbaiduapp_android@0&callback=B.getCode&r=595&sid=110085_644658_644678_646540_646543_650474_652587_653265_646559_656456_657734_655951_651759_660624_658259_660928_661765_662196_662214_662994_664621_665191_665225_665265_666424_662113_666486_666676_666667_666654_666670_666660_666604_666611_666612_666846_666372_666464_666558_667113_667240_665291_667402_667417_667430_667595_667556_667684_667675_667942_668038_668049_667600_662823_668365_668377_667868_668514_668509_668527_668535_668521_668664_668661_668777_668650_668832_668754_668763_668757_668909_668900_668894_668892_668896_668962_668980_668872_668996_669039_669052_669055_669067_668822_667125_663790_669114_669112_669110_669064_669163_669193_669106_669266_669273_669284_667208_667191_667211_667198_669315_667884_667838_669379_669404_667566_669275_669419_666581_669527_669556_669558_669528_669518_669509_669514_669540_669503_669598_669630",
+            "total": 188.87599999999992,
+            "scripting": 83.10399999999993,
+            "scriptParseCompile": 89.63600000000001
+          },
+          {
+            "url": "https://hectorstatic.baidu.com/38671186615f1ba6.js",
+            "total": 159.28399999999968,
+            "scripting": 152.47999999999968,
+            "scriptParseCompile": 3.996
+          },
+          {
+            "url": "https://hectorstatic.baidu.com/a27e7df71036d80c.js",
+            "total": 155.39599999999922,
+            "scripting": 142.89599999999922,
+            "scriptParseCompile": 6.148
+          },
+          {
+            "url": "Unattributable",
+            "total": 143.7080000000008,
+            "scripting": 9.475999999999996,
+            "scriptParseCompile": 0
+          }
+        ],
+        "summary": {
+          "wastedMs": 641.3319999999985
+        },
+        "sortedBy": [
+          "total"
+        ]
+      }
+  },
+  "main-thread-tasks": {
+    "id": "main-thread-tasks",
+    "title": "Tasks",
+    "description": "Lists the toplevel main thread tasks that executed during page load.",
+    "details": {
+      "type": "table",
+      "headings": [
+        {
+          "key": "startTime",
+          "valueType": "ms",
+          "granularity": 1,
+          "label": "Start Time"
+        },
+        {
+          "key": "duration",
+          "valueType": "ms",
+          "granularity": 1,
+          "label": "End Time"
+        }
+      ],
+      "items": [
+        {
+          "duration": 9.707,
+          "startTime": 118.628
+        },
+        {
+          "duration": 6.605,
+          "startTime": 244.196
+        },
+        {
+          "duration": 36.466,
+          "startTime": 251.014
+        },
+        {
+          "duration": 38.586,
+          "startTime": 317.282
+        },
+        {
+          "duration": 47.151,
+          "startTime": 439.161
+        },
+        {
+          "duration": 6.004,
+          "startTime": 510.354
+        },
+        {
+          "duration": 5.591,
+          "startTime": 534.817
+        },
+        {
+          "duration": 5.94,
+          "startTime": 544.066
+        },
+        {
+          "duration": 31.94,
+          "startTime": 1630.784
+        },
+        {
+          "duration": 7.244,
+          "startTime": 1675.802
+        },
+        {
+          "duration": 11.091,
+          "startTime": 1796.261
+        }
+      ]
+    }
+  },
+  "third-party-summary": {
+    "id": "third-party-summary",
+    "title": "Minimize third-party usage",
+    "description": "Third-party code can significantly impact load performance.",
+    "displayValue": "Third-party code blocked the main thread for 0 ms",
+    "metricSavings": {
+      "TBT": 0
+    },
+    "details": {
+      "type": "table",
+      "headings": [
+        {
+          "key": "entity",
+          "valueType": "text",
+          "label": "Third-Party",
+          "subItemsHeading": {
+            "key": "url",
+            "valueType": "url"
+          }
+        },
+        {
+          "key": "transferSize",
+          "granularity": 1,
+          "valueType": "bytes",
+          "label": "Transfer Size",
+          "subItemsHeading": {
+            "key": "transferSize"
+          }
+        },
+        {
+          "key": "blockingTime",
+          "granularity": 1,
+          "valueType": "ms",
+          "label": "Main-Thread Blocking Time",
+          "subItemsHeading": {
+            "key": "blockingTime"
+          }
+        }
+      ],
+      "items": [
+        {
+          "mainThreadTime": 145.15599999999995,
+          "blockingTime": 0.08335011690426858,
+          "transferSize": 437004,
+          "tbtImpact": 0.08335011690426858,
+          "entity": "bdstatic.com",
+          "subItems": {
+            "type": "subitems",
+            "items": [
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/boot_70f41ad.js",
+                "mainThreadTime": 14.955999999999992,
+                "blockingTime": 0.06468667392302402,
+                "transferSize": 1582,
+                "tbtImpact": 0.06468667392302402
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/indexlocal_49da17a.js",
+                "mainThreadTime": 1.616,
+                "blockingTime": 0.018663442981244557,
+                "transferSize": 3203,
+                "tbtImpact": 0.018663442981244557
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/mcp-search_f19f372.js",
+                "mainThreadTime": 18.367999999999995,
+                "blockingTime": 0,
+                "transferSize": 57636,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/fonts/n-icons_7bcbf44.woff",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 43864,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/package/newsActivity_07abb89.js",
+                "mainThreadTime": 10.023999999999997,
+                "blockingTime": 0,
+                "transferSize": 33466,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/spritelist_71904c7.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 28832,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://sv.bdstatic.com/static/fecommon/growth/release/core.js?_sv=2025091715",
+                "mainThreadTime": 11.787999999999991,
+                "blockingTime": 0,
+                "transferSize": 25174,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/invoke-box_23724c3.js",
+                "mainThreadTime": 6.931999999999999,
+                "blockingTime": 0,
+                "transferSize": 25094,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/default_icon_02f13d8.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 24807,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/atomWrapper_6fc442d.js",
+                "mainThreadTime": 6.827999999999991,
+                "blockingTime": 0,
+                "transferSize": 22535,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/boxx_16de4a5.js",
+                "mainThreadTime": 3.0240000000000005,
+                "blockingTime": 0,
+                "transferSize": 13935,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://s.bdstatic.com/common/openjs/openBox.js?_v=2025-09-17-15",
+                "mainThreadTime": 10.107999999999993,
+                "blockingTime": 0,
+                "transferSize": 12594,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/ralltiir_6ae1e84.js",
+                "mainThreadTime": 3.204,
+                "blockingTime": 0,
+                "transferSize": 11698,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-prompt_3cade39.js",
+                "mainThreadTime": 1.7280000000000002,
+                "blockingTime": 0,
+                "transferSize": 9401,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/invoke-box-search_fde7350.js",
+                "mainThreadTime": 2.2920000000000003,
+                "blockingTime": 0,
+                "transferSize": 9085,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-panel_3e86ac0.js",
+                "mainThreadTime": 1.4400000000000002,
+                "blockingTime": 0,
+                "transferSize": 8465,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/Boxjs-amd_1cd9b4a.js",
+                "mainThreadTime": 5.64,
+                "blockingTime": 0,
+                "transferSize": 8152,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/Carousel_f7bb751.js",
+                "mainThreadTime": 1.828,
+                "blockingTime": 0,
+                "transferSize": 6838,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/Boxjs-search_2ce639b.js",
+                "mainThreadTime": 2.4360000000000004,
+                "blockingTime": 0,
+                "transferSize": 5702,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/btmBanner_f91323e.js",
+                "mainThreadTime": 0.744,
+                "blockingTime": 0,
+                "transferSize": 5239,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://s.bdstatic.com/common/openjs/amd/eslx.js",
+                "mainThreadTime": 1.576,
+                "blockingTime": 0,
+                "transferSize": 4175,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/a4/carousel_030ec32.js",
+                "mainThreadTime": 2.24,
+                "blockingTime": 0,
+                "transferSize": 3610,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/pack_e282bf1.js",
+                "mainThreadTime": 1.08,
+                "blockingTime": 0,
+                "transferSize": 3602,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/plugin/safariicon_6bd009a.js",
+                "mainThreadTime": 0.9520000000000001,
+                "blockingTime": 0,
+                "transferSize": 3586,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/package/superframe_fb3f939.js",
+                "mainThreadTime": 0.796,
+                "blockingTime": 0,
+                "transferSize": 3245,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/fankui_cc44349.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 3243,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-popup_8ca5d9c.js",
+                "mainThreadTime": 0.788,
+                "blockingTime": 0,
+                "transferSize": 2836,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/shoucang_5ef89d6.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 2827,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://pss.bdstatic.com/static/wiseindex/img/fetch_ing_8_0.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 2780,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/itemrep/channelMgr/index_c70dc69.js",
+                "mainThreadTime": 0.9600000000000002,
+                "blockingTime": 0,
+                "transferSize": 2441,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeSecr_13c5fec.js",
+                "mainThreadTime": 0.6040000000000001,
+                "blockingTime": 0,
+                "transferSize": 2332,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/user-agent_a8f8f1d.js",
+                "mainThreadTime": 1.592,
+                "blockingTime": 0,
+                "transferSize": 2274,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/guanzhu_0edf6fe.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 2182,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/underscore_23fe246.js",
+                "mainThreadTime": 1.1640000000000001,
+                "blockingTime": 0,
+                "transferSize": 2155,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/img/baiduappAdCloseWhite_b84ffa8.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 2134,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/pifu_eef387c.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 1938,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/promise_ac4cb03.js",
+                "mainThreadTime": 1.112,
+                "blockingTime": 0,
+                "transferSize": 1887,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/fullscreen_bb2defb.js",
+                "mainThreadTime": 0.56,
+                "blockingTime": 0,
+                "transferSize": 1689,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/img/favicon64_587c374.ico",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 1588,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/fnProvider_9833c78.js",
+                "mainThreadTime": 0.5640000000000001,
+                "blockingTime": 0,
+                "transferSize": 1578,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/bubble/bubble_783df9e.js",
+                "mainThreadTime": 0.5880000000000001,
+                "blockingTime": 0,
+                "transferSize": 1453,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/ivkBox_63d7b94.js",
+                "mainThreadTime": 0.524,
+                "blockingTime": 0,
+                "transferSize": 1448,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/DataProcess_deb477f.js",
+                "mainThreadTime": 0.31200000000000006,
+                "blockingTime": 0,
+                "transferSize": 1436,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/Core_7e3b01e.js",
+                "mainThreadTime": 1.2120000000000002,
+                "blockingTime": 0,
+                "transferSize": 1413,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/ShieldMonitor_b61052e.js",
+                "mainThreadTime": 6.124,
+                "blockingTime": 0,
+                "transferSize": 1326,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/bannerConfig_d14ae37.js",
+                "mainThreadTime": 0.18400000000000002,
+                "blockingTime": 0,
+                "transferSize": 1283,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/logo/logo_ab453f8.js",
+                "mainThreadTime": 0.4640000000000001,
+                "blockingTime": 0,
+                "transferSize": 1275,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/hash_424f744.js",
+                "mainThreadTime": 2.024,
+                "blockingTime": 0,
+                "transferSize": 1232,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/log_8406fdd.js",
+                "mainThreadTime": 0.18800000000000006,
+                "blockingTime": 0,
+                "transferSize": 1232,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeCookie_31fef6f.js",
+                "mainThreadTime": 0.32000000000000006,
+                "blockingTime": 0,
+                "transferSize": 1212,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/changeRelativeParam_d43b46a.js",
+                "mainThreadTime": 0.672,
+                "blockingTime": 0,
+                "transferSize": 1205,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/StrategyDataProcess_787f12d.js",
+                "mainThreadTime": 0.20000000000000004,
+                "blockingTime": 0,
+                "transferSize": 1186,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeBox_12354c1.js",
+                "mainThreadTime": 0.264,
+                "blockingTime": 0,
+                "transferSize": 1110,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/setFullScreenIvkCK_92b17a0.js",
+                "mainThreadTime": 0.23600000000000004,
+                "blockingTime": 0,
+                "transferSize": 1093,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/log/indexUbcLog_e63a8c9.js",
+                "mainThreadTime": 0.9880000000000002,
+                "blockingTime": 0,
+                "transferSize": 1008,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/serverDataFactory_568f951.js",
+                "mainThreadTime": 0.3360000000000001,
+                "blockingTime": 0,
+                "transferSize": 998,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/background_0a042a0.js",
+                "mainThreadTime": 0.384,
+                "blockingTime": 0,
+                "transferSize": 966,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/jssdk_6c0ef3a.js",
+                "mainThreadTime": 0.9840000000000001,
+                "blockingTime": 0,
+                "transferSize": 923,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/head_d11aab1.js",
+                "mainThreadTime": 10.260000000000002,
+                "blockingTime": 0,
+                "transferSize": 869,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/get-app-info_2747ad8.js",
+                "mainThreadTime": 0.4800000000000001,
+                "blockingTime": 0,
+                "transferSize": 841,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/hanbaobao_04adf60.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 767,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/getInvokeLogData_fc32168.js",
+                "mainThreadTime": 0.37600000000000006,
+                "blockingTime": 0,
+                "transferSize": 757,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/assert_3ed54c3.js",
+                "mainThreadTime": 0.3440000000000001,
+                "blockingTime": 0,
+                "transferSize": 713,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/fixChrome_redirect_0e91546.js",
+                "mainThreadTime": 0.344,
+                "blockingTime": 0,
+                "transferSize": 706,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/enterSkin_a4c42bc.js",
+                "mainThreadTime": 0.128,
+                "blockingTime": 0,
+                "transferSize": 660,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/setIvkCK_bb46616.js",
+                "mainThreadTime": 0.276,
+                "blockingTime": 0,
+                "transferSize": 488,
+                "tbtImpact": 0
+              }
+            ]
+          }
+        },
+        {
+          "mainThreadTime": 0,
+          "blockingTime": 0,
+          "transferSize": 341731,
+          "tbtImpact": 0,
+          "entity": "bcebos.com",
+          "subItems": {
+            "type": "subitems",
+            "items": [
+              {
+                "url": "https://search-operate.cdn.bcebos.com/a19cdc05db815c52aadaa3c23a5d1c0e.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 305172,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://search-operate.cdn.bcebos.com/5b0fa97578dbc928b2d2cee47bc2e676.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 20037,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://search-operate.cdn.bcebos.com/76deafc45187fdfc32d5dc3e1bf7a8cf.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 6840,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://psstatic.cdn.bcebos.com/basics/wise_global/searchbox/personal-center_8e143b4_1726815913000.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 3809,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://psstatic.cdn.bcebos.com/basics/wise_global/searchbox/%E4%B8%8B%E8%BD%BD_1726815906000.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 2372,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://psstatic.cdn.bcebos.com/basics/wise_global/searchbox/1_1726315824000.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 1767,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://psstatic.cdn.bcebos.com/basics/wise_global/searchbox/2_1726310931000.png",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 1734,
+                "tbtImpact": 0
+              }
+            ]
+          }
+        },
+        {
+          "mainThreadTime": 27.06799999999999,
+          "blockingTime": 0,
+          "transferSize": 12846,
+          "tbtImpact": 0,
+          "entity": "Baidu Analytics",
+          "subItems": {
+            "type": "subitems",
+            "items": [
+              {
+                "url": "https://hm.baidu.com/hm.js?12423ecbc0e2ca965d84259063d35238",
+                "mainThreadTime": 27.06799999999999,
+                "blockingTime": 0,
+                "transferSize": 11911,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://hm.baidu.com/hm.gif?si=c42dc7b5fa22eba9c22b2ca4d8829372&et=0&v=pixel-1.0&u=https%3A%2F%2Fm.baidu.com%2Fexp%2Ffailed%3Fv%3D1.0.4&rnd=1376374107",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 636,
+                "tbtImpact": 0
+              },
+              {
+                "url": "https://hm.baidu.com/hm.gif?hca=20FF29118E1DC449&cc=1&ck=1&cl=24-bit&ds=412x823&vl=823&et=0&ja=0&ln=zh-cn&lo=0&rnd=1562273335&si=12423ecbc0e2ca965d84259063d35238&v=1.3.2&lv=1&sn=52331&r=0&ww=412&u=https%3A%2F%2Fwww.baidu.com%2F&tt=%E7%99%BE%E5%BA%A6%E4%B8%80%E4%B8%8B",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 299,
+                "tbtImpact": 0
+              }
+            ]
+          }
+        },
+        {
+          "mainThreadTime": 0,
+          "blockingTime": 0,
+          "transferSize": 0,
+          "tbtImpact": 0,
+          "entity": "127.0.0.1",
+          "subItems": {
+            "type": "subitems",
+            "items": [
+              {
+                "url": "http://127.0.0.1:59468/?data=fCMxIzsjMi8xLzUjLSMyIzsjSlR5cW4yN2M5b2Y3cTIye3s1c3FPbzdad3dqN0dEZywwY3s3WHlKN1FbUEhDcmZVUlU5aG1obGhQN0RoOE84akJERGRRUm9wdmpoVm91ampOZkJQNHg%2BPiMtIzMjOyM5NTVjfSMtIzQjOzI4NjkxOjUzNDo4NzJ%2B",
+                "mainThreadTime": 0,
+                "blockingTime": 0,
+                "transferSize": 0,
+                "tbtImpact": 0
+              }
+            ]
+          }
+        }
+      ],
+      "summary": {
+        "wastedBytes": 791581,
+        "wastedMs": 0.08335011690426858
+      },
+      "isEntityGrouped": true
+    }
+  },
+  "resource-summary": {
+    "id": "resource-summary",
+    "title": "Resources Summary",
+    "description": "Aggregates all network requests and groups them by type",
+    "details": {
+      "type": "table",
+      "headings": [
+        {
+          "key": "label",
+          "valueType": "text",
+          "label": "Resource Type"
+        },
+        {
+          "key": "requestCount",
+          "valueType": "numeric",
+          "label": "Requests"
+        },
+        {
+          "key": "transferSize",
+          "valueType": "bytes",
+          "label": "Transfer Size"
+        }
+      ],
+      "items": [
+        {
+          "resourceType": "total",
+          "label": "Total",
+          "requestCount": 102,
+          "transferSize": 1155468
+        },
+        {
+          "resourceType": "script",
+          "label": "Script",
+          "requestCount": 61,
+          "transferSize": 567444
+        },
+        {
+          "resourceType": "image",
+          "label": "Image",
+          "requestCount": 36,
+          "transferSize": 463295
+        },
+        {
+          "resourceType": "document",
+          "label": "Document",
+          "requestCount": 2,
+          "transferSize": 79107
+        },
+        {
+          "resourceType": "font",
+          "label": "Font",
+          "requestCount": 1,
+          "transferSize": 43864
+        },
+        {
+          "resourceType": "other",
+          "label": "Other",
+          "requestCount": 2,
+          "transferSize": 1758
+        },
+        {
+          "resourceType": "stylesheet",
+          "label": "Stylesheet",
+          "requestCount": 0,
+          "transferSize": 0
+        },
+        {
+          "resourceType": "media",
+          "label": "Media",
+          "requestCount": 0,
+          "transferSize": 0
+        },
+        {
+          "resourceType": "third-party",
+          "label": "Third-party",
+          "requestCount": 75,
+          "transferSize": 778735
+        }
+      ]
+    }
+  },
+  "script-treemap-data": {
+    "id": "script-treemap-data",
+    "title": "Script Treemap Data",
+    "description": "Used for treemap app",,
+    "details": {
+      "type": "treemap-data",
+      "nodes": [
+        {
+          "name": "https://www.baidu.com/",
+          "resourceBytes": 40087,
+          "encodedBytes": 13735,
+          "unusedBytes": 4352,
+          "children": [
+            {
+              "name": "(inline) window._perform…",
+              "resourceBytes": 55,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) var url =  loca…",
+              "resourceBytes": 740,
+              "unusedBytes": 40
+            },
+            {
+              "name": "(inline) !function(e,n){…",
+              "resourceBytes": 5223,
+              "unusedBytes": 2868
+            },
+            {
+              "name": "(inline) window.__spyHea…",
+              "resourceBytes": 326,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) window.rain = {…",
+              "resourceBytes": 252,
+              "unusedBytes": 78
+            },
+            {
+              "name": "(inline) window.TABREREN…",
+              "resourceBytes": 26,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) B.init(function…",
+              "resourceBytes": 1643,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) B.init(function…",
+              "resourceBytes": 1236,
+              "unusedBytes": 621
+            },
+            {
+              "name": "(inline) B.load(function…",
+              "resourceBytes": 91,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) B.load(function…",
+              "resourceBytes": 133,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) B.init(function…",
+              "resourceBytes": 12094,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) !function(a){a.…",
+              "resourceBytes": 466,
+              "unusedBytes": 154
+            },
+            {
+              "name": "(inline) window.TABREREN…",
+              "resourceBytes": 26,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) window.sSession…",
+              "resourceBytes": 172,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) window._perform…",
+              "resourceBytes": 61,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) !function(a){a.…",
+              "resourceBytes": 155,
+              "unusedBytes": 96
+            },
+            {
+              "name": "(inline) !function(a){fu…",
+              "resourceBytes": 867,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) window.sSession…",
+              "resourceBytes": 13665,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) !function(v){fu…",
+              "resourceBytes": 2650,
+              "unusedBytes": 444
+            },
+            {
+              "name": "(inline) rain.event.list…",
+              "resourceBytes": 105,
+              "unusedBytes": 51
+            },
+            {
+              "name": "(inline) rain.loadModule…",
+              "resourceBytes": 47,
+              "unusedBytes": 0
+            },
+            {
+              "name": "(inline) window._perform…",
+              "resourceBytes": 54,
+              "unusedBytes": 0
+            }
+          ]
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/boot_70f41ad.js",
+          "resourceBytes": 795,
+          "encodedBytes": 813,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/head_d11aab1.js",
+          "resourceBytes": 434,
+          "encodedBytes": 452,
+          "unusedBytes": 51
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/fixChrome_redirect_0e91546.js",
+          "resourceBytes": 356,
+          "encodedBytes": 374,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/enterSkin_a4c42bc.js",
+          "resourceBytes": 264,
+          "encodedBytes": 282,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/changeRelativeParam_d43b46a.js",
+          "resourceBytes": 1033,
+          "encodedBytes": 548,
+          "unusedBytes": 905
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/indexlocal_49da17a.js",
+          "resourceBytes": 8846,
+          "encodedBytes": 2786,
+          "unusedBytes": 1851
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/inline/hash_424f744.js",
+          "resourceBytes": 834,
+          "encodedBytes": 852,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://hectorstatic.baidu.com/a27e7df71036d80c.js",
+          "resourceBytes": 93805,
+          "encodedBytes": 21935,
+          "unusedBytes": 10693
+        },
+        {
+          "name": "https://www.baidu.com/?action=static&ms=1&version=css_page_2@0,css_callapp@0,css_weather@0,css_icon@0,css_plus@0,css_edit@0,css_modal@0,css_widget_sug@0,css_skin@0,js_esl@0,js_zepto@0,js_event@0,js_fastclick@0,js_utils@0,js_smartymonkey@0,js_index@0,js_banner_ctrl@0,js_inputlog@0,js_bdnow@0,js_nctips@0,js_widget_textinput@0,js_widget_sug@0,js_mp@0,js_hash_lib@0,js_skinRenderIndex@0,js_skinIphone@0,js_prefetch@0,js_sug@0,js_iscroll@0,js_superframe@0,js_init@0,js_geolocation@0,js_login@0,js_tab@0,js_md5@0,js_url@0,js_lswrite@0,js_modal@0,js_thirdparty@0,js_m_monitor@0,js_superstart@0,js_baiduloc@0,js_callbaiduapp_android@0&callback=B.getCode&r=595&sid=110085_644658_644678_646540_646543_650474_652587_653265_646559_656456_657734_655951_651759_660624_658259_660928_661765_662196_662214_662994_664621_665191_665225_665265_666424_662113_666486_666676_666667_666654_666670_666660_666604_666611_666612_666846_666372_666464_666558_667113_667240_665291_667402_667417_667430_667595_667556_667684_667675_667942_668038_668049_667600_662823_668365_668377_667868_668514_668509_668527_668535_668521_668664_668661_668777_668650_668832_668754_668763_668757_668909_668900_668894_668892_668896_668962_668980_668872_668996_669039_669052_669055_669067_668822_667125_663790_669114_669112_669110_669064_669163_669193_669106_669266_669273_669284_667208_667191_667211_667198_669315_667884_667838_669379_669404_667566_669275_669419_666581_669527_669556_669558_669528_669518_669509_669514_669540_669503_669598_669630",
+          "resourceBytes": 575570,
+          "encodedBytes": 186656,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/ralltiir_6ae1e84.js",
+          "resourceBytes": 37445,
+          "encodedBytes": 11269,
+          "unusedBytes": 14848
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/boxx_16de4a5.js",
+          "resourceBytes": 37712,
+          "encodedBytes": 13288,
+          "unusedBytes": 24011
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/assert_3ed54c3.js",
+          "resourceBytes": 247,
+          "encodedBytes": 265,
+          "unusedBytes": 35
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/package/newsActivity_07abb89.js",
+          "resourceBytes": 107927,
+          "encodedBytes": 33063,
+          "unusedBytes": 104265
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/underscore_23fe246.js",
+          "resourceBytes": 4609,
+          "encodedBytes": 1741,
+          "unusedBytes": 2430
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/pack_e282bf1.js",
+          "resourceBytes": 10219,
+          "encodedBytes": 3153,
+          "unusedBytes": 2819
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/atomWrapper_6fc442d.js",
+          "resourceBytes": 59197,
+          "encodedBytes": 21901,
+          "unusedBytes": 23982
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/package/superframe_fb3f939.js",
+          "resourceBytes": 7841,
+          "encodedBytes": 2785,
+          "unusedBytes": 5439
+        },
+        {
+          "name": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/itemrep/channelMgr/index_c70dc69.js",
+          "resourceBytes": 5303,
+          "encodedBytes": 2102,
+          "unusedBytes": 4885
+        },
+        {
+          "name": "https://s.bdstatic.com/common/openjs/amd/eslx.js",
+          "resourceBytes": 8143,
+          "encodedBytes": 3821,
+          "unusedBytes": 2835
+        },
+        {
+          "name": "https://s.bdstatic.com/common/openjs/openBox.js?_v=2025-09-17-15",
+          "resourceBytes": 31915,
+          "encodedBytes": 12242,
+          "unusedBytes": 9093
+        },
+        {
+          "name": "https://hector.baidu.com/a.js",
+          "resourceBytes": 4665,
+          "encodedBytes": 1530,
+          "unusedBytes": 2733
+        },
+        {
+          "name": "https://hm.baidu.com/hm.js?12423ecbc0e2ca965d84259063d35238",
+          "resourceBytes": 29897,
+          "encodedBytes": 11291,
+          "unusedBytes": 13647
+        },
+        {
+          "name": "https://sv.bdstatic.com/static/fecommon/growth/release/core.js?_sv=2025091715",
+          "resourceBytes": 101507,
+          "encodedBytes": 24801,
+          "unusedBytes": 80525
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/bubble/bubble_783df9e.js",
+          "resourceBytes": 919,
+          "encodedBytes": 937,
+          "unusedBytes": 510
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/logo/logo_ab453f8.js",
+          "resourceBytes": 783,
+          "encodedBytes": 801,
+          "unusedBytes": 429
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/a4/carousel_030ec32.js",
+          "resourceBytes": 10380,
+          "encodedBytes": 2999,
+          "unusedBytes": 475
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/plugin/safariicon_6bd009a.js",
+          "resourceBytes": 8390,
+          "encodedBytes": 3122,
+          "unusedBytes": 7449
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/setIvkCK_bb46616.js",
+          "resourceBytes": 97,
+          "encodedBytes": 115,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/btmBanner_f91323e.js",
+          "resourceBytes": 7495,
+          "encodedBytes": 4822,
+          "unusedBytes": 7011
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/background_0a042a0.js",
+          "resourceBytes": 400,
+          "encodedBytes": 418,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/component/fullscreen_bb2defb.js",
+          "resourceBytes": 2322,
+          "encodedBytes": 1231,
+          "unusedBytes": 1725
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/log/indexUbcLog_e63a8c9.js",
+          "resourceBytes": 1109,
+          "encodedBytes": 543,
+          "unusedBytes": 302
+        },
+        {
+          "name": "https://hectorstatic.baidu.com/38671186615f1ba6.js",
+          "resourceBytes": 61560,
+          "encodedBytes": 19198,
+          "unusedBytes": 8608
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/getInvokeLogData_fc32168.js",
+          "resourceBytes": 330,
+          "encodedBytes": 348,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/ivkBox_63d7b94.js",
+          "resourceBytes": 1760,
+          "encodedBytes": 849,
+          "unusedBytes": 896
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/Core_7e3b01e.js",
+          "resourceBytes": 2490,
+          "encodedBytes": 942,
+          "unusedBytes": 442
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/Carousel_f7bb751.js",
+          "resourceBytes": 22254,
+          "encodedBytes": 6463,
+          "unusedBytes": 12741
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/bannerConfig_d14ae37.js",
+          "resourceBytes": 691,
+          "encodedBytes": 709,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeCookie_31fef6f.js",
+          "resourceBytes": 1439,
+          "encodedBytes": 760,
+          "unusedBytes": 749
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/serverDataFactory_568f951.js",
+          "resourceBytes": 1149,
+          "encodedBytes": 566,
+          "unusedBytes": 0
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/fnProvider_9833c78.js",
+          "resourceBytes": 2766,
+          "encodedBytes": 1180,
+          "unusedBytes": 934
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/log_8406fdd.js",
+          "resourceBytes": 648,
+          "encodedBytes": 666,
+          "unusedBytes": 400
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/setFullScreenIvkCK_92b17a0.js",
+          "resourceBytes": 1112,
+          "encodedBytes": 625,
+          "unusedBytes": 1051
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/invoke-box-search_fde7350.js",
+          "resourceBytes": 23717,
+          "encodedBytes": 8626,
+          "unusedBytes": 20481
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/DataProcess_deb477f.js",
+          "resourceBytes": 831,
+          "encodedBytes": 849,
+          "unusedBytes": 137
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/StrategyDataProcess_787f12d.js",
+          "resourceBytes": 746,
+          "encodedBytes": 764,
+          "unusedBytes": 186
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeBox_12354c1.js",
+          "resourceBytes": 1381,
+          "encodedBytes": 631,
+          "unusedBytes": 208
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/invoke/invokeSecr_13c5fec.js",
+          "resourceBytes": 4297,
+          "encodedBytes": 1961,
+          "unusedBytes": 4206
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/js/lib/transfer/common/ShieldMonitor_b61052e.js",
+          "resourceBytes": 1675,
+          "encodedBytes": 757,
+          "unusedBytes": 503
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/mcp-search_f19f372.js",
+          "resourceBytes": 286155,
+          "encodedBytes": 57160,
+          "unusedBytes": 217571
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/user-agent_a8f8f1d.js",
+          "resourceBytes": 5931,
+          "encodedBytes": 1860,
+          "unusedBytes": 4839
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/invoke-box_23724c3.js",
+          "resourceBytes": 90682,
+          "encodedBytes": 24572,
+          "unusedBytes": 64839
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-popup_8ca5d9c.js",
+          "resourceBytes": 7441,
+          "encodedBytes": 2420,
+          "unusedBytes": 3225
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-panel_3e86ac0.js",
+          "resourceBytes": 17453,
+          "encodedBytes": 7919,
+          "unusedBytes": 4148
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/get-app-info_2747ad8.js",
+          "resourceBytes": 316,
+          "encodedBytes": 334,
+          "unusedBytes": 127
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/wise-invoke-prompt_3cade39.js",
+          "resourceBytes": 22152,
+          "encodedBytes": 8986,
+          "unusedBytes": 7218
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/jssdk_6c0ef3a.js",
+          "resourceBytes": 504,
+          "encodedBytes": 522,
+          "unusedBytes": 350
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@searchfe/promise_ac4cb03.js",
+          "resourceBytes": 3742,
+          "encodedBytes": 1334,
+          "unusedBytes": 3510
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/Boxjs-search_2ce639b.js",
+          "resourceBytes": 22665,
+          "encodedBytes": 5310,
+          "unusedBytes": 21879
+        },
+        {
+          "name": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/Boxjs-amd_1cd9b4a.js",
+          "resourceBytes": 27900,
+          "encodedBytes": 7673,
+          "unusedBytes": 22554
+        }
+      ]
+    }
+  },
+  "render-blocking-resources": {
+    "id": "render-blocking-resources",
+    "title": "Eliminate render-blocking resources",
+    "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
+    "score": 1,
+    "scoreDisplayMode": "metricSavings",
+    "numericValue": 0,
+    "numericUnit": "millisecond",
+    "metricSavings": {
+      "FCP": 0,
+      "LCP": 0
+    },
+    "details": {
+      "type": "opportunity",
+      "headings": [],
+      "items": [],
+      "overallSavingsMs": 0
+    },
+    "guidanceLevel": 2
+  },
+  "total-byte-weight": {
+        "id": "total-byte-weight",
+        "title": "Avoids enormous network payloads",
+        "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
+        "score": 1,
+        "scoreDisplayMode": "metricSavings",
+        "numericValue": 1155468,
+        "numericUnit": "byte",
+        "displayValue": "Total size was 1,128 KiB",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            }
+          ],
+          "items": [
+            {
+              "url": "https://search-operate.cdn.bcebos.com/a19cdc05db815c52aadaa3c23a5d1c0e.png",
+              "totalBytes": 305172
+            },
+            {
+              "url": "https://www.baidu.com/?action=static&ms=1&version=css_page_2@0,css_callapp@0,css_weather@0,css_icon@0,css_plus@0,css_edit@0,css_modal@0,css_widget_sug@0,css_skin@0,js_esl@0,js_zepto@0,js_event@0,js_fastclick@0,js_utils@0,js_smartymonkey@0,js_index@0,js_banner_ctrl@0,js_inputlog@0,js_bdnow@0,js_nctips@0,js_widget_textinput@0,js_widget_sug@0,js_mp@0,js_hash_lib@0,js_skinRenderIndex@0,js_skinIphone@0,js_prefetch@0,js_sug@0,js_iscroll@0,js_superframe@0,js_init@0,js_geolocation@0,js_login@0,js_tab@0,js_md5@0,js_url@0,js_lswrite@0,js_modal@0,js_thirdparty@0,js_m_monitor@0,js_superstart@0,js_baiduloc@0,js_callbaiduapp_android@0&callback=B.getCode&r=595&sid=110085_644658_644678_646540_646543_650474_652587_653265_646559_656456_657734_655951_651759_660624_658259_660928_661765_662196_662214_662994_664621_665191_665225_665265_666424_662113_666486_666676_666667_666654_666670_666660_666604_666611_666612_666846_666372_666464_666558_667113_667240_665291_667402_667417_667430_667595_667556_667684_667675_667942_668038_668049_667600_662823_668365_668377_667868_668514_668509_668527_668535_668521_668664_668661_668777_668650_668832_668754_668763_668757_668909_668900_668894_668892_668896_668962_668980_668872_668996_669039_669052_669055_669067_668822_667125_663790_669114_669112_669110_669064_669163_669193_669106_669266_669273_669284_667208_667191_667211_667198_669315_667884_667838_669379_669404_667566_669275_669419_666581_669527_669556_669558_669528_669518_669509_669514_669540_669503_669598_669630",
+              "totalBytes": 189277
+            },
+            {
+              "url": "https://www.baidu.com/",
+              "totalBytes": 79107
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/mcp-search_f19f372.js",
+              "totalBytes": 57636
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/wiseindex/fonts/n-icons_7bcbf44.woff",
+              "totalBytes": 43864
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/wiseindex/js/package/newsActivity_07abb89.js",
+              "totalBytes": 33466
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/spritelist_71904c7.png",
+              "totalBytes": 28832
+            },
+            {
+              "url": "https://sv.bdstatic.com/static/fecommon/growth/release/core.js?_sv=2025091715",
+              "totalBytes": 25174
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/wiseindex/amd_modules/@baidu/invoke-box_23724c3.js",
+              "totalBytes": 25094
+            },
+            {
+              "url": "https://ms.bdstatic.com/se/static/indexatom/personalcenter/assets/img/default_icon_02f13d8.png",
+              "totalBytes": 24807
+            }
+          ],
+          "sortedBy": [
+            "totalBytes"
+          ]
+        },
+        "guidanceLevel": 1
+      },
+}
