@@ -1,217 +1,286 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError, type CallToolRequest } from '@modelcontextprotocol/sdk/types.js';
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-import { DocxClient, CodeupClient, AppStackClient } from 'qm-workflow';
-import { formatErrorMessage, Logger } from './utils/tools';
-import express, { Request, Response } from 'express';
 import type { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
-/**
- * 统一的响应格式
- */
-// interface McpResponse {
-//     content: Array<{
-//         type: 'text';
-//         text: string;
-//     }>;
-// }
+import express, { Request, Response } from 'express';
+import { AppStackClient, CodeupClient, DocxClient } from 'qm-workflow';
 
-function handleError(error: unknown, operation: string): any {
+import { formatErrorMessage, Logger } from './utils/tools';
+import { IFeishuTool, IFeishuMcpOptions, IFeishuConfig, IJsonSchema, ToolHandlerFn, IToolResponse, type IToolHandlerContext } from './type';
+
+function handleError(error: unknown, operation: string): IToolResponse {
     Logger.error(`${operation}失败:`, error);
     const errorMessage = formatErrorMessage(error);
     return {
-        content: [{ type: 'text' as const, text: `${operation}失败: ${errorMessage}` }],
+        content: [{ type: 'text', text: `${operation}失败: ${errorMessage}` }],
+        isError: true,
     };
 }
 
-export class FeishuMcpServer {
-    private readonly server: McpServer;
-    private sseTransports: Map<string, SSEServerTransport> = new Map();
-    private docxClient: DocxClient;
-    private readonly options: any = null;
-    constructor(options: any) {
-        // 验证飞书配置
-        if (!options.feishuConfig?.appId || !options.feishuConfig?.appSecret) {
-            throw new Error('飞书配置不完整，请检查 appId、appSecret');
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
+}
+
+function isFeishuConfig(value: unknown): value is IFeishuConfig {
+    if (!isRecord(value)) {
+        return false;
+    }
+    return typeof value.appId === 'string' && value.appId.length > 0 && typeof value.appSecret === 'string' && value.appSecret.length > 0;
+}
+
+const getFeishuDocSchema: IJsonSchema = {
+    type: 'object',
+    properties: {
+        url: {
+            type: 'string',
+            description: 'Feishu document url',
+        },
+    },
+    required: ['url'],
+};
+
+const handleGetFeishuDoc: ToolHandlerFn = async (args, context) => {
+    try {
+        if (!context.docxClient) {
+            throw new McpError(ErrorCode.InvalidParams, '飞书配置不完整，请检查 appId、appSecret');
         }
+        const res = await context.docxClient.getWikiDocs(args.url);
+        return {
+            content: [{ type: 'text', text: res }],
+        };
+    } catch (error) {
+        return handleError(error, '获取飞书文档信息');
+    }
+};
+
+const createFeishuDocSchema: IJsonSchema = {
+    type: 'object',
+    properties: {
+        markdown: {
+            type: 'string',
+            description: 'Feishu document context in markdown format',
+        },
+        parent_node: {
+            type: 'string',
+            description: 'The folder where the created Feishu document belongs, the url splits the last item by /',
+        },
+    },
+    required: ['markdown', 'parent_node'],
+};
+
+const handleCreateFeishuDoc: ToolHandlerFn = async (args, context) => {
+    try {
+        if (!context.docxClient) {
+            throw new McpError(ErrorCode.InvalidParams, '飞书配置不完整，请检查 appId、appSecret');
+        }
+        await context.docxClient.getWikiBase();
+        let token = args.parent_node;
+        if (token.includes('http')) {
+            const infoArr = token.split('?')[0]?.split('/') || [];
+            token = infoArr.pop() || '';
+        }
+        const res = await context.docxClient.createWikiDocsMarkdown(args.markdown, token);
+        return {
+            content: [{ type: 'text', text: JSON.stringify(res) }],
+        };
+    } catch (error) {
+        return handleError(error, '创建飞书文档');
+    }
+};
+
+const createMergeRequestSchema: IJsonSchema = {
+    type: 'object',
+    properties: {
+        sourceBranch: {
+            type: 'string',
+            description: 'current branch',
+        },
+        description: {
+            type: 'string',
+            description: 'Merge request description, if user input empty, use ai to generate according to the diff with master',
+        },
+    },
+    required: ['sourceBranch', 'description'],
+};
+
+const handleCreateMergeRequest: ToolHandlerFn = async (args, context) => {
+    try {
+        if (!context.options.aliConfig.token) {
+            throw new McpError(ErrorCode.InvalidParams, '阿里云 token 未配置');
+        }
+        const codeupInstance = new CodeupClient(context.options.aliConfig, {
+            sourceBranch: args.sourceBranch,
+        });
+        await codeupInstance.getRepoInfo();
+        const mrInfo = await codeupInstance.getMergeRequest();
+        if (mrInfo) {
+            return {
+                content: [{ type: 'text', text: '当前 mr 已存在，无需创建' }],
+            };
+        }
+        const res = await codeupInstance.createMergeRequest(args.sourceBranch, args.description);
+        if (res?.code === 200 && res?.data?.detailUrl) {
+            return {
+                content: [{ type: 'text', text: `mr 创建成功: ${res.data.detailUrl}` }],
+            };
+        }
+        return {
+            content: [{ type: 'text', text: JSON.stringify(res) }],
+        };
+    } catch (error) {
+        return handleError(error, '创建 mr');
+    }
+};
+
+const developmentProjectSchema: IJsonSchema = {
+    type: 'object',
+    properties: {
+        runEnv: {
+            type: 'string',
+            description: 'deploy environment',
+        },
+        project: {
+            type: 'string',
+            description: 'project name',
+        },
+        branch: {
+            type: 'string',
+            description: 'branch name',
+        },
+    },
+    required: ['runEnv', 'project', 'branch'],
+};
+
+const handleDevelopmentProject: ToolHandlerFn = async (args, context) => {
+    try {
+        if (!context.options.aliConfig.token) {
+            throw new McpError(ErrorCode.InvalidParams, '阿里云 token 未配置');
+        }
+        const appStackInstance = new AppStackClient(context.options.aliConfig);
+        await appStackInstance.getAppStack();
+        const workflows = appStackInstance.getWorkflows();
+        if (!Array.isArray(workflows)) {
+            return {
+                content: [{ type: 'text', text: '部署项目失败: 未获取到工作流信息' }],
+                isError: true,
+            };
+        }
+        const workflowList = workflows
+            .filter(isWorkflow)
+            .filter((workflow) => workflow.name.includes(args.project))
+            .flatMap((workflow) =>
+                workflow.releaseStages.map((stage) => ({
+                    workflowSn: workflow.sn,
+                    stageSn: stage.sn,
+                    stageName: stage.name,
+                })),
+            );
+        await appStackInstance.ExecuteAppStack(args.runEnv, workflowList, args.branch);
+        return {
+            content: [{ type: 'text', text: 'ok' }],
+        };
+    } catch (error) {
+        return handleError(error, '部署项目');
+    }
+};
+
+const tools: IFeishuTool[] = [
+    {
+        name: 'get_feishu_doc',
+        description: 'Get the Feishu document based on the url in markdown format',
+        schema: getFeishuDocSchema,
+        handler: handleGetFeishuDoc,
+    },
+    {
+        name: 'create_feishu_doc',
+        description: 'Create a Feishu document',
+        schema: createFeishuDocSchema,
+        handler: handleCreateFeishuDoc,
+    },
+    {
+        name: 'create_merge_request',
+        description: 'Use cur branch to create a merge request to target branch',
+        schema: createMergeRequestSchema,
+        handler: handleCreateMergeRequest,
+    },
+    {
+        name: 'development_project',
+        description: 'Deploy the project remotely',
+        schema: developmentProjectSchema,
+        handler: handleDevelopmentProject,
+    },
+];
+
+export class FeishuMcpServer {
+    private readonly server: Server;
+
+    private readonly sseTransports: Map<string, SSEServerTransport> = new Map();
+
+    private readonly options: IFeishuMcpOptions;
+
+    private readonly docxClient: DocxClient;
+
+    constructor(options: IFeishuMcpOptions) {
         this.options = options;
-        this.sseTransports = new Map<string, SSEServerTransport>();
-
-        this.docxClient = new DocxClient({
-            appId: options.feishuConfig.appId,
-            appSecret: options.feishuConfig.appSecret,
-            spaceName: options.feishuConfig.spaceName,
-            appUserToken: options.feishuConfig.appUserToken,
-        });
-
-        this.server = new McpServer({
-            name: 'qm-workflow-mcp-server',
-            version: '0.0.1',
-        });
-        this.registerTools();
+        if (isFeishuConfig(options.feishuConfig)) {
+            this.docxClient = new DocxClient({
+                appId: options.feishuConfig.appId,
+                appSecret: options.feishuConfig.appSecret,
+                spaceName: options.feishuConfig.spaceName,
+                appUserToken: options.feishuConfig.appUserToken,
+            });
+        }
+        this.server = new Server(
+            {
+                name: 'qm-workflow-mcp-server',
+                version: '0.1.4',
+            },
+            {
+                capabilities: {
+                    tools: {},
+                },
+            },
+        );
+        this.registerHandlers();
     }
 
-    async registerTools() {
-        this.server.tool(
-            'get_feishu_doc',
-            'Get the Feishu document based on the url in markdown format',
-            {
-                type: 'object',
-                properties: {
-                    url: {
-                        type: 'string',
-                        description: 'Feishu document url',
-                    },
-                },
-                required: ['url'],
-            },
-            async ({ url }) => {
-                try {
-                    const res = await this.docxClient.getWikiDocs(url);
-                    return {
-                        content: [{ type: 'text' as const, text: res }],
-                    };
-                } catch (error) {
-                    return handleError(error, '获取飞书文档信息');
-                }
-            },
-        );
+    private registerHandlers(): void {
+        this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
+            tools: tools.map(({ name, description, schema }) => ({
+                name,
+                description,
+                inputSchema: schema,
+            })),
+        }));
 
-        this.server.tool(
-            'create_feishu_doc',
-            'Create a Feishu document',
-            {
-                type: 'object',
-                properties: {
-                    markdown: {
-                        type: 'string',
-                        description: 'Feishu document context in markdown format',
-                    },
-                    parent_node: {
-                        type: 'string',
-                        description: 'The folder where the created Feishu document belongs, the url splits the last item by /',
-                    },
-                },
-                required: ['markdown', 'parent_node'],
-            },
-            async ({ markdown, parent_node }) => {
-                try {
-                    await this.docxClient.getWikiBase();
-                    let token = parent_node;
-                    if (parent_node.includes('http')) {
-                        const infoArr = parent_node.split('?')[0]?.split('/') || [];
-                        token = infoArr.pop() || '';
-                    }
-                    const res = await this.docxClient.createWikiDocsMarkdown(markdown, token);
-                    return {
-                        content: [{ type: 'text' as const, text: JSON.stringify(res) }],
-                    };
-                } catch (error) {
-                    return handleError(error, '创建飞书文档');
+        this.server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
+            const tool = tools.find((item) => item.name === request.params.name);
+            if (!tool) {
+                throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${request.params.name}`);
+            }
+            try {
+                const context: IToolHandlerContext = {
+                    docxClient: this.docxClient,
+                    options: this.options,
+                };
+                return await tool.handler(request.params.arguments ?? {}, context);
+            } catch (error) {
+                if (error instanceof McpError) {
+                    throw error;
                 }
-            },
-        );
-
-        this.server.tool(
-            'create_merge_request',
-            'Use cur branch to create a merge request to target branch',
-            {
-                type: 'object',
-                properties: {
-                    sourceBranch: {
-                        type: 'string',
-                        description: 'current branch',
-                    },
-                    description: {
-                        type: 'string',
-                        description: 'Merge request description, if user input empty, use ai to generate according to the diff with master',
-                    },
-                },
-                required: ['sourceBranch', 'description'],
-            },
-            async ({ sourceBranch, description }) => {
-                try {
-                    const codeupInstance = new CodeupClient(this.options.aliConfig, {
-                        sourceBranch: sourceBranch,
-                    });
-                    await codeupInstance.getRepoInfo();
-                    const mrInfo = await codeupInstance.getMergeRequest();
-                    if (mrInfo) {
-                        return {
-                            content: [{ type: 'text' as const, text: '当前 mr 已存在，无需创建' }],
-                        };
-                    }
-                    const res = await codeupInstance.createMergeRequest(sourceBranch, description);
-                    if (res.code === 200) {
-                        return {
-                            content: [{ type: 'text' as const, text: 'ok' }],
-                        };
-                    } else {
-                        return {
-                            content: [{ type: 'text' as const, text: sourceBranch + codeupInstance.targetBranch + JSON.stringify(res) }],
-                        };
-                    }
-                } catch (error) {
-                    return handleError(error, '创建 mr');
-                }
-            },
-        );
-
-        this.server.tool(
-            'development_project',
-            'Deploy the project remotely',
-            {
-                type: 'object',
-                properties: {
-                    runEnv: {
-                        type: 'string',
-                        description: 'deploy environment',
-                    },
-                    project: {
-                        type: 'string',
-                        description: 'project name',
-                    },
-                    branch: {
-                        type: 'string',
-                        description: 'branch name',
-                    },
-                },
-                required: ['runEnv', 'project', 'branch'],
-            },
-            async ({ runEnv, project, branch }) => {
-                try {
-                    const appStackInstance = new AppStackClient(this.options.aliConfig);
-                    await appStackInstance.getAppStack();
-                    const res = appStackInstance.getWorkflows();
-                    const needApps = res.filter((item) => item.name.includes(project));
-                    const workflowList: { workflowSn: string; stageSn: string; stageName: string }[] = [];
-                    needApps.forEach((workflow) => {
-                        workflow.releaseStages.forEach((stage) => {
-                            workflowList.push({
-                                workflowSn: workflow.sn,
-                                stageSn: stage.sn,
-                                stageName: stage.name,
-                            });
-                        });
-                    });
-                    await appStackInstance.ExecuteAppStack(runEnv, workflowList, branch);
-                    return {
-                        content: [{ type: 'text' as const, text: 'ok' }],
-                    };
-                } catch (error) {
-                    return handleError(error, '部署项目');
-                }
-            },
-        );
+                return handleError(error, tool.description);
+            }
+        });
     }
 
     async connect(transport: Transport) {
         await this.server.connect(transport);
-        // 添加错误处理
         try {
-            Logger.log = (...args: any[]) => {
+            Logger.log = (...args: unknown[]) => {
                 this.server.server.sendLoggingMessage({ level: 'info', data: args });
             };
 
-            Logger.error = (...args: any[]) => {
+            Logger.error = (...args: unknown[]) => {
                 this.server.server.sendLoggingMessage({ level: 'error', data: args });
             };
         } catch (error) {

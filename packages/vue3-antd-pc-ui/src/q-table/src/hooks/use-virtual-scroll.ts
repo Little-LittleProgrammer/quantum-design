@@ -231,20 +231,21 @@ export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef
     watch(
         () => unref(dataSource).length,
         async (val) => {
-            if (!init.value && val > 0) {
-                await nextTick();
-                initVirtualList();
-                initDOMElements();
-                init.value = true;
-                await nextTick();
-            }
-            if (unref(isVirtualEnabled) || !!virtualState.placeholderDom) {
-                if (!unref(isVirtualEnabled) && virtualState.wrapperDom && virtualState.contentDom) {
-                    virtualState.wrapperDom.scrollTop = 0;
-                    virtualState.contentDom.style.transform = `translateY(0px)`;
+            if (config.value.enabled) {
+                if (!init.value && val > 0) {
+                    await nextTick();
+                    initVirtualList();
+                    initDOMElements();
+                    init.value = true;
+                    await nextTick();
                 }
-
-                updatePlaceholderHeight();
+                if (unref(isVirtualEnabled) || !!virtualState.placeholderDom) {
+                    if (!unref(isVirtualEnabled) && virtualState.wrapperDom && virtualState.contentDom) {
+                        virtualState.wrapperDom.scrollTop = 0;
+                        virtualState.contentDom.style.transform = `translateY(0px)`;
+                    }
+                    updatePlaceholderHeight();
+                }
             }
         },
         {
@@ -256,17 +257,19 @@ export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef
     watch(
         () => unref(config),
         (newConfig) => {
-            virtualState.itemHeight = newConfig.itemHeight;
-            virtualState.tableHeight = newConfig.containerHeight;
-            if (unref(isVirtualEnabled)) {
-                const newCount = Math.ceil(newConfig.containerHeight / newConfig.itemHeight);
-                if (newCount > virtualState.count) {
-                    virtualState.end += newCount - virtualState.count;
-                } else {
-                    virtualState.end -= newCount - virtualState.count;
+            if (config.value.enabled) {
+                virtualState.itemHeight = newConfig.itemHeight;
+                virtualState.tableHeight = newConfig.containerHeight;
+                if (unref(isVirtualEnabled)) {
+                    const newCount = Math.ceil(newConfig.containerHeight / newConfig.itemHeight);
+                    if (newCount > virtualState.count) {
+                        virtualState.end += newCount - virtualState.count;
+                    } else {
+                        virtualState.end -= newCount - virtualState.count;
+                    }
+                    virtualState.count = Math.ceil(newConfig.containerHeight / newConfig.itemHeight) + 4;
+                    updatePlaceholderHeight();
                 }
-                virtualState.count = Math.ceil(newConfig.containerHeight / newConfig.itemHeight) + 4;
-                updatePlaceholderHeight();
             }
         },
         { deep: true },

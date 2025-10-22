@@ -79,11 +79,11 @@ export function useRowSelection(propsRef: ComputedRef<BasicTableProps>, tableDat
 
     function set_selected_row_keys(rowKeys: string[]) {
         selectedRowKeysRef.value = [...new Set([...selectedRowKeysRef.value, ...rowKeys])];
-        const _allSelectedRows: any[] = js_utils_find_node_all(toRaw(unref(tableData)).concat(toRaw(unref(selectedRowRef))), (item: any) => rowKeys?.includes(item[unref(getRowKey) as string]), {
+        const _allSelectedRows: any[] = js_utils_find_node_all(toRaw(unref(tableData)), (item: any) => selectedRowKeysRef.value.includes(item[unref(getRowKey) as string]), {
             children: propsRef.value.childrenColumnName ?? 'children',
         });
         const trueSelectedRows: any[] = [];
-        rowKeys?.forEach((key: string) => {
+        selectedRowKeysRef.value.forEach((key: string) => {
             const found = _allSelectedRows.find((item) => item[unref(getRowKey) as string] === key);
             found && trueSelectedRows.push(found);
         });

@@ -312,7 +312,7 @@ export function useDataSource(propsRef: ComputedRef<BasicTableProps>, { getPagin
 
             const _isArrayResult = isArray(_res);
 
-            let _resultItems: Recordable[] = _isArrayResult ? _res : get(_res, listField);
+            let _resultItems: Recordable[] = _isArrayResult ? _res : get(_res, listField) || [];
             const _resultTotal: number = _isArrayResult ? _res.length : get(_res, totalField) || _resultItems.length;
             const _sortHeader = isArray(_res) ? [] : get(_res, sortHeaderField);
 

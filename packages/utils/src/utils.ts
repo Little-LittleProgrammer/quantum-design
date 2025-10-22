@@ -1,4 +1,4 @@
-import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
+import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol, isNullOrUndef } from './is';
 
 export function js_utils_deep_copy<T>(target: T, map = new Map()): T {
     //  深拷贝
@@ -329,7 +329,7 @@ export function js_utils_edit_attr(path: string, value: any, obj: any) {
 
         const key = _list[index];
 
-        if (key === undefined) return;
+        if (isNullOrUndef(key) || isNullOrUndef(cur)) return;
 
         if (key === '*') {
             if (isArray(cur)) {

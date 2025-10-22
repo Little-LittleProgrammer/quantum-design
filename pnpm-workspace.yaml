@@ -264,6 +264,8 @@ catalog:
   "@types/minimist": "^1.2.3"
   # prompts: 命令行交互工具
   "prompts": "^2.4.2"
+  "chrome-launcher": "^1.2.0"
+  "lighthouse": "^12.8.2"
   # @types/prompts: 类型定义
   "@types/prompts": "^2.4.6"
   # kolorist: 终端颜色美化工具

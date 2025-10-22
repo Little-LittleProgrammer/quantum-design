@@ -51,8 +51,5 @@
         "minimist": "catalog:",
         "prompts": "catalog:",
         "unbuild": "catalog:"
-    },
-    "volta": {
-        "node": "18.18.2"
     }
 }
