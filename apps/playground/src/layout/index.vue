@@ -10,7 +10,7 @@
                         </template>
                         <a-button type="link">
                             <template #icon>
-                                <q-antd-icon class="line-height-1 text-lg text-white" type="SearchOutlined" />
+                                <q-antd-icon class="text-lg leading-none text-white" type="SearchOutlined" />
                             </template>
                         </a-button>
                     </a-tooltip>
@@ -26,7 +26,7 @@
                     <div class="flex-center h-full w-full">
                         <q-breadcrumb v-if="isUseBreadCrumb" class="mr-2.5 whitespace-nowrap text-sm" :router-list="routerData" :class="!isUseCacheTabsSetting ? 'flex' : ''"></q-breadcrumb>
                         <q-antd-keep-alive-tabs v-if="isUseCacheTabsSetting" :canDrag="isUseCacheCanDrag" :showQuick="isUseQuick" :init-path="sysStore.initMenuData" class="flex-1" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
-                        <div class="h-7 w-9 border-l border-[var(--border-color-base)] text-center leading-[30px]" v-if="isUseReloadButton">
+                        <div class="h-7 w-9 border-l border-solid border-[var(--border-color-base)] text-center" v-if="isUseReloadButton">
                             <a-tooltip>
                                 <template #title>
                                     <span>刷新页面</span>
