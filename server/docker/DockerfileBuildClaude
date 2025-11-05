@@ -38,15 +38,21 @@ RUN npm config set registry=https://packages.aliyun.com/5f6426fcdb0493ecef9118ab
     npm install -g @anthropic-ai/claude-code@latest
 
 # 设置 Claude API 环境变量
-# ENV ANTHROPIC_BASE_URL="https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy"
-# ENV ANTHROPIC_AUTH_TOKEN="sk-xxxxxxx"
+## qwen3
+# ENV ANTHROPIC_BASE_URL="https://dashscope.aliyuncs.com/apps/anthropic"
+# ENV ANTHROPIC_AUTH_TOKEN="sk-xxxxxx"
 # ENV ANTHROPIC_MODEL="qwen3-coder-plus-2025-09-23"
-# ENV ANTHROPIC_SMALL_FAST_MODEL="qwen3-coder-flash"
-ENV ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
-ENV ANTHROPIC_AUTH_TOKEN="sk-xxxxxxx"
-ENV ANTHROPIC_MODEL="deepseek-chat"
-ENV ANTHROPIC_SMALL_FAST_MODEL="deepseek-chat"
-ENV API_TIMEOUT_MS=600000
+# ENV ANTHROPIC_SMALL_FAST_MODEL="qwen3-coder-plus-2025-09-23"
+# ENV ANTHROPIC_DEFAULT_SONNET_MODEL="qwen3-coder-plus-2025-09-23"
+# ENV ANTHROPIC_DEFAULT_OPUS_MODEL="qwen3-max"
+# ENV ANTHROPIC_DEFAULT_HAIKU_MODEL="qwen3-coder-plus-2025-09-23"
+
+## deepseek
+# ENV ANTHROPIC_BASE_URL="https://api.deepseek.com/anthropic"
+# ENV ANTHROPIC_AUTH_TOKEN="sk-xxxx"
+# ENV ANTHROPIC_MODEL="deepseek-chat"
+# ENV ANTHROPIC_SMALL_FAST_MODEL="deepseek-chat"
+# ENV API_TIMEOUT_MS=600000
 
 # 配置 Claude MCP 工具
 RUN claude mcp add-json lighthouse '{"command":"npx","args":["-y","qm-lighthouse-mcp@0.1.4"]}' --scope user && \
