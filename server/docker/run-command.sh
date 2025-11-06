@@ -23,14 +23,16 @@ echo "✅ 克隆成功"
 
 # 进入仓库目录
 cd "${BASE_REPO_NAME}"
+
 mv /root/prompt/sentryfix.md ./
+mv /root/prompt/sentrynofix.md ./
 echo "当前目录: $(pwd)"
 
 echo "添加规则，忽略指定文件"
 # 向 .gitignore 添加忽略规则(如果不存在)
 
 GITIGNORE=".gitignore"
-RULES=("report/sentryfix.json" "sentryfix.md" "report/performance.json" "performance.md")
+RULES=("report/sentryfix.json" "report/sentrynofix.json" "sentryfix.md" "report/performance.json" "performance.md")
 
 for rule in "${RULES[@]}"; do
     if grep -Fxq "$rule" "$GITIGNORE"; then
@@ -49,9 +51,15 @@ ls -la
 # 执行后续命令
 echo "添加mcp"
 
-claude mcp add-json workflow '{"command": "npx", "args": ["-y", "qm-workflow-mcp@0.1.4", "--stdio"], "env": {"FEISHU_APP_ID": "'${FEISHU_APP_ID}'", "FEISHU_APP_SECRET": "'${FEISHU_APP_SECRET}'","REPO_NAME": "'${BASE_REPO_NAME}'", "TARGET_BRANCH": "'${TARGET_BRANCH}'", "ALI_TOKEN": "'${ALI_TOKEN}'"}}'
+claude mcp add-json workflow '{"command": "npx", "args": ["-y", "qm-workflow-mcp@0.1.6", "--stdio"], "env": {"FEISHU_APP_ID": "'${FEISHU_APP_ID}'", "FEISHU_APP_SECRET": "'${FEISHU_APP_SECRET}'","REPO_NAME": "'${BASE_REPO_NAME}'", "TARGET_BRANCH": "'${TARGET_BRANCH}'", "ALI_TOKEN": "'${ALI_TOKEN}'", "REVIEWER_USERS": "'${REVIEWER_USERS}'"}}'
 echo "开始执行AI流程..."
-claude -p "按照 ./sentryfix.md, 修复 ${SENTRY_JSON} 问题" --allowedTools "mcp__workflow,Bash,Edit(*),Read(*),WebSearch,WebFetch" --permission-mode acceptEdits 
+if [ "${IS_FIX}" = "fix" ]; then
+    PROMPT_FILE="./sentryfix.md"
+else
+    PROMPT_FILE="./sentrynofix.md"
+fi
+
+claude -p "按照 ${PROMPT_FILE}, 修复 ${SENTRY_JSON} 问题" --allowedTools "mcp__workflow,Bash,Edit(*),Read(*),WebSearch,WebFetch" --permission-mode acceptEdits
 echo "继续执行AI流程，以保证全部流程执行顺利..."
 claude --continue "继续，检测流程是否完成，尤其查找指定文件(report/sentryfix.json)是否生成" --allowedTools "mcp__workflow,Bash,Edit(*),Read(*),WebSearch,WebFetch" --permission-mode acceptEdits
 # claude -p "按照 ./performance.md, 测试 ${TEST_WEB} 网站, 并详细分析" --allowedTools "mcp__lighthouse,mcp__larkmcp__bitable_v1_appTableField_list,mcp__larkmcp__bitable_v1_appTableRecord_create,mcp__larkmcp__im_v1_message_create,Bash,Edit(*),Read(*),WebSearch,WebFetch" --permission-mode acceptEdits
@@ -60,7 +68,6 @@ echo "发送http，更新结果"
 
 #!/bin/bash
 
-jq ".sentry_title=\"${SENTRY_TITLE}\"" report/sentryfix.json > tmp.json && mv tmp.json report/sentryfix.json
 jq ".sentry_id=${SENTRY_ID}" report/sentryfix.json > tmp.json && mv tmp.json report/sentryfix.json
 
 cat report/sentryfix.json
