@@ -15,7 +15,7 @@ class SettingManager {
     private initialConfig: IProjectConfig | null = { ...defaultSetting };
     private isInitialized = false;
     private saveConfig: (config: IProjectConfig) => Promise<unknown> | undefined;
-    private state: IProjectConfig = reactive({});
+    state: IProjectConfig = reactive({});
 
     constructor() {
         this.cache = js_create_local_storage({
@@ -40,7 +40,7 @@ class SettingManager {
         return this.initialConfig;
     }
 
-    getConfig() {
+    get getConfig() {
         return readonly(this.state);
     }
 

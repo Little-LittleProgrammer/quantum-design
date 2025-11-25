@@ -4,6 +4,8 @@
         <divider>主题功能</divider>
         <switch-item title="主题切换按钮" :event="HandleEnum.theme_mode_change" :default="isUseThemeSwitch"></switch-item>
         <switch-item title="公祭日灰色模式" tooltip="纪念日: 4月4日, 4月5日, 12月13日" :event="HandleEnum.theme_gray_status" :default="isUseGraySwitch"></switch-item>
+        <divider>内置主题</divider>
+        <builtin-theme v-model="themeBuiltinType" v-model:theme-color-primary="themeColorPrimary" :is-dark="isDark" />
         <divider>功能配置</divider>
         <switch-item title="菜单搜索" :event="HandleEnum.func_search_status" :default="isUseSearchButton"></switch-item>
         <switch-item title="回到顶部" :event="HandleEnum.func_top_status" :default="isUseBackTop"></switch-item>
@@ -27,22 +29,51 @@
 </template>
 
 <script lang="ts" setup>
-import { type PropType, onMounted } from 'vue';
+import { type PropType, computed, onMounted } from 'vue';
 import { useDrawerInner } from '@vue3-antd/q-drawer';
 import QAntdDrawer from '@vue3-antd/q-drawer';
 import { Divider } from 'ant-design-vue';
 import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
 import { HandleEnum } from '../enums/enum';
-import { useProjectSetting, type IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
+import { useProjectSetting, type BuiltinThemeType, type IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
+import BuiltinTheme from './builtin.vue';
+
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,
         default: () => {},
     },
 });
-const { isUseNProgress, isUsePageLoading, isUseTransition, isUseCacheCanDrag, isUseThemeSwitch, isUseGraySwitch, isUseSearchButton, isUseBackTop, isUseBreadCrumb, isUseAsideRepeatClick, isUseReloadButton, isUseCacheTabsSetting, isUseKeepAlive, isUseCacheCanCache, isUseQuick, isUseTableCacheSetting } = useProjectSetting();
+const { isUseNProgress, isUsePageLoading, isUseTransition, isUseCacheCanDrag, isUseThemeSwitch, isUseGraySwitch, isUseSearchButton, isUseBackTop, isUseBreadCrumb, isUseAsideRepeatClick, isUseReloadButton, isUseCacheTabsSetting, isUseKeepAlive, isUseCacheCanCache, isUseQuick, isUseTableCacheSetting, isDark } = useProjectSetting();
 const [registerDrawer, { setDrawerProps }] = useDrawerInner();
+
+const projectSetting = useProjectSetting();
+const themeBuiltinType = computed({
+    get() {
+        return projectSetting.getProjectConfig.value.theme?.builtinType || 'default';
+    },
+    set(value: BuiltinThemeType) {
+        projectSetting.updateProjectConfig({
+            theme: {
+                builtinType: value,
+            },
+        });
+    },
+});
+
+const themeColorPrimary = computed({
+    get() {
+        return projectSetting.getProjectConfig.value.theme?.colorPrimary || '';
+    },
+    set(value: string) {
+        projectSetting.updateProjectConfig({
+            theme: {
+                colorPrimary: value,
+            },
+        });
+    },
+});
 onMounted(() => {
     setDrawerProps({
         isDetail: false,

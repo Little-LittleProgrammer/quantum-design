@@ -68,3 +68,8 @@ cache
 # will have compiled files and executables
 **/target/
 **/gen/schemas
+configs/tailwind/src/index.ts
+report/sentryfix.json
+sentryfix.md
+report/performance.json
+performance.md

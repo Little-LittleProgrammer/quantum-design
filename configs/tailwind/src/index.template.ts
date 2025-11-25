@@ -15,6 +15,24 @@ const tailwindPackages: string[] = [];
 /** need-replace */
 
 const customColors = {
+    primary: {
+        DEFAULT: 'var(--primary-color)',
+        hover: 'var(--hover-link-color)',
+        active: 'var(--primary-color)',
+    },
+    border: {
+        DEFAULT: 'var(--border-color-base)',
+    },
+    card: {
+        DEFAULT: 'var(--aside-bg)',
+        foreground: 'var(--text-color)',
+    },
+    text: {
+        primary: 'var(--text-color)',
+        'primary-hover': 'var(--link-color)',
+        'primary-active': 'var(--primary-color)',
+        secondary: 'var(--text-color-secondary)',
+    },
     green: {
         ...createColorsPalette('green-color'),
     },

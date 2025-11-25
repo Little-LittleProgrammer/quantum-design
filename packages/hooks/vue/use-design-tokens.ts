@@ -57,9 +57,9 @@ export function useAntdDesignTokens() {
 
             tokens.colorBgBase = getCssVariableValue('--body-bg');
 
-            tokens.borderRadius = getCssVariableValue('--body-bg');
+            tokens.borderRadius = getCssVariableValue('--border-radius-base');
         },
-        { immediate: true },
+        { immediate: true, deep: true },
     );
 
     return {

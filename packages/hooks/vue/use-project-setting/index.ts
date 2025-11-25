@@ -1,11 +1,20 @@
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import settingManager from './setting-manager';
 import { js_utils_diff } from '@quantum-design/utils';
 import { isDarkMode } from './update-css-variables';
 import type { IProjectConfig } from './types';
+import type { BuiltinThemePreset, BuiltinThemeType } from './constants';
+import { BUILT_IN_THEME_PRESETS } from './constants';
 
 export function useProjectSetting() {
-    const getConfig = computed(() => settingManager.getConfig());
+    const getConfig = ref(settingManager.getConfig);
+    watch(
+        () => settingManager.state,
+        (newVal) => {
+            getConfig.value = newVal;
+        },
+        { deep: true },
+    );
     const initialConfig = settingManager.getInitialConfig();
     const getDiffConfig = computed(() => js_utils_diff(getConfig.value || {}, initialConfig || {}));
 
@@ -83,4 +92,6 @@ export function useProjectSetting() {
     };
 }
 
-export type { IProjectConfig };
+export { BUILT_IN_THEME_PRESETS };
+
+export type { IProjectConfig, BuiltinThemePreset, BuiltinThemeType };

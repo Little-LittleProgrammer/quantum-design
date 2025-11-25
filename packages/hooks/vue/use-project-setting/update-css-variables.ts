@@ -24,10 +24,10 @@ function updateMainColorVariables(config: IProjectConfig) {
     const { colorError, colorPrimary, colorSuccess, colorWarning } = config.theme;
 
     const colorVariables = generatorColorVariables([
-        { color: colorPrimary, name: 'primary-color' },
-        { alias: 'warning-color', color: colorWarning, name: 'yellow-color' },
-        { alias: 'success-color', color: colorSuccess, name: 'green-color' },
-        { alias: 'error-color', color: colorError, name: 'red-color' },
+        { color: colorPrimary || '', name: 'primary-color' },
+        { alias: 'warning-color', color: colorWarning || '', name: 'yellow-color' },
+        { alias: 'success-color', color: colorSuccess || '', name: 'green-color' },
+        { alias: 'error-color', color: colorError || '', name: 'red-color' },
     ]);
 
     // 要设置的 CSS 变量映射

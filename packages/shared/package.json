@@ -14,12 +14,12 @@
     "module": "dist/shared.esm.min.js",
     "exports": {
         "./enums": {
-            "types": "./dist/types/enums.d.ts",
+            "types": "./dist/types/enums/enums.d.ts",
             "import": "./dist/enums.esm.min.js",
             "require": "./dist/enums.cjs.min.js"
         },
         "./color": {
-            "types": "./dist/types/color.d.ts",
+            "types": "./dist/types/color/index.d.ts",
             "import": "./dist/color.esm.min.js",
             "require": "./dist/color.cjs.min.js"
         },
