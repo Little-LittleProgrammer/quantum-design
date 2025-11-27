@@ -11,7 +11,10 @@
     "license": "ISC",
     "author": "Evan Wu",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true"
+        "build": "rollup -c --environment TYPES:true",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage"
     },
     "files": [
         "dist"
@@ -37,6 +40,9 @@
         "@quantum-design/types": "workspace:*",
         "@types/lodash-es": "catalog:",
         "@types/qs": "catalog:",
-        "rollup": "catalog:"
+        "@vitest/coverage-v8": "catalog:",
+        "happy-dom": "catalog:",
+        "rollup": "catalog:",
+        "vitest": "catalog:"
     }
 }
