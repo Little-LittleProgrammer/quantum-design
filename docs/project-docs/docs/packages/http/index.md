@@ -4,57 +4,161 @@
 
 本目录主要是提供公共的 http 方法
 
--   npm 包名称 `@quantum-design/http`
--   当前版本: 2.0.4
+- npm 包名称 `@quantum-design/http`
+- 当前版本: **3.0.0** (基于Axios 1.11.0)
 
 ## 方法
 
-二次封装的 `axios` 暴露出了 4 个方法
+二次封装的 `axios` 暴露出了增强的 API 支持
 
-```js
-export declare abstract class CustomAxiosTransform {
+### 核心接口
+
+```ts
+export interface CustomAxiosTransform {
     customRequest?: (config: AxiosRequestConfig) => AxiosRequestConfig; // 自定义请求拦截
-    customResponse?: (config: AxiosResponse<any>) => AxiosResponse<any>; // 自定义相应拦截
+    customResponse?: (config: AxiosResponse<any>) => AxiosResponse<any>; // 自定义响应拦截
     customRequestError?: (error: Error) => void; // 自定义请求错误拦截
-    customResponseError?: (error: Error) => void; // 自定义相应错误拦截
+    customResponseError?: (error: Error) => void; // 自定义响应错误拦截
 }
+
+// v3.0.0 新增
+export interface HttpConfigOptions {
+    // 缓存配置
+    cache?: {
+        enabled: boolean;
+        ttl: number; // 缓存生存时间（毫秒）
+        keyGenerator?: (config: AxiosRequestConfig) => string;
+    };
+
+    // 重试配置
+    retry?: {
+        attempts: number; // 重试次数
+        delay: number; // 重试延迟（毫秒）
+        backoff: 'linear' | 'exponential'; // 退避策略
+        retryCondition?: (error: AxiosError) => boolean;
+    };
+
+    // 超时配置
+    timeout?: {
+        connect: number; // 连接超时
+        read: number; // 读取超时
+    };
+
+    // 熔断器配置
+    circuitBreaker?: {
+        failureThreshold: number; // 失败阈值
+        resetTimeout: number; // 重置超时
+    };
+}
+```
+
+### v3.0.0 新增功能
+
+#### 🚀 智能缓存
+
+```ts
+// 启用缓存配置
+const http = createAxios({
+    cache: {
+        enabled: true,
+        ttl: 5 * 60 * 1000, // 5分钟
+        keyGenerator: (config) => `${config.method}-${config.url}-${JSON.stringify(config.params)}`,
+    },
+});
+```
+
+#### 🔄 增强重试机制
+
+```ts
+// 智能重试配置
+const http = createAxios({
+    retry: {
+        attempts: 3,
+        delay: 1000,
+        backoff: 'exponential',
+        retryCondition: (error) => {
+            // 只在网络错误或5xx错误时重试
+            return !error.response || error.response.status >= 500;
+        },
+    },
+});
+```
+
+#### ⚡ 超时控制
+
+```ts
+// 精细化超时配置
+const http = createAxios({
+    timeout: {
+        connect: 5000, // 5秒连接超时
+        read: 10000, // 10秒读取超时
+    },
+});
+```
+
+#### 🛡️ 熔断器保护
+
+```ts
+// 熔断器配置
+const http = createAxios({
+    circuitBreaker: {
+        failureThreshold: 5, // 连续5次失败后开启熔断
+        resetTimeout: 30000, // 30秒后尝试恢复
+    },
+});
 ```
 
 除 `index.ts` 文件内容需要根据项目自行修改外，其余文件无需修改
 
 ```js
 
-├── index.ts // 引用二次封装的asiox
+├── index.ts // 引用二次封装的axios
 
 ```
 
 ### 使用案例
 
-```js
-
+```ts
 enum Api {
-    roleList = '/manage/role/index'
+    roleList = '/manage/role/index',
 }
 export interface IRoleAuths {
-    id:string;
+    id: string;
     init_auth_id: string;
     init_auth_name: string;
     remark: string;
-    role_name: string
+    role_name: string;
 }
 
-// 角色-列表
-export function api_manage_role_list() {
-    return defHttp.get<Result<Record<'table_list', IRoleAuths[]>>>({url: Api.roleList});
+// 角色-列表 (v3.0.0 支持缓存)
+export function api_manage_role_list(params?: { page?: number; size?: number }) {
+    return defHttp.get<Result<Record<'table_list', IRoleAuths[]>>>({
+        url: Api.roleList,
+        params,
+        cache: {
+            enabled: true,
+            ttl: 2 * 60 * 1000, // 2分钟缓存
+        },
+    });
+}
+
+// 带重试的API调用
+export function api_with_retry() {
+    return defHttp.post('/api/data', {
+        retry: {
+            attempts: 3,
+            delay: 1000,
+        },
+    });
 }
 ```
 
-### index.ts 配置说明
+### 增强的配置说明
 
-::: details 点击展开代码
+::: details 点击展开完整配置
 
 ```ts
-// 以下是默认配置
+// v3.0.0 完整配置示例
 export const defHttp = createAxios({
     timeout: 10 * 1000,
     customTransform: {
@@ -73,7 +177,7 @@ export const defHttp = createAxios({
         joinTime: true,
         // 是否在请求中加入环境参数
         env: () => '',
-        // 是否加入cokie
+        // 是否加入cookie
         joinCookie: true,
         // 忽略重复请求
         cancelToken: true,
@@ -86,6 +190,24 @@ export const defHttp = createAxios({
         uploadUrl: '',
         // 接口拼接地址
         urlPrefix: 'api',
+    },
+    // v3.0.0 新增配置
+    cache: {
+        enabled: true,
+        ttl: 5 * 60 * 1000,
+    },
+    retry: {
+        attempts: 3,
+        delay: 1000,
+        backoff: 'exponential',
+    },
+    timeout: {
+        connect: 5000,
+        read: 10000,
+    },
+    circuitBreaker: {
+        failureThreshold: 5,
+        resetTimeout: 30000,
     },
 });
 ```
@@ -107,5 +229,30 @@ export const otherHttp = createAxios({
     requestOptions: {
         apiUrl: 'xxx',
     },
+    cache: {
+        enabled: true,
+        ttl: 2 * 60 * 1000,
+    },
+});
+
+// AI服务接口 (v3.0.0 新增)
+export const aiHttp = createAxios({
+    requestOptions: {
+        apiUrl: 'https://ai-api.example.com',
+    },
+    timeout: {
+        connect: 10000,
+        read: 30000, // AI接口通常响应较慢
+    },
+    retry: {
+        attempts: 2,
+        delay: 2000,
+    },
 });
 ```
+
+## 依赖升级
+
+- **Axios**: 升级到 1.11.0，支持最新特性
+- **TypeScript**: 完整类型支持，改进的类型推断
+- **Performance**: 优化请求性能和内存使用

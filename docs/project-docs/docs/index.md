@@ -3,24 +3,24 @@ layout: home
 hero:
     name: Quantum Design
     text: 量子公共框架文档
-    tagline: 基于Vue3, monorepo, pnpm
+    tagline: 基于Vue3.5, Vite7, Turbo, monorepo, pnpm 最新技术栈
     image:
         src: /logo.png
     actions:
         - text: 快速开始 →
-          link: /help-code/standard/
+          link: /guide/introduction/
           theme: brand
         - text: Github 🔗
           link: https://github.com/Little-LittleProgrammer/quantum-design
           theme: alt
 
 features:
-    - title: 💡 最新技术栈
-      details: 基于Vue3、Vite、TypeScript、monorepo等最新技术栈开发
+    - title: 🚀 最新技术栈
+      details: 基于Vue3.5.18、Vite7.1.1、TypeScript5.9.2、Turbo2.5.5等最新技术栈开发
     - title: ⚡️ 轻量快速的热重载
       details: 无论应用程序大小如何，都始终极快的模块热重载（Vite-HMR）
     - title: 🛠️ 轻量化编程
-      details: 80%公共代码都已经抽离npm, 轻量化编程
+      details: 90%公共代码都已经抽离npm, 轻量化编程
     - title: 📦 模块化编程
       details: 将代码模块划分,更加符合TS的意愿
     - title: 🔩 主题配置
@@ -33,4 +33,8 @@ features:
       details: 集成Tauri，支持构建高性能、安全的跨平台桌面应用
     - title: 🔧 丰富的CLI工具
       details: 提供项目脚手架、产品分析、工作流管理等CLI工具
+    - title: 🤖 AI 集成支持
+      details: 新增AI Hub包，支持阿里云、OpenAI等多种AI服务集成
+    - title: 🏗️ Nuxt 4 支持
+      details: 全面支持Nuxt 4，提供更强大的服务端渲染和静态生成能力
 ---
