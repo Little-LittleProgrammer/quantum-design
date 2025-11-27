@@ -1,5 +1,12 @@
 # qm-product-analysis
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [5a85942]
+    - @quantum-design/ai-hub@1.0.0
+
 ## 0.0.4-beta.0
 
 ### Patch Changes
