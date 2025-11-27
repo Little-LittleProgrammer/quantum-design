@@ -45,10 +45,10 @@
         "npm": ">=9.0.0",
         "node": ">=20.19.0"
     },
-    "packageManager": "pnpm@10.13.1",
+    "packageManager": "pnpm@10.15.1",
     "volta": {
-        "node": "20.19.4",
-        "pnpm": "10.13.1"
+        "node": "22.19.0",
+        "pnpm": "10.15.1"
     },
     "pnpm": {
         "peerDependencyRules": {

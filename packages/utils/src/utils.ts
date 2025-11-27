@@ -311,9 +311,21 @@ export function js_utils_find_attr(object: any, path: string) {
 }
 
 /**
- * @param path 要设置的属性 'a.b.c'
- * @param value 设置值
+ * 设置对象的嵌套属性值，支持通配符 * 进行批量设置
+ * @param path 要设置的属性路径，支持点号和方括号语法，如 'a.b.c' 或 'data[*].address'
+ * @param value 设置的值。当路径包含 * 且 value 为数组时，会按索引一一对应设置
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
+ * @example
+ * // 普通设置
+ * js_utils_edit_attr('a.b.c', 'value', obj)
+ *
+ * // 批量设置（value 非数组）
+ * js_utils_edit_attr('data[*].name', 'test', { data: [{}, {}] })
+ * // 结果: { data: [{ name: 'test' }, { name: 'test' }] }
+ *
+ * // 数组元素一一对应设置（value 为数组）
+ * js_utils_edit_attr('data[*].address', ['上海', '北京'], { data: [{}, {}] })
+ * // 结果: { data: [{ address: '上海' }, { address: '北京' }] }
  */
 export function js_utils_edit_attr(path: string, value: any, obj: any) {
     const _list = path
@@ -324,7 +336,7 @@ export function js_utils_edit_attr(path: string, value: any, obj: any) {
         .filter(Boolean);
     const _length = _list.length - 1;
 
-    function setAttr(cur: any, index: number) {
+    function setAttr(cur: any, index: number, arrayIndex?: number) {
         if (index > _length) return;
 
         const key = _list[index];
@@ -333,16 +345,31 @@ export function js_utils_edit_attr(path: string, value: any, obj: any) {
 
         if (key === '*') {
             if (isArray(cur)) {
-                cur.forEach((item) => setAttr(item, index + 1));
+                // 检查是否为最后一层且 value 是数组（数组元素一一对应）
+                const isLastLevel = index + 1 === _length;
+                const isValueArray = isArray(value);
+
+                if (isLastLevel && isValueArray) {
+                    // 数组元素一一对应设置
+                    cur.forEach((item, idx) => setAttr(item, index + 1, idx));
+                } else {
+                    // 批量设置相同值
+                    cur.forEach((item) => setAttr(item, index + 1, arrayIndex));
+                }
             }
         } else {
             if (!(key in cur)) {
                 cur[key] = isNaN(Number(_list[index + 1])) ? {} : [];
             }
             if (index === _length) {
-                cur[key] = value;
+                // 如果有数组索引且 value 是数组，使用对应索引的值
+                if (arrayIndex !== undefined && isArray(value)) {
+                    cur[key] = value[arrayIndex];
+                } else {
+                    cur[key] = value;
+                }
             } else {
-                setAttr(cur[key], index + 1);
+                setAttr(cur[key], index + 1, arrayIndex);
             }
         }
     }

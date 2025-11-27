@@ -69,8 +69,9 @@ function parseObjectString(objStr: string): Record<string, any> {
         // 使用 Function 构造器替代 eval
         return new Function(`return ${processedStr}`)();
     } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
         console.warn('对象字符串解析失败:', error);
-        throw new Error(`无法解析对象字符串: ${error.message}`);
+        throw new Error(`无法解析对象字符串: ${errorMessage}`);
     }
 }
 
@@ -193,9 +194,9 @@ function deepSerializeProcess(target: any, processMap = new Map()): any {
         return handleSpecialTypeToString(target);
     }
 
-    // 防止循环引用
+    // 防止循环引用 - 抛出错误
     if (processMap.has(target)) {
-        return processMap.get(target);
+        throw new Error('检测到循环引用，无法序列化');
     }
 
     const newObject = createSameTypeObject(target);
@@ -225,7 +226,8 @@ export function serializeToString<T>(value: T): string {
         const serializedObject = deepSerializeProcess(value);
         return JSON.stringify(serializedObject, null, 4);
     } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
         console.error('serializeToString 执行失败:', error);
-        throw new Error(`序列化失败: ${error.message}`);
+        throw new Error(`序列化失败: ${errorMessage}`);
     }
 }
