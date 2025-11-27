@@ -1,6 +1,6 @@
 <template>
     <div class="code-editor-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -22,7 +22,7 @@
             </div>
         </a-card>
 
-        <a-card title="只读模式" class="g-mt">
+        <a-card title="只读模式" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -34,7 +34,7 @@
             </div>
         </a-card>
 
-        <a-card title="主题切换" class="g-mt">
+        <a-card title="主题切换" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -50,7 +50,7 @@
             </div>
         </a-card>
 
-        <a-card title="自定义编辑器选项" class="g-mt">
+        <a-card title="自定义编辑器选项" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-row :gutter="16">
@@ -88,7 +88,7 @@
             </div>
         </a-card>
 
-        <a-card title="多语言代码示例" class="g-mt">
+        <a-card title="多语言代码示例" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-tabs v-model:activeKey="activeTab" @change="onTabChange">
@@ -109,7 +109,7 @@
             </div>
         </a-card>
 
-        <a-card title="代码比较" class="g-mt">
+        <a-card title="代码比较" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <h4>左侧 (原始代码) vs 右侧 (修改后代码)</h4>
@@ -127,7 +127,7 @@
             </div>
         </a-card>
 
-        <a-card title="事件监听" class="g-mt">
+        <a-card title="事件监听" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <h4>事件日志:</h4>
@@ -151,7 +151,7 @@ import { QCodeEditor } from '@quantum-design/vue3-pc-ui';
 import { Card as ACard, Button as AButton, Space as ASpace, Select as ASelect, SelectOption as ASelectOption, Switch as ASwitch, RadioGroup as ARadioGroup, RadioButton as ARadioButton, Row as ARow, Col as ACol, InputNumber as AInputNumber, Tabs as ATabs, TabPane as ATabPane, message } from 'ant-design-vue';
 
 defineOptions({
-    name: 'CodeEditorDemo'
+    name: 'CodeEditorDemo',
 });
 
 // 基础用法
@@ -213,8 +213,8 @@ const editorOptions = reactive({
     lineNumbers: true,
     wordWrap: false,
     minimap: {
-        enabled: true
-    }
+        enabled: true,
+    },
 });
 
 const customCode = ref(`/**
@@ -385,7 +385,7 @@ public class Calculator {
 .calculator-button:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
-}`
+}`,
 });
 
 // 代码比较
@@ -417,7 +417,7 @@ watch(
             customEditorRef.value.updateOptions(editorOptions);
         }
     },
-    { deep: true }
+    { deep: true },
 );
 
 function onLanguageChange() {
@@ -457,7 +457,7 @@ function greet(person: Person): string {
         json: `{
     "greeting": "Hello, World!",
     "language": "JSON"
-}`
+}`,
     };
 
     basicCode.value = examples[basicLanguage.value] || '// 示例代码';

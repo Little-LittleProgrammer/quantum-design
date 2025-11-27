@@ -6,7 +6,7 @@ export interface IFileExport {
     title?: string;
     action: string;
     message: string;
-    export_url: string
+    export_url: string;
 }
 
 let timeId: TimeoutHandle;
@@ -17,54 +17,46 @@ const ls = js_create_local_storage();
 const createState = () => {
     const state = {
         systemName: '量子Demo',
-        theme: ls.get('themeMode') || 'light' as 'light' | 'dark',
         date: new Date(),
         dataLoading: false,
         pageLoading: false,
-        environmentData: { //  环境
+        environmentData: {
+            //  环境
             env: '', // 0:测试环境 1:正式环境
-            title: ''
+            title: '',
         },
-        asyncExportNoticePop: { //  下载
+        asyncExportNoticePop: {
+            //  下载
             visible: false,
             file: '', //  文件名
-            title: '' //  异步查看文件的列表html代码（包含查看链接）
+            title: '', //  异步查看文件的列表html代码（包含查看链接）
         },
         hasHistoryUrl: false, // 是否有项目历史地址
         authorityManage: true, // 权限管理开关（默认为开启，需要配置相应的数据）
-        citySelect: [] as ISelectOption[]
+        citySelect: [] as ISelectOption[],
     };
     return state;
 };
-export type globalState = ReturnType<typeof createState>
+export type globalState = ReturnType<typeof createState>;
 
 export const state = createState();
 
 export const useGlobalStore = defineStore('global', {
-    state: ():globalState => (state),
-    getters: {
-        getThemeMode(state): 'light' | 'dark' {
-            return state.theme || ls.get('themeMode') || 'light';
-        }
-    },
+    state: (): globalState => state,
     actions: {
-        set_theme_mode(mode: 'light' | 'dark') {
-            this.theme = mode;
-            ls.set('themeMode', mode);
-        },
         set_environment_data(data: SelectPartial<globalState['environmentData'], 'env'>) {
-            if (this.environmentData.env != '' && data.env != this.environmentData.env){
+            if (this.environmentData.env != '' && data.env != this.environmentData.env) {
                 window.location.reload();
                 return false;
             }
             this.environmentData.env = '' + data.env;
-            if (data.env == '0'){
+            if (data.env == '0') {
                 this.environmentData.title = '测试环境';
-            } else if (data.env == '1'){
+            } else if (data.env == '1') {
                 this.environmentData.title = '正式环境';
             }
         },
-        set_async_export_data(data:IFileExport) {
+        set_async_export_data(data: IFileExport) {
             if (data.action === 'async') {
                 if (data.title) {
                     this.asyncExportNoticePop.title = data.title;
@@ -76,7 +68,7 @@ export const useGlobalStore = defineStore('global', {
                 message.success('导出成功');
             }
         },
-        set_page_loading_action(loading:boolean) {
+        set_page_loading_action(loading: boolean) {
             if (loading) {
                 clearTimeout(timeId);
                 // Prevent flicker
@@ -87,7 +79,6 @@ export const useGlobalStore = defineStore('global', {
                 this.pageLoading = loading;
                 clearTimeout(timeId);
             }
-        }
-    }
+        },
+    },
 });
-

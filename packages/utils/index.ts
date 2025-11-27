@@ -7,3 +7,4 @@ export * from './src/tree-util';
 export * from './src/indexed-db';
 export * from './src/parse';
 export * from './src/letter';
+export * from './src/diff';

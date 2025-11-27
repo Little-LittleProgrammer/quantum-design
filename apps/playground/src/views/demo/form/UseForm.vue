@@ -4,7 +4,7 @@
         <a-card>
             <q-antd-form @register="registerForm"></q-antd-form>
         </a-card>
-        <a-card class="g-mt">
+        <a-card class="mt-2.5">
             <q-antd-form @register="registerForm2" @blur="formChange" @change="formChange">
                 <template #extra="{ model, field }">
                     <p>aaaa{{ model[field] }}</p>
@@ -22,7 +22,7 @@ import { computed, onMounted } from 'vue';
 import { useForm, QAntdForm, createFormSchemas } from '@quantum-design/vue3-antd-pc-ui';
 import { js_utils_copy_code } from '@quantum-design/utils';
 defineOptions({
-    name: 'UseForm'
+    name: 'UseForm',
 });
 
 interface Test {
@@ -42,7 +42,7 @@ const schemas = computed(() =>
             label: '姓名',
             field: 'name',
             component: 'Input',
-            required: true
+            required: true,
         },
         {
             label: 'sub姓名',
@@ -54,9 +54,9 @@ const schemas = computed(() =>
                     onChange: () => {
                         console.log(formModel);
                         formModel['sub.sub.name'] = '11111';
-                    }
+                    },
                 };
-            }
+            },
         },
         {
             label: 'sub下的sub姓名',
@@ -65,17 +65,17 @@ const schemas = computed(() =>
             componentProps: {
                 options: [
                     { label: '1', value: 1 },
-                    { label: '2', value: 2 }
-                ]
+                    { label: '2', value: 2 },
+                ],
             },
-            required: true
+            required: true,
         },
         {
             label: '日期',
             field: 'sub.sub.date',
-            component: 'DatePicker'
-        }
-    ])
+            component: 'DatePicker',
+        },
+    ]),
 );
 
 const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
@@ -84,47 +84,47 @@ const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     // 开启自定义筛选功能
     enableCustomFilter: true,
     formId: '1234',
-    submitFunc: async() => {
+    submitFunc: async () => {
         console.log(getFieldsValue());
-    }
+    },
 });
 const [registerForm2, { getFieldsValue: getFieldsValue1, setFieldsValue: setFieldsValue1, validateFields }] = useForm({
     schemas,
     labelWidth: 130,
     baseColProps: {
-        span: 13
+        span: 13,
     },
     actionColOptions: {
-        span: 24
+        span: 24,
     },
     submitButtonOptions: {
-        title: '提交'
+        title: '提交',
     },
     resetButtonOptions: {
-        title: '重置'
+        title: '重置',
     },
-    submitFunc: async() => {
+    submitFunc: async () => {
         await validateFields();
         console.log(getFieldsValue1());
-    }
+    },
 });
 function copy_obj() {
     const values = getFieldsValue1();
     js_utils_copy_code(JSON.stringify(values));
 }
 
-onMounted(async() => {
+onMounted(async () => {
     await setFieldsValue({
         name: '张三',
         sub: {
-            name: '李四'
-        }
+            name: '李四',
+        },
     });
     await setFieldsValue1({
         name: '张三',
         sub: {
-            name: '李四'
-        }
+            name: '李四',
+        },
     });
     console.log(getFieldsValue());
 });

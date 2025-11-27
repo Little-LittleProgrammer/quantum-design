@@ -142,7 +142,7 @@ class CodeupClient extends BaseClient {
             const response: AxiosResponse = await axios.post(
                 url,
                 {
-                    title,
+                    title: title || this.sourceBranch,
                     // 请求 openai，根据 diff 文件获取本次 MR 的描述
                     description: `【本 MR 的描述来自大模型】\n${description}`,
                     organizationId: this.aliOrgId,
@@ -156,7 +156,7 @@ class CodeupClient extends BaseClient {
                 },
                 {
                     headers: this.getAliHeaders,
-                }
+                },
             );
             this.mrInfo = response.data;
             return {
@@ -187,7 +187,7 @@ class CodeupClient extends BaseClient {
             },
             {
                 headers: this.getAliHeaders,
-            }
+            },
         );
         return response.data;
     }
@@ -252,7 +252,7 @@ class CodeupClient extends BaseClient {
                     },
                     {
                         headers: this.getAliHeaders,
-                    }
+                    },
                 );
             }
         } catch (error) {
@@ -265,12 +265,16 @@ class CodeupClient extends BaseClient {
     async commentOnMRByString(comment: string) {
         const url = `${this.baseUrl}/codeup/organizations/${this.aliOrgId}/repositories/${this.repoInfo.repo.id}/changeRequests/${this.mrInfo.localId}/review`;
         try {
-            await axios.post(url, {
-                reviewComment: comment,
-                reviewOpinion: 'NOT_PASS',
-            }, {
-                headers: this.getAliHeaders,
-            });
+            await axios.post(
+                url,
+                {
+                    reviewComment: comment,
+                    reviewOpinion: 'NOT_PASS',
+                },
+                {
+                    headers: this.getAliHeaders,
+                },
+            );
         } catch (error) {
             console.error('Error fetching diff patches:', error);
             throw error; // 抛出错误，以便调用者处理

@@ -32,17 +32,17 @@ export async function executeAppStack(paramTarget: string[]) {
             }
             let needApps: TypeAppStackWorkflow = [];
             if (!finParams.project) {
-                needApps = res.length === 1 ? res : get_change_apps(res) as TypeAppStackWorkflow;
+                needApps = res.length === 1 ? res : (get_change_apps(res) as TypeAppStackWorkflow);
             } else {
-                needApps = res.filter(item => item.name.includes(finParams.project!));
+                needApps = res.filter((item) => item.name.includes(finParams.project!));
             }
             if (needApps.length === 0) {
                 console.error('没有需要发布的项目');
                 return;
             }
-            const workflowList: {workflowSn: string, stageSn: string, stageName: string}[] = [];
-            needApps.forEach(workflow => {
-                workflow.releaseStages.forEach(stage => {
+            const workflowList: { workflowSn: string; stageSn: string; stageName: string }[] = [];
+            needApps.forEach((workflow) => {
+                workflow.releaseStages.forEach((stage) => {
                     workflowList.push({
                         workflowSn: workflow.sn,
                         stageSn: stage.sn,
@@ -81,11 +81,11 @@ export async function executeAppStack(paramTarget: string[]) {
                 type: 'select',
                 message: '请选择应用环境',
                 choices: [
-                    { title: '测试环境1', value: 'test1', },
-                    { title: '测试环境2', value: 'test2', },
-                    { title: '测试环境3', value: 'test3', },
-                    { title: '测试环境4', value: 'test4', },
-                    { title: '测试环境5', value: 'test5', }
+                    { title: '测试环境1', value: 'test1' },
+                    { title: '测试环境2', value: 'test2' },
+                    { title: '测试环境3', value: 'test3' },
+                    { title: '测试环境4', value: 'test4' },
+                    { title: '测试环境5', value: 'test5' },
                 ],
             });
             setGlobalOptions({
@@ -95,8 +95,11 @@ export async function executeAppStack(paramTarget: string[]) {
             });
             // 执行应用栈
             const result = await appStackInstance.ExecuteAppStack(options.aliConfig.pipelineEnv!, options.aliConfig.selection!, options.gitConfig.sourceBranch!);
-
-            console.log('应用栈执行成功！');
+            let url = '';
+            for (const item of options.aliConfig.selection!) {
+                url += `https://devops.aliyun.com/appstack/app/${options.aliConfig.appStackName}/workflow/${item.workflowSn}/stage/${item.stageSn}/current\n`;
+            }
+            console.log('应用栈执行成功！', url);
             return result;
         }
     } catch (error) {

@@ -1,6 +1,6 @@
 <template>
     <div class="rich-text-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -14,7 +14,7 @@
             </div>
         </a-card>
 
-        <a-card title="尺寸自定义" class="g-mt">
+        <a-card title="尺寸自定义" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -28,7 +28,7 @@
             </div>
         </a-card>
 
-        <a-card title="主题模式" class="g-mt">
+        <a-card title="主题模式" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -43,7 +43,7 @@
             </div>
         </a-card>
 
-        <a-card title="自定义工具栏" class="g-mt">
+        <a-card title="自定义工具栏" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space wrap>
@@ -75,7 +75,7 @@
             </div>
         </a-card>
 
-        <a-card title="插件配置" class="g-mt">
+        <a-card title="插件配置" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space wrap>
@@ -103,7 +103,7 @@
             </div>
         </a-card>
 
-        <a-card title="内容模板" class="g-mt">
+        <a-card title="内容模板" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -121,7 +121,7 @@
             </div>
         </a-card>
 
-        <a-card title="事件监听" class="g-mt">
+        <a-card title="事件监听" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <h4>事件日志:</h4>
@@ -137,7 +137,7 @@
             </div>
         </a-card>
 
-        <a-card title="只读模式" class="g-mt">
+        <a-card title="只读模式" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -149,7 +149,7 @@
             </div>
         </a-card>
 
-        <a-card title="实时预览与导出" class="g-mt">
+        <a-card title="实时预览与导出" class="mt-2.5">
             <div class="editor-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -182,7 +182,7 @@ import { QRichText } from '@quantum-design/vue3-pc-ui';
 import { Card as ACard, Button as AButton, Space as ASpace, InputNumber as AInputNumber, RadioGroup as ARadioGroup, RadioButton as ARadioButton, CheckboxGroup as ACheckboxGroup, Checkbox as ACheckbox, Select as ASelect, SelectOption as ASelectOption, Switch as ASwitch, message } from 'ant-design-vue';
 
 defineOptions({
-    name: 'RichTextDemo'
+    name: 'RichTextDemo',
 });
 
 // 基础用法
@@ -272,7 +272,7 @@ const templates = {
         <p>以上是本周的工作汇报，如有问题请随时联系我。</p>
         <p>此致<br/>敬礼！</p>
         <p style="text-align: right;">李四<br/>${new Date().toLocaleDateString()}</p>
-    `
+    `,
 };
 
 // 事件监听
@@ -325,7 +325,7 @@ watch(
     () => {
         console.log('工具栏配置已更改:', selectedToolbar.value);
     },
-    { deep: true }
+    { deep: true },
 );
 
 // 监听插件配置变化
@@ -334,7 +334,7 @@ watch(
     () => {
         console.log('插件配置已更改:', selectedPlugins.value);
     },
-    { deep: true }
+    { deep: true },
 );
 
 function loadTemplate() {

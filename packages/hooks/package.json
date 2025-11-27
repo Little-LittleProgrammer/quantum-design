@@ -1,43 +1,44 @@
 {
     "name": "@quantum-design/hooks",
-    "version": "2.0.4",
+    "version": "3.0.0",
     "description": "公共 `hooks` 方法",
-    "scripts": {},
-    "files": [
-        "base",
-        "vue"
-    ],
     "keywords": [
         "quantum",
         "monorepo",
         "hooks",
         "turborepo"
     ],
+    "license": "MIT",
     "author": "Evan Wu",
+    "scripts": {},
+    "files": [
+        "base",
+        "vue"
+    ],
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "license": "MIT",
+    "peerDependencies": {
+        "@ant-design/icons-vue": "^7.0.1",
+        "ant-design-vue": "^4.2.6",
+        "vue": "^3.5.0",
+        "vue-router": "^4.5.0"
+    },
     "dependencies": {
         "@quantum-design/shared": "workspace:*",
+        "@quantum-design/types": "workspace:*",
         "@quantum-design/utils": "workspace:*",
-        "@quantum-design/types": "workspace:*"
+        "dayjs": "catalog:"
     },
     "devDependencies": {
+        "@ant-design/icons-vue": "catalog:",
         "@quantum-design/types": "workspace:*",
         "@types/sortablejs": "catalog:",
         "ant-design-vue": "catalog:",
-        "@ant-design/icons-vue": "catalog:",
-        "vue": "catalog:",
-        "vue-router": "catalog:",
         "echarts": "catalog:",
-        "sortablejs": "catalog:"
-    },
-    "peerDependencies": {
-        "ant-design-vue": "^4.2.6",
-        "@ant-design/icons-vue": "^7.0.1",
-        "vue": "^3.5.0",
-        "vue-router": "^4.5.0"
+        "sortablejs": "catalog:",
+        "vue": "catalog:",
+        "vue-router": "catalog:"
     }
 }

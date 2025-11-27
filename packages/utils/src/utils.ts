@@ -1,17 +1,18 @@
-import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol } from './is';
+import { isArray, isBase, isClient, isFunction, isMap, isObject, isRegExp, isSet, isString, isSymbol, isNullOrUndef } from './is';
 
-export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷贝
+export function js_utils_deep_copy<T>(target: T, map = new Map()): T {
+    //  深拷贝
     // 判断引用类型的temp
-    function check_temp(target:any) {
+    function check_temp(target: any) {
         const _c = target.constructor;
         return new _c();
     }
 
     // 不可遍历应用类型深拷贝
     // 拷贝方法
-    function clone_func(func:Fn):Fn | null {
-        const _bodyReg = /(?<={)(.|\n)+(?=})/m;
-        const _paramReg = /(?<=\().+(?=\)\s+{)/;
+    function clone_func(func: Fn): Fn | null {
+        const _bodyReg = /(?<=\{)(.|\n)+(?=\})/;
+        const _paramReg = /(?<=\().+(?=\)\s+\{)/;
         const _funcStr = func.toString();
         if (func.prototype) {
             const _param = _paramReg.exec(_funcStr);
@@ -27,7 +28,6 @@ export function js_utils_deep_copy<T>(target:T, map = new Map()):T { //  深拷�
                 return null;
             }
         } else {
-            // eslint-disable-next-line
             return eval(_funcStr);
         }
     }
@@ -82,15 +82,16 @@ export function js_utils_first_to_upper(str: string) {
     return str.trim().toLowerCase().replace(str[0], str[0].toUpperCase());
 }
 
-export function js_utils_get_uuid(len: number, radix?: number): string { //  指定长度和基数
+export function js_utils_get_uuid(len: number, radix?: number): string {
+    //  指定长度和基数
     const _chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-    const _uuid:string[] = [];
+    const _uuid: string[] = [];
     let i;
     radix = radix || _chars.length;
 
     if (len) {
         // Compact form
-        for (i = 0; i < len; i++) _uuid[i] = _chars[0 | Math.random() * radix];
+        for (i = 0; i < len; i++) _uuid[i] = _chars[0 | (Math.random() * radix)];
     } else {
         // rfc4122, version 4 form
         let r;
@@ -103,8 +104,8 @@ export function js_utils_get_uuid(len: number, radix?: number): string { //  指
         // per rfc4122, sec. 4.1.5
         for (i = 0; i < 36; i++) {
             if (!_uuid[i]) {
-                r = 0 | Math.random() * 16;
-                _uuid[i] = _chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                r = 0 | (Math.random() * 16);
+                _uuid[i] = _chars[i == 19 ? (r & 0x3) | 0x8 : r];
             }
         }
     }
@@ -133,12 +134,12 @@ export function js_utils_throttle_event(fn: any, data: any) {
         const params = {
             time: data.time || 200,
             context: data.context || null,
-            args: data.args
+            args: data.args,
         };
         // 执行定时器
         // 函数也属于对象，因此可以添加属性
         return new Promise((resolve) => {
-            fn.__timebar = setTimeout(function() {
+            fn.__timebar = setTimeout(function () {
                 // 执行方法
                 const _res = fn.apply(params.context, params.args);
                 resolve(_res);
@@ -156,14 +157,15 @@ export function js_utils_throttle_event(fn: any, data: any) {
  * @describe 将每个元素放入他该放的位置, 类似前序, 不稳定排序
  */
 export function js_utils_quick_sort(nums: number[]) {
-    function shuffle(nums: number[]) { // 随机打乱
+    function shuffle(nums: number[]) {
+        // 随机打乱
         const _n = nums.length;
         for (let i = 0; i < _n; i++) {
             const _r = i + Math.floor(Math.random() * (_n - i));
             swap(nums, i, _r);
         }
     }
-    function sort(nums:number[], low:number, high: number) {
+    function sort(nums: number[], low: number, high: number) {
         if (low >= high) {
             return;
         }
@@ -173,9 +175,10 @@ export function js_utils_quick_sort(nums: number[]) {
         sort(nums, low, _p - 1);
         sort(nums, _p + 1, high);
     }
-    function partition(nums:number[], low:number, high: number): number {
+    function partition(nums: number[], low: number, high: number): number {
         const _value = nums[low];
-        let i = low + 1; let j = high;
+        let i = low + 1;
+        let j = high;
         while (i <= j) {
             while (i < high && nums[i] <= _value) {
                 i++;
@@ -189,7 +192,7 @@ export function js_utils_quick_sort(nums: number[]) {
         swap(nums, low, j);
         return j;
     }
-    function swap(nums: number[], i:number, j:number) {
+    function swap(nums: number[], i: number, j: number) {
         const _temp = nums[i];
         nums[i] = nums[j];
         nums[j] = _temp;
@@ -308,9 +311,21 @@ export function js_utils_find_attr(object: any, path: string) {
 }
 
 /**
- * @param path 要设置的属性 'a.b.c'
- * @param value 设置值
+ * 设置对象的嵌套属性值，支持通配符 * 进行批量设置
+ * @param path 要设置的属性路径，支持点号和方括号语法，如 'a.b.c' 或 'data[*].address'
+ * @param value 设置的值。当路径包含 * 且 value 为数组时，会按索引一一对应设置
  * @param obj 要设置的对象 {a: {b:{c: {}}}}
+ * @example
+ * // 普通设置
+ * js_utils_edit_attr('a.b.c', 'value', obj)
+ *
+ * // 批量设置（value 非数组）
+ * js_utils_edit_attr('data[*].name', 'test', { data: [{}, {}] })
+ * // 结果: { data: [{ name: 'test' }, { name: 'test' }] }
+ *
+ * // 数组元素一一对应设置（value 为数组）
+ * js_utils_edit_attr('data[*].address', ['上海', '北京'], { data: [{}, {}] })
+ * // 结果: { data: [{ address: '上海' }, { address: '北京' }] }
  */
 export function js_utils_edit_attr(path: string, value: any, obj: any) {
     const _list = path
@@ -321,25 +336,40 @@ export function js_utils_edit_attr(path: string, value: any, obj: any) {
         .filter(Boolean);
     const _length = _list.length - 1;
 
-    function setAttr(cur: any, index: number) {
+    function setAttr(cur: any, index: number, arrayIndex?: number) {
         if (index > _length) return;
 
         const key = _list[index];
 
-        if (key === undefined) return;
+        if (isNullOrUndef(key) || isNullOrUndef(cur)) return;
 
         if (key === '*') {
             if (isArray(cur)) {
-                cur.forEach((item) => setAttr(item, index + 1));
+                // 检查是否为最后一层且 value 是数组（数组元素一一对应）
+                const isLastLevel = index + 1 === _length;
+                const isValueArray = isArray(value);
+
+                if (isLastLevel && isValueArray) {
+                    // 数组元素一一对应设置
+                    cur.forEach((item, idx) => setAttr(item, index + 1, idx));
+                } else {
+                    // 批量设置相同值
+                    cur.forEach((item) => setAttr(item, index + 1, arrayIndex));
+                }
             }
         } else {
             if (!(key in cur)) {
                 cur[key] = isNaN(Number(_list[index + 1])) ? {} : [];
             }
             if (index === _length) {
-                cur[key] = value;
+                // 如果有数组索引且 value 是数组，使用对应索引的值
+                if (arrayIndex !== undefined && isArray(value)) {
+                    cur[key] = value[arrayIndex];
+                } else {
+                    cur[key] = value;
+                }
             } else {
-                setAttr(cur[key], index + 1);
+                setAttr(cur[key], index + 1, arrayIndex);
             }
         }
     }
@@ -374,7 +404,7 @@ export function js_utils_yuan_to_fen(yuan: number | string, digit = 100): number
     if (_digitStr.includes('.')) {
         _dotSum += _digitStr.split('.')[1].length;
     }
-    return Number(_amountStr.replace('.', '')) * Number(_digitStr.replace('.', '')) / Math.pow(10, _dotSum);
+    return (Number(_amountStr.replace('.', '')) * Number(_digitStr.replace('.', ''))) / Math.pow(10, _dotSum);
 }
 /**
  * 数组转化成csv文件
@@ -404,13 +434,13 @@ export function js_utils_csv_to_array(file: File, encoding = 'utf-8') {
     const _fileReader = new FileReader();
     _fileReader.readAsText(file, encoding);
     return new Promise((resolve, reject) => {
-        _fileReader.onload = function() {
+        _fileReader.onload = function () {
             if (isString(this.result)) {
                 const _data = this.result.split('\n');
-                const _res:string[][] = [];
-                _data.map(item => {
+                const _res: string[][] = [];
+                _data.map((item) => {
                     if (item) {
-                        _res.push(item.split(',').map(e => e.trim()));
+                        _res.push(item.split(',').map((e) => e.trim()));
                     }
                 });
                 resolve(_res);
@@ -502,7 +532,7 @@ export function js_utils_get_current_url(): UrlInfo | null {
             pathname: url.pathname,
             port: url.port,
             protocol: url.protocol,
-            search: url.search
+            search: url.search,
         };
     } catch (error) {
         console.error('获取当前 URL 失败:', error);

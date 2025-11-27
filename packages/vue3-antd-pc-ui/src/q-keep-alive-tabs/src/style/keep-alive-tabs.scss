@@ -26,7 +26,7 @@ $multiple-height: 30px;
             height: $multiple-height - 2px;
             padding-right: 12px;
             line-height: $multiple-height - 2px;
-            @include text-color(text-color);
+            color: var(--text-color);
             transition: none;
             border-radius: 3px;
 
@@ -58,18 +58,18 @@ $multiple-height: 30px;
             }
 
             svg {
-                @include text-color(text-color);
+                color: var(--text-color);
             }
         }
         .ant-tabs-tab:not(.ant-tabs-tab-active) {
             &:hover {
-                color: $primary-color;
+                color: var(--primary-color);
             }
         }
         .ant-tabs-tab-active {
             position: relative;
             padding-left: 18px;
-            background: $primary-color;
+            background: var(--primary-color);
             border: 0;
             transition: none;
             span {
@@ -112,4 +112,30 @@ $multiple-height: 30px;
         margin-left: 1px;
     }
 }
-@import './tab-content.scss'
+.q-keep-alive-tabs-drop-down {
+    &-extra-quick {
+        display: inline-block;
+        width: 36px;
+        height: $multiple-height;
+        line-height: $multiple-height;
+        color: var(--text-color-secondary);
+        text-align: center;
+        cursor: pointer;
+        border-left: 1px solid var(--border-color-base);
+
+        &:hover {
+            color: var(--text-color);
+        }
+    }
+
+    &-info {
+        display: inline-block;
+        width: 100%;
+        height: $multiple-height - 2;
+        padding-left: 0;
+        margin-left: -10px;
+        font-size: 12px;
+        cursor: pointer;
+        user-select: none;
+    }
+}

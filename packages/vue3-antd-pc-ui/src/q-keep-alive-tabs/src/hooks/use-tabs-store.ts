@@ -10,18 +10,21 @@ export interface TabState {
     cacheTabList: Set<string>;
     tabList: RouteLocationNormalized[];
     lastDragEndIndex: number;
-    initPath: string
+    initPath: string;
 }
 
 function handle_goto_page(router: Router) {
     const go = useGo(router);
-    go({
-        path: unref(router.currentRoute).path,
-        query: unref(router.currentRoute).query ?? {} // 针对含有query的路由, 防止replace失败
-    }, true);
+    go(
+        {
+            path: unref(router.currentRoute).path,
+            query: unref(router.currentRoute).query ?? {}, // 针对含有query的路由, 防止replace失败
+        },
+        true,
+    );
 }
 
-export function ignore_t(fullPath: string):string {
+export function ignore_t(fullPath: string): string {
     if (fullPath.indexOf('?t=') > -1) {
         return fullPath.split('?t=')[0];
     }
@@ -33,13 +36,13 @@ const get_to_target = (tabItem: RouteLocationNormalized) => {
     return {
         params: params || {},
         path,
-        query: query || {}
+        query: query || {},
     };
 };
 
 const ls = isClient && js_create_local_storage();
 const ss = isClient && js_create_session_storage();
-const cacheTab = ls && ls.get('project_config')?.cacheTabsSetting?.cache || false;
+const cacheTab = (ls && ls.get('project_config')?.cacheTabsSetting?.cache) || false;
 
 // state
 const createState = () => {
@@ -47,11 +50,11 @@ const createState = () => {
         // 被 keepalive 缓存的 name
         cacheTabList: new Set(),
         // 显示在 tab 上的页面list
-        tabList: cacheTab ? ss && ss.get(TabKeys) || [] : [],
+        tabList: cacheTab ? (ss && ss.get(TabKeys)) || [] : [],
         // tabList: cacheTab ? Persistent.getLocal(MULTIPLE_TABS_KEY) || [] : [],
         // Index of the last moved tab
         lastDragEndIndex: 0,
-        initPath: ''
+        initPath: '',
     };
     return state;
 };
@@ -64,22 +67,22 @@ const tabsGetters = {
     },
     getCachedTabList(state: TabState): string[] {
         // 过滤undefined
-        return Array.from(state.cacheTabList).filter(item => !!item);
+        return Array.from(state.cacheTabList).filter((item) => !!item);
     },
     getLastDragEndIndex(state: TabState): number {
         return state.lastDragEndIndex;
-    }
+    },
 };
 
 export const useTabsStore = defineStore('tabs', {
-    state: ():TabState => (state),
+    state: (): TabState => state,
     getters: tabsGetters,
     actions: {
         // 更新缓 keepalive 缓存的页面 namelist
         async update_cache_tab() {
             const cacheMap: Set<string> = new Set();
             for (const tab of this.tabList) {
-            // 忽视以下页面
+                // 忽视以下页面
                 if (['Redirect', 'RedirectTo', '/backend/error', '/backend/*', 'error1', 'error2'].indexOf(tab.name as string) > -1 || !!tab.meta?.ignoreKeepAlive) {
                     continue;
                 }
@@ -136,10 +139,7 @@ export const useTabsStore = defineStore('tabs', {
         async add_tab(route: RouteLocationNormalized) {
             const { path, name, fullPath, params, query } = route;
             // 忽视以下页面
-            if (
-                ['Redirect', 'RedirectTo', '/backend/error', '/backend/*', 'error1', 'error2'].indexOf(name as string) > -1 ||
-            path == '/'
-            ) {
+            if (['Redirect', 'RedirectTo', '/backend/error', '/backend/*', 'error1', 'error2'].indexOf(name as string) > -1 || path == '/') {
                 return;
             }
             let updateIndex = -1;
@@ -161,14 +161,14 @@ export const useTabsStore = defineStore('tabs', {
             } else {
                 this.tabList.push({
                     ...route,
-                    fullPath: ignore_t(route.fullPath)
+                    fullPath: ignore_t(route.fullPath),
                 });
             }
             this.update_cache_tab();
-        // 预留位置, 以后开发刷新浏览器保留已打开页面
+            // 预留位置, 以后开发刷新浏览器保留已打开页面
         },
         // 关闭tab
-        async close_tab(obj: {tab: RouteLocationNormalized, router: Router}) {
+        async close_tab(obj: { tab: RouteLocationNormalized; router: Router }) {
             const close = (route: RouteLocationNormalized) => {
                 const { fullPath } = route;
                 // 初始化页面不关闭
@@ -183,7 +183,7 @@ export const useTabsStore = defineStore('tabs', {
 
             const { path } = unref(currentRoute);
             if (path !== obj.tab.path) {
-            // 关闭未在活动的tab
+                // 关闭未在活动的tab
                 close(obj.tab);
                 this.update_cache_tab();
                 return;
@@ -193,16 +193,16 @@ export const useTabsStore = defineStore('tabs', {
             let toTarget: RouteLocationRaw = {};
             const index = this.tabList.findIndex((item) => item.path === path);
             if (index === 0) {
-            // 如果只有一个tab, 直接跳到初始化页面
+                // 如果只有一个tab, 直接跳到初始化页面
                 if (this.tabList.length === 1) {
                     toTarget = this.initPath;
                 } else {
-                //  跳到右边的tab
+                    //  跳到右边的tab
                     const page = this.tabList[index + 1];
                     toTarget = get_to_target(page);
                 }
             } else {
-            // 关闭当前的tab, 会跳到左边的页面
+                // 关闭当前的tab, 会跳到左边的页面
                 const page = this.tabList[index - 1];
                 toTarget = get_to_target(page);
             }
@@ -212,10 +212,10 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         // 通关key, 关闭tab
-        async close_tab_by_key(obj:{key: string, router: Router}) {
+        async close_tab_by_key(obj: { key: string; router: Router }) {
             const index = this.tabList.findIndex((item) => (item.fullPath || item.path) === obj.key);
             if (index !== -1) {
-                await this.close_tab({tab: this.tabList[index], router: obj.router});
+                await this.close_tab({ tab: this.tabList[index], router: obj.router });
                 const { currentRoute, replace } = obj.router;
                 // 检查当前路由是否存在于tabList中
                 const isActivated = this.tabList.findIndex((item) => {
@@ -241,7 +241,7 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         // 排序用
-        async sort_tabs(obj: {oldIndex: number, newIndex: number}) {
+        async sort_tabs(obj: { oldIndex: number; newIndex: number }) {
             const currentTab = this.tabList[obj.oldIndex];
             this.tabList.splice(obj.oldIndex, 1);
             this.tabList.splice(obj.newIndex, 0, currentTab);
@@ -249,11 +249,11 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         // 关闭左侧tab
-        async close_left_tabs(obj: {route: RouteLocationNormalized, router: Router}) {
+        async close_left_tabs(obj: { route: RouteLocationNormalized; router: Router }) {
             const index = this.tabList.findIndex((item) => item.path === obj.route.path);
 
             if (index > 0) {
-            // 删除左侧的tab
+                // 删除左侧的tab
                 const leftTabs = this.tabList.slice(0, index);
                 const pathList: string[] = [];
                 for (const item of leftTabs) {
@@ -269,7 +269,7 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         // 关闭右侧tab
-        async close_right_tabs(obj: {route: RouteLocationNormalized, router: Router}) {
+        async close_right_tabs(obj: { route: RouteLocationNormalized; router: Router }) {
             const index = this.tabList.findIndex((item) => item.fullPath === ignore_t(obj.route.fullPath));
 
             if (index >= 0 && index < this.tabList.length - 1) {
@@ -297,9 +297,9 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         /**
-     * 关闭其他tab
-     */
-        async close_other_tabs(obj: {route: RouteLocationNormalized, router: Router}) {
+         * 关闭其他tab
+         */
+        async close_other_tabs(obj: { route: RouteLocationNormalized; router: Router }) {
             const closePathList = this.tabList.map((item) => item.fullPath);
 
             const pathList: string[] = [];
@@ -322,10 +322,10 @@ export const useTabsStore = defineStore('tabs', {
         },
 
         /**
-     * 批量关闭tab
-     */
+         * 批量关闭tab
+         */
         async bulk_close_tabs(pathList: string[]) {
             this.tabList = this.tabList.filter((item) => !(pathList.indexOf(item.fullPath) > -1));
-        }
-    }
+        },
+    },
 });

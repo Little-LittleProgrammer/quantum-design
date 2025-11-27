@@ -1,13 +1,21 @@
 {
     "name": "create-quantum-app",
     "version": "2.0.1",
-    "type": "module",
     "description": "",
+    "keywords": [],
+    "license": "ISC",
+    "author": "Evan Wu",
+    "type": "module",
     "scripts": {
         "dev": "unbuild --stub",
         "build": "unbuild",
         "start": "cqap"
     },
+    "files": [
+        "dist",
+        "index.js",
+        "template"
+    ],
     "bin": {
         "create-quantum-app": "index.js",
         "create-quantum-api": "api.js",
@@ -16,26 +24,18 @@
         "create-qm-api": "api.js",
         "cqa": "api.js"
     },
-    "files": [
-        "index.js",
-        "template",
-        "dist"
-    ],
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "keywords": [],
-    "author": "Evan Wu",
-    "license": "ISC",
     "devDependencies": {
-        "@types/fs-extra": "~11.0.2",
-        "@types/minimist": "~1.2.3",
-        "@types/prompts": "~2.4.6",
-        "fs-extra": "~11.2.0",
-        "kolorist": "~1.8.0",
-        "minimist": "~1.2.5",
-        "prompts": "~2.4.2",
-        "unbuild": "~2.0.0"
+        "@types/fs-extra": "catalog:",
+        "@types/minimist": "catalog:",
+        "@types/prompts": "catalog:",
+        "fs-extra": "catalog:",
+        "kolorist": "catalog:",
+        "minimist": "catalog:",
+        "prompts": "catalog:",
+        "unbuild": "catalog:"
     }
 }

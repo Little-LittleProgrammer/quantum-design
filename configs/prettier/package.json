@@ -1,0 +1,24 @@
+{
+    "name": "@quantum-design-configs/prettier",
+    "version": "3.0.0",
+    "license": "MIT",
+    "type": "module",
+    "files": [
+        "index.mjs"
+    ],
+    "main": "./index.mjs",
+    "module": "./index.mjs",
+    "exports": {
+        ".": {
+            "default": "./index.mjs"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "dependencies": {
+        "prettier": "catalog:",
+        "prettier-plugin-tailwindcss": "catalog:"
+    }
+}

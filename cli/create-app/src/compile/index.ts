@@ -24,6 +24,12 @@ export function copy_project() {
             }
             // 处理package.json
             for (const dir of _dirsList) {
+                // 删除 子项目中的 eslint.config.mjs/.lintstagedrc.mjs/.prettierignore/.prettierrc.mjs/commitlint.config.mjs 文件
+                rm_file(`${dir}/eslint.config.mjs`);
+                rm_file(`${dir}/.lintstagedrc.mjs`);
+                rm_file(`${dir}/.prettierignore`);
+                rm_file(`${dir}/.prettierrc.mjs`);
+                rm_file(`${dir}/commitlint.config.mjs`);
                 const pkgContent = readFileSync(`${dir}/package.json`, 'utf8');
                 if (pkgContent) {
                     const _text = JSON.parse(pkgContent);
@@ -31,7 +37,7 @@ export function copy_project() {
                     if (_text.pnpm) {
                         Reflect.deleteProperty(_text, 'pnpm');
                     }
-                    if (_text.devDependencies){
+                    if (_text.devDependencies) {
                         for (const key of monorepoNotNeed) {
                             _text.devDependencies[key] && Reflect.deleteProperty(_text.devDependencies, key);
                         }

@@ -11,8 +11,43 @@ import { ref, type PropType, computed, unref, watch, onBeforeUnmount, useAttrs }
 import { bindHandlers, plugins as defaultPlugins, toolbar as defaultToolbar } from './tinymce';
 import { isNumber, js_utils_get_uuid } from '@quantum-design/utils';
 defineOptions({
-    name: 'RichText'
+    name: 'RichText',
 });
+const props = defineProps({
+    options: {
+        type: Object,
+        default: () => {},
+    },
+    value: {
+        type: String,
+    },
+
+    toolbar: {
+        type: Array as PropType<string[]>,
+        default: defaultToolbar,
+    },
+    plugins: {
+        type: Array as PropType<string[]>,
+        default: defaultPlugins,
+    },
+    height: {
+        type: [Number, String] as PropType<string | number>,
+        required: false,
+        default: 400,
+    },
+    width: {
+        type: [Number, String] as PropType<string | number>,
+        required: false,
+        default: 'auto',
+    },
+    themeMode: {
+        type: String,
+        default: 'light',
+    },
+});
+
+const emit = defineEmits(['change', 'update:value', 'inited', 'initError']);
+
 let tinymce: any = null;
 
 const canUse = ref(false);
@@ -154,41 +189,6 @@ function init_tinymic_plugins() {
     }
 }
 
-const props = defineProps({
-    options: {
-        type: Object,
-        default: () => {}
-    },
-    value: {
-        type: String
-    },
-
-    toolbar: {
-        type: Array as PropType<string[]>,
-        default: defaultToolbar
-    },
-    plugins: {
-        type: Array as PropType<string[]>,
-        default: defaultPlugins
-    },
-    height: {
-        type: [Number, String] as PropType<string | number>,
-        required: false,
-        default: 400
-    },
-    width: {
-        type: [Number, String] as PropType<string | number>,
-        required: false,
-        default: 'auto'
-    },
-    themeMode: {
-        type: String,
-        default: 'light'
-    }
-});
-
-const emit = defineEmits(['change', 'update:value', 'inited', 'init-error']);
-
 const tinymceId = ref('tiny-vue' + js_utils_get_uuid(4));
 
 const elRef = ref<HTMLElement | null>(null);
@@ -214,7 +214,7 @@ watch(
                 initEditor();
             }, 300);
         }
-    }
+    },
 );
 
 const initOptions = computed(() => {
@@ -236,7 +236,7 @@ const initOptions = computed(() => {
         setup: (editor: any) => {
             editorRef.value = editor;
             editor.on('init', (e: any) => initSetup(e));
-        }
+        },
     };
 });
 
@@ -252,8 +252,8 @@ function initEditor() {
             emit('inited', editor);
         })
         .catch((err) => {
-            console.log('init-error', err);
-            emit('init-error', err);
+            console.log('initError', err);
+            emit('initError', err);
         });
 }
 
@@ -284,13 +284,13 @@ function bindModelHandlers(editor: any) {
             setValue(editor, val, prevVal);
         },
         {
-            immediate: true
-        }
+            immediate: true,
+        },
     );
 
     editor.on(normalizedEvents || 'change keyup undo redo', () => {
         const content = editor.getContent({
-            format: attrs.outputFormat
+            format: attrs.outputFormat,
         });
         emit('update:value', content);
         emit('change', content);
@@ -311,8 +311,8 @@ onBeforeUnmount(() => {
 });
 </script>
 <style lang="scss">
-@import './style/content.min.css';
-@import './style/skin.min.css';
+@use './style/content.min.css';
+@use './style/skin.min.css';
 .q-code-text {
     position: relative;
     line-height: normal;

@@ -1,19 +1,19 @@
-@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;
+@use 'sass:math';
 $prefix-cls: 'q-table';
 .#{$prefix-cls}-editable-cell {
     position: relative;
     min-height: 24px; //设置高度让其始终可被hover
     .edit-cell-align-left {
         text-align: left;
-    
+
         input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
-          text-align: left;
+            text-align: left;
         }
     }
-    
+
     .edit-cell-align-center {
         text-align: center;
-    
+
         input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
             text-align: center;
         }
@@ -21,7 +21,7 @@ $prefix-cls: 'q-table';
 
     .edit-cell-align-right {
         text-align: right;
-    
+
         input:not(.ant-calendar-picker-input, .ant-time-picker-input) {
             text-align: right;
         }
@@ -33,7 +33,7 @@ $prefix-cls: 'q-table';
             &-content {
                 padding: 4px 8px;
                 border-radius: 2px;
-                color: $error-color;
+                color: var(--error-color);
             }
         }
     }
@@ -42,24 +42,24 @@ $prefix-cls: 'q-table';
         display: flex;
         align-items: center;
         justify-content: center;
-  
+
         > .ant-select {
-          min-width: calc(100% - 50px);
+            min-width: calc(100% - 50px);
         }
-      }
-  
+    }
+
     &-icon {
         margin-left: 4px;
         margin-right: 2px;
         &:hover {
             transform: scale(1.2);
-    
+
             svg {
-                color: $primary-color;
+                color: var(--primary-color);
             }
         }
     }
-  
+
     .ellipsis-cell {
         .cell-content {
             overflow: hidden;
@@ -69,7 +69,7 @@ $prefix-cls: 'q-table';
             overflow-wrap: break-word;
         }
     }
-  
+
     &-normal {
         &-icon {
             display: none;
@@ -80,7 +80,7 @@ $prefix-cls: 'q-table';
             cursor: pointer;
         }
     }
-  
+
     &:hover {
         .q-table-editable-cell-normal-icon {
             display: inline-block;

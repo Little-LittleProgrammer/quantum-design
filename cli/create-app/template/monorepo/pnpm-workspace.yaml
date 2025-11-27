@@ -1,124 +1,320 @@
 packages:
-  - "apps/*"
+  # 内部共享包（工具、组件等），排除 @vue3-antd-pc-ui-nuxt/ 和 @vue3-pc-ui-nuxt/
+  # 用于存放可复用的工具库、组件库等内部 npm 包
   - "packages/*"
   - "docs/*"
+  # CLI 工具集合（自定义命令行工具相关包）
+  - "apps/*"
 
-catalog: 
-  "czg": ^1.10.1
-  "cz-git": ^1.10.1
-  "sass-migrator": "^2.2.1"
-  "@types/node": "20.2.5"
-  "@vitest/coverage-v8": "^2.1.8"
-  "@vitest/ui": "^2.1.8"
-  "lint-staged": "^15.2.10"
+catalog:
+  # 提交规范与变更日志
+  # czg: 交互式提交工具
+  "czg": ^1.12.0
+  # cz-git: git commit 规范工具
+  "cz-git": ^1.12.0
+  # @changesets/cli: 多包仓库变更日志与版本管理工具
+  "@changesets/cli": "^2.29.5"
+
+  # Git hooks 与工作流
+  # husky: Git hooks 工具
   "husky": "^9.1.6"
-  "jsdom": "^25.0.1"
+  # lint-staged: 针对暂存文件运行 lint
+  "lint-staged": "^15.2.10"
+
+  # Commitlint 规则
+  # @commitlint/cli: commit message 校验工具
+  "@commitlint/cli": "^19.8.0"
+  # @commitlint/config-conventional: 约定式 commitlint 规则
+  "@commitlint/config-conventional": "^19.8.0"
+  # commitlint-plugin-function-rules: commitlint 自定义函数规则插件
+  "commitlint-plugin-function-rules": "^4.0.2"
+
+  # Lint/类型检查
+  # prettier: 代码格式化工具
+  "prettier": "^3.5.3"
+  # prettier-plugin-tailwindcss: Tailwind CSS 类名排序插件
+  "prettier-plugin-tailwindcss": "^0.6.11"
+  # @eslint/js: ESLint 官方 JS 规则集
+  "@eslint/js": "^9.22.0"
+  # @types/eslint: ESLint 类型定义
+  "@types/eslint": "^9.6.1"
+  # eslint: 代码质量和风格检查工具
+  "eslint": "^9.22.0"
+  # eslint-plugin-turbo: TurboRepo 相关 ESLint 插件
+  "eslint-plugin-turbo": "^2.5.5"
+  # @typescript-eslint/eslint-plugin: TypeScript ESLint 插件
+  "@typescript-eslint/eslint-plugin": "^8.26.0"
+  # @typescript-eslint/parser: TypeScript 解析器
+  "@typescript-eslint/parser": "^8.26.0"
+  # eslint-plugin-jsdoc: JSDoc 注释检查插件
+  "eslint-plugin-jsdoc": "^50.6.3"
+  # eslint-plugin-jsonc: JSON/JSONC 文件检查插件
+  "eslint-plugin-jsonc": "^2.19.1"
+  # eslint-plugin-n: Node.js 相关 ESLint 插件
+  "eslint-plugin-n": "^17.16.2"
+  # eslint-plugin-no-only-tests: 检查测试代码中 .only 的插件
+  "eslint-plugin-no-only-tests": "^3.3.0"
+  # eslint-plugin-prettier: Prettier 与 ESLint 集成插件
+  "eslint-plugin-prettier": "^5.2.3"
+  # eslint-plugin-regexp: 正则表达式检查插件
+  "eslint-plugin-regexp": "^2.7.0"
+  # eslint-plugin-unused-imports: 检查未使用的 import
+  "eslint-plugin-unused-imports": "^4.1.4"
+  # eslint-plugin-vitest: Vitest 测试相关 ESLint 插件
+  "eslint-plugin-vitest": "^0.5.4"
+  # globals: 常用全局变量定义
+  "globals": "^16.3.0"
+  # jsonc-eslint-parser: JSON/JSONC 解析器
+  "jsonc-eslint-parser": "^2.4.0"
+  # eslint-plugin-vue: Vue 相关 ESLint 插件
+  "eslint-plugin-vue": "^9.33.0"
+  # vue-eslint-parser: Vue 文件解析器
+  "vue-eslint-parser": "^9.4.3"
+  # typescript: TypeScript 语言支持
+  "typescript": "^5.9.2"
+  # tslib: TypeScript 辅助库
   "tslib": "^2.8.1"
-  "turbo": "^2.3.3"
-  "typescript": "~5.7.2"
-  "vite": "^6.0.5"
-  "vitest": "^2.1.0"
-  "@changesets/cli": "~2.27.7"
-  "@commitlint/cli": "^19.5.0"
-  "@commitlint/config-conventional": "^19.5.0"
-  "commitlint-plugin-function-rules": "^4.0.1"
-  "@typescript-eslint/eslint-plugin": "~8.18.2"
-  "@typescript-eslint/parser": "~8.18.2"
-  "eslint-config-turbo": "~2.3.3"
-  "eslint-plugin-vue": "~9.32.0"
-  "eslint": "~8.57.0"
-  "rollup": "~4.29.1"
-  "@rollup/plugin-terser": "~0.4.4"
-  "@rollup/plugin-typescript": "~12.1.2"
-  "@rollup/plugin-commonjs": "~28.0.2"
-  "@rollup/plugin-json": "~6.1.0"
-  "@rollup/plugin-node-resolve": "~16.0.0"
-  "@vitejs/plugin-vue": "~5.2.1"
-  "@vitejs/plugin-vue-jsx": "~4.1.1"
-  "postcss-pxtorem": "~6.1.0"
-  "unplugin-vue-components": "~0.28.0"
-  "vite-plugin-compression2": "~1.3.3"
-  "vite-plugin-dts": "~4.4.0"
-  "vite-plugin-pwa": "~0.21.0"
-  "vite-plugin-vue-mcp": "latest"
-  "vite-plugin-vue-devtools": "^7.7.2"
-  "@sentry/vue": "~8.47.0"
-  "@sentry/cli": "1.72.0"
-  "@sentry/vite-plugin": "~2.22.0"
-  "@types/postcss-pxtorem": "~6.0.3"
-  "@vue/test-utils": "~2.4.6"
-  "sass": "~1.83.0"
-  "vue": "~3.5.13"
-  "vue-router": "~4.5.0"
-  "vue-types": "~5.1.1"
-  "pinia": "~3.0.0"
-  "sortablejs": "~1.15.0"
-  "@types/sortablejs": "~1.15.0"
-  "echarts": "~5.6.0"
-  "ant-design-vue": "~4.2.6"
-  "@ant-design/icons-vue": "~7.0.1"
-  "highlight.js": "~11.4.0"
-  "vitepress": "1.5.0"
-  "less": "~4.2.1"
-  "crypto-js": "~4.2.0"
-  "@types/crypto-js": "~4.2.0"
-  "lodash-es": "~4.17.21"
-  "@types/lodash-es": "~4.17.12"
-  "qs": "~6.12.2"
-  "@types/qs": "~6.9.15"
-  "axios": "~1.7.2"
-  "dayjs": "~1.11.7"
-  "csstype": "~3.1.2"
-  "@nuxt/kit": "~3.15.0"
-  "magic-string": "~0.30.0"
-  "unplugin": "~2.1.0"
-  "nuxt": "~3.15.0"
-  "@nuxt/module-builder": "~0.8.4"
-  "@nuxt/schema": "~3.15.0"
+  # vue-tsc: Vue + TypeScript 类型检查工具
+  "vue-tsc": "^3.0.5"
+  # @types/node: Node.js 类型定义
+  "@types/node": "^20.19.10"
+  # oxlint: 高性能 JS/TS Linter
+  "oxlint": "^1.11.1"
+  # eslint-plugin-oxlint: Oxlint ESLint 插件
+  "eslint-plugin-oxlint": "^1.11.1"
+
+  # 构建工具链（Vite/Unbuild/Rollup/Unplugin）
+  # vite: 前端构建工具
+  "vite": "^7.1.1"
+  # @vitejs/plugin-vue: Vite 的 Vue 支持插件
+  "@vitejs/plugin-vue": "^6.0.1"
+  # @vitejs/plugin-vue-jsx: Vite 的 Vue JSX 支持插件
+  "@vitejs/plugin-vue-jsx": "^5.0.1"
+  # vite-plugin-dts: TypeScript 类型声明生成插件
+  "vite-plugin-dts": "^4.5.4"
+  # vite-plugin-compression2: 资源压缩插件
+  "vite-plugin-compression2": "^2.2.0"
+  # unplugin-vue-components: 自动按需引入 Vue 组件插件
+  "unplugin-vue-components": "^29.0.0"
+  # vitepress: 基于 Vite 的文档生成工具
+  "vitepress": "^2.0.0-alpha.11"
+  # unplugin: 通用 Vite/Webpack/Rollup 插件开发工具
+  "unplugin": "^2.3.5"
+  # rollup: JS 打包工具
+  "rollup": "^4.46.2"
+  # @rollup/plugin-node-resolve: Node 模块解析插件
+  "@rollup/plugin-node-resolve": "^16.0.1"
+  # @rollup/plugin-commonjs: CommonJS 转换插件
+  "@rollup/plugin-commonjs": "^28.0.6"
+  # @rollup/plugin-json: JSON 文件导入插件
+  "@rollup/plugin-json": "^6.1.0"
+  # @rollup/plugin-typescript: TypeScript 支持插件
+  "@rollup/plugin-typescript": "^12.1.4"
+  # @rollup/plugin-terser: 代码压缩插件
+  "@rollup/plugin-terser": "^0.4.4"
+  # unbuild: 通用包构建工具
+  "unbuild": "^3.6.0"
+  # magic-string: 代码字符串处理工具
+  "magic-string": "^0.30.0"
+  # turbo: monorepo 构建加速工具
+  "turbo": "^2.5.5"
+
+  # vitest
+  # vitest: 现代前端测试框架
+  "vitest": "^3.2.4"
+  # @vitest/coverage-v8: 覆盖率统计插件
+  "@vitest/coverage-v8": "^3.2.4"
+  # @vitest/ui: Vitest UI 界面
+  "@vitest/ui": "^3.2.4"
+  # jsdom: Node.js 下的 DOM 实现
+  "jsdom": "^26.0.0"
+
+  # Vue 生态
+  # vue: Vue.js 框架
+  "vue": "^3.5.18"
+  # vue-router: Vue 路由管理
+  "vue-router": "^4.5.1"
+  # pinia: 现代化状态管理库
+  "pinia": "^3.0.3"
+  # vue-types: Vue 组件类型工具
+  "vue-types": "^6.0.0"
+  # @vue/test-utils: Vue 测试工具
+  "@vue/test-utils": "^2.4.6"
+
+  # Nuxt 生态
+  # nuxt: Nuxt.js 框架
+  "nuxt": "^4.0.3"
+  # @nuxt/kit: Nuxt 工具包
+  "@nuxt/kit": "^4.0.3"
+  # @nuxt/schema: Nuxt 类型定义
+  "@nuxt/schema": "^4.0.3"
+  # @nuxt/module-builder: Nuxt 模块开发工具
+  "@nuxt/module-builder": "^1.0.2"
+  # @nuxt/devtools: Nuxt 开发者工具
+  "@nuxt/devtools": "^2.6.2"
+  # @pinia/nuxt: Pinia Nuxt 集成
+  "@pinia/nuxt": "^0.11.2"
+
+  # UI 组件与可视化
+  # ant-design-vue: Ant Design Vue 组件库
+  "ant-design-vue": "^4.2.6"
+  # @ant-design/icons-vue: Ant Design Vue 图标库
+  "@ant-design/icons-vue": "^7.0.1"
+  # echarts: 可视化图表库
+  "echarts": "^6.0.0"
+  # monaco-editor: Monaco 编辑器
   "monaco-editor": "^0.52.2"
+  # tinymce: 富文本编辑器
   "tinymce": "^5.10.9"
+  # highlight.js: 代码高亮库
+  "highlight.js": "^11.4.0"
+  # nprogress: 页面加载进度条
   "nprogress": "0.2.0"
+  # @types/nprogress: nprogress 类型定义
   "@types/nprogress": "0.2.0"
+  # element-resize-detector: 元素尺寸变化监听
   "element-resize-detector": "1.2.4"
+  # @types/element-resize-detector: 类型定义
   "@types/element-resize-detector": "1.1.3"
-  "vue-tsc": "1.8.8"
-  "workbox-build": "~7.3.0"
-  "workbox-window": "~7.3.0"
-  "fs-extra": "~11.2.0"
-  "@types/fs-extra": "~11.0.4"
-  "@ant-design-vue/nuxt": "~1.4.6"
-  "cross-env": "~7.0.3"
-  "esno": "~0.17.0"
-  "@vite-pwa/nuxt": "~0.10.6"
-  "@nuxt/devtools": "~2.0.0"
-  "npm-run-all": "~4.1.5"
-  "@pinia/nuxt": "~0.9.0"
-  "openai": "~4.86.1"
-  "@types/minimist": "^1.2.3"
-  "@types/prompts": "^2.4.6"
-  "kolorist": "^1.8.0"
+  # moveable: 可拖拽缩放组件
+  "moveable": "^0.51.0"
+
+  # 样式与预处理器
+  # sass: Sass 预处理器
+  "sass": "^1.83.0"
+  # less: Less 预处理器
+  "less": "^4.2.1"
+  # postcss-pxtorem: px 转 rem 插件
+  "postcss-pxtorem": "^6.1.0"
+  # @types/postcss-pxtorem: 类型定义
+  "@types/postcss-pxtorem": "^6.0.3"
+  # sass-migrator: Sass 语法迁移工具
+  "sass-migrator": "^2.2.1"
+
+  # PWA 与监控
+  # vite-plugin-pwa: PWA 支持插件
+  "vite-plugin-pwa": "^1.0.2"
+  # workbox-build: PWA 构建工具
+  "workbox-build": "^7.3.0"
+  # workbox-window: PWA 前端工具
+  "workbox-window": "^7.3.0"
+  # @sentry/vue: Sentry Vue 集成
+  "@sentry/vue": "^10.3.0"
+  # @sentry/cli: Sentry 命令行工具
+  "@sentry/cli": "^2.51.1"
+  # @sentry/vite-plugin: Sentry Vite 插件
+  "@sentry/vite-plugin": "^4.0.2"
+
+  # HTTP/数据处理/工具库
+  # axios: HTTP 请求库
+  "axios": "^1.11.0"
+  # dayjs: 轻量日期处理库
+  "dayjs": "^1.11.13"
+  # lodash-es: 工具函数库（ESM 版）
+  "lodash-es": "^4.17.21"
+  # @types/lodash-es: 类型定义
+  "@types/lodash-es": "^4.17.12"
+  # qs: 查询字符串解析/序列化
+  "qs": "^6.14.0"
+  # @types/qs: 类型定义
+  "@types/qs": "^6.14.0"
+  # crypto-js: 加密算法库
+  "crypto-js": "^4.2.0"
+  # @types/crypto-js: 类型定义
+  "@types/crypto-js": "^4.2.0"
+  # zod: 类型校验与解析库
+  "zod": "^4.0.17"
+  # csstype: CSS 类型定义
+  "csstype": "^3.1.3"
+  # sortablejs: 拖拽排序库
+  "sortablejs": "^1.15.0"
+  # @types/sortablejs: 类型定义
+  "@types/sortablejs": "^1.15.0"
+  # theme-colors: 主题色工具
+  "theme-colors": "^0.1.0"
+  # @ctrl/tinycolor: 颜色处理工具
+  "@ctrl/tinycolor": "^4.1.0"
+
+  # Node/脚手架与通用工具
+  # fs-extra: 文件系统扩展库
+  "fs-extra": "^11.3.1"
+  # @types/fs-extra: 类型定义
+  "@types/fs-extra": "^11.0.4"
+  # dotenv: 环境变量加载工具
+  "dotenv": "^17.2.0"
+  # cross-env: 跨平台设置环境变量
+  "cross-env": "^10.0.0"
+  # esno: TypeScript/ESM 运行工具
+  "esno": "^4.8.0"
+  # npm-run-all: 并行/串行运行 npm 脚本
+  "npm-run-all": "^4.1.5"
+  # shx: 跨平台 shell 工具
+  "shx": "^0.4.0"
+  # minimist: 命令行参数解析
   "minimist": "^1.2.5"
+  # @types/minimist: 类型定义
+  "@types/minimist": "^1.2.3"
+  # prompts: 命令行交互工具
   "prompts": "^2.4.2"
-  "unbuild": "^2.0.0"
-  "@larksuiteoapi/node-sdk": "^1.45.0"
-  "zod": "^3.24.2"
-  "@modelcontextprotocol/sdk": "^1.8.0"
-  "shx": "^0.3.4"
-  "dotenv": "^16.4.5"
+  # @types/prompts: 类型定义
+  "@types/prompts": "^2.4.6"
+  # kolorist: 终端颜色美化工具
+  "kolorist": "^1.8.0"
+  # express: Web 服务框架
   "express": "^5.0.1"
-  "@quantum-design-configs/eslint": "~2.0.0"
-  "@quantum-design-configs/tsconfig": "~2.0.0"
-  "@quantum-design-configs/commitlint": "~1.0.1"
-  "@quantum-design-configs/vite-sentry": "~2.0.0"
-  "@quantum-design-configs/vite": "~2.0.0"
-  "@quantum-design-configs/rollup": "~2.0.0"
-  "@quantum-design/hooks": "~2.0.0"
-  "@quantum-design/http": "~2.0.0"
-  "@quantum-design/shared": "~2.0.0"
-  "@quantum-design/styles": "~2.0.0"
-  "@quantum-design/types": "~2.0.0"
-  "@quantum-design/utils": "~2.0.0"
-  "@quantum-design/vue3-antd-pc-ui": "~2.0.0"
-  "@quantum-design/vue3-pc-ui": "~2.0.0"
-  "@quantum-design/vue3-antd-pc-ui-nuxt": "~2.0.0"
-  "@quantum-design/vue3-pc-ui-nuxt": "~2.0.0"
+
+  # AI/MCP/三方平台 SDK
+  # openai: OpenAI 官方 SDK
+  "openai": "^4.86.1"
+  # @modelcontextprotocol/sdk: MCP 协议 SDK
+  "@modelcontextprotocol/sdk": "^1.17.2"
+  # @larksuiteoapi/node-sdk: 飞书开放平台 SDK
+  "@larksuiteoapi/node-sdk": "^1.54.0"
+
+  # 客户端
+  # @tauri-apps/cli: Tauri CLI 工具
+  "@tauri-apps/cli": "^2"
+  # @tauri-apps/api: Tauri API
+  "@tauri-apps/api": "^2"
+  # @tauri-apps/plugin-fs: Tauri 文件系统插件
+  "@tauri-apps/plugin-fs": "~2"
+  # @tauri-apps/plugin-notification: Tauri 通知插件
+  "@tauri-apps/plugin-notification": "^2"
+  # @tauri-apps/plugin-opener: Tauri 外部打开插件
+  "@tauri-apps/plugin-opener": "^2"
+
+  # Tailwind/PostCSS
+  "@manypkg/get-packages": "^2.2.2"
+  "@tailwindcss/typography": "^0.5.16"
+  "autoprefixer": "^10.4.20"
+  "cssnano": "^7.0.6"
+  "postcss": "^8.5.3"
+  "postcss-antd-fixes": "^0.2.0"
+  "postcss-import": "^16.1.0"
+  "postcss-preset-env": "^10.1.5"
+  "tailwindcss": "^3.4.17"
+  "tailwindcss-animate": "^1.0.7"
+  "@types/postcss-import": "^14.0.3"
+
+
+  # 内部包
+  "@quantum-design-configs/eslint": "^3.0.0"
+  "@quantum-design-configs/tsconfig": "^3.0.0"
+  "@quantum-design-configs/prettier": "^3.0.0"
+  "@quantum-design-configs/commitlint": "^3.0.0"
+  "@quantum-design-configs/rollup": "^3.0.0"
+  "@quantum-design-configs/vite": "^3.0.0"
+  "@quantum-design-configs/sentry": "^3.0.0"
+  "@quantum-design/ai-hub": "^1.0.0"
+  "@quantum-design/shared": "^3.0.0"
+  "@quantum-design/utils": "^3.0.0"
+  "@quantum-design/types": "^3.0.0"
+  "@quantum-design/hooks": "^3.0.0"
+  "@quantum-design/http": "^3.0.0"
+  "@quantum-design/styles": "^3.0.0"
+  "@quantum-design/vue3-antd-pc-ui": "^3.0.0"
+  "@quantum-design/vue3-pc-ui": "^3.0.0"
+
+
+
+

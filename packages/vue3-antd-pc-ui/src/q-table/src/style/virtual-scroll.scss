@@ -1,0 +1,28 @@
+@use 'sass:meta';
+
+// 虚拟滚动样式
+.q-table {
+    // 启用虚拟滚动时的优化
+    &.virtual-enabled {
+        .ant-table-body {
+            // 性能优化
+            will-change: scroll-position;
+            contain: layout;
+            -webkit-overflow-scrolling: touch;
+
+            // 占位符样式
+            .placeholder-dom {
+                pointer-events: none;
+                opacity: 0;
+            }
+
+            // 表格内容样式
+            table {
+                will-change: transform;
+                contain: layout style;
+                z-index: 1;
+                position: relative;
+            }
+        }
+    }
+}

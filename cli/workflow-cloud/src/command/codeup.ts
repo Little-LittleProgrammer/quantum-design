@@ -67,7 +67,7 @@ export async function executeCodeup() {
             const res = await codeupInstance.createMergeRequest(options.gitConfig.sourceBranch!, description || '');
             consoleInfo('创建 mr 成功');
             if (res.code === 200) {
-                consoleInfo('MR创建成功！');
+                consoleInfo('MR创建成功！', res.data.detailUrl);
                 // TODO 调用飞书 api 发送消息, const feishuClient = new FeishuClient(options.feishuConfig);
                 // 调用飞书 api 创建云文档记录本次 mr(res.data.detailUrl， res.data.sourceBranch)
             } else {

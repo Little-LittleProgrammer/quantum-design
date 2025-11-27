@@ -53,23 +53,25 @@ class AppStackClient extends BaseClient {
         for (const workflow of workflowList) {
             const url = `${this.baseUrl}/appstack/organizations/${this.aliOrgId}/apps/${this.appStackName}/releaseWorkflows/${workflow.workflowSn}/releaseStages/${workflow.stageSn}:execute`;
             try {
-                promiseList.push(axios.post(
-                    url,
-                    {
-                        releaseWorkflowSn: workflow.workflowSn,
-                        releaseStageSn: workflow.stageSn,
-                        appStackName: this.appStackName,
-                        params: {
-                            FLOW_INST_RUNNING_COMMENT: '自动执行',
-                            APP_ENV: env,
-                            pipelineEnv: env,
-                            [formatRepoName(this.repoName)]: this.source,
+                promiseList.push(
+                    axios.post(
+                        url,
+                        {
+                            releaseWorkflowSn: workflow.workflowSn,
+                            releaseStageSn: workflow.stageSn,
+                            appStackName: this.appStackName,
+                            params: {
+                                FLOW_INST_RUNNING_COMMENT: '自动执行',
+                                APP_ENV: env,
+                                pipelineEnv: env,
+                                [formatRepoName(this.repoName)]: this.source,
+                            },
                         },
-                    },
-                    {
-                        headers: this.getAliHeaders,
-                    }
-                ));
+                        {
+                            headers: this.getAliHeaders,
+                        },
+                    ),
+                );
             } catch (error) {
                 console.error('Error executing app stack:', error);
             }

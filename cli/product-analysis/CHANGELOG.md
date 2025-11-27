@@ -1,53 +1,67 @@
 # qm-product-analysis
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [5a85942]
+    - @quantum-design/ai-hub@1.0.0
+
+## 0.0.4-beta.0
+
+### Patch Changes
+
+- Updated dependencies
+    - @quantum-design/ai-hub@1.0.0-beta.0
+
 ## 0.0.3
 
 ### Patch Changes
 
--   @quantum-design/ai-hub@0.0.3
+- @quantum-design/ai-hub@0.0.3
 
 ## 0.0.3-beta.0
 
 ### Patch Changes
 
--   @quantum-design/ai-hub@0.0.3-beta.0
+- @quantum-design/ai-hub@0.0.3-beta.0
 
 ## 0.0.2
 
 ### Patch Changes
 
--   371bf90: 修复 utils 缺陷
--   371bf90: 常规更新
--   Updated dependencies [371bf90]
--   Updated dependencies [371bf90]
-    -   @quantum-design/ai-hub@0.0.2
+- 371bf90: 修复 utils 缺陷
+- 371bf90: 常规更新
+- Updated dependencies [371bf90]
+- Updated dependencies [371bf90]
+    - @quantum-design/ai-hub@0.0.2
 
 ## 0.0.2-beta.3
 
 ### Patch Changes
 
--   修复 utils 缺陷
--   Updated dependencies
-    -   @quantum-design/ai-hub@0.0.2-beta.7
+- 修复 utils 缺陷
+- Updated dependencies
+    - @quantum-design/ai-hub@0.0.2-beta.7
 
 ## 0.0.2-beta.2
 
 ### Patch Changes
 
--   常规更新
--   Updated dependencies
-    -   @quantum-design/ai-hub@0.0.2-beta.6
+- 常规更新
+- Updated dependencies
+    - @quantum-design/ai-hub@0.0.2-beta.6
 
 ## 0.0.2-beta.1
 
 ### Patch Changes
 
--   @quantum-design/ai-hub@0.0.2-beta.5
+- @quantum-design/ai-hub@0.0.2-beta.5
 
 ## 0.0.2-beta.0
 
 ### Patch Changes
 
--   修复 ai 通讯缺陷
--   Updated dependencies
-    -   @quantum-design/ai-hub@0.0.2-beta.4
+- 修复 ai 通讯缺陷
+- Updated dependencies
+    - @quantum-design/ai-hub@0.0.2-beta.4

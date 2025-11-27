@@ -1,22 +1,7 @@
 {
     "name": "@quantum-design-configs/vite",
-    "version": "2.0.4",
+    "version": "3.0.0",
     "description": "`vite` 插件以及公共打包方法",
-    "type": "module",
-    "main": "dist/vite.esm.min.js",
-    "types": "dist/types/configs/vite/index.d.ts",
-    "files": [
-        "dist",
-        "README.md"
-    ],
-    "scripts": {
-        "build": "rollup -c --environment TYPES:true"
-    },
-    "author": "Evan Wu",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
     "keywords": [
         "quantum-configs",
         "monorepo",
@@ -24,26 +9,42 @@
         "turborepo"
     ],
     "license": "MIT",
-    "dependencies": {
-        "@quantum-design/utils": "workspace:*",
-        "@quantum-design/shared": "workspace:*",
-        "@quantum-design-configs/vite-sentry": "workspace:*",
+    "author": "Evan Wu",
+    "type": "module",
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "files": [
+        "README.md",
+        "dist"
+    ],
+    "main": "dist/vite.esm.min.js",
+    "types": "dist/types/configs/vite/index.d.ts",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "peerDependencies": {
         "@vitejs/plugin-vue": "catalog:",
         "@vitejs/plugin-vue-jsx": "catalog:",
-        "postcss-pxtorem": "catalog:",
         "unplugin-vue-components": "catalog:",
-        "vite-plugin-compression2": "catalog:",
+        "vite": "^6.0.5 || ^7.0.0",
         "vite-plugin-dts": "catalog:",
+        "vue": "^3.4.0"
+    },
+    "dependencies": {
+        "@quantum-design-configs/vite-sentry": "workspace:*",
+        "@quantum-design/shared": "workspace:*",
+        "@quantum-design/utils": "workspace:*",
+        "postcss-pxtorem": "catalog:",
+        "vite-plugin-compression2": "catalog:",
         "vite-plugin-pwa": "catalog:"
     },
     "devDependencies": {
-        "@sentry/vite-plugin": "catalog:",
         "@quantum-design-configs/rollup": "workspace:*",
+        "@sentry/vite-plugin": "catalog:",
         "@types/postcss-pxtorem": "catalog:",
+        "kolorist": "catalog:",
         "rollup": "catalog:"
-    },
-    "peerDependencies": {
-        "vite": "^6.0.5",
-        "vue": "^3.4.0"
     }
 }

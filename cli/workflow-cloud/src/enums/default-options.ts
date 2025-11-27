@@ -53,7 +53,7 @@ export interface ICliOptions {
     gitConfig: Partial<IGitConfig>;
     openaiConfig: Partial<IOpenaiConfig>;
     aliConfig: Partial<IAliConfig>;
-    feishuConfig: Partial<IFeishuConfig>
+    feishuConfig: Partial<IFeishuConfig>;
 }
 
 export const cliOptions: ICliOptions = {

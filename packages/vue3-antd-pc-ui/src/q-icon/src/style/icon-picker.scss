@@ -14,7 +14,7 @@
         height: 220px;
         overflow-x: hidden;
         border: 1px solid;
-        @include border-color(border-color);
+        border-color: var(--border-color-base);
         .table-row {
             display: flex;
             flex-wrap: wrap;
@@ -29,13 +29,12 @@
                 padding: 5px;
                 margin: 5px;
                 border: 1px solid;
-                @include border-color(border-color);
+                border-color: var(--border-color-base);
                 &.selected {
-                    border: 1px solid ;
-                    border-color: $primary-color;
+                    border: 1px solid;
+                    border-color: var(--primary-color);
                 }
             }
-
         }
     }
     .icon-pagination {

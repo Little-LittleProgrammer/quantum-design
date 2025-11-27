@@ -3,7 +3,13 @@
     <div class="q-code-editor">
         <Teleport to="body" :disabled="!fullScreen">
             <div class="q-code-editor-wrapper" :class="`${fullScreen ? 'full-screen' : ''}`">
-                <svg v-if="!fullScreen" t="1701256882326" class="code-edit-full-screen-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2319" width="200" height="200" @click="full_screen_handler"><path d="M344 64H120c-30.9 0-56 25.1-56 56v224c0 30.9 25.1 56 56 56s56-25.1 56-56V175.9l168 0.1c30.9 0 56-25.1 56-56s-25.1-56-56-56zM344 848l-168 0.1V680c0-30.9-25.1-56-56-56s-56 25.1-56 56v224c0 30.9 25.1 56 56 56h224c30.9 0 56-25.1 56-56s-25.1-56-56-56zM904 624c-30.9 0-56 25.1-56 56l0.1 168H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h224c30.9 0 56-25.1 56-56V680c0-30.9-25.1-56-56-56zM904 64H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h168.1l-0.1 168c0 30.9 25.1 56 56 56s56-25.1 56-56V120c0-30.9-25.1-56-56-56z" fill="#8a8a8a" p-id="2320"></path></svg>
+                <svg v-if="!fullScreen" t="1701256882326" class="code-edit-full-screen-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2319" width="200" height="200" @click="full_screen_handler">
+                    <path
+                        d="M344 64H120c-30.9 0-56 25.1-56 56v224c0 30.9 25.1 56 56 56s56-25.1 56-56V175.9l168 0.1c30.9 0 56-25.1 56-56s-25.1-56-56-56zM344 848l-168 0.1V680c0-30.9-25.1-56-56-56s-56 25.1-56 56v224c0 30.9 25.1 56 56 56h224c30.9 0 56-25.1 56-56s-25.1-56-56-56zM904 624c-30.9 0-56 25.1-56 56l0.1 168H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h224c30.9 0 56-25.1 56-56V680c0-30.9-25.1-56-56-56zM904 64H680c-30.9 0-56 25.1-56 56s25.1 56 56 56h168.1l-0.1 168c0 30.9 25.1 56 56 56s56-25.1 56-56V120c0-30.9-25.1-56-56-56z"
+                        fill="#8a8a8a"
+                        p-id="2320"
+                    ></path>
+                </svg>
                 <svg v-if="fullScreen" t="1701256780086" class="code-edit-full-screen-button" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4736" width="200" height="200" @click="full_screen_handler"><path d="M358.4 921.6h-76.8v-179.2H102.4v-76.8h256v256z m307.2 0h76.8v-179.2h179.2v-76.8H665.6v256z m25.6-844.8h76.8v179.2h179.2v76.8H691.2V76.8zM332.8 76.8h-76.8v179.2H76.8v76.8h256V76.8z" p-id="4737" fill="#8a8a8a"></path></svg>
                 <div ref="codeEditor" class="q-code-editor-content"></div>
             </div>
@@ -11,15 +17,34 @@
     </div>
 </template>
 
-<script lang='ts' setup>
+<script lang="ts" setup>
 import { onUnmounted, ref, watch } from 'vue';
 // import * as monaco from 'monaco-editor'
-import {serializeToString} from '@quantum-design/utils';
+import { serializeToString } from '@quantum-design/utils';
 defineOptions({
-    name: 'code-editor'
+    name: 'CodeEditor',
 });
 
-type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T
+const props = withDefaults(
+    defineProps<{
+        value?: any;
+        language?: string;
+        autoSave?: boolean;
+        options?: {
+            [key: string]: any;
+        };
+        parse?: <T = any>(schemas: string, language: string) => T;
+    }>(),
+    {
+        value: '',
+        autoSave: true,
+        language: 'typescript',
+    },
+);
+
+const emit = defineEmits(['initd', 'save', 'change', 'blur']);
+
+type UnwrapPromise<T> = T extends () => Promise<infer U> ? U : T;
 
 let monaco: any = null;
 async function loadMonacoEditor() {
@@ -36,24 +61,7 @@ async function loadMonacoEditor() {
     }
 }
 loadMonacoEditor();
-const props = withDefaults(
-    defineProps<{
-        value?:any
-        language?: string;
-        autoSave?: boolean;
-        options?: {
-            [key: string]: any;
-        },
-        parse?: <T = any>(schemas: string, language:string) => T
-    }>(), {
-        value: '',
-        autoSave: true,
-        language: 'typescript'
-    }
-);
-const emit = defineEmits(['initd', 'save', 'change', 'blur']);
-
-type Momonaco = UnwrapPromise<typeof monaco>['editor']['create'] extends (...args: any) => infer T ? T : any
+type Momonaco = UnwrapPromise<typeof monaco>['editor']['create'] extends (...args: any) => infer T ? T : any;
 
 let vsEditor: Momonaco | null = null;
 const codeEditor = ref<HTMLDivElement>();
@@ -89,8 +97,8 @@ watch(
     },
     {
         deep: true,
-        immediate: true
-    }
+        immediate: true,
+    },
 );
 
 async function init_editor() {
@@ -100,7 +108,7 @@ async function init_editor() {
         value: values.value,
         language: props.language,
         theme: 'vs-dark',
-        ...props.options
+        ...props.options,
     };
 
     try {
@@ -135,6 +143,7 @@ async function init_editor() {
         }
         resizeObserver.observe(codeEditor.value);
     } catch (error) {
+        console.log('error', error);
     }
 }
 
@@ -155,7 +164,7 @@ function to_string(v: string | any, language: string = props.language.toLocaleLo
     return value;
 }
 
-function set_editor_value(value: string | any){
+function set_editor_value(value: string | any) {
     const lang = props.language.toLocaleLowerCase();
     values.value = to_string(value, lang);
 
@@ -182,11 +191,10 @@ defineExpose({
 
     focus() {
         vsEditor?.focus();
-    }
+    },
 });
-
 </script>
-<style lang='scss'>
+<style lang="scss">
 .q-code-editor {
     width: 100%;
 }
@@ -214,5 +222,4 @@ defineExpose({
         height: 100%;
     }
 }
-
 </style>

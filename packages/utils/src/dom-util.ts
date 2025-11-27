@@ -19,13 +19,13 @@ export interface ViewportOffsetResult {
  * ```
  */
 
-export function js_utils_css(dom:HTMLElement, key: string | Partial<CSSStyleDeclaration>, value?:string) {
+export function js_utils_css(dom: HTMLElement, key: string | Partial<CSSStyleDeclaration>, value?: string) {
     // 判读 key是对象还是字符串
     if (typeof key === 'string' && value) {
         dom.style[key as never] = value;
     } else {
         // 遍历
-        for (const name in (key as CSSStyleDeclaration)) {
+        for (const name in key as CSSStyleDeclaration) {
             // name表示属性名称， key[name]表示属性值
             js_utils_css(dom, name, key[name]);
         }
@@ -40,7 +40,7 @@ export function js_utils_dom_offset(dom: Element & HTMLElement) {
     // 获取当前元素的定位值
     const result = {
         left: dom.offsetLeft,
-        top: dom.offsetTop
+        top: dom.offsetTop,
     };
     // 依次遍历每一个元素的定位元素，直到body
     while (dom !== document.body && dom.offsetParent !== null) {
@@ -62,12 +62,12 @@ export function js_utils_dom_offset(dom: Element & HTMLElement) {
     return {
         ...result,
         rightIncludeBody: clientWidth - result.left,
-        bottomIncludeBody: clientHeight - result.top
+        bottomIncludeBody: clientHeight - result.top,
     };
 }
 
 export function js_utils_trim(string: string) {
-    return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
+    return (string || '').replace(/^\s+|\s+$/g, '');
 }
 
 /* istanbul ignore next */
@@ -129,31 +129,21 @@ export function js_utils_dom_remove_class(el: Element, cls: string) {
 }
 
 /* istanbul ignore next */
-export function on(
-    element: Element | HTMLElement | Document | Window,
-    event: string,
-    handler: EventListener | EventListenerObject,
-    options?: AddEventListenerOptions
-): void {
+export function on(element: Element | HTMLElement | Document | Window, event: string, handler: EventListener | EventListenerObject, options?: AddEventListenerOptions): void {
     if (element && event && handler) {
         element.addEventListener(event, handler, {
             passive: true,
-            ...(options || {})
+            ...(options || {}),
         });
     }
 }
 
 /* istanbul ignore next */
-export function off(
-    element: Element | HTMLElement | Document | Window,
-    event: string,
-    handler: EventListener | EventListenerObject,
-    options?: AddEventListenerOptions
-): void {
+export function off(element: Element | HTMLElement | Document | Window, event: string, handler: EventListener | EventListenerObject, options?: AddEventListenerOptions): void {
     if (element && event && handler) {
         element.removeEventListener(event, handler, {
             passive: true,
-            ...(options || {})
+            ...(options || {}),
         });
     }
 }
@@ -161,7 +151,7 @@ export function off(
 export interface ICanvasOption {
     width?: number;
     height?: number;
-    style?: CSSStyleDeclaration
+    style?: CSSStyleDeclaration;
 }
 /**
  * 将html代码转化为图片
@@ -169,20 +159,22 @@ export interface ICanvasOption {
  * @param {*} options 配置  宽高：width， height， canvas样式：style
  * @description
  */
-export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, options:ICanvasOption) {
+export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, options: ICanvasOption) {
     const _reqOptions: Required<ICanvasOption> = Object.assign({ width: 100, height: 100, style: {} }, options); // 默认样式
     const $canvas = document.createElement('canvas');
     $canvas.id = 'canvas';
     $canvas.width = _reqOptions.width;
     $canvas.height = _reqOptions.height;
-    if (JSON.stringify(_reqOptions.style) !== '{}') { // 配置canvas的样式
+    if (JSON.stringify(_reqOptions.style) !== '{}') {
+        // 配置canvas的样式
         for (const key in _reqOptions.style) {
             js_utils_css($canvas, `${key}`, `${_reqOptions.style[key]}`);
         }
     }
     const ctx = $canvas.getContext('2d')!;
 
-    async function init_main() { // 主方法
+    async function init_main() {
+        // 主方法
         const data = await get_svg_dom_string(dom as HTMLImageElement);
         // const DOMURL = window.URL || window.webkitURL || window;
         const img = new Image();
@@ -192,7 +184,8 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
         // img.setAttribute('crossOrigin', 'anonymous');
         // img.src = url;
         return new Promise<HTMLCanvasElement>((resolve) => {
-            img.onload = function() { // 最终生成的canvas
+            img.onload = function () {
+                // 最终生成的canvas
                 ctx.drawImage(img, 0, 0);
                 // const parentNode = dom.parentNode;
                 // parentNode.insertBefore($canvas, dom); // 将canvas插入原来的位置
@@ -202,7 +195,8 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
         });
     }
 
-    async function get_svg_dom_string(element: HTMLElement & HTMLImageElement) { // 将html代码嵌入svg
+    async function get_svg_dom_string(element: HTMLElement & HTMLImageElement) {
+        // 将html代码嵌入svg
         const $dom = await render_dom(element, true);
         return `
                     <svg xmlns="http://www.w3.org/2000/svg" width = "${_reqOptions.width}" height = "${_reqOptions.height}">
@@ -213,16 +207,19 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
                 `;
     }
 
-    async function render_dom(element: HTMLElement & HTMLImageElement, isTop?: boolean) { // 递归调用获取子标签
+    async function render_dom(element: HTMLElement & HTMLImageElement, isTop?: boolean) {
+        // 递归调用获取子标签
         const tag = element.tagName.toLowerCase();
         let _str = `<${tag} `;
         let _flag = true;
         // 最外层的节点要加xmlns命名空间
         isTop && (_str += `xmlns="http://www.w3.org/1999/xhtml" `);
-        if (_str === '<img ') { // img标签特殊处理
+        if (_str === '<img ') {
+            // img标签特殊处理
             _flag = false;
             let base64Img = '';
-            if (element.src.indexOf('base64')) { // 判断src属性是不是base64， 是的话不用处理，不是的话，转换base64
+            if (element.src.indexOf('base64')) {
+                // 判断src属性是不是base64， 是的话不用处理，不是的话，转换base64
                 base64Img = element.src;
             } else {
                 base64Img = await get_base64_image(element.src);
@@ -235,7 +232,7 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
             _str += `style="${get_element_styles(element)}">\n`;
         }
         if (element.children.length) {
-            for (const el of (element.children as unknown as (HTMLElement & HTMLImageElement)[])) {
+            for (const el of element.children as unknown as (HTMLElement & HTMLImageElement)[]) {
                 _str += await render_dom(el);
             }
         } else {
@@ -247,13 +244,14 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
         return _str;
     }
 
-    function get_element_styles(element: HTMLElement & HTMLImageElement) { // 获取标签的所有样式
+    function get_element_styles(element: HTMLElement & HTMLImageElement) {
+        // 获取标签的所有样式
         let _css: Partial<CSSStyleDeclaration> = {};
         // 能力检测
         _css = window.getComputedStyle(element);
 
         let _style = '';
-        Object.keys(_css).forEach(key => {
+        Object.keys(_css).forEach((key) => {
             // 排除无用样式
             if (!Number.isNaN(+key)) {
                 const _realKey = _css[key as unknown as number];
@@ -271,14 +269,15 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
             }
         });
         // 将字符串里的双引号变成单引号，防止赋值style的时候造成混乱
-        return _style.replace(/\"/g, '\'');
+        return _style.replace(/"/g, "'");
     }
 
-    function get_base64_image(img: string) { // 获取图片的base64
+    function get_base64_image(img: string) {
+        // 获取图片的base64
         const _image = new Image();
         _image.src = img;
-        return new Promise<string>(resolve => {
-            _image.onload = function() {
+        return new Promise<string>((resolve) => {
+            _image.onload = function () {
                 const $canvas = document.createElement('canvas');
                 $canvas.id = 'image';
                 $canvas.width = _image.width;
@@ -295,17 +294,27 @@ export function js_utils_html_to_canvas(dom: HTMLElement | HTMLImageElement, opt
     return init_main();
 }
 
-export function js_utils_copy_code(str: string) {
-    const $input = document.createElement('textarea');
-    document.body.appendChild($input);
-    $input.value = str; // 修改文本框的内容
-    $input.select(); // 选中文本
-    if (document.execCommand('copy')) {
-        document.execCommand('copy');
-        document.body.removeChild($input);
-        return true;
-    } else {
-        document.body.removeChild($input);
+export async function js_utils_copy_code(str: string) {
+    try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(str);
+            return true;
+        } else {
+            const $input = document.createElement('textarea');
+            document.body.appendChild($input);
+            $input.value = str; // 修改文本框的内容
+            $input.select(); // 选中文本
+            if (document.execCommand('copy')) {
+                document.execCommand('copy');
+                document.body.removeChild($input);
+                return true;
+            } else {
+                document.body.removeChild($input);
+                return false;
+            }
+        }
+    } catch (err) {
+        console.error('Failed to copy: ', err);
         return false;
     }
 }
@@ -321,16 +330,16 @@ export function js_utils_copy_code(str: string) {
  * console.log(width, height);
  * ```
  */
-export function js_utils_get_image_size(src: string): Promise<{width: number, height: number}> {
+export function js_utils_get_image_size(src: string): Promise<{ width: number; height: number }> {
     return new Promise((resolve, reject) => {
         const img = new Image();
-        img.onload = function() {
+        img.onload = function () {
             resolve({
                 width: img.width,
-                height: img.height
+                height: img.height,
             });
         };
-        img.onerror = function() {
+        img.onerror = function () {
             reject(new Error('加载图片失败'));
         };
         // 处理跨域问题
@@ -415,4 +424,30 @@ export function js_utils_base64_to_blob(base64: string, fileName?: string, mimeT
     }
 
     return blob;
+}
+
+export function js_utils_update_css_variables(variables: Record<string, string>, id: string = '__quantum-design-styles__') {
+    // 获取或创建内联样式表元素
+    const styleElement = document.querySelector(`#${id}`) || document.createElement('style');
+
+    styleElement.id = id;
+
+    // 构建要更新的 CSS 变量的样式文本
+    let cssText = ':root {';
+    for (const key in variables) {
+        if (Object.prototype.hasOwnProperty.call(variables, key)) {
+            cssText += `${key}: ${variables[key]};`;
+        }
+    }
+    cssText += '}';
+
+    // 将样式文本赋值给内联样式表
+    styleElement.textContent = cssText;
+
+    // 将内联样式表添加到文档头部
+    if (!document.querySelector(`#${id}`)) {
+        setTimeout(() => {
+            document.head.append(styleElement);
+        });
+    }
 }

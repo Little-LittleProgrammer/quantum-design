@@ -112,7 +112,7 @@ export class Hunk {
                 totalTokens += subWords.length;
 
                 // 特殊字符和运算符各算一个token
-                totalTokens += (word.match(/[!@#$%^&*()+=\-\[\]{};:'"\\|,.<>?/]/g) || []).length;
+                totalTokens += (word.match(/[!@#$%^&*()+=\-[\]{};:'"\\|,.<>?/]/g) || []).length;
             }
 
             totalTokens += 1; // 行基础开销
@@ -271,7 +271,7 @@ export class PRCompressor {
         /\.woff2$/, // 字体
         /\.eot$/, // 字体
         /\.otf$/, // 字体
-        /\.ttf$/ // 字体
+        /\.ttf$/, // 字体
     ];
 
     constructor(compareResult: CompareResult, maxTokens: number) {
@@ -320,7 +320,7 @@ export class PRCompressor {
 
     // 添加新的方法来检查文件是否应该被排除
     private shouldExcludeFile(fileName: string): boolean {
-        return PRCompressor.EXCLUDED_PATTERNS.some(pattern => pattern.test(fileName));
+        return PRCompressor.EXCLUDED_PATTERNS.some((pattern) => pattern.test(fileName));
     }
 
     // 按文件名分组, 并按照文件的token数量排序， 确保高token的文件排在前面

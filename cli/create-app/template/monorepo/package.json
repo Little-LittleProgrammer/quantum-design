@@ -1,37 +1,57 @@
 {
     "name": "qm-monorepo",
     "private": true,
+    "type": "module",
     "scripts": {
         "build": "turbo run build",
         "build:lib": "turbo run build:lib",
         "dev": "turbo run dev",
-        "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "lint": "pnpm dlx oxlint && eslint",
+        "test": "turbo run test",
+        "test:coverage": "turbo run test:coverage",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "commit": "czg",
+        "prepare": "husky"
     },
     "devDependencies": {
-        "eslint": "catalog:",
-        "lint-staged": "catalog:",
-        "typescript": "catalog:",
+        "@quantum-design-configs/commitlint": "catalog:",
         "@quantum-design-configs/eslint": "catalog:",
+        "@quantum-design-configs/prettier": "catalog:",
+        "@quantum-design-configs/tailwind": "catalog:",
         "@quantum-design-configs/tsconfig": "catalog:",
-        "turbo": "latest",
-        "vite": "catalog:",
+        "@types/node": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitejs/plugin-vue-jsx": "catalog:",
+        "@vitest/ui": "catalog:",
+        "husky": "catalog:",
+        "jsdom": "catalog:",
+        "lint-staged": "catalog:",
         "tslib": "catalog:",
-        "@types/node": "catalog:"
+        "turbo": "catalog:",
+        "typescript": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:"
     },
-    "packageManager": "pnpm@9.15.7",
     "engines": {
-        "npm": ">=8.0.0",
-        "node": ">=18.0.0"
+        "npm": ">=9.0.0",
+        "node": ">=20.19.0"
+    },
+    "packageManager": "pnpm@10.13.1",
+    "volta": {
+        "node": "20.19.4",
+        "pnpm": "10.13.1"
     },
     "pnpm": {
+        "peerDependencyRules": {
+            "allowedVersions": {
+                "eslint": "*",
+                "oxlint": "*"
+            }
+        },
         "overrides": {
             "eslint": "catalog:",
-            "@sentry/cli": "catalog:"
+            "typescript": "catalog:",
+            "vite": "catalog:"
         }
-    },
-    "volta": {
-        "node": "18.18.2",
-        "pnpm": "9.15.7"
     }
 }

@@ -1,13 +1,13 @@
 // 生成 uuid
 export function generateUUID(len: number, radix?: number) {
     const _chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-    const _uuid:string[] = [];
+    const _uuid: string[] = [];
     let i;
     radix = radix || _chars.length;
 
     if (len) {
         // Compact form
-        for (i = 0; i < len; i++) _uuid[i] = _chars[0 | Math.random() * radix];
+        for (i = 0; i < len; i++) _uuid[i] = _chars[0 | (Math.random() * radix)];
     } else {
         // rfc4122, version 4 form
         let r;
@@ -20,8 +20,8 @@ export function generateUUID(len: number, radix?: number) {
         // per rfc4122, sec. 4.1.5
         for (i = 0; i < 36; i++) {
             if (!_uuid[i]) {
-                r = 0 | Math.random() * 16;
-                _uuid[i] = _chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                r = 0 | (Math.random() * 16);
+                _uuid[i] = _chars[i == 19 ? (r & 0x3) | 0x8 : r];
             }
         }
     }
@@ -44,7 +44,7 @@ export function formatErrorMessage(error: any): string {
         return error;
     } else if (error && typeof error === 'object') {
         try {
-        // 处理包含apiError字段的FeishuError对象
+            // 处理包含apiError字段的FeishuError对象
             if (error.apiError) {
                 const apiError = error.apiError;
                 let errorMsg = '';
@@ -146,9 +146,9 @@ export function formatErrorMessage(error: any): string {
             }
 
             // 如果上述都不符合，尝试将整个对象序列化（但移除敏感信息）
-            const safeError = { ...error, };
+            const safeError = { ...error };
             // 移除可能的敏感信息
-            ['token', 'secret', 'password', 'key', 'credentials'].forEach(key => {
+            ['token', 'secret', 'password', 'key', 'credentials'].forEach((key) => {
                 if (key in safeError) delete safeError[key];
             });
             return `发生错误: ${JSON.stringify(safeError)}`;

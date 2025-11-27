@@ -4,15 +4,31 @@ import { isWindow } from './is';
  * IndexedDB 操作结果接口
  * @interface IIndexedDBRes
  */
-interface IIndexedDBRes {
+interface IIndexedDBRes<T = any> {
     /** 状态码 */
     code: number;
     /** 返回的数据 */
-    data?: any;
+    data?: T;
     /** 错误信息 */
-    error?: ChangeEvent;
+    error?: Error | Event | DOMException;
     /** 提示信息 */
     msg?: string;
+}
+
+/**
+ * 存储的数据项接口
+ */
+interface IStoredItem<T = any> {
+    /** 自增 ID */
+    id?: number;
+    /** 用户定义的键 */
+    key: string | number | symbol;
+    /** 存储的值 */
+    value: T;
+    /** 创建时间 */
+    createdAt?: number;
+    /** 更新时间 */
+    updatedAt?: number;
 }
 
 /**
@@ -20,15 +36,18 @@ interface IIndexedDBRes {
  * @enum ErrorCode
  */
 enum ErrorCode {
+    // 成功
+    success = 200,
     // 错误码
-    success = 200, // 成功
     error = 401, // key不存在
-    open = 91001, // 打开数据库失败的错误
-    save = 91002, // 保存数据失败的错误
-    get = 91003, // 获取数据失败的错误
-    delete = 91004, // 删除数据失败的错误
-    deleteAll = 91005, // 清空数据库失败的错误
+    open = 91001, // 打开数据库失败
+    save = 91002, // 保存数据失败
+    get = 91003, // 获取数据失败
+    delete = 91004, // 删除数据失败
+    deleteAll = 91005, // 清空数据库失败
     storeNotFound = 91006, // 对象存储不存在
+    notSupported = 91007, // IndexedDB 不受支持
+    transactionError = 91008, // 事务错误
 }
 
 /**
@@ -38,6 +57,15 @@ interface DBCache {
     db: IDBDatabase;
     version: number;
     stores: Set<string>;
+}
+
+/**
+ * 操作队列项
+ */
+interface QueueItem {
+    operation: () => Promise<any>;
+    resolve: (value: any) => void;
+    reject: (reason?: any) => void;
 }
 
 /**
@@ -58,6 +86,10 @@ export class IndexedDB {
     public readonly storeName: string;
     /** 预定义的表列表 */
     private static storeSchemas = new Map<string, Set<string>>();
+    /** 操作队列，用于串行化操作避免并发冲突 */
+    private operationQueue: QueueItem[] = [];
+    /** 是否正在处理队列 */
+    private isProcessingQueue = false;
 
     /**
      * 构造函数
@@ -75,33 +107,73 @@ export class IndexedDB {
         if (!IndexedDB.storeSchemas.has(dbName)) {
             IndexedDB.storeSchemas.set(dbName, new Set());
         }
-        IndexedDB.storeSchemas.get(dbName)!.add(storeName);
+        const schema = IndexedDB.storeSchemas.get(dbName);
+        if (schema) {
+            schema.add(storeName);
+        }
+    }
+
+    /**
+     * 将操作加入队列
+     * @private
+     */
+    private enqueueOperation<T>(operation: () => Promise<T>): Promise<T> {
+        return new Promise((resolve, reject) => {
+            this.operationQueue.push({ operation, resolve, reject });
+            this.processQueue();
+        });
+    }
+
+    /**
+     * 处理操作队列
+     * @private
+     */
+    private async processQueue(): Promise<void> {
+        if (this.isProcessingQueue || this.operationQueue.length === 0) {
+            return;
+        }
+
+        this.isProcessingQueue = true;
+
+        while (this.operationQueue.length > 0) {
+            const item = this.operationQueue.shift();
+            if (!item) break;
+
+            try {
+                const result = await item.operation();
+                item.resolve(result);
+            } catch (error) {
+                item.reject(error);
+            }
+        }
+
+        this.isProcessingQueue = false;
     }
 
     /**
      * 获取对象存储（表）
      * @private
-     * @returns {IDBObjectStore | null} 对象存储实例
+     * @param mode 事务模式，默认为 'readwrite'
+     * @returns {Promise<IDBObjectStore>} 对象存储实例
      */
-    private _getStore(): IDBObjectStore | null {
+    private async _getStore(mode: IDBTransactionMode = 'readwrite'): Promise<IDBObjectStore> {
         const cache = IndexedDB.dbCacheMap.get(this.dbName);
-        if (!cache || !this.indexedDB) {
-            return null;
+
+        if (!cache) {
+            throw new Error(`数据库 "${this.dbName}" 未打开`);
         }
 
-        try {
-            // 检查表是否存在
-            if (!cache.db.objectStoreNames.contains(this.storeName)) {
-                console.error(`对象存储 "${this.storeName}" 在数据库 "${this.dbName}" 中不存在`);
-                return null;
-            }
-
-            const transaction = cache.db.transaction(this.storeName, 'readwrite');
-            return transaction.objectStore(this.storeName);
-        } catch (error) {
-            console.error('获取对象存储失败:', error);
-            return null;
+        if (!this.indexedDB) {
+            throw new Error('IndexedDB 不受支持');
         }
+
+        // 检查表是否存在
+        if (!cache.db.objectStoreNames.contains(this.storeName)) {
+            throw new Error(`对象存储 "${this.storeName}" 在数据库 "${this.dbName}" 中不存在`);
+        }
+
+        const transaction = cache.db.transaction(this.storeName, mode);
+        return transaction.objectStore(this.storeName);
     }
 
     /**
@@ -136,112 +208,132 @@ export class IndexedDB {
     /**
      * 打开数据库
      * @private
-     * @param callback 回调函数，接收创建的存储或错误信息
+     * @returns {Promise<IDBDatabase>} 数据库实例
      */
-    private _open(callback: Fn) {
-        if (!this.indexedDB) {
-            callback({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
-            return;
-        }
+    private _open(): Promise<IDBDatabase> {
+        return new Promise((resolve, reject) => {
+            if (!this.indexedDB) {
+                reject({
+                    code: ErrorCode.notSupported,
+                    error: new Error('IndexedDB 不受支持'),
+                    msg: 'IndexedDB 不受支持',
+                });
+                return;
+            }
 
-        const cache = IndexedDB.dbCacheMap.get(this.dbName);
+            const cache = IndexedDB.dbCacheMap.get(this.dbName);
 
-        if (cache) {
-            // 检查表是否存在
-            if (cache.db.objectStoreNames.contains(this.storeName)) {
-                const store = this._getStore();
-                if (store) {
-                    callback(store);
-                    return;
-                } else {
-                    callback({ code: ErrorCode.storeNotFound, error: new Error(`对象存储 "${this.storeName}" 不存在`), msg: `对象存储 "${this.storeName}" 不存在` });
+            // 如果缓存存在且表也存在，直接返回
+            if (cache && cache.db.objectStoreNames.contains(this.storeName)) {
+                resolve(cache.db);
+                return;
+            }
+
+            // 如果缓存存在但表不存在，需要升级数据库
+            if (cache) {
+                cache.db.close();
+                IndexedDB.dbCacheMap.delete(this.dbName);
+            }
+
+            // 检查并确定需要的版本号
+            const targetVersion = this._checkAndUpgradeVersion();
+            const request = this.indexedDB.open(this.dbName, targetVersion);
+
+            // 打开数据库失败
+            request.onerror = () => {
+                reject({
+                    code: ErrorCode.open,
+                    error: request.error,
+                    msg: '打开数据库失败',
+                });
+            };
+
+            // 打开数据库成功
+            request.onsuccess = () => {
+                const db = request.result;
+                if (!db) {
+                    reject({
+                        code: ErrorCode.open,
+                        error: new Error('数据库连接失败'),
+                        msg: '数据库连接失败',
+                    });
                     return;
                 }
-            } else {
-                // 表不存在，需要升级数据库
-                cache.db.close(); // 关闭当前连接
-                IndexedDB.dbCacheMap.delete(this.dbName); // 清除缓存
-            }
-        }
 
-        // 检查并确定需要的版本号
-        const targetVersion = this._checkAndUpgradeVersion();
-        const request = this.indexedDB.open(this.dbName, targetVersion);
-
-        // 打开数据库失败时的回调
-        request.onerror = (e) => {
-            callback({ code: ErrorCode.open, error: e, msg: '打开数据库失败' });
-        };
-
-        // 打开数据库成功时的回调
-        request.onsuccess = (e) => {
-            const db = (e.target as any)?.result as IDBDatabase;
-            if (!db) {
-                callback({ code: ErrorCode.open, error: new Error('数据库连接失败'), msg: '数据库连接失败' });
-                return;
-            }
-
-            // 更新缓存
-            const stores = new Set<string>();
-            for (let i = 0; i < db.objectStoreNames.length; i++) {
-                stores.add(db.objectStoreNames[i]);
-            }
-
-            IndexedDB.dbCacheMap.set(this.dbName, {
-                db,
-                version: targetVersion,
-                stores
-            });
-
-            // 获取对象存储
-            const store = this._getStore();
-            if (store) {
-                callback(store);
-            } else {
-                callback({ code: ErrorCode.storeNotFound, error: new Error(`对象存储 "${this.storeName}" 不存在`), msg: `对象存储 "${this.storeName}" 不存在` });
-            }
-        };
-
-        // 数据库版本升级时的回调
-        request.onupgradeneeded = (e) => {
-            const db = (e.target as any)?.result as IDBDatabase;
-            if (!db) {
-                callback({ code: ErrorCode.open, error: new Error('数据库升级失败'), msg: '数据库升级失败' });
-                return;
-            }
-
-            // 获取当前数据库需要的所有表
-            const requiredStores = IndexedDB.storeSchemas.get(this.dbName) || new Set();
-
-            // 创建所有需要但不存在的表
-            for (const storeName of requiredStores) {
-                if (!db.objectStoreNames.contains(storeName)) {
-                    try {
-                        console.log(`创建对象存储: ${storeName}`);
-                        const store = db.createObjectStore(storeName, {
-                            keyPath: 'id',
-                            autoIncrement: true
-                        });
-                        // 创建索引，用于按 key 查询
-                        store.createIndex('key', 'key', { unique: false });
-                    } catch (error) {
-                        console.error(`创建对象存储 ${storeName} 失败:`, error);
+                // 更新缓存
+                const stores = new Set<string>();
+                for (let i = 0; i < db.objectStoreNames.length; i++) {
+                    const storeName = db.objectStoreNames[i];
+                    if (storeName) {
+                        stores.add(storeName);
                     }
                 }
-            }
 
-            // 由于在 onupgradeneeded 中，事务是自动的，我们直接获取当前存储
-            try {
-                const store = request.transaction?.objectStore(this.storeName);
-                if (store) {
-                    callback(store);
-                } else {
-                    callback({ code: ErrorCode.storeNotFound, error: new Error(`无法获取对象存储 "${this.storeName}"`), msg: `无法获取对象存储 "${this.storeName}"` });
+                IndexedDB.dbCacheMap.set(this.dbName, {
+                    db,
+                    version: targetVersion,
+                    stores,
+                });
+
+                // 验证表是否存在
+                if (!db.objectStoreNames.contains(this.storeName)) {
+                    reject({
+                        code: ErrorCode.storeNotFound,
+                        error: new Error(`对象存储 "${this.storeName}" 不存在`),
+                        msg: `对象存储 "${this.storeName}" 不存在`,
+                    });
+                    return;
                 }
-            } catch (error) {
-                callback({ code: ErrorCode.storeNotFound, error, msg: `获取对象存储失败: ${error}` });
-            }
-        };
+
+                resolve(db);
+            };
+
+            // 数据库版本升级
+            request.onupgradeneeded = () => {
+                const db = request.result;
+                if (!db) {
+                    reject({
+                        code: ErrorCode.open,
+                        error: new Error('数据库升级失败'),
+                        msg: '数据库升级失败',
+                    });
+                    return;
+                }
+
+                // 获取当前数据库需要的所有表
+                const requiredStores = IndexedDB.storeSchemas.get(this.dbName) || new Set();
+
+                // 创建所有需要但不存在的表
+                for (const storeName of requiredStores) {
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        try {
+                            console.log(`创建对象存储: ${storeName}`);
+                            const store = db.createObjectStore(storeName, {
+                                keyPath: 'id',
+                                autoIncrement: true,
+                            });
+                            // 创建索引，用于按 key 查询
+                            store.createIndex('key', 'key', { unique: false });
+                            // 创建时间索引
+                            store.createIndex('createdAt', 'createdAt', { unique: false });
+                            store.createIndex('updatedAt', 'updatedAt', { unique: false });
+                        } catch (error) {
+                            console.error(`创建对象存储 ${storeName} 失败:`, error);
+                        }
+                    }
+                }
+            };
+        });
+    }
+
+    /**
+     * 执行数据库操作的通用方法
+     * @private
+     */
+    private async _executeOperation<T>(operation: (store: IDBObjectStore) => Promise<T>, mode: IDBTransactionMode = 'readwrite'): Promise<T> {
+        await this._open();
+        const store = await this._getStore(mode);
+        return operation(store);
     }
 
     /**
@@ -251,62 +343,88 @@ export class IndexedDB {
      * @param value 值
      * @returns {Promise<IIndexedDBRes>} 操作结果
      */
-    set(key: string|number|symbol, value: any): Promise<IIndexedDBRes> | undefined {
+    set<T = any>(key: string | number | symbol, value: T): Promise<IIndexedDBRes> {
         if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
         }
 
-        return new Promise((resolve, reject) => {
-            // 先检查 key 是否存在
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    // 使用索引查询是否存在
+                    const index = store.index('key');
+                    const getRequest = index.get(IDBKeyRange.only(key as any));
 
-                try {
-                    const _request = result.index('key').openCursor();
-                    let _keyExists = false;
+                    getRequest.onsuccess = () => {
+                        const existingItem = getRequest.result as IStoredItem<T> | undefined;
+                        const now = Date.now();
 
-                    _request.onsuccess = (e: any) => {
-                        const _cursor = e.target.result;
-                        if (_cursor) {
-                            if (_cursor.value.key === key) {
-                                _keyExists = true;
-                                // key 存在，调用 update 方法更新
-                                this.update(key, { value })?.then((res) => {
-                                    resolve(res);
-                                }).catch((err) => {
-                                    reject(err);
+                        if (existingItem) {
+                            // 更新现有数据
+                            const updatedItem: IStoredItem<T> = {
+                                ...existingItem,
+                                value,
+                                updatedAt: now,
+                            };
+
+                            const updateRequest = store.put(updatedItem);
+
+                            updateRequest.onsuccess = () => {
+                                resolve({
+                                    code: ErrorCode.success,
+                                    data: updatedItem,
+                                    msg: '更新成功',
                                 });
-                                return; // 找到并更新后直接返回
-                            }
-                            _cursor.continue();
+                            };
+
+                            updateRequest.onerror = () => {
+                                reject({
+                                    code: ErrorCode.save,
+                                    error: updateRequest.error,
+                                    msg: '更新失败',
+                                });
+                            };
                         } else {
-                            // 游标遍历完成
-                            if (!_keyExists) {
-                                // key 不存在，添加新数据
-                                const _data = {
-                                    key,
-                                    value
-                                };
-                                const _addRequest = result.put(_data);
-                                _addRequest.onsuccess = () => {
-                                    resolve({ code: ErrorCode.success, msg: '添加成功' });
-                                };
-                                _addRequest.onerror = (e: Error) => {
-                                    reject({ code: ErrorCode.save, error: e, msg: '添加失败' });
-                                };
-                            }
+                            // 添加新数据
+                            const newItem: IStoredItem<T> = {
+                                key,
+                                value,
+                                createdAt: now,
+                                updatedAt: now,
+                            };
+
+                            const addRequest = store.add(newItem);
+
+                            addRequest.onsuccess = () => {
+                                resolve({
+                                    code: ErrorCode.success,
+                                    data: { ...newItem, id: addRequest.result as number },
+                                    msg: '添加成功',
+                                });
+                            };
+
+                            addRequest.onerror = () => {
+                                reject({
+                                    code: ErrorCode.save,
+                                    error: addRequest.error,
+                                    msg: '添加失败',
+                                });
+                            };
                         }
                     };
 
-                    _request.onerror = (e: ChangeEvent) => {
-                        reject({ code: ErrorCode.get, error: e, msg: '检查键是否存在失败' });
+                    getRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.get,
+                            error: getRequest.error,
+                            msg: '检查键是否存在失败',
+                        });
                     };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
+                });
             });
         });
     }
@@ -314,138 +432,142 @@ export class IndexedDB {
     /**
      * 获取数据
      * @param key 键名，可选。如果不传则返回所有数据
-     * @returns {Promise<IIndexedDBRes>} 查询结果
+     * @returns {Promise<IIndexedDBRes<IStoredItem[]>>} 查询结果
      */
-    get(key?: string|number|symbol): Promise<IIndexedDBRes> | undefined {
+    get<T = any>(key?: string | number | symbol): Promise<IIndexedDBRes<IStoredItem<T>[]>> {
         if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
         }
 
-        return new Promise((resolve, reject) => {
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes<IStoredItem<T>[]>>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    if (key !== undefined) {
+                        // 使用索引直接查询单个 key
+                        const index = store.index('key');
+                        const getRequest = index.getAll(IDBKeyRange.only(key as any));
 
-                try {
-                    const _request = result.index('key').openCursor();
-                    const _resList: any[] = [];
-
-                    _request.onsuccess = (e: any) => {
-                        const _cursor = e.target.result;
-                        if (_cursor) {
-                            const _current = _cursor.value;
-                            _resList.push(_current);
-                            _cursor.continue();
-                        } else {
-                            // 游标遍历完成，返回结果
+                        getRequest.onsuccess = () => {
+                            const results = getRequest.result as IStoredItem<T>[];
                             resolve({
                                 code: ErrorCode.success,
-                                data: key ? _resList.filter((item) => item.key === key) : _resList,
-                                msg: '查询成功'
+                                data: results,
+                                msg: '查询成功',
                             });
-                        }
-                    };
+                        };
 
-                    _request.onerror = (e: ChangeEvent) => {
-                        reject({ code: ErrorCode.get, error: e, msg: '查询失败' });
-                    };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
-            });
+                        getRequest.onerror = () => {
+                            reject({
+                                code: ErrorCode.get,
+                                error: getRequest.error,
+                                msg: '查询失败',
+                            });
+                        };
+                    } else {
+                        // 获取所有数据
+                        const getAllRequest = store.getAll();
+
+                        getAllRequest.onsuccess = () => {
+                            const results = getAllRequest.result as IStoredItem<T>[];
+                            resolve({
+                                code: ErrorCode.success,
+                                data: results,
+                                msg: '查询成功',
+                            });
+                        };
+
+                        getAllRequest.onerror = () => {
+                            reject({
+                                code: ErrorCode.get,
+                                error: getAllRequest.error,
+                                msg: '查询失败',
+                            });
+                        };
+                    }
+                });
+            }, 'readonly');
         });
     }
 
     /**
      * 获取所有数据
-     * @returns {Promise<IIndexedDBRes>} 查询结果
+     * @returns {Promise<IIndexedDBRes<IStoredItem[]>>} 查询结果
      */
-    getAll(): Promise<IIndexedDBRes> | undefined {
-        if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
-        }
-
-        return new Promise((resolve, reject) => {
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
-
-                try {
-                    const _request = result.index('key').openCursor();
-                    const _resList: any[] = [];
-
-                    _request.onsuccess = (e: any) => {
-                        const _cursor = e.target.result;
-                        if (_cursor) {
-                            _resList.push(_cursor.value);
-                            _cursor.continue();
-                        } else {
-                            resolve({ code: ErrorCode.success, data: _resList, msg: '查询成功' });
-                        }
-                    };
-
-                    _request.onerror = (e: ChangeEvent) => {
-                        reject({ code: ErrorCode.get, error: e, msg: '查询失败' });
-                    };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
-            });
-        });
+    getAll<T = any>(): Promise<IIndexedDBRes<IStoredItem<T>[]>> {
+        return this.get<T>();
     }
 
     /**
      * 更新数据
-     * 注意：只适用于唯一key情况，否则会全部更改
      * @param key 键名
-     * @param value 新的值对象
+     * @param updates 要更新的字段
      * @returns {Promise<IIndexedDBRes>} 更新结果
      */
-    update(key: string|number|symbol, value: any): Promise<IIndexedDBRes> | undefined {
+    update<T = any>(key: string | number | symbol, updates: Partial<Omit<IStoredItem<T>, 'id' | 'key' | 'createdAt'>>): Promise<IIndexedDBRes> {
         if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
         }
 
-        return new Promise((resolve, reject) => {
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    const index = store.index('key');
+                    const getRequest = index.get(IDBKeyRange.only(key as any));
 
-                try {
-                    const _request = result.index('key').openCursor();
+                    getRequest.onsuccess = () => {
+                        const existingItem = getRequest.result as IStoredItem<T> | undefined;
 
-                    _request.onsuccess = (e: any) => {
-                        const _cursor = e.target.result;
-                        if (_cursor) {
-                            if (_cursor.value.key === key) {
-                                const _current = _cursor.value;
-                                // 合并原有数据和新数据
-                                const _request2 = _cursor.update({
-                                    ..._current,
-                                    ...value
-                                });
-                                _request2.onerror = (e: ChangeEvent) => {
-                                    reject({ code: ErrorCode.get, error: e, msg: '更新失败' });
-                                };
-                            }
-                            _cursor.continue();
-                        } else {
-                            resolve({ code: ErrorCode.success, msg: '更新成功' });
+                        if (!existingItem) {
+                            reject({
+                                code: ErrorCode.error,
+                                error: new Error(`键 "${String(key)}" 不存在`),
+                                msg: `键 "${String(key)}" 不存在`,
+                            });
+                            return;
                         }
+
+                        // 合并更新
+                        const updatedItem: IStoredItem<T> = {
+                            ...existingItem,
+                            ...updates,
+                            updatedAt: Date.now(),
+                        };
+
+                        const updateRequest = store.put(updatedItem);
+
+                        updateRequest.onsuccess = () => {
+                            resolve({
+                                code: ErrorCode.success,
+                                data: updatedItem,
+                                msg: '更新成功',
+                            });
+                        };
+
+                        updateRequest.onerror = () => {
+                            reject({
+                                code: ErrorCode.save,
+                                error: updateRequest.error,
+                                msg: '更新失败',
+                            });
+                        };
                     };
 
-                    _request.onerror = (e: Error) => {
-                        reject({ code: ErrorCode.get, error: e, msg: '更新失败' });
+                    getRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.get,
+                            error: getRequest.error,
+                            msg: '查询数据失败',
+                        });
                     };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
+                });
             });
         });
     }
@@ -453,52 +575,69 @@ export class IndexedDB {
     /**
      * 根据键名删除数据
      * @param key 键名
-     * @param num 删除数量，可选。如果不传则删除所有匹配的数据
+     * @param limit 删除数量限制，可选。如果不传则删除所有匹配的数据
      * @returns {Promise<IIndexedDBRes>} 删除结果
      */
-    delete(key: string|number|symbol, num?: number): Promise<IIndexedDBRes> | undefined {
+    delete(key: string | number | symbol, limit?: number): Promise<IIndexedDBRes> {
         if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
         }
 
-        return new Promise((resolve, reject) => {
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    const index = store.index('key');
+                    const cursorRequest = index.openCursor(IDBKeyRange.only(key as any));
+                    let deletedCount = 0;
 
-                try {
-                    const _request = result.index('key').openCursor();
-                    let _index = 0;
+                    cursorRequest.onsuccess = (event) => {
+                        const cursor = (event.target as IDBRequest).result;
 
-                    _request.onsuccess = (e: any) => {
-                        const _cursor = e.target.result;
-                        if (_cursor) {
-                            if (_cursor.value.key === key) {
-                                if (num) {
-                                    // 删除指定个数
-                                    if (_index < num) {
-                                        _cursor.delete();
-                                    }
-                                    _index++;
-                                } else {
-                                    // 删除全部
-                                    _cursor.delete();
-                                }
+                        if (cursor) {
+                            if (limit === undefined || deletedCount < limit) {
+                                cursor.delete();
+                                deletedCount++;
                             }
-                            _cursor.continue();
+
+                            if (limit === undefined || deletedCount < limit) {
+                                cursor.continue();
+                            } else {
+                                resolve({
+                                    code: ErrorCode.success,
+                                    data: { deletedCount },
+                                    msg: `成功删除 ${deletedCount} 条数据`,
+                                });
+                            }
                         } else {
-                            resolve({ code: ErrorCode.success, msg: '删除成功' });
+                            // 游标遍历完成
+                            if (deletedCount === 0) {
+                                reject({
+                                    code: ErrorCode.error,
+                                    error: new Error(`键 "${String(key)}" 不存在`),
+                                    msg: `键 "${String(key)}" 不存在`,
+                                });
+                            } else {
+                                resolve({
+                                    code: ErrorCode.success,
+                                    data: { deletedCount },
+                                    msg: `成功删除 ${deletedCount} 条数据`,
+                                });
+                            }
                         }
                     };
 
-                    _request.onerror = function(e: ChangeEvent) {
-                        reject({ code: ErrorCode.delete, error: e, msg: '删除失败' });
+                    cursorRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.delete,
+                            error: cursorRequest.error,
+                            msg: '删除失败',
+                        });
                     };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
+                });
             });
         });
     }
@@ -509,29 +648,134 @@ export class IndexedDB {
      */
     deleteAll(): Promise<IIndexedDBRes> {
         if (!this.indexedDB) {
-            return Promise.reject({ code: ErrorCode.open, error: new Error('IndexedDB 不受支持'), msg: 'IndexedDB 不受支持' });
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
         }
 
-        return new Promise((resolve, reject) => {
-            this._open((result) => {
-                if (result.error || result.code) {
-                    reject(result);
-                    return;
-                }
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    const clearRequest = store.clear();
 
-                try {
-                    // 清空对象存储中的所有数据
-                    const clearRequest = result.clear();
                     clearRequest.onsuccess = () => {
-                        resolve({ code: ErrorCode.success, msg: '删除所有成功' });
+                        resolve({
+                            code: ErrorCode.success,
+                            msg: '删除所有数据成功',
+                        });
                     };
-                    clearRequest.onerror = (e: ChangeEvent) => {
-                        reject({ code: ErrorCode.deleteAll, error: e, msg: '删除所有失败' });
+
+                    clearRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.deleteAll,
+                            error: clearRequest.error,
+                            msg: '删除所有数据失败',
+                        });
                     };
-                } catch (error) {
-                    reject({ code: ErrorCode.storeNotFound, error, msg: '无法访问对象存储' });
-                }
+                });
             });
+        });
+    }
+
+    /**
+     * 获取数据总数
+     * @param key 可选，指定 key 则统计该 key 的数量
+     * @returns {Promise<IIndexedDBRes<number>>} 数量结果
+     */
+    count(key?: string | number | symbol): Promise<IIndexedDBRes<number>> {
+        if (!this.indexedDB) {
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
+        }
+
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes<number>>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    let countRequest: IDBRequest;
+
+                    if (key !== undefined) {
+                        const index = store.index('key');
+                        countRequest = index.count(IDBKeyRange.only(key as any));
+                    } else {
+                        countRequest = store.count();
+                    }
+
+                    countRequest.onsuccess = () => {
+                        resolve({
+                            code: ErrorCode.success,
+                            data: countRequest.result,
+                            msg: '统计成功',
+                        });
+                    };
+
+                    countRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.get,
+                            error: countRequest.error,
+                            msg: '统计失败',
+                        });
+                    };
+                });
+            }, 'readonly');
+        });
+    }
+
+    /**
+     * 检查指定的 key 是否存在
+     * @param key 键名
+     * @returns {Promise<boolean>} 是否存在
+     */
+    async has(key: string | number | symbol): Promise<boolean> {
+        try {
+            const result = await this.get(key);
+            return result.data !== undefined && result.data.length > 0;
+        } catch {
+            return false;
+        }
+    }
+
+    /**
+     * 获取所有的 keys
+     * @returns {Promise<IIndexedDBRes<Array<string | number | symbol>>>} keys 列表
+     */
+    keys(): Promise<IIndexedDBRes<Array<string | number | symbol>>> {
+        if (!this.indexedDB) {
+            return Promise.reject({
+                code: ErrorCode.notSupported,
+                error: new Error('IndexedDB 不受支持'),
+                msg: 'IndexedDB 不受支持',
+            });
+        }
+
+        return this.enqueueOperation(async () => {
+            return this._executeOperation<IIndexedDBRes<Array<string | number | symbol>>>(async (store) => {
+                return new Promise((resolve, reject) => {
+                    const getAllRequest = store.getAll();
+
+                    getAllRequest.onsuccess = () => {
+                        const items = getAllRequest.result as IStoredItem[];
+                        const keys = items.map((item) => item.key);
+                        resolve({
+                            code: ErrorCode.success,
+                            data: keys,
+                            msg: '获取 keys 成功',
+                        });
+                    };
+
+                    getAllRequest.onerror = () => {
+                        reject({
+                            code: ErrorCode.get,
+                            error: getAllRequest.error,
+                            msg: '获取 keys 失败',
+                        });
+                    };
+                });
+            }, 'readonly');
         });
     }
 
@@ -541,6 +785,17 @@ export class IndexedDB {
      */
     support(): boolean {
         return this.indexedDB !== null;
+    }
+
+    /**
+     * 关闭数据库连接
+     */
+    close(): void {
+        const cache = IndexedDB.dbCacheMap.get(this.dbName);
+        if (cache) {
+            cache.db.close();
+            IndexedDB.dbCacheMap.delete(this.dbName);
+        }
     }
 
     /**
@@ -565,5 +820,36 @@ export class IndexedDB {
         IndexedDB.dbCacheMap.clear();
         IndexedDB.storeSchemas.clear();
     }
-}
 
+    /**
+     * 静态方法：删除整个数据库
+     * @param dbName 数据库名称
+     * @returns {Promise<void>}
+     */
+    static deleteDatabase(dbName: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (typeof window === 'undefined' || !window.indexedDB) {
+                reject(new Error('IndexedDB 不受支持'));
+                return;
+            }
+
+            // 先关闭并清除缓存
+            IndexedDB.clearCache(dbName);
+
+            const deleteRequest = window.indexedDB.deleteDatabase(dbName);
+
+            deleteRequest.onsuccess = () => {
+                IndexedDB.storeSchemas.delete(dbName);
+                resolve();
+            };
+
+            deleteRequest.onerror = () => {
+                reject(deleteRequest.error);
+            };
+
+            deleteRequest.onblocked = () => {
+                console.warn(`删除数据库 "${dbName}" 被阻止，可能有其他连接未关闭`);
+            };
+        });
+    }
+}

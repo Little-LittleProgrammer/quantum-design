@@ -1,45 +1,43 @@
 {
     "name": "qm-workflow-mcp",
     "version": "0.0.6",
-    "type": "module",
     "description": "工作流 mcp server",
+    "keywords": [],
+    "license": "ISC",
+    "author": "Evan Wu",
+    "type": "module",
     "scripts": {
         "dev": "unbuild --stub",
         "build": "unbuild"
     },
+    "files": [
+        "README.md",
+        "dist"
+    ],
     "bin": {
         "qm-workflow-mcp": "index.js"
     },
-    "files": [
-        "dist",
-        "README.md"
-    ],
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "keywords": [],
-    "author": "Evan Wu",
-    "license": "ISC",
     "dependencies": {
-        "axios": "catalog:",
-        "qm-workflow": "workspace:*",
         "@modelcontextprotocol/sdk": "catalog:",
         "dotenv": "catalog:",
-        "zod": "catalog:",
-        "express": "catalog:"
+        "express": "catalog:",
+        "qm-workflow": "workspace:*"
     },
     "devDependencies": {
-        "shx": "catalog:",
         "@types/fs-extra": "catalog:",
+        "@types/lodash-es": "catalog:",
         "@types/minimist": "catalog:",
         "@types/prompts": "catalog:",
         "fs-extra": "catalog:",
-        "lodash-es": "catalog:",
-        "@types/lodash-es": "catalog:",
         "kolorist": "catalog:",
+        "lodash-es": "catalog:",
         "minimist": "catalog:",
         "prompts": "catalog:",
+        "shx": "catalog:",
         "unbuild": "catalog:"
     }
 }

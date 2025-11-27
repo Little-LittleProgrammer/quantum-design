@@ -7,10 +7,13 @@
         },
         "build:lib": {
             "dependsOn": ["^build"],
-            "outputs": ["dist/**","dist-components/**", ".next/**"]
+            "outputs": ["dist/**", "dist-components/**", ".next/**"]
         },
         "lint": {
             "outputs": []
+        },
+        "stub": {
+            "outputs": ["dist/**"]
         },
         "dev": {
             "cache": false,
@@ -23,6 +26,16 @@
         "test:coverage": {
             "dependsOn": ["^build"],
             "outputs": ["coverage/**"]
+        },
+        "tauri": {
+            "cache": false,
+            "dependsOn": ["^build"]
+        },
+        "tauri:dev": {
+            "dependsOn": ["^build"]
+        },
+        "tauri:build": {
+            "dependsOn": ["^build"]
         }
     }
 }

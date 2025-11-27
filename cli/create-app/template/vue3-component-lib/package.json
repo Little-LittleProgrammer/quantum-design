@@ -1,69 +1,72 @@
 {
-  "name": "@quantum-design/vue3-pc-ui",
-  "version": "0.0.0",
-  "description": "vue3-pc端组件库",
-  "main": "dist/lib/index.js",
-  "module": "dist/es/index.js",
-  "typings": "dist/index.d.ts",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
-  },
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
+    "name": "@quantum-design/vue3-pc-ui",
+    "version": "0.0.0",
+    "description": "vue3-pc端组件库",
+    "license": "MIT",
+    "author": "Evan Wu",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
-    "./es": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/es/index.js"
+    "files": [
+        "dist"
+    ],
+    "main": "dist/lib/index.js",
+    "module": "dist/es/index.js",
+    "typings": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js",
+            "require": "./dist/lib/index.js"
+        },
+        "./es": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/es/index.js"
+        },
+        "./lib": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/lib/index.js"
+        },
+        "./es/*": {
+            "types": "./dist/src/*.d.ts",
+            "import": "./dist/es/*.js"
+        },
+        "./lib/*": {
+            "types": "./dist/src/*.d.ts",
+            "require": "./dist/lib/*.js"
+        },
+        "./*": "./*"
     },
-    "./lib": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/lib/index.js"
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/"
     },
-    "./es/*": {
-      "types": "./dist/src/*.d.ts",
-      "import": "./dist/es/*.js"
+    "peerDependencies": {
+        "vue": "^3.5.18",
+        "vue-router": "^4.5.1"
     },
-    "./lib/*": {
-      "types": "./dist/src/*.d.ts",
-      "require": "./dist/lib/*.js"
+    "dependencies": {
+        "@quantum-design/shared": "~3.0.0",
+        "@quantum-design/utils": "~3.0.0"
     },
-    "./*": "./*"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
-  },
-  "author": "Evan Wu",
-  "license": "MIT",
-  "dependencies": {
-    "@quantum-design/shared": "~1.1.0",
-    "@quantum-design/utils": "~1.1.0"
-  },
-  "devDependencies": {
-    "@quantum-design-configs/vite": "~1.1.0",
-    "@quantum-design/types": "~1.1.0",
-    "@vue/test-utils": "~2.4.0",
-    "sass": "~1.77.6",
-    "vue": "~3.4.31",
-    "vue-router": "~4.4.0",
-    "@changesets/cli": "~2.24.3",
-    "eslint": "~7.32.0",
-    "typescript": "~5.4.5",
-    "@quantum-design-configs/eslint": "~1.0.0",
-    "@quantum-design-configs/tsconfig": "~1.0.0",
-    "vite": "~5.4.1",
-    "tslib": "~2.5.3",
-    "@types/node": "~20.2.5"
-  },
-  "peerDependencies": {
-    "vue": "~3.4.31",
-    "vue-router": "~4.4.0"
-  }
+    "devDependencies": {
+        "@changesets/cli": "^2.29.5",
+        "@quantum-design-configs/eslint": "~3.0.0",
+        "@quantum-design-configs/prettier": "~3.0.0",
+        "@quantum-design-configs/tailwind": "~3.0.0",
+        "@quantum-design-configs/tsconfig": "~3.0.0",
+        "@quantum-design-configs/vite": "~3.0.0",
+        "@quantum-design/types": "~3.0.0",
+        "@types/node": "^20.19.10",
+        "@vue/test-utils": "^2.4.6",
+        "eslint": "^9.22.0",
+        "sass": "^1.83.0",
+        "tslib": "^2.8.1",
+        "typescript": "^5.9.2",
+        "vite": "^7.1.1",
+        "vue": "^3.5.18",
+        "vue-router": "^4.5.1"
+    }
 }

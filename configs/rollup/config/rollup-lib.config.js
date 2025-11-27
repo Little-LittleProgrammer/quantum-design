@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import { createRequire } from 'node:module';
+import process from 'process';
 
 const required = createRequire(import.meta.url);
 const pkg = required('../package.json');
@@ -19,10 +20,9 @@ const FormatTypes = {
 
 const packageDirDist = process.env.LOCALDIR ? process.env.LOCALDIR : 'dist';
 // 阿里云自带环境
-const isDeclaration = process.env.TYPES !== 'false' &&
-    !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
+const isDeclaration = process.env.TYPES !== 'false' && !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
 
-function isString(val){
+function isString(val) {
     return toString.call(val) === `[object String]`;
 }
 
@@ -59,8 +59,8 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
                 exclude: ['**/*.spec.ts+(|x)', 'node_modules'],
             }),
             terser({
-                compress: {drop_console: true, },
-            })
+                compress: { pure_funcs: ['console.log'] },
+            }),
         ];
         const nextPlugins = [...(rollupOptions.plugins || [])];
         const preObj = {};
@@ -112,21 +112,23 @@ export function rollup_commpn_lib_config(pkgList, rollupOptions, version) {
         }
 
         for (const item of finPkgList) {
-            result.push(...format.map(key => {
-                return {
-                    ...common,
-                    input: item.input,
-                    output: {
-                        dir: `${packageDirDist}`,
-                        entryFileNames: `${item.name}.${key}.min.js`,
-                        format: FormatTypes[key],
-                        sourcemap: false,
-                        compact: true,
-                        banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
-                        ...common.output,
-                    },
-                };
-            }));
+            result.push(
+                ...format.map((key) => {
+                    return {
+                        ...common,
+                        input: item.input,
+                        output: {
+                            dir: `${packageDirDist}`,
+                            entryFileNames: `${item.name}.${key}.min.js`,
+                            format: FormatTypes[key],
+                            sourcemap: false,
+                            compact: true,
+                            banner: `/*! name: ${item.name} version: ${version || masterVersion} \n author: ${author} */`,
+                            ...common.output,
+                        },
+                    };
+                }),
+            );
         }
     }
 

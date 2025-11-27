@@ -1,26 +1,26 @@
 {
     "name": "@quantum-design-configs/tsconfig",
-    "version": "2.0.3",
+    "version": "3.0.0",
     "description": "代码tsconfig统一文件",
-    "main": "index.js",
-    "scripts": {},
-    "author": "Evan Wu",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
     "keywords": [
         "quantum-configs",
         "monorepo",
         "tsconfig",
         "turborepo"
     ],
+    "license": "MIT",
+    "author": "Evan Wu",
+    "scripts": {},
     "files": [
         "base.json",
         "lib.json",
         "vue.json"
     ],
-    "license": "MIT",
+    "main": "index.js",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
     "dependencies": {},
     "devDependencies": {}
 }

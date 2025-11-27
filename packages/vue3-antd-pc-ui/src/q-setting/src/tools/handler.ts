@@ -1,121 +1,121 @@
 import { HandleEnum } from '../enums/enum';
-import { useProjectSetting } from '../hooks/use-project-setting';
-import type { IProjectConfig } from '../type';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
+import type { IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
 
 export function handler(event: HandleEnum, value: any): IProjectConfig {
     switch (event) {
         case HandleEnum.cache_alive_status:
             return {
                 cacheTabsSetting: {
-                    openKeepAlive: value
-                }
+                    openKeepAlive: value,
+                },
             };
         case HandleEnum.cache_drag_status:
             return {
                 cacheTabsSetting: {
-                    canDrag: value
-                }
+                    canDrag: value,
+                },
             };
         case HandleEnum.cache_quick_status:
             return {
                 cacheTabsSetting: {
-                    showQuick: value
-                }
+                    showQuick: value,
+                },
             };
         case HandleEnum.cache_tabs_status:
             return {
                 cacheTabsSetting: {
-                    show: value
-                }
+                    show: value,
+                },
             };
         case HandleEnum.cache_cache:
             return {
                 cacheTabsSetting: {
-                    cache: value
-                }
+                    cache: value,
+                },
             };
         case HandleEnum.func_aside_repeat_status: {
             return {
                 func: {
-                    asideRepeatClick: value
-                }
+                    asideRepeatClick: value,
+                },
             };
         }
         case HandleEnum.func_bread_status: {
             return {
                 func: {
-                    showBreadCrumb: value
-                }
+                    showBreadCrumb: value,
+                },
             };
         }
         case HandleEnum.func_reload_status: {
             return {
                 func: {
-                    showReloadButton: value
-                }
+                    showReloadButton: value,
+                },
             };
         }
         case HandleEnum.func_remove_http_status: {
             return {
                 func: {
-                    removeAllHttpPending: value
-                }
+                    removeAllHttpPending: value,
+                },
             };
         }
         case HandleEnum.func_search_status: {
             return {
                 func: {
-                    showSearchButton: value
-                }
+                    showSearchButton: value,
+                },
             };
         }
         case HandleEnum.func_top_status: {
             return {
                 func: {
-                    showBackTop: value
-                }
+                    showBackTop: value,
+                },
             };
         }
         case HandleEnum.theme_gray_status: {
             return {
                 theme: {
-                    grayMode: value
-                }
+                    grayMode: value,
+                },
             };
         }
         case HandleEnum.func_table_cache_status: {
             return {
                 func: {
-                    tableCache: value
-                }
+                    tableCache: value,
+                },
             };
         }
         case HandleEnum.theme_mode_change: {
             return {
                 theme: {
-                    showDarkModeToggle: value
-                }
+                    showDarkModeToggle: value,
+                },
             };
         }
         case HandleEnum.transition_page_loading: {
             return {
                 transition: {
-                    openPageLoading: value
-                }
+                    openPageLoading: value,
+                },
             };
         }
         case HandleEnum.transition_progress: {
             return {
                 transition: {
-                    openNProgress: value
-                }
+                    openNProgress: value,
+                },
             };
         }
         case HandleEnum.transition_status: {
             return {
                 transition: {
-                    enable: value
-                }
+                    enable: value,
+                },
             };
         }
         default: {
@@ -127,5 +127,5 @@ export function handler(event: HandleEnum, value: any): IProjectConfig {
 export function set_handler(event: HandleEnum, value: any) {
     const projectSetting = useProjectSetting();
     const config = handler(event, value);
-    projectSetting.setRootSetting(config);
+    projectSetting.updateProjectConfig(config);
 }

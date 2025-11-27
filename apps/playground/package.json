@@ -1,8 +1,8 @@
 {
     "name": "playground",
-    "private": true,
     "version": "0.0.0",
     "description": "操场",
+    "private": true,
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
@@ -10,7 +10,10 @@
         "build": "vite build",
         "build:lib": "vite build -c vite.lib.config.ts",
         "preview": "vite preview",
-        "type:check": "vue-tsc --noEmit --skipLibCheck"
+        "type:check": "vue-tsc --noEmit --skipLibCheck",
+        "tauri": "tauri",
+        "tauri:dev": "tauri dev",
+        "tauri:build": "tauri build"
     },
     "dependencies": {
         "@ant-design/icons-vue": "catalog:",
@@ -25,29 +28,34 @@
         "@quantum-design/vue3-pc-ui": "workspace:*",
         "ant-design-vue": "catalog:",
         "axios": "catalog:",
-        "dayjs": "catalog:",
         "crypto-js": "catalog:",
-        "sortablejs": "catalog:",
+        "dayjs": "catalog:",
+        "echarts": "catalog:",
         "element-resize-detector": "catalog:",
         "lodash-es": "catalog:",
+        "monaco-editor": "catalog:",
         "nprogress": "catalog:",
         "pinia": "catalog:",
-        "monaco-editor": "catalog:",
+        "sortablejs": "catalog:",
+        "tinymce": "catalog:",
         "vue": "catalog:",
-        "vue-router": "catalog:",
-        "echarts": "catalog:",
-        "tinymce": "catalog:"
+        "vue-router": "catalog:"
     },
     "devDependencies": {
-        "@types/crypto-js": "catalog:",
-        "@quantum-design/types": "workspace:*",
         "@quantum-design-configs/vite-sentry": "workspace:*",
+        "@quantum-design/types": "workspace:*",
+        "@tauri-apps/api": "catalog:",
+        "@tauri-apps/cli": "catalog:",
+        "@tauri-apps/plugin-fs": "catalog:",
+        "@tauri-apps/plugin-notification": "catalog:",
+        "@tauri-apps/plugin-opener": "catalog:",
+        "@types/crypto-js": "catalog:",
         "@types/element-resize-detector": "catalog:",
         "@types/lodash-es": "catalog:",
         "@types/nprogress": "catalog:",
         "sass": "catalog:",
-        "vue-tsc": "catalog:",
         "unplugin-vue-components": "catalog:",
+        "vue-tsc": "catalog:",
         "workbox-build": "catalog:",
         "workbox-window": "catalog:"
     }

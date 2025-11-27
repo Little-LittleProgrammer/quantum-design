@@ -2,17 +2,6 @@
     "name": "@quantum-design/vue3-antd-pc-ui-nuxt",
     "version": "2.0.4",
     "description": "vue3-antd-pc-ui module for Nuxt",
-    "license": "MIT",
-    "type": "module",
-    "exports": {
-        ".": {
-            "import": "./dist/module.mjs",
-            "require": "./dist/module.cjs"
-        }
-    },
-    "main": "./dist/module.cjs",
-    "module": "dist/module.mjs",
-    "types": "./dist/types.d.ts",
     "keywords": [
         "quantum",
         "monorepo",
@@ -21,34 +10,44 @@
         "turborepo",
         "nuxt"
     ],
-    "files": [
-        "dist"
-    ],
+    "license": "MIT",
     "author": "Evan Wu",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
+    "type": "module",
     "scripts": {
         "build": "npm run dev:prepare && nuxt-module-build",
         "dev": "nuxi dev playground",
         "dev:build": "nuxi build playground",
         "dev:start": "node playground/.output/server/index.mjs",
         "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
-        "lint": "eslint . --fix --ext .ts,.vue,.js",
+        "lint": "oxlint --fix && eslint . --fix --ext .ts,.vue,.js",
         "lint:test": "eslint . --ext .ts,.vue,.js --max-warnings 0"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/module.mjs",
+    "module": "./dist/module.mjs",
+    "types": "./dist/types.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/module.mjs"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
     },
     "dependencies": {
         "@nuxt/kit": "catalog:",
+        "@quantum-design/vue3-antd-pc-ui": "workspace:*",
         "magic-string": "catalog:",
-        "unplugin": "catalog:",
-        "@quantum-design/vue3-antd-pc-ui": "workspace:*"
+        "unplugin": "catalog:"
     },
     "devDependencies": {
         "@nuxt/module-builder": "catalog:",
         "@nuxt/schema": "catalog:",
-        "vue": "catalog:",
+        "@quantum-design/shared": "workspace:*",
         "nuxt": "catalog:",
-        "@quantum-design/shared": "workspace:*"
+        "vue": "catalog:"
     }
 }

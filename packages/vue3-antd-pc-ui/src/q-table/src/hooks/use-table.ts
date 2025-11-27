@@ -38,10 +38,10 @@ export function useTable(tableProps?: Props): [
 
     function register(instance: TableActionType, formInstance: UseTableMethod) {
         import.meta.env.PROD &&
-      onUnmounted(() => {
-          tableRef.value = null;
-          loadedRef.value = null;
-      });
+            onUnmounted(() => {
+                tableRef.value = null;
+                loadedRef.value = null;
+            });
 
         if (unref(loadedRef) && import.meta.env.PROD && instance === unref(tableRef)) return;
 
@@ -59,17 +59,15 @@ export function useTable(tableProps?: Props): [
             },
             {
                 immediate: true,
-                deep: true
-            }
+                deep: true,
+            },
         );
     }
 
     function getTableInstance(): TableActionType {
         const table = unref(tableRef);
         if (!table) {
-            console.error(
-                'The table instance has not been obtained yet, please make sure the table is presented when performing the table operation!'
-            );
+            console.error('The table instance has not been obtained yet, please make sure the table is presented when performing the table operation!');
         }
         return table as TableActionType;
     }
@@ -77,7 +75,7 @@ export function useTable(tableProps?: Props): [
     const methods: TableActionType & {
         getForm: () => FormActionType;
     } = {
-        reload: async(opt?: FetchParams) => {
+        reload: async (opt?: FetchParams) => {
             return await getTableInstance().reload(opt);
         },
         setProps: (props: Partial<BasicTableProps>) => {
@@ -156,7 +154,7 @@ export function useTable(tableProps?: Props): [
         getForm: () => {
             return unref(formRef) as unknown as FormActionType;
         },
-        setShowPagination: async(show: boolean) => {
+        setShowPagination: async (show: boolean) => {
             getTableInstance().setShowPagination(show);
         },
         getShowPagination: () => {
@@ -173,7 +171,20 @@ export function useTable(tableProps?: Props): [
         },
         scrollTo: (pos: string) => {
             getTableInstance().scrollTo(pos);
-        }
+        },
+        // 虚拟滚动相关方法
+        scrollToIndex: (index: number, align?: 'top' | 'center' | 'bottom') => {
+            getTableInstance().scrollToIndex?.(index, align);
+        },
+        scrollToRow: (rowKey: string | number, align?: 'top' | 'center' | 'bottom') => {
+            getTableInstance().scrollToRow?.(rowKey, align);
+        },
+        getVirtualScrollInfo: () => {
+            return getTableInstance().getVirtualScrollInfo?.() || null;
+        },
+        updateVirtualConfig: (config: any) => {
+            getTableInstance().updateVirtualConfig?.(config);
+        },
     };
 
     return [register, methods];

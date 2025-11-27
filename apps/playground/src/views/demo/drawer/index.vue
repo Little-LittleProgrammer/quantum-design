@@ -1,6 +1,6 @@
 <template>
     <div class="drawer-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -14,7 +14,7 @@
             </div>
         </a-card>
 
-        <a-card title="尺寸配置" class="g-mt">
+        <a-card title="尺寸配置" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -28,7 +28,7 @@
             </div>
         </a-card>
 
-        <a-card title="功能配置" class="g-mt">
+        <a-card title="功能配置" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space wrap>
@@ -42,7 +42,7 @@
             </div>
         </a-card>
 
-        <a-card title="详情模式" class="g-mt">
+        <a-card title="详情模式" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -54,7 +54,7 @@
             </div>
         </a-card>
 
-        <a-card title="表单编辑抽屉" class="g-mt">
+        <a-card title="表单编辑抽屉" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -66,7 +66,7 @@
             </div>
         </a-card>
 
-        <a-card title="内容丰富的抽屉" class="g-mt">
+        <a-card title="内容丰富的抽屉" class="mt-2.5">
             <div class="demo-section">
                 <div style="margin-bottom: 16px">
                     <a-space>
@@ -481,11 +481,11 @@ import {
     CheckboxGroup as ACheckboxGroup,
     Radio as ARadio,
     RadioGroup as ARadioGroup,
-    message
+    message,
 } from 'ant-design-vue';
 
 defineOptions({
-    name: 'DrawerDemo'
+    name: 'DrawerDemo',
 });
 
 // 基础抽屉
@@ -536,14 +536,14 @@ const formData = reactive({
     department: undefined,
     position: '',
     joinDate: undefined,
-    remark: ''
+    remark: '',
 });
 
 const editFormData = reactive({
     name: '王五',
     age: 30,
     email: 'wangwu@example.com',
-    active: true
+    active: true,
 });
 
 const formRules = {
@@ -551,11 +551,11 @@ const formRules = {
     age: [{ required: true, message: '请输入年龄', trigger: 'blur' }],
     email: [
         { required: true, message: '请输入邮箱', trigger: 'blur' },
-        { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
+        { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' },
     ],
     phone: [{ required: true, message: '请输入电话', trigger: 'blur' }],
     department: [{ required: true, message: '请选择部门', trigger: 'change' }],
-    position: [{ required: true, message: '请输入职位', trigger: 'blur' }]
+    position: [{ required: true, message: '请输入职位', trigger: 'blur' }],
 };
 
 // 项目列表数据
@@ -564,20 +564,20 @@ const projectList = ref([
         name: '前端重构项目',
         description: '使用Vue3重构现有系统',
         status: '进行中',
-        color: '#1890ff'
+        color: '#1890ff',
     },
     {
         name: '移动端开发',
         description: '开发移动端应用',
         status: '已完成',
-        color: '#52c41a'
+        color: '#52c41a',
     },
     {
         name: '数据可视化',
         description: '构建数据分析看板',
         status: '计划中',
-        color: '#faad14'
-    }
+        color: '#faad14',
+    },
 ]);
 
 // 表格数据
@@ -587,7 +587,7 @@ const tableColumns = [
     { title: '邮箱', dataIndex: 'email', key: 'email' },
     { title: '部门', dataIndex: 'department', key: 'department' },
     { title: '状态', key: 'status' },
-    { title: '操作', key: 'action' }
+    { title: '操作', key: 'action' },
 ];
 
 const tableData = ref([
@@ -597,7 +597,7 @@ const tableData = ref([
         age: 28,
         email: 'zhangsan@example.com',
         department: '技术部',
-        status: '激活'
+        status: '激活',
     },
     {
         key: '2',
@@ -605,7 +605,7 @@ const tableData = ref([
         age: 32,
         email: 'lisi@example.com',
         department: '产品部',
-        status: '激活'
+        status: '激活',
     },
     {
         key: '3',
@@ -613,8 +613,8 @@ const tableData = ref([
         age: 25,
         email: 'wangwu@example.com',
         department: '设计部',
-        status: '停用'
-    }
+        status: '停用',
+    },
 ]);
 
 // 事件处理函数
@@ -647,7 +647,7 @@ function handleFormSubmit() {
                         department: undefined,
                         position: '',
                         joinDate: undefined,
-                        remark: ''
+                        remark: '',
                     });
                 }, 2000);
             })

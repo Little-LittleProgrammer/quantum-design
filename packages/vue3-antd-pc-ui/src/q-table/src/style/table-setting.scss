@@ -1,6 +1,4 @@
 @use 'sass:math';
-@use '@quantum-design/styles/base/base.scss' as *;
-@use '@quantum-design/styles/base/mixin.scss' as *;
 $prefix-cls: 'q-table';
 .#{$prefix-cls}-setting {
     & > * {
@@ -50,7 +48,7 @@ $prefix-cls: 'q-table';
                 width: 100%;
 
                 &:hover {
-                    color: $primary-color;
+                    color: var(--primary-color);
                 }
             }
         }
@@ -61,11 +59,11 @@ $prefix-cls: 'q-table';
 
             &.active,
             &:hover {
-                color: $primary-color;
+                color: var(--primary-color);
             }
 
             &.disabled {
-                color: $disabled-color;
+                color: var(--disabled-color);
                 cursor: not-allowed;
             }
         }
@@ -93,8 +91,12 @@ $prefix-cls: 'q-table';
             cursor: pointer;
         }
     }
+}
 
-    [data-theme='dark'] & {
+.dark,
+.dark[data-theme='custom'],
+.dark[data-theme='default'] {
+    .#{$prefix-cls}-setting {
         &.float-setting {
             background-color: #1f1f1f;
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);

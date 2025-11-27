@@ -1,8 +1,8 @@
-@use 'sass:math'; @use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;
+@use 'sass:math';
 $prefix-cls: 'q-table';
 .#{$prefix-cls}-basic-header {
     &-top {
-        margin: 5px
+        margin: 5px;
     }
     &-title {
         display: flex;
@@ -25,9 +25,9 @@ $prefix-cls: 'q-table';
         flex: 1;
         align-items: center;
         justify-content: flex-end;
-  
+
         > * {
-          margin-right: 8px;
+            margin-right: 8px;
         }
     }
 }

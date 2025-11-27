@@ -12,11 +12,7 @@
         <div class="qm-header-tabs">
             <a-menu mode="horizontal" v-model:selectedKeys="selectedKeysAgent">
                 <a-menu-item v-for="item in menuData" :key="item.id">
-                    <a
-                        :href="item.path"
-                        target="_blank"
-                        @click.stop="jump_page(item, $event)"
-                    >{{ item.auth_name }}</a>
+                    <a :href="item.path" target="_blank" @click.stop="jump_page(item, $event)">{{ item.auth_name }}</a>
                 </a-menu-item>
             </a-menu>
         </div>
@@ -26,7 +22,7 @@
     </header>
 </template>
 
-<script lang='ts' setup>
+<script lang="ts" setup>
 import { useGo } from '@quantum-design/hooks/vue/use-page';
 import { onMounted, type PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
@@ -35,25 +31,27 @@ import { propTypes } from '@quantum-design/types/vue/types';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 
 const props = defineProps({
-    menuData: { // 导航数据
+    menuData: {
+        // 导航数据
         type: Array as PropType<IMenuData[]>,
         required: true,
         default: () => {
             const _arr: IMenuData[] = [];
             return _arr;
-        }
+        },
     },
-    environmentData: { // 环境
+    environmentData: {
+        // 环境
         type: Object,
         default: () => {
             return {
                 env: '', // 0:测试环境 1:正式环境
-                title: ''
+                title: '',
             };
-        }
+        },
     },
     systemName: propTypes.string.def(''), // 系统名称,
-    initMenu: propTypes.string.def('') // 初始页面
+    initMenu: propTypes.string.def(''), // 初始页面
 });
 const store = useSysStore();
 const route = useRoute();
@@ -62,29 +60,30 @@ const jump_page = (item: IMenuData, event: Event) => {
     if (item.path && !(item.path.includes('http://') || item.path.includes('https://') || item.path.match(/^\/\//) != null)) {
         if (item.children != undefined) {
             store.asideMenuData = item.children;
-        } else { // 无二级导航时 清空二级导航数据
+        } else {
+            // 无二级导航时 清空二级导航数据
             store.asideMenuData = [];
         }
         event.preventDefault();
         if (item.children != undefined && item.children.length > 0) {
             if (item.children[0].path && (item.children[0].path.includes('http://') || item.children[0].path.includes('https://') || item.children[0].path.match(/^\/\//) != null)) {
                 go({
-                    path: item.path
+                    path: item.path,
                 });
             } else {
                 if (item.children[0].children != undefined && item.children[0].children.length > 0) {
                     go({
-                        path: item.children[0].children[0].path!
+                        path: item.children[0].children[0].path!,
                     });
                 } else {
                     go({
-                        path: item.children[0].path!
+                        path: item.children[0].path!,
                     });
                 }
             }
         } else {
             go({
-                path: item.path
+                path: item.path,
             });
         }
     }
@@ -105,17 +104,17 @@ const selectedKeysAgent = computed(() => {
     });
     return _selectedKey;
 });
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
-<style lang="scss" >
+<style lang="scss">
+@use 'sass:math';
 .qm-header {
-    padding: 0 $space;
+    padding: 0 var(--space);
     display: flex;
-    background: $header-bg;
+    background: var(--header-bg);
     &-logo {
-        padding: $space 0;
-        height: $header-height;
+        padding: var(--space) 0;
+        height: var(--header-height);
         box-sizing: border-box;
         display: block;
         img {
@@ -126,25 +125,25 @@ onMounted(() => {
             border-radius: 6px;
         }
         .s-name {
-            font-size: $header-system-size;
-            color: $header-system-color;
+            font-size: var(--header-system-size);
+            color: var(--header-system-color);
             padding-left: 8px;
             display: inline-block;
             font-weight: bold;
-            line-height: $header-height - $space * 2;
-            height: $header-height - $space * 2;
+            line-height: calc(var(--header-height) - calc(var(--space) * 2));
+            height: calc(var(--header-height) - calc(var(--space) * 2));
         }
     }
     &-environment {
-        font-size: $header-environment-size;
-        color: $header-environment-color;
+        font-size: var(--header-environment-size);
+        color: var(--header-environment-color);
         display: block;
         font-weight: bold;
-        line-height: $header-height;
+        line-height: var(--header-height);
         white-space: nowrap;
-        padding-left: div($space, 2);
+        padding-left: calc(var(--space) / 2);
         em {
-            padding-left: div($space, 2);
+            padding-left: calc(var(--space) / 2);
         }
     }
     &-tabs {
@@ -153,7 +152,7 @@ onMounted(() => {
         display: block;
         text-align: left;
         overflow: hidden;
-        padding-left: $space * 2;
+        padding-left: calc(var(--space) * 2);
         // overflow-x: scroll;
         .ant-menu {
             background: none;
@@ -162,14 +161,14 @@ onMounted(() => {
         .ant-menu-item,
         .ant-menu-submenu {
             border: 0 none;
-            color: $header-tabs-color;
+            color: var(--header-tabs-color);
             vertical-align: top;
-            line-height: $header-height;
-            height: $header-height;
+            line-height: var(--header-height);
+            height: var(--header-height);
             overflow: hidden;
             a {
                 display: block;
-                color: $header-tabs-color;
+                color: var(--header-tabs-color);
             }
             &:hover,
             &.ant-menu-item-active,
@@ -181,28 +180,28 @@ onMounted(() => {
             &:hover,
             &.ant-menu-item-active,
             &.ant-menu-submenu-active {
-                background: $header-tabs-hover-bg;
+                background: var(--header-tabs-hover-bg);
                 a {
-                    color: $header-tabs-hover-color;
+                    color: var(--header-tabs-hover-color);
                 }
             }
             &.ant-menu-item-selected,
             &.ant-menu-submenu-selected {
-                background: $header-tabs-cur-bg;
+                background: var(--header-tabs-cur-bg);
                 font-weight: bold;
                 a {
-                    color: $header-tabs-cur-color;
+                    color: var(--header-tabs-cur-color);
                 }
             }
         }
     }
     &-function {
-        padding-left: $space * 2;
+        padding-left: calc(var(--space) * 2);
         display: block;
         @include flex-center();
         .ant-btn,
         a {
-            margin-left: $space;
+            margin-left: var(--space);
             display: inline-block;
             &:first-child {
                 margin-left: 0;

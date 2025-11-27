@@ -11,11 +11,7 @@ interface Options {
     getAutoCreateKey: ComputedRef<boolean | undefined>;
 }
 
-function get_key(
-    record: Recordable,
-    rowKey: string | ((record: Record<string, any>) => string) | undefined,
-    autoCreateKey?: boolean
-) {
+function get_key(record: Recordable, rowKey: string | ((record: Record<string, any>) => string) | undefined, autoCreateKey?: boolean) {
     if (!rowKey || autoCreateKey) {
         return record[ROW_KEY];
     }
@@ -29,10 +25,7 @@ function get_key(
 }
 
 // a-table 行属性
-export function useCustomRow(
-    propsRef: ComputedRef<BasicTableProps>,
-    { setSelectedRowKeys, getSelectRowKeys, getAutoCreateKey, clearSelectedRowKeys, emit }: Options
-) {
+export function useCustomRow(propsRef: ComputedRef<BasicTableProps>, { setSelectedRowKeys, getSelectRowKeys, getAutoCreateKey, clearSelectedRowKeys, emit }: Options) {
     const customRow = (record: Recordable, index: number) => {
         return {
             onClick: (e: Event) => {
@@ -47,9 +40,7 @@ export function useCustomRow(
                     const _isCheckbox = rowSelection.type === 'checkbox';
                     if (_isCheckbox) {
                         // 找到tr
-                        const tr: HTMLElement = (e as MouseEvent)
-                            .composedPath?.()
-                            .find((dom: HTMLElement) => dom.tagName === 'TR') as HTMLElement;
+                        const tr: HTMLElement = (e as MouseEvent).composedPath?.().find((dom: HTMLElement) => dom.tagName === 'TR') as HTMLElement;
                         if (!tr) return;
                         // 找到Checkbox，检查是否为disabled
                         const checkBox = tr.querySelector('input[type=checkbox]');
@@ -91,11 +82,11 @@ export function useCustomRow(
             },
             onMouseleave: (event: Event) => {
                 emit('row-mouseleave', record, index, event);
-            }
+            },
         };
     };
 
     return {
-        customRow
+        customRow,
     };
 }

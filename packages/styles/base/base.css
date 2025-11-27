@@ -1,0 +1,98 @@
+:root {
+    /* 全局主色 */
+    --primary-color: hsl(41, 79%, 50%);
+    /* 链接色 */
+    --link-color: hsl(37, 81%, 47%);
+    --hover-link-color: hsl(42, 88%, 60%);
+    /* 成功色 */
+    --success-color: hsl(149, 82%, 38%);
+    /* 警告色 */
+    --warning-color: hsl(36, 100%, 49%);
+    /* 错误色 */
+    --error-color: hsl(5, 90%, 55%);
+    /* 主字号 */
+    --font-size-base: 14px;
+    /* 标题色 */
+    --heading-color: hsl(0 0% 0% / 85%);
+    /* 失效色 */
+    --disabled-color: hsl(0 0% 0% / 25%);
+    /* 组件/浮层圆角 */
+    --border-radius-base: 6px;
+    /* 浮层阴影 */
+    --box-shadow-base: 0 2px 8px hsl(0 0% 0% / 15%);
+    /* 表格置灰禁止颜色 */
+    --disabled-table-color: hsl(0, 0%, 96%);
+    /* 主文本色 */
+    --text-color: hsl(0, 0%, 13%);
+    /* 次文本色 */
+    --text-color-secondary: hsl(0, 0%, 60%);
+    /* 边框色 */
+    --border-color-base: hsl(0, 0%, 91%);
+    /* 全站默认间距 */
+    --space: 10px;
+    /* 全站背景色 */
+    --body-bg: hsl(0, 0%, 96%);
+    --important-color: hsl(5, 90%, 55%);
+    --important-second-color: hsl(36, 100%, 49%);
+    /* 表格表头背景色 */
+    --table-th-bg: hsl(0, 0%, 94%);
+    /* 表格隔行背景色 */
+    --table-even-bg: hsl(0, 0%, 98%);
+
+    /* header */
+    /* header高度 */
+    --header-height: 48px;
+    /* header背景色 */
+    --header-bg: hsl(0, 0%, 20%);
+    /* 系统名颜色 */
+    --header-system-color: hsl(0, 0%, 100%);
+    /* 系统名文字大小 */
+    --header-system-size: 20px;
+    /* tab文字大小 */
+    --header-tabs-size: 16px;
+    /* tab文字背景色 */
+    --header-tabs-color: hsl(0, 0%, 100%);
+    /* hover文字颜色 */
+    --header-tabs-hover-color: hsl(0, 0%, 100%);
+    /* hover背景色 */
+    --header-tabs-hover-bg: hsla(0, 0%, 100%, 0.06);
+    /* 选中tab文字背景色 */
+    --header-tabs-cur-color: hsl(0, 0%, 100%);
+    /* 选中tab背景色 */
+    --header-tabs-cur-bg: hsla(0, 0%, 100%, 0.12);
+    /* 环境提示文案颜色 */
+    --header-environment-color: hsl(48, 100%, 49%);
+    /* 环境提示文案字体大小 */
+    --header-environment-size: 16px;
+
+    /* aside */
+    /* 左侧栏背景色 */
+    --aside-bg: hsl(0, 0%, 100%);
+    /* 右侧导航高度 */
+    --aside-height: 40px;
+    /* tab文字大小 */
+    --aside-tabs-size: 14px;
+    /* tab文字颜色 */
+    --aside-tabs-color: var(--heading-color);
+    /* tab hover背景色 */
+    --aside-tabs-hover-bg: transparent;
+    /* tab hover文字颜色 */
+    --aside-tabs-hover-color: var(--link-color);
+    /* tab 选中背景色 */
+    --aside-tabs-cur-bg: var(--primary-color);
+    /* tab 选中文字颜色 */
+    --aside-tabs-cur-color: hsl(0, 0%, 100%);
+    /* 边框颜色 */
+    --aside-right-border-color: var(--border-color-base);
+    --aside-padding: 12px;
+    /* 导航栏宽度 */
+    --aside-width: 180px;
+    /* 项目选择背景色 */
+    --aside-project-select-bg: hsl(0, 0%, 91%);
+
+    /* blur */
+    --blue-color: hsl(209, 100%, 45%);
+
+    accent-color: var(--primary-color);
+    color-scheme: light;
+}

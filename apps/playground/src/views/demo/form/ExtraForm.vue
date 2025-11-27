@@ -1,7 +1,7 @@
 <!--  -->
 <template>
     <div>
-        <a-card class="g-mt">
+        <a-card class="mt-2.5">
             <q-antd-form @register="registerForm2">
                 <template #extra="{ model, field }">
                     <p>aaaa{{ model[field] }}</p>
@@ -16,7 +16,7 @@ import { computed, onMounted, onUnmounted } from 'vue';
 import { QCodeEditor, QRichText } from '@quantum-design/vue3-pc-ui';
 import { useForm, type FormSchema, QAntdForm, useComponentRegister, delComponentRegister, createFormSchemas } from '@quantum-design/vue3-antd-pc-ui';
 defineOptions({
-    name: 'UseForm'
+    name: 'UseForm',
 });
 
 useComponentRegister('CodeEditor', QCodeEditor);
@@ -54,7 +54,7 @@ const schemas = computed<FormSchema<Test, ExtraComponentPropsMap>[]>(() => {
             label: '姓名',
             field: 'name',
             component: 'Input',
-            required: true
+            required: true,
         },
         {
             label: 'sub姓名',
@@ -66,40 +66,40 @@ const schemas = computed<FormSchema<Test, ExtraComponentPropsMap>[]>(() => {
                     onChange: () => {
                         console.log(formModel);
                         formModel.sub.sub.name = '11111';
-                    }
+                    },
                 };
-            }
+            },
         },
         {
             label: 'sub下的sub姓名',
             field: 'sub.sub.name',
             component: 'Input',
-            required: true
+            required: true,
         },
         {
             label: '日期',
             field: 'sub.sub.date',
-            component: 'DatePicker'
+            component: 'DatePicker',
         },
         {
             label: '代码',
             field: 'sub.sub.code',
             component: 'CodeEditor',
             colProps: {
-                span: 24
+                span: 24,
             },
             componentProps: {
                 style: { height: '800px' },
-            }
+            },
         },
         {
             label: '富文本',
             field: 'sub.sub.rich',
             component: 'RichText',
             colProps: {
-                span: 24
+                span: 24,
             },
-        }
+        },
     ]);
 });
 
@@ -107,32 +107,32 @@ const [registerForm2, { getFieldsValue, setFieldsValue, validateFields }] = useF
     schemas,
     labelWidth: 130,
     baseColProps: {
-        span: 13
+        span: 13,
     },
     actionColOptions: {
-        span: 24
+        span: 24,
     },
     submitButtonOptions: {
-        title: '提交'
+        title: '提交',
     },
     resetButtonOptions: {
-        title: '取消'
+        title: '取消',
     },
-    submitFunc: async() => {
+    submitFunc: async () => {
         await validateFields();
         console.log(getFieldsValue());
-    }
+    },
 });
 
-onMounted(async() => {
+onMounted(async () => {
     await setFieldsValue({
         name: '张三',
         sub: {
             name: '李四',
             sub: {
-                code: "({app, dataSource,}, params) => {console.log(app, dataSource);dataSource.setData('我改变了', 'a1'); }"
+                code: "({app, dataSource,}, params) => {console.log(app, dataSource);dataSource.setData('我改变了', 'a1'); }",
             },
-        }
+        },
     });
 });
 

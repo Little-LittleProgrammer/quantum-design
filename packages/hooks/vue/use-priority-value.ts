@@ -3,7 +3,7 @@ import type { ComputedRef, Ref } from 'vue';
 import { computed, getCurrentInstance, unref, useAttrs, useSlots } from 'vue';
 
 import {
-    js_utils_get_first_non_empty,
+    getFirstNonEmpty,
     js_utils_kebab_to_camel_case
 } from '@quantum-design/utils';
 
@@ -36,7 +36,7 @@ export function usePriorityValue<
       standardRawProps?.[key] === undefined ? undefined : props[key];
 
         // slot可以关闭
-        return js_utils_get_first_non_empty(
+        return getFirstNonEmpty(
             slots[key as string],
             attrs[key],
             propsKey,

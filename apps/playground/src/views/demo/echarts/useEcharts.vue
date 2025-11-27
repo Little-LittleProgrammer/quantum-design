@@ -1,5 +1,5 @@
 <template>
-    <a-card class="g-mt">
+    <a-card class="mt-2.5">
         <div style="height: 500px" ref="chartRef"></div>
         <a-button @click="toggle">切换渲染模式</a-button>
         <div>{{ _renderer }}</div>
@@ -23,17 +23,17 @@ function toggle() {
         setChartOptions({
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
             },
             series: [
                 {
                     type: 'line',
-                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                },
+            ],
         });
     }, 1000);
 }
@@ -41,17 +41,17 @@ onMounted(() => {
     setChartOptions({
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
         },
         series: [
             {
                 type: 'line',
-                data: [820, 932, 901, 934, 1290, 1330, 1320]
-            }
-        ]
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+            },
+        ],
     });
 });
 </script>

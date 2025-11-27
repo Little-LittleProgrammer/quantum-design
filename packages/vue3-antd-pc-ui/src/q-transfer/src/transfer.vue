@@ -14,7 +14,7 @@
                     @expand="on_expand"
                     @check="
                         (_: boolean, props: AntTreeNodeCheckedEvent) => {
-                            on_checked(direction, _, props, direction === 'left' ? [...selectedKeys, ...targetKeys]: [...selectedKeys] , onItemSelect)
+                            on_checked(direction, _, props, direction === 'left' ? [...selectedKeys, ...targetKeys] : [...selectedKeys], onItemSelect);
                         }
                     "
                 ></a-tree>
@@ -33,8 +33,26 @@ import { Transfer as ATransfer, Tree as ATree, InputSearch as AInputSearch } fro
 import { propTypes } from '@quantum-design/types/vue/types';
 
 defineOptions({
-    name: 'QAntdTransfer'
+    name: 'QAntdTransfer',
 });
+
+const props = defineProps({
+    targetKeys: {
+        type: Array as PropType<string[]>,
+        default: () => [],
+    },
+    treeData: {
+        type: Array as PropType<ICity[]>,
+        default: () => [],
+    },
+    fieldNames: {
+        type: Object as PropType<IFieldNames>,
+        default: () => {},
+    },
+    returnAll: propTypes.bool.def(false),
+});
+
+const emit = defineEmits(['update:targetKeys', 'change']);
 
 interface DataProps {
     expandedKeys: string[];
@@ -45,29 +63,12 @@ interface DataProps {
     searchWord: string;
 }
 
-const props = defineProps({
-    targetKeys: {
-        type: Array as PropType<string[]>,
-        default: () => []
-    },
-    treeData: {
-        type: Array as PropType<ICity[]>,
-        default: () => []
-    },
-    fieldNames: {
-        type: Object as PropType<IFieldNames>,
-        default: () => {}
-    },
-    returnAll: propTypes.bool.def(false)
-});
-const emit = defineEmits(['update:targetKeys', 'change']);
-
 const getTreeData = computed<ICity[]>(() => {
     const _fieldNames = {
         key: 'key',
         children: 'children',
         title: 'title',
-        ...(props.fieldNames || {})
+        ...(props.fieldNames || {}),
     };
     if (_fieldNames.key || _fieldNames.children || _fieldNames.title) {
         return dfs(props.treeData, _fieldNames);
@@ -81,7 +82,7 @@ const data: DataProps = reactive({
     expandedKeys: [],
     filterLeftTreeData: [],
     selectedTreeData: [],
-    searchWord: ''
+    searchWord: '',
 });
 
 const getFilterLeftTreeData = computed<ICity[]>(() => {
@@ -163,7 +164,7 @@ function filter_search_data(value: string, treeData: ICity[]) {
                 title: item.title,
                 children: item.children.filter((e) => {
                     return e.title.includes(value);
-                })
+                }),
             };
             if (item.children.filter((e) => e.title.includes(value)).length !== 0) {
                 _result = [..._result, _child];
@@ -192,6 +193,6 @@ watch(
             });
         }
     },
-    { immediate: true }
+    { immediate: true },
 );
 </script>

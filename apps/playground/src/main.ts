@@ -1,15 +1,14 @@
 import { createApp } from 'vue';
 import { register_sentry_vue } from '@quantum-design-configs/vite-sentry/project';
-import {setup_store} from '@/store';
+import { setup_store } from '@/store';
 import { router, setup_router } from '@/router';
 import { register_glob_comp } from './antd';
 import { setup_outer_guard } from './router/setup-router';
 import App from './App.vue';
 import 'dayjs/locale/zh-cn';
-import { setup_project_conf } from '@quantum-design/vue3-antd-pc-ui';
-import setting from './enums/projectEnum';
 import dayjs from 'dayjs';
 import { install_monaco } from './monaco';
+import '@quantum-design/styles/base/global.css';
 
 // 时间组件中文
 dayjs.locale('zh-cn');
@@ -19,7 +18,6 @@ install_monaco();
 
 // 安装store
 setup_store(app);
-setup_project_conf(setting);
 // 安装router
 setup_router(app);
 // router-guard 安装路由守卫
@@ -33,9 +31,9 @@ if (import.meta.env.VITE_USE_SENTRY === 'true') {
         dsn: 'xxxxxxx',
         ignoreErrors: [
             'ResizeObserver loop limit exceeded', // ant 官方建议
-            'validate error'
+            'validate error',
         ],
-        environment: import.meta.env.VITE_GLOB_ENV
+        environment: import.meta.env.VITE_GLOB_ENV,
     });
 }
 

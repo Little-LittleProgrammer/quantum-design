@@ -1,30 +1,33 @@
 {
     "name": "qm-workflow",
     "version": "0.0.6",
-    "type": "module",
     "description": "工作流 cli",
+    "keywords": [],
+    "license": "ISC",
+    "author": "Evan Wu",
+    "type": "module",
     "scripts": {
         "dev": "unbuild --stub",
         "build": "unbuild"
     },
+    "files": [
+        "README.md",
+        "dist",
+        "index.js",
+        "tools.js"
+    ],
     "bin": {
         "qm-workflow": "index.js",
         "qw": "index.js"
     },
-    "files": [
-        "dist",
-        "README.md",
-        "tools.js",
-        "index.js"
-    ],
     "exports": {
         ".": {
-            "require": "./tools.js",
-            "import": "./dist/tools.mjs"
+            "import": "./dist/tools.mjs",
+            "require": "./tools.js"
         },
         "./index.js": {
-            "require": "./tools.js",
-            "import": "./dist/tools.mjs"
+            "import": "./dist/tools.mjs",
+            "require": "./tools.js"
         },
         "./dist/*": "./dist/*"
     },
@@ -32,27 +35,21 @@
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "keywords": [],
-    "author": "Evan Wu",
-    "license": "ISC",
     "dependencies": {
-        "axios": "catalog:",
         "@larksuiteoapi/node-sdk": "catalog:",
+        "axios": "catalog:",
         "dotenv": "catalog:"
     },
     "devDependencies": {
         "@types/fs-extra": "catalog:",
+        "@types/lodash-es": "catalog:",
         "@types/minimist": "catalog:",
         "@types/prompts": "catalog:",
         "fs-extra": "catalog:",
-        "lodash-es": "catalog:",
-        "@types/lodash-es": "catalog:",
         "kolorist": "catalog:",
+        "lodash-es": "catalog:",
         "minimist": "catalog:",
         "prompts": "catalog:",
         "unbuild": "catalog:"
-    },
-    "volta": {
-        "node": "18.18.2"
     }
 }

@@ -24,16 +24,14 @@ export class OpenAIClient {
             this.bailianAppId = options.bailianAppId;
         }
         this.apiKey = options.apiKey;
-        this.baseURL = this.bailianAppId
-            ? `https://dashscope.aliyuncs.com/api/v1/apps/${this.bailianAppId}/completion`
-            : 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
+        this.baseURL = this.bailianAppId ? `https://dashscope.aliyuncs.com/api/v1/apps/${this.bailianAppId}/completion` : 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation';
         this.modelName = options.modelName || 'deepseek-v3';
     }
 
     get getHeaders() {
         return {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.apiKey}`,
+            Authorization: `Bearer ${this.apiKey}`,
         };
     }
 
@@ -90,10 +88,12 @@ export class OpenAIClient {
                 } else {
                     return {
                         type: 'json',
-                        result: [{
-                            ...jsonResult,
-                            lineNumber: isNaN(jsonResult.lineNumber) || jsonResult.lineNumber === null ? 1 : jsonResult.lineNumber,
-                        }],
+                        result: [
+                            {
+                                ...jsonResult,
+                                lineNumber: isNaN(jsonResult.lineNumber) || jsonResult.lineNumber === null ? 1 : jsonResult.lineNumber,
+                            },
+                        ],
                     };
                 }
             }
@@ -126,14 +126,14 @@ export class OpenAIClient {
     private getParams(prompt: string) {
         if (this.bailianAppId) {
             return {
-                input: { prompt: prompt, },
+                input: { prompt: prompt },
                 session_id: this.sessionId ? this.sessionId : undefined,
             };
         }
         return {
             model: this.modelName,
             input: {
-                messages: [{ role: 'user', content: prompt, }],
+                messages: [{ role: 'user', content: prompt }],
             },
         };
     }

@@ -1,0 +1,1340 @@
+{
+  "total": 184,
+  "items": [
+    {
+      "name": "minimatch",
+      "versions": [
+        "10.0.3",
+        "3.1.2",
+        "5.1.6",
+        "8.0.4",
+        "9.0.1",
+        "9.0.5"
+      ]
+    },
+    {
+      "name": "commander",
+      "versions": [
+        "10.0.1",
+        "11.1.0",
+        "12.1.0",
+        "13.1.0",
+        "2.20.3"
+      ]
+    },
+    {
+      "name": "ajv",
+      "versions": [
+        "6.12.6",
+        "8.12.0",
+        "8.13.0",
+        "8.17.1"
+      ]
+    },
+    {
+      "name": "fs-extra",
+      "versions": [
+        "11.3.1",
+        "7.0.1",
+        "8.1.0",
+        "9.1.0"
+      ]
+    },
+    {
+      "name": "globals",
+      "versions": [
+        "13.24.0",
+        "14.0.0",
+        "15.15.0",
+        "16.3.0"
+      ]
+    },
+    {
+      "name": "is-stream",
+      "versions": [
+        "1.1.0",
+        "2.0.1",
+        "3.0.0",
+        "4.0.1"
+      ]
+    },
+    {
+      "name": "semver",
+      "versions": [
+        "5.7.2",
+        "6.3.1",
+        "7.5.4",
+        "7.7.2"
+      ]
+    },
+    {
+      "name": "@types/node",
+      "versions": [
+        "12.20.55",
+        "20.19.10",
+        "24.2.1"
+      ]
+    },
+    {
+      "name": "@vue/devtools-api",
+      "versions": [
+        "6.6.4",
+        "7.7.7",
+        "8.0.0"
+      ]
+    },
+    {
+      "name": "dotenv",
+      "versions": [
+        "16.0.3",
+        "16.6.1",
+        "17.2.1"
+      ]
+    },
+    {
+      "name": "emoji-regex",
+      "versions": [
+        "10.4.0",
+        "8.0.0",
+        "9.2.2"
+      ]
+    },
+    {
+      "name": "estree-walker",
+      "versions": [
+        "1.0.1",
+        "2.0.2",
+        "3.0.3"
+      ]
+    },
+    {
+      "name": "find-up",
+      "versions": [
+        "4.1.0",
+        "5.0.0",
+        "7.0.0"
+      ]
+    },
+    {
+      "name": "get-stream",
+      "versions": [
+        "4.1.0",
+        "5.2.0",
+        "8.0.1"
+      ]
+    },
+    {
+      "name": "glob",
+      "versions": [
+        "10.4.5",
+        "7.2.3",
+        "9.3.5"
+      ]
+    },
+    {
+      "name": "is-fullwidth-code-point",
+      "versions": [
+        "3.0.0",
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "locate-path",
+      "versions": [
+        "5.0.0",
+        "6.0.0",
+        "7.2.0"
+      ]
+    },
+    {
+      "name": "lru-cache",
+      "versions": [
+        "10.4.3",
+        "5.1.1",
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "magic-string",
+      "versions": [
+        "0.25.9",
+        "0.30.17",
+        "0.30.8"
+      ]
+    },
+    {
+      "name": "mime",
+      "versions": [
+        "1.6.0",
+        "3.0.0",
+        "4.0.7"
+      ]
+    },
+    {
+      "name": "npm-run-path",
+      "versions": [
+        "2.0.2",
+        "5.3.0",
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "p-limit",
+      "versions": [
+        "2.3.0",
+        "3.1.0",
+        "4.0.0"
+      ]
+    },
+    {
+      "name": "p-locate",
+      "versions": [
+        "4.1.0",
+        "5.0.0",
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "path-key",
+      "versions": [
+        "2.0.1",
+        "3.1.1",
+        "4.0.0"
+      ]
+    },
+    {
+      "name": "pretty-bytes",
+      "versions": [
+        "5.6.0",
+        "6.1.1",
+        "7.0.1"
+      ]
+    },
+    {
+      "name": "readable-stream",
+      "versions": [
+        "2.3.8",
+        "3.6.2",
+        "4.7.0"
+      ]
+    },
+    {
+      "name": "source-map",
+      "versions": [
+        "0.6.1",
+        "0.7.6",
+        "0.8.0-beta.0"
+      ]
+    },
+    {
+      "name": "string-width",
+      "versions": [
+        "4.2.3",
+        "5.1.2",
+        "7.2.0"
+      ]
+    },
+    {
+      "name": "supports-color",
+      "versions": [
+        "10.1.0",
+        "7.2.0",
+        "8.1.1"
+      ]
+    },
+    {
+      "name": "tr46",
+      "versions": [
+        "0.0.3",
+        "1.0.1",
+        "5.1.1"
+      ]
+    },
+    {
+      "name": "type-fest",
+      "versions": [
+        "0.16.0",
+        "0.20.2",
+        "4.41.0"
+      ]
+    },
+    {
+      "name": "unplugin",
+      "versions": [
+        "1.0.1",
+        "1.16.1",
+        "2.3.5"
+      ]
+    },
+    {
+      "name": "webidl-conversions",
+      "versions": [
+        "3.0.1",
+        "4.0.2",
+        "7.0.0"
+      ]
+    },
+    {
+      "name": "whatwg-url",
+      "versions": [
+        "14.2.0",
+        "5.0.0",
+        "7.1.0"
+      ]
+    },
+    {
+      "name": "which",
+      "versions": [
+        "1.3.1",
+        "2.0.2",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "wrap-ansi",
+      "versions": [
+        "7.0.0",
+        "8.1.0",
+        "9.0.0"
+      ]
+    },
+    {
+      "name": "yallist",
+      "versions": [
+        "3.1.1",
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "@babel/types",
+      "versions": [
+        "7.28.0",
+        "7.28.2"
+      ]
+    },
+    {
+      "name": "@changesets/types",
+      "versions": [
+        "4.1.0",
+        "6.1.0"
+      ]
+    },
+    {
+      "name": "@esbuild/aix-ppc64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/android-arm",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/android-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/android-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/darwin-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/darwin-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/freebsd-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/freebsd-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-arm",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-ia32",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-loong64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-mips64el",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-ppc64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-riscv64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-s390x",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/linux-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/netbsd-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/netbsd-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/openbsd-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/openbsd-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/sunos-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/win32-arm64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/win32-ia32",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@esbuild/win32-x64",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "@humanwhocodes/retry",
+      "versions": [
+        "0.3.1",
+        "0.4.3"
+      ]
+    },
+    {
+      "name": "@netlify/serverless-functions-api",
+      "versions": [
+        "1.41.2",
+        "2.1.3"
+      ]
+    },
+    {
+      "name": "@nuxt/kit",
+      "versions": [
+        "3.18.1",
+        "4.0.3"
+      ]
+    },
+    {
+      "name": "@rolldown/pluginutils",
+      "versions": [
+        "1.0.0-beta.29",
+        "1.0.0-beta.32"
+      ]
+    },
+    {
+      "name": "@rollup/plugin-node-resolve",
+      "versions": [
+        "15.3.1",
+        "16.0.1"
+      ]
+    },
+    {
+      "name": "@rollup/plugin-replace",
+      "versions": [
+        "2.4.2",
+        "6.0.2"
+      ]
+    },
+    {
+      "name": "@rollup/pluginutils",
+      "versions": [
+        "3.1.0",
+        "5.2.0"
+      ]
+    },
+    {
+      "name": "@types/estree",
+      "versions": [
+        "0.0.39",
+        "1.0.8"
+      ]
+    },
+    {
+      "name": "@typescript-eslint/scope-manager",
+      "versions": [
+        "7.18.0",
+        "8.39.1"
+      ]
+    },
+    {
+      "name": "@typescript-eslint/types",
+      "versions": [
+        "7.18.0",
+        "8.39.1"
+      ]
+    },
+    {
+      "name": "@typescript-eslint/typescript-estree",
+      "versions": [
+        "7.18.0",
+        "8.39.1"
+      ]
+    },
+    {
+      "name": "@typescript-eslint/utils",
+      "versions": [
+        "7.18.0",
+        "8.39.1"
+      ]
+    },
+    {
+      "name": "@typescript-eslint/visitor-keys",
+      "versions": [
+        "7.18.0",
+        "8.39.1"
+      ]
+    },
+    {
+      "name": "@volar/language-core",
+      "versions": [
+        "2.4.22",
+        "2.4.23"
+      ]
+    },
+    {
+      "name": "@volar/source-map",
+      "versions": [
+        "2.4.22",
+        "2.4.23"
+      ]
+    },
+    {
+      "name": "@volar/typescript",
+      "versions": [
+        "2.4.22",
+        "2.4.23"
+      ]
+    },
+    {
+      "name": "@vue/devtools-kit",
+      "versions": [
+        "7.7.7",
+        "8.0.0"
+      ]
+    },
+    {
+      "name": "@vue/devtools-shared",
+      "versions": [
+        "7.7.7",
+        "8.0.0"
+      ]
+    },
+    {
+      "name": "@vue/language-core",
+      "versions": [
+        "2.2.0",
+        "3.0.5"
+      ]
+    },
+    {
+      "name": "abbrev",
+      "versions": [
+        "2.0.0",
+        "3.0.1"
+      ]
+    },
+    {
+      "name": "agent-base",
+      "versions": [
+        "6.0.2",
+        "7.1.4"
+      ]
+    },
+    {
+      "name": "alien-signals",
+      "versions": [
+        "0.4.14",
+        "2.0.6"
+      ]
+    },
+    {
+      "name": "ansi-regex",
+      "versions": [
+        "5.0.1",
+        "6.1.0"
+      ]
+    },
+    {
+      "name": "ansi-styles",
+      "versions": [
+        "4.3.0",
+        "6.2.1"
+      ]
+    },
+    {
+      "name": "argparse",
+      "versions": [
+        "1.0.10",
+        "2.0.1"
+      ]
+    },
+    {
+      "name": "axios",
+      "versions": [
+        "0.27.2",
+        "1.11.0"
+      ]
+    },
+    {
+      "name": "brace-expansion",
+      "versions": [
+        "1.1.12",
+        "2.0.2"
+      ]
+    },
+    {
+      "name": "buffer-crc32",
+      "versions": [
+        "0.2.13",
+        "1.0.0"
+      ]
+    },
+    {
+      "name": "chalk",
+      "versions": [
+        "4.1.2",
+        "5.5.0"
+      ]
+    },
+    {
+      "name": "chokidar",
+      "versions": [
+        "3.6.0",
+        "4.0.3"
+      ]
+    },
+    {
+      "name": "color-convert",
+      "versions": [
+        "1.9.3",
+        "2.0.1"
+      ]
+    },
+    {
+      "name": "color-name",
+      "versions": [
+        "1.1.3",
+        "1.1.4"
+      ]
+    },
+    {
+      "name": "confbox",
+      "versions": [
+        "0.1.8",
+        "0.2.2"
+      ]
+    },
+    {
+      "name": "cookie",
+      "versions": [
+        "0.7.2",
+        "1.0.2"
+      ]
+    },
+    {
+      "name": "cookie-es",
+      "versions": [
+        "1.2.2",
+        "2.0.0"
+      ]
+    },
+    {
+      "name": "copy-anything",
+      "versions": [
+        "2.0.6",
+        "3.0.5"
+      ]
+    },
+    {
+      "name": "cross-spawn",
+      "versions": [
+        "6.0.6",
+        "7.0.6"
+      ]
+    },
+    {
+      "name": "css-tree",
+      "versions": [
+        "2.2.1",
+        "3.1.0"
+      ]
+    },
+    {
+      "name": "define-lazy-prop",
+      "versions": [
+        "2.0.0",
+        "3.0.0"
+      ]
+    },
+    {
+      "name": "detect-libc",
+      "versions": [
+        "1.0.3",
+        "2.0.4"
+      ]
+    },
+    {
+      "name": "dot-prop",
+      "versions": [
+        "5.3.0",
+        "9.0.0"
+      ]
+    },
+    {
+      "name": "entities",
+      "versions": [
+        "4.5.0",
+        "6.0.1"
+      ]
+    },
+    {
+      "name": "env-paths",
+      "versions": [
+        "2.2.1",
+        "3.0.0"
+      ]
+    },
+    {
+      "name": "esbuild",
+      "versions": [
+        "0.25.5",
+        "0.25.9"
+      ]
+    },
+    {
+      "name": "escape-string-regexp",
+      "versions": [
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "eslint-compat-utils",
+      "versions": [
+        "0.5.1",
+        "0.6.5"
+      ]
+    },
+    {
+      "name": "eslint-scope",
+      "versions": [
+        "7.2.2",
+        "8.4.0"
+      ]
+    },
+    {
+      "name": "eslint-visitor-keys",
+      "versions": [
+        "3.4.3",
+        "4.2.1"
+      ]
+    },
+    {
+      "name": "espree",
+      "versions": [
+        "10.4.0",
+        "9.6.1"
+      ]
+    },
+    {
+      "name": "execa",
+      "versions": [
+        "1.0.0",
+        "8.0.1"
+      ]
+    },
+    {
+      "name": "glob-parent",
+      "versions": [
+        "5.1.2",
+        "6.0.2"
+      ]
+    },
+    {
+      "name": "globby",
+      "versions": [
+        "11.1.0",
+        "14.1.0"
+      ]
+    },
+    {
+      "name": "https-proxy-agent",
+      "versions": [
+        "5.0.1",
+        "7.0.6"
+      ]
+    },
+    {
+      "name": "iconv-lite",
+      "versions": [
+        "0.4.24",
+        "0.6.3"
+      ]
+    },
+    {
+      "name": "ignore",
+      "versions": [
+        "5.3.2",
+        "7.0.5"
+      ]
+    },
+    {
+      "name": "ini",
+      "versions": [
+        "1.3.8",
+        "4.1.1"
+      ]
+    },
+    {
+      "name": "is-arrayish",
+      "versions": [
+        "0.2.1",
+        "0.3.2"
+      ]
+    },
+    {
+      "name": "is-docker",
+      "versions": [
+        "2.2.1",
+        "3.0.0"
+      ]
+    },
+    {
+      "name": "is-obj",
+      "versions": [
+        "1.0.1",
+        "2.0.0"
+      ]
+    },
+    {
+      "name": "is-what",
+      "versions": [
+        "3.14.1",
+        "4.1.16"
+      ]
+    },
+    {
+      "name": "is-wsl",
+      "versions": [
+        "2.2.0",
+        "3.1.0"
+      ]
+    },
+    {
+      "name": "isarray",
+      "versions": [
+        "1.0.0",
+        "2.0.5"
+      ]
+    },
+    {
+      "name": "isexe",
+      "versions": [
+        "2.0.0",
+        "3.1.1"
+      ]
+    },
+    {
+      "name": "jiti",
+      "versions": [
+        "1.21.7",
+        "2.5.1"
+      ]
+    },
+    {
+      "name": "js-tokens",
+      "versions": [
+        "4.0.0",
+        "9.0.1"
+      ]
+    },
+    {
+      "name": "js-yaml",
+      "versions": [
+        "3.14.1",
+        "4.1.0"
+      ]
+    },
+    {
+      "name": "jsdoc-type-pratt-parser",
+      "versions": [
+        "4.1.0",
+        "4.8.0"
+      ]
+    },
+    {
+      "name": "jsesc",
+      "versions": [
+        "3.0.2",
+        "3.1.0"
+      ]
+    },
+    {
+      "name": "json-schema-traverse",
+      "versions": [
+        "0.4.1",
+        "1.0.0"
+      ]
+    },
+    {
+      "name": "jsonfile",
+      "versions": [
+        "4.0.0",
+        "6.2.0"
+      ]
+    },
+    {
+      "name": "kleur",
+      "versions": [
+        "3.0.3",
+        "4.1.5"
+      ]
+    },
+    {
+      "name": "make-dir",
+      "versions": [
+        "2.1.0",
+        "4.0.0"
+      ]
+    },
+    {
+      "name": "mdn-data",
+      "versions": [
+        "2.0.28",
+        "2.12.2"
+      ]
+    },
+    {
+      "name": "mime-db",
+      "versions": [
+        "1.52.0",
+        "1.54.0"
+      ]
+    },
+    {
+      "name": "mime-types",
+      "versions": [
+        "2.1.35",
+        "3.0.1"
+      ]
+    },
+    {
+      "name": "minipass",
+      "versions": [
+        "4.2.8",
+        "7.1.2"
+      ]
+    },
+    {
+      "name": "nanoid",
+      "versions": [
+        "3.3.11",
+        "5.1.5"
+      ]
+    },
+    {
+      "name": "node-fetch",
+      "versions": [
+        "2.7.0",
+        "3.3.2"
+      ]
+    },
+    {
+      "name": "nopt",
+      "versions": [
+        "7.2.1",
+        "8.1.0"
+      ]
+    },
+    {
+      "name": "normalize-path",
+      "versions": [
+        "2.1.1",
+        "3.0.0"
+      ]
+    },
+    {
+      "name": "onetime",
+      "versions": [
+        "6.0.0",
+        "7.0.0"
+      ]
+    },
+    {
+      "name": "open",
+      "versions": [
+        "10.2.0",
+        "8.4.2"
+      ]
+    },
+    {
+      "name": "p-map",
+      "versions": [
+        "2.1.0",
+        "7.0.3"
+      ]
+    },
+    {
+      "name": "package-manager-detector",
+      "versions": [
+        "0.2.11",
+        "1.3.0"
+      ]
+    },
+    {
+      "name": "parse-json",
+      "versions": [
+        "5.2.0",
+        "8.3.0"
+      ]
+    },
+    {
+      "name": "path-exists",
+      "versions": [
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "path-type",
+      "versions": [
+        "4.0.0",
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "pathe",
+      "versions": [
+        "1.1.2",
+        "2.0.3"
+      ]
+    },
+    {
+      "name": "picomatch",
+      "versions": [
+        "2.3.1",
+        "4.0.3"
+      ]
+    },
+    {
+      "name": "pkg-types",
+      "versions": [
+        "1.3.1",
+        "2.2.0"
+      ]
+    },
+    {
+      "name": "postcss-selector-parser",
+      "versions": [
+        "6.1.2",
+        "7.1.0"
+      ]
+    },
+    {
+      "name": "prettier",
+      "versions": [
+        "2.8.8",
+        "3.6.2"
+      ]
+    },
+    {
+      "name": "readdirp",
+      "versions": [
+        "3.6.0",
+        "4.1.2"
+      ]
+    },
+    {
+      "name": "resolve",
+      "versions": [
+        "1.22.10",
+        "2.0.0-next.5"
+      ]
+    },
+    {
+      "name": "resolve-from",
+      "versions": [
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "rollup",
+      "versions": [
+        "2.79.2",
+        "4.46.2"
+      ]
+    },
+    {
+      "name": "safe-buffer",
+      "versions": [
+        "5.1.2",
+        "5.2.1"
+      ]
+    },
+    {
+      "name": "shebang-command",
+      "versions": [
+        "1.2.0",
+        "2.0.0"
+      ]
+    },
+    {
+      "name": "shebang-regex",
+      "versions": [
+        "1.0.0",
+        "3.0.0"
+      ]
+    },
+    {
+      "name": "signal-exit",
+      "versions": [
+        "3.0.7",
+        "4.1.0"
+      ]
+    },
+    {
+      "name": "slash",
+      "versions": [
+        "3.0.0",
+        "5.1.0"
+      ]
+    },
+    {
+      "name": "slice-ansi",
+      "versions": [
+        "5.0.0",
+        "7.1.0"
+      ]
+    },
+    {
+      "name": "spdx-expression-parse",
+      "versions": [
+        "3.0.1",
+        "4.0.0"
+      ]
+    },
+    {
+      "name": "statuses",
+      "versions": [
+        "2.0.1",
+        "2.0.2"
+      ]
+    },
+    {
+      "name": "string_decoder",
+      "versions": [
+        "1.1.1",
+        "1.3.0"
+      ]
+    },
+    {
+      "name": "strip-ansi",
+      "versions": [
+        "6.0.1",
+        "7.1.0"
+      ]
+    },
+    {
+      "name": "tinyexec",
+      "versions": [
+        "0.3.2",
+        "1.0.1"
+      ]
+    },
+    {
+      "name": "tmp",
+      "versions": [
+        "0.0.33",
+        "0.2.5"
+      ]
+    },
+    {
+      "name": "ts-api-utils",
+      "versions": [
+        "1.4.3",
+        "2.1.0"
+      ]
+    },
+    {
+      "name": "tslib",
+      "versions": [
+        "2.3.0",
+        "2.8.1"
+      ]
+    },
+    {
+      "name": "undici-types",
+      "versions": [
+        "6.21.0",
+        "7.10.0"
+      ]
+    },
+    {
+      "name": "unicorn-magic",
+      "versions": [
+        "0.1.0",
+        "0.3.0"
+      ]
+    },
+    {
+      "name": "universalify",
+      "versions": [
+        "0.1.2",
+        "2.0.1"
+      ]
+    },
+    {
+      "name": "urlpattern-polyfill",
+      "versions": [
+        "10.1.0",
+        "8.0.2"
+      ]
+    },
+    {
+      "name": "vue-types",
+      "versions": [
+        "3.0.2",
+        "6.0.0"
+      ]
+    },
+    {
+      "name": "webpack-virtual-modules",
+      "versions": [
+        "0.5.0",
+        "0.6.2"
+      ]
+    },
+    {
+      "name": "xml-name-validator",
+      "versions": [
+        "4.0.0",
+        "5.0.0"
+      ]
+    },
+    {
+      "name": "yocto-queue",
+      "versions": [
+        "0.1.0",
+        "1.2.1"
+      ]
+    },
+    {
+      "name": "youch",
+      "versions": [
+        "4.1.0-beta.11",
+        "4.1.0-beta.8"
+      ]
+    },
+    {
+      "name": "zod",
+      "versions": [
+        "3.25.76",
+        "4.0.17"
+      ]
+    }
+  ]
+}

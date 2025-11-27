@@ -1,55 +1,85 @@
 <!--  -->
 <template>
     <q-antd-drawer v-bind="$attrs" @register="registerDrawer">
-        <Divider>主题功能</Divider>
-        <switch-item title="主题切换按钮" :event="HandleEnum.theme_mode_change" :default="getShowThemeSwitch"></switch-item>
-        <switch-item title="公祭日灰色模式" tooltip="纪念日: 4月4日, 4月5日, 12月13日" :event="HandleEnum.theme_gray_status" :default="getGraySwitch"></switch-item>
-        <Divider>功能配置</Divider>
-        <switch-item title="菜单搜索" :event="HandleEnum.func_search_status" :default="getSearchButton"></switch-item>
-        <switch-item title="回到顶部" :event="HandleEnum.func_top_status" :default="getBackTop"></switch-item>
-        <switch-item title="面包屑" :event="HandleEnum.func_bread_status" :default="getBreadCrumb"></switch-item>
-        <switch-item title="重复点击" :event="HandleEnum.func_aside_repeat_status" :default="getAsideRepeatClick"></switch-item>
-        <switch-item title="刷新按钮" :event="HandleEnum.func_reload_status" :default="getShowReloadButton"></switch-item>
-        <switch-item title="缓存表格配置" tooltip="自动保存表格列设置、排序等配置信息，关闭后会清空所有已有配置信息" :event="HandleEnum.func_table_cache_status" :default="getTableCacheSetting"></switch-item>
-        <Divider>tab栏配置</Divider>
-        <switch-item title="展示Tab栏" :event="HandleEnum.cache_tabs_status" :default="getShowCacheTabsSetting"></switch-item>
-        <switch-item title="tab栏缓存" tooltip="切换tab及刷新页面时保存页面状态" :event="HandleEnum.cache_alive_status" :default="getOpenKeepAlive" :disabled="!getShowCacheTabsSetting"></switch-item>
-        <switch-item title="刷新时缓存" tooltip="刷新后仍保留已经打开的tab" :event="HandleEnum.cache_cache" :default="getCacheCanCache" :disabled="!getShowCacheTabsSetting"></switch-item>
-        <switch-item title="tab栏拖拽" :event="HandleEnum.cache_drag_status" :default="getCacheCanDrag" :disabled="!getShowCacheTabsSetting"></switch-item>
-        <switch-item title="tab栏快速操作" :event="HandleEnum.cache_quick_status" :default="getShowQuick" :disabled="!getShowCacheTabsSetting"></switch-item>
-        <Divider>动画配置</Divider>
-        <switch-item title="切换动画" :event="HandleEnum.transition_status" :default="getShowTransition"></switch-item>
-        <switch-item title="切换loading" :event="HandleEnum.transition_page_loading" :default="getShowPageLoading"></switch-item>
-        <switch-item title="顶部进度条" :event="HandleEnum.transition_progress" :default="getShowNProgress"></switch-item>
-        <Divider></Divider>
+        <divider>主题功能</divider>
+        <switch-item title="主题切换按钮" :event="HandleEnum.theme_mode_change" :default="isUseThemeSwitch"></switch-item>
+        <switch-item title="公祭日灰色模式" tooltip="纪念日: 4月4日, 4月5日, 12月13日" :event="HandleEnum.theme_gray_status" :default="isUseGraySwitch"></switch-item>
+        <divider>内置主题</divider>
+        <builtin-theme v-model="themeBuiltinType" v-model:theme-color-primary="themeColorPrimary" :is-dark="isDark" />
+        <divider>功能配置</divider>
+        <switch-item title="菜单搜索" :event="HandleEnum.func_search_status" :default="isUseSearchButton"></switch-item>
+        <switch-item title="回到顶部" :event="HandleEnum.func_top_status" :default="isUseBackTop"></switch-item>
+        <switch-item title="面包屑" :event="HandleEnum.func_bread_status" :default="isUseBreadCrumb"></switch-item>
+        <switch-item title="重复点击" :event="HandleEnum.func_aside_repeat_status" :default="isUseAsideRepeatClick"></switch-item>
+        <switch-item title="刷新按钮" :event="HandleEnum.func_reload_status" :default="isUseReloadButton"></switch-item>
+        <switch-item title="缓存表格配置" tooltip="自动保存表格列设置、排序等配置信息，关闭后会清空所有已有配置信息" :event="HandleEnum.func_table_cache_status" :default="isUseTableCacheSetting"></switch-item>
+        <divider>tab栏配置</divider>
+        <switch-item title="展示Tab栏" :event="HandleEnum.cache_tabs_status" :default="isUseCacheTabsSetting"></switch-item>
+        <switch-item title="tab栏缓存" tooltip="切换tab及刷新页面时保存页面状态" :event="HandleEnum.cache_alive_status" :default="isUseKeepAlive" :disabled="!isUseCacheTabsSetting"></switch-item>
+        <switch-item title="刷新时缓存" tooltip="刷新后仍保留已经打开的tab" :event="HandleEnum.cache_cache" :default="isUseCacheCanCache" :disabled="!isUseCacheTabsSetting"></switch-item>
+        <switch-item title="tab栏拖拽" :event="HandleEnum.cache_drag_status" :default="isUseCacheCanDrag" :disabled="!isUseCacheTabsSetting"></switch-item>
+        <switch-item title="tab栏快速操作" :event="HandleEnum.cache_quick_status" :default="isUseQuick" :disabled="!isUseCacheTabsSetting"></switch-item>
+        <divider>动画配置</divider>
+        <switch-item title="切换动画" :event="HandleEnum.transition_status" :default="isUseTransition"></switch-item>
+        <switch-item title="切换loading" :event="HandleEnum.transition_page_loading" :default="isUsePageLoading"></switch-item>
+        <switch-item title="顶部进度条" :event="HandleEnum.transition_progress" :default="isUseNProgress"></switch-item>
+        <divider></divider>
         <setting-footer :defaultSetting="props.defaultSetting"></setting-footer>
     </q-antd-drawer>
 </template>
 
 <script lang="ts" setup>
-import { type PropType, onMounted } from 'vue';
+import { type PropType, computed, onMounted } from 'vue';
 import { useDrawerInner } from '@vue3-antd/q-drawer';
 import QAntdDrawer from '@vue3-antd/q-drawer';
 import { Divider } from 'ant-design-vue';
 import SwitchItem from './switch-item.vue';
 import settingFooter from './setting-footer.vue';
 import { HandleEnum } from '../enums/enum';
-import { useProjectSetting } from '../hooks/use-project-setting';
-import type { IProjectConfig } from '../type';
+import { useProjectSetting, type BuiltinThemeType, type IProjectConfig } from '@quantum-design/hooks/vue/use-project-setting';
+import BuiltinTheme from './builtin.vue';
+
 const props = defineProps({
     defaultSetting: {
         type: Object as PropType<IProjectConfig>,
-        default: () => {}
-    }
+        default: () => {},
+    },
 });
-const { getShowNProgress, getShowPageLoading, getShowTransition, getCacheCanDrag, getShowThemeSwitch, getGraySwitch, getSearchButton, getBackTop, getBreadCrumb, getAsideRepeatClick, getShowReloadButton, getShowCacheTabsSetting, getOpenKeepAlive, getCacheCanCache, getShowQuick, getTableCacheSetting } = useProjectSetting();
+const { isUseNProgress, isUsePageLoading, isUseTransition, isUseCacheCanDrag, isUseThemeSwitch, isUseGraySwitch, isUseSearchButton, isUseBackTop, isUseBreadCrumb, isUseAsideRepeatClick, isUseReloadButton, isUseCacheTabsSetting, isUseKeepAlive, isUseCacheCanCache, isUseQuick, isUseTableCacheSetting, isDark } = useProjectSetting();
 const [registerDrawer, { setDrawerProps }] = useDrawerInner();
+
+const projectSetting = useProjectSetting();
+const themeBuiltinType = computed({
+    get() {
+        return projectSetting.getProjectConfig.value.theme?.builtinType || 'default';
+    },
+    set(value: BuiltinThemeType) {
+        projectSetting.updateProjectConfig({
+            theme: {
+                builtinType: value,
+            },
+        });
+    },
+});
+
+const themeColorPrimary = computed({
+    get() {
+        return projectSetting.getProjectConfig.value.theme?.colorPrimary || '';
+    },
+    set(value: string) {
+        projectSetting.updateProjectConfig({
+            theme: {
+                colorPrimary: value,
+            },
+        });
+    },
+});
 onMounted(() => {
     setDrawerProps({
         isDetail: false,
         width: 330,
         title: '项目配置',
-        showFooter: false
+        showFooter: false,
     });
 });
 </script>

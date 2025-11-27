@@ -38,7 +38,7 @@
             </template>
         </q-antd-table>
         <edit @register="registerDrawer"></edit>
-        <BaseModal />
+        <base-modal />
     </div>
 </template>
 <script lang="ts" setup>
@@ -60,7 +60,7 @@ function onChange() {
 
 const [BaseModal, baseModalApi] = useQAntdModal({
     // 连接抽离的组件
-    connectedComponent: BaseDemo
+    connectedComponent: BaseDemo,
 });
 
 const data = reactive({
@@ -68,23 +68,23 @@ const data = reactive({
         access_mode_list: [
             {
                 label: '1',
-                value: '1'
+                value: '1',
             },
             {
                 label: '2',
-                value: '2'
-            }
-        ]
-    }
+                value: '2',
+            },
+        ],
+    },
 });
 
 const testSelectObj = ref({
     access_mode_list: [
         {
             label: '1',
-            value: '1'
-        }
-    ]
+            value: '1',
+        },
+    ],
 });
 
 const schemas = computed(() => {
@@ -94,15 +94,16 @@ const schemas = computed(() => {
             label: '日期',
             field: 'duration',
             component: 'RangePicker',
-            defaultValue: defaultDuration
+            defaultValue: defaultDuration,
+            alwaysVisible: true,
         },
         {
             label: '接入模式',
             field: 'access_mode',
             component: 'Select',
             componentProps: {
-                options: data.selectObj.access_mode_list
-            }
+                options: data.selectObj.access_mode_list,
+            },
         },
         {
             label: '操作时间',
@@ -115,8 +116,8 @@ const schemas = computed(() => {
                 placeholder: ['开始日期', '结束日期'],
                 onChange: (_value: any) => {
                     reload();
-                }
-            }
+                },
+            },
         },
         {
             label: '授权渠道',
@@ -127,9 +128,9 @@ const schemas = computed(() => {
                 options: testSelectObj.value.access_mode_list,
                 allowClear: true,
                 class: 'w-250',
-                showSearch: true
-            }
-        }
+                showSearch: true,
+            },
+        },
     ];
 });
 
@@ -145,13 +146,13 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
         layout: 'inline',
         schemas,
         enableCustomFilter: true,
-        formId: 'form-table'
+        formId: 'form-table',
         // fieldMapToTime: [['duration', ['start', 'end'], gDateFormatEnum.date]],
     },
     resizable: true,
     tableSetting: {
         cache: true,
-        floating: floating.value
+        floating: floating.value,
     },
     columnsConfig: {
         widthData: {
@@ -159,21 +160,22 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
             auth_result: 180,
             check_result: 180,
             lock_result: 180,
-            reader_cp_name: 180
+            reader_cp_name: 180,
         },
         fixedData: {
             operateTime: 'left',
             partner_cp_name: 'left',
-            reader_cp_name: 'left'
-        }
+            reader_cp_name: 'left',
+        },
     },
 
     scroll: { x: true },
+    virtual: true,
     columns: getBasicColumns(),
     dataSource: getBasicData(),
     autoCreateKey: true,
     summaryConfig: {
-        fixed: 'top'
+        fixed: 'top',
     },
     expandedRowRender(_record) {
         return h('div', '123123123');
@@ -181,7 +183,7 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
     showTableSetting: true,
     onChange,
     rowSelection: {
-        type: 'checkbox'
+        type: 'checkbox',
     },
     onColumnsChange: (data: ColumnChangeParam[]) => {
         console.log('ColumnsChanged', data);
@@ -190,10 +192,10 @@ const [registerTable, { setLoading, setColumns, setProps, getColumns, getDataSou
         {
             component: 'CustomExtraComp',
             componentProps: {
-                text: '外部传入：自定义注册组件，查看表格数据'
-            }
-        }
-    ]
+                text: '外部传入：自定义注册组件，查看表格数据',
+            },
+        },
+    ],
 });
 
 const [registerDrawer, { openDrawer }] = useDrawer();
@@ -218,7 +220,7 @@ function reloadTable() {
     //     showIndexColumn: true
     // });
     reload({
-        page: 1
+        page: 1,
     });
 }
 
@@ -244,7 +246,7 @@ function getPagination() {
 
 function setPaginationInfo() {
     setPagination({
-        current: 2
+        current: 2,
     });
     reload();
 }
@@ -278,14 +280,14 @@ function createActions(record: any, _column: any) {
                 label: '弹窗',
                 onClick: () => {
                     baseModalApi.open();
-                }
+                },
             },
             {
                 label: '抽屉',
                 onClick: () => {
                     openDrawer();
-                }
-            }
+                },
+            },
         ];
     }
     return [
@@ -294,7 +296,7 @@ function createActions(record: any, _column: any) {
             onClick: () => {
                 record.onSubmit();
                 console.log('保存');
-            }
+            },
         },
         {
             label: '取消',
@@ -303,15 +305,15 @@ function createActions(record: any, _column: any) {
                 confirm: () => {
                     record.onCancel();
                     console.log('取消');
-                }
-            }
-        }
+                },
+            },
+        },
     ];
 }
 
 function collapseAll() {
     setProps({
-        ellipsis: false
+        ellipsis: false,
     });
 }
 
@@ -322,8 +324,8 @@ function handle_form_expand_change(expandStatus: boolean) {
 function updateSetting() {
     setProps({
         tableSetting: {
-            floating: !floating.value
-        }
+            floating: !floating.value,
+        },
     });
     floating.value = !floating.value;
 }

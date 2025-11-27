@@ -10,7 +10,7 @@ export declare type SortOrder = 'ascend' | 'descend';
 
 export type Recordable<T = any> = {
     [x: string]: T;
-}
+};
 // current page data
 export interface TableCurrentDataSource<T = any> {
     currentDataSource: T[];
@@ -84,6 +84,20 @@ export interface GetColumnsParams {
     sort?: boolean; // re sort by fix [ ...fixedLeft, ...def, ... fixedRight]
 }
 
+// 虚拟滚动配置
+export interface VirtualScrollConfig {
+    /** 每行高度（像素），支持固定高度 */
+    itemHeight?: number;
+    /** 缓冲区行数，用于平滑滚动 */
+    bufferSize?: number;
+    /** 可视区域高度 */
+    containerHeight?: number;
+    /** 是否启用虚拟滚动 */
+    enabled?: boolean;
+    /** 滚动节流延迟 */
+    throttleDelay?: number;
+}
+
 // table size
 export type SizeType = 'default' | 'middle' | 'small' | 'large';
 
@@ -101,10 +115,10 @@ export interface TableActionType {
     deleteSelectRowByKey: (key: string) => void;
     setPagination: (info: Partial<PaginationProps>) => void;
     setTableData: <T extends Recordable = Recordable>(values: T[]) => void;
-    updateTableDataRecord: (rowKey: string | number, record: Recordable) => Recordable | void;
+    updateTableDataRecord: (rowKey: string | number, record: Recordable) => Recordable;
     deleteTableDataRecord: (rowKey: string | number | string[] | number[]) => void;
-    insertTableDataRecord: (record: Recordable | Recordable[], index?: number) => Recordable[] | void;
-    findTableDataRecord: (rowKey: string | number) => Recordable | void;
+    insertTableDataRecord: (record: Recordable | Recordable[], index?: number) => Recordable[];
+    findTableDataRecord: (rowKey: string | number) => Recordable;
     getColumns: (opt?: GetColumnsParams) => BasicColumn[];
     setColumns: (columns: BasicColumn[] | string[]) => void;
     getDataSource: <T extends Recordable = Recordable>() => T[];
@@ -179,7 +193,11 @@ export interface BasicTableProps<T = any> {
     summaryFunc?: (...arg: any) => Recordable[];
     // 自定义合计表格内容
     summaryData?: Recordable[];
-    summaryConfig?: {fixed: string};
+    summaryConfig?: { fixed: string };
+    // 是否开启虚拟滚动
+    virtual?: boolean;
+    // 虚拟滚动配置
+    virtualConfig?: VirtualScrollConfig;
     // 是否可拖拽列
     canColDrag?: boolean;
     // 接口请求对象
@@ -189,7 +207,7 @@ export interface BasicTableProps<T = any> {
         api: (...arg: any) => Promise<any>;
         beforeFetch?: Fn;
         afterFetch?: Fn;
-    }
+    };
     useExtraComponents?: ExtraComponents[];
     // 请求之前处理参数
     beforeFetch?: Fn;
@@ -407,12 +425,7 @@ export interface BasicTableProps<T = any> {
      *
      * The cell will not submit data while callback return false
      */
-    beforeEditSubmit?: (data: {
-        record: Recordable;
-        index: number;
-        key: string | number;
-        value: any;
-    }) => Promise<any>;
+    beforeEditSubmit?: (data: { record: Recordable; index: number; key: string | number; value: any }) => Promise<any>;
 
     /**
      * Callback executed when pagination, filters or sorter is changed
@@ -438,14 +451,10 @@ export interface BasicTableProps<T = any> {
     onExpandedRowsChange?: (expandedRows: string[] | number[]) => void;
 
     onColumnsChange?: (data: ColumnChangeParam[]) => void;
-
 }
 
 // customRender
-export type CellFormat =
-  | string
-  | ((text: string, record: Recordable, index: number) => string | number)
-  | Map<string | number, any>;
+export type CellFormat = string | ((text: string, record: Recordable, index: number) => string | number) | Map<string | number, any>;
 
 // BasicColumn
 export interface BasicColumn extends ColumnProps<Recordable> {
@@ -471,14 +480,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
     editRow?: boolean;
     editable?: boolean;
     editComponent?: ComponentType;
-    editComponentProps?:
-    | ((opt: {
-        text: string | number | boolean | Recordable;
-        record: Recordable;
-        column: BasicColumn;
-        index: number;
-    }) => Recordable)
-    | Recordable;
+    editComponentProps?: ((opt: { text: string | number | boolean | Recordable; record: Recordable; column: BasicColumn; index: number }) => Recordable) | Recordable;
     editRule?: boolean | ((text: string, record: Recordable) => Promise<string>);
     editValueMap?: (value: any) => string;
     onEditRow?: () => void;
@@ -487,12 +489,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
     // 业务控制是否显示
     ifShow?: boolean | ((column: BasicColumn) => boolean);
     // 自定义修改后显示的内容
-    editRender?: (opt: {
-        text: string | number | boolean | Recordable;
-        record: Recordable;
-        column: BasicColumn;
-        index: number;
-    }) => VNodeChild | JSX.Element;
+    editRender?: (opt: { text: string | number | boolean | Recordable; record: Recordable; column: BasicColumn; index: number }) => VNodeChild | JSX.Element;
     // 动态 Disabled
     editDynamicDisabled?: boolean | ((record: Recordable) => boolean);
 }
@@ -510,10 +507,10 @@ export interface InnerHandlers {
 
 export type IOptionsTable<C extends string | number | symbol> = {
     alignData?: Partial<Record<C | 'all', 'left' | 'right' | 'center'>>;
-    widthData?: Partial<Record<C | 'all', string | number>>,
-    fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>,
-    sortData?: (C | 'all' | undefined)[] | Partial<Record<(C | 'all'), Fn>>;
-    customTitle?: (C | 'all')[],
-    customCell?:Partial< Record<(C | 'all'), any>>,
-    resizableData?: Partial<Record<C | 'all', boolean>> // 是否可拖拽
-}
+    widthData?: Partial<Record<C | 'all', string | number>>;
+    fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>;
+    sortData?: (C | 'all' | undefined)[] | Partial<Record<C | 'all', Fn>>;
+    customTitle?: (C | 'all')[];
+    customCell?: Partial<Record<C | 'all', any>>;
+    resizableData?: Partial<Record<C | 'all', boolean>>; // 是否可拖拽
+};

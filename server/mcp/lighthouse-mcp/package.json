@@ -1,0 +1,41 @@
+{
+    "name": "qm-lighthouse-mcp",
+    "version": "0.1.3",
+    "description": "Lighthouse MCP",
+    "keywords": [],
+    "license": "ISC",
+    "author": "Evan Wu",
+    "type": "module",
+    "scripts": {
+        "dev": "unbuild --stub",
+        "build": "unbuild"
+    },
+    "files": [
+        "README.md",
+        "dist",
+        "index.js"
+    ],
+    "bin": {
+        "qm-lighthouse-mcp": "index.js"
+    },
+    "publishConfig": {
+        "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/",
+        "access": "public"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "catalog:",
+        "chrome-launcher": "catalog:",
+        "dotenv": "catalog:",
+        "lighthouse": "catalog:",
+        "zod": "catalog:"
+    },
+    "devDependencies": {
+        "@types/lodash-es": "catalog:",
+        "@types/minimist": "catalog:",
+        "kolorist": "catalog:",
+        "lodash-es": "catalog:",
+        "minimist": "catalog:",
+        "shx": "catalog:",
+        "unbuild": "catalog:"
+    }
+}

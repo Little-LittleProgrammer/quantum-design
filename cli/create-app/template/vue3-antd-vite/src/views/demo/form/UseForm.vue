@@ -6,7 +6,7 @@
         </a-card>
         <a-card class="g-mt">
             <q-antd-form @register="registerForm2" @blur="formChange" @change="formChange">
-                <template #extra="{model, field}">
+                <template #extra="{ model, field }">
                     <p>aaaa{{ model[field] }}</p>
                 </template>
                 <template #submitBefore>
@@ -17,62 +17,67 @@
     </div>
 </template>
 
-<script lang='ts' setup>
-import {computed, onMounted} from 'vue';
+<script lang="ts" setup>
+import { computed, onMounted } from 'vue';
 import { useForm, type FormSchema } from '@quantum-design/vue3-antd-pc-ui';
 import { js_utils_copy_code } from '@quantum-design/utils';
 defineOptions({
     name: 'UseForm',
 });
 
-interface Test{
+interface Test {
     name: string;
     sub: {
         name: string;
         sub: {
             name: string;
             date: string;
-        }
-    }
+        };
+    };
 }
 
-const schemas = computed<FormSchema<Test>[]>(() => [{
-    label: '姓名',
-    field: 'name',
-    component: 'Input',
-    required: true,
-}, {
-    label: 'sub姓名',
-    field: 'sub.name',
-    component: 'Input',
-    required: true,
-    componentProps: ({formModel, }) => {
-        return {
-            onChange: () => {
-                console.log(formModel);
-                formModel['sub.sub.name'] = '11111';
-            },
-        };
+const schemas = computed<FormSchema<Test>[]>(() => [
+    {
+        label: '姓名',
+        field: 'name',
+        component: 'Input',
+        required: true,
     },
-}, {
-    label: 'sub下的sub姓名',
-    field: 'sub.sub.name',
-    component: 'Input',
-    required: true,
-}, {
-    label: '日期',
-    field: 'sub.sub.date',
-    component: 'DatePicker',
-}]);
+    {
+        label: 'sub姓名',
+        field: 'sub.name',
+        component: 'Input',
+        required: true,
+        componentProps: ({ formModel }) => {
+            return {
+                onChange: () => {
+                    console.log(formModel);
+                    formModel['sub.sub.name'] = '11111';
+                },
+            };
+        },
+    },
+    {
+        label: 'sub下的sub姓名',
+        field: 'sub.sub.name',
+        component: 'Input',
+        required: true,
+    },
+    {
+        label: '日期',
+        field: 'sub.sub.date',
+        component: 'DatePicker',
+    },
+]);
 
-const [registerForm, {getFieldsValue, setFieldsValue, }] = useForm({
+const [registerForm, { getFieldsValue, setFieldsValue }] = useForm({
     schemas,
     layout: 'inline',
-    submitFunc: async() => {
+    submitFunc: async () => {
         console.log(getFieldsValue());
     },
 });
-const [registerForm2, {getFieldsValue: getFieldsValue1, setFieldsValue: setFieldsValue1, validateFields, }] = useForm({
+const [registerForm2, { getFieldsValue: getFieldsValue1, setFieldsValue: setFieldsValue1, validateFields }] = useForm({
     schemas,
     labelWidth: 130,
     baseColProps: {
@@ -87,7 +92,7 @@ const [registerForm2, {getFieldsValue: getFieldsValue1, setFieldsValue: setField
     resetButtonOptions: {
         title: '重置',
     },
-    submitFunc: async() => {
+    submitFunc: async () => {
         await validateFields();
         console.log(getFieldsValue1());
     },
@@ -97,7 +102,7 @@ function copy_obj() {
     js_utils_copy_code(JSON.stringify(values));
 }
 
-onMounted(async() => {
+onMounted(async () => {
     await setFieldsValue({
         name: '张三',
         sub: {
@@ -116,7 +121,5 @@ onMounted(async() => {
 function formChange(e) {
     console.log('formValue', e);
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,6 +1,6 @@
 <template>
     <div class="tag-demo">
-        <a-card title="基础用法" class="g-mt">
+        <a-card title="基础用法" class="mt-2.5">
             <div class="tag-section">
                 <q-tag value="默认标签" />
                 <q-tag value="标签内容" />
@@ -10,7 +10,7 @@
             </div>
         </a-card>
 
-        <a-card title="动态标签" class="g-mt">
+        <a-card title="动态标签" class="mt-2.5">
             <div class="tag-section">
                 <div style="margin-bottom: 16px">
                     <a-input v-model:value="newTagValue" placeholder="输入标签内容" style="width: 200px; margin-right: 8px" @press-enter="addTag" />
@@ -23,7 +23,7 @@
             </div>
         </a-card>
 
-        <a-card title="标签集合展示" class="g-mt">
+        <a-card title="标签集合展示" class="mt-2.5">
             <div class="tag-section">
                 <h4>技术标签:</h4>
                 <div style="margin-bottom: 16px">
@@ -42,7 +42,7 @@
             </div>
         </a-card>
 
-        <a-card title="文本截断示例" class="g-mt">
+        <a-card title="文本截断示例" class="mt-2.5">
             <div class="tag-section">
                 <div style="margin-bottom: 8px">
                     <q-tag value="短标签" />
@@ -59,7 +59,7 @@
             </div>
         </a-card>
 
-        <a-card title="使用场景示例" class="g-mt">
+        <a-card title="使用场景示例" class="mt-2.5">
             <div class="tag-section">
                 <h4>用户信息:</h4>
                 <div style="margin-bottom: 16px">
@@ -91,7 +91,7 @@ import { QTag } from '@quantum-design/vue3-pc-ui';
 import { Card as ACard, Input as AInput, Button as AButton } from 'ant-design-vue';
 
 defineOptions({
-    name: 'TagDemo'
+    name: 'TagDemo',
 });
 
 const newTagValue = ref('');

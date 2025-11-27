@@ -1,15 +1,14 @@
 $header-height: 60px;
 $detail-header-height: 40px;
-$footer-height: 60px;
 
-.q-drawer.container.drawer-container.add-weight {
+.q-drawer.drawer-container.add-weight {
     .ant-drawer-wrapper-body {
         overflow: hidden;
     }
 
     .ant-drawer-close {
         &:hover {
-            color: $error-color;
+            color: var(--error-color);
         }
     }
     .ant-drawer-body {
@@ -29,23 +28,21 @@ $footer-height: 60px;
     .q-drawer-footer {
         position: absolute;
         bottom: 0;
-        width: 100%;
-        padding: 0 12px 0 20px;
+        right: 10px;
         text-align: right;
-        border-top: 1px solid $border-color-base;
-        @include border-color(border-color, top);
+        border-top: 1px solid var(--border-color-base);
     }
 
     .q-drawer-header {
         display: flex;
         height: 100%;
         align-items: center;
-        @include text-color(text-color);
+        color: var(--text-color);
         &-back {
             padding: 0 12px;
             cursor: pointer;
             &:hover {
-                color: $primary-color;
+                color: var(--primary-color);
             }
         }
         &-twrap {
@@ -57,15 +54,14 @@ $footer-height: 60px;
         }
     }
 }
-.q-drawer.container.drawer-container.add-weight.q-drawer-detail {
+.q-drawer.drawer-container.add-weight.q-drawer-detail {
     position: absolute;
 
     .ant-drawer-header {
         width: 100%;
         height: $detail-header-height;
         padding: 10px;
-        border-top: 1px solid $border-color-base;
-        @include border-color(border-color);
+        border-top: 1px solid var(--border-color-base);
         box-sizing: border-box;
     }
 
@@ -86,8 +82,10 @@ $footer-height: 60px;
         height: calc(100% - $detail-header-height);
     }
 }
-[data-theme='dark'] {
-    .q-drawer.container.drawer-container.add-weight {
+.dark,
+.dark[data-theme='custom'],
+.dark[data-theme='default'] {
+    .q-drawer.drawer-container.add-weight {
         .ant-drawer-body {
             .q-drawer-content {
                 background-color: #000;

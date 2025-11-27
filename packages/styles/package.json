@@ -1,19 +1,19 @@
 {
     "name": "@quantum-design/styles",
-    "version": "2.0.3",
+    "version": "3.0.0",
     "description": "",
-    "publishConfig": {
-        "registry": "https://registry.npmjs.com/",
-        "access": "public"
-    },
+    "license": "MIT",
+    "author": "Evan Wu",
     "scripts": {},
     "files": [
         "antd",
         "base",
         "element"
     ],
-    "author": "Evan Wu",
-    "license": "MIT",
-    "devDependencies": {},
-    "dependencies": {}
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "dependencies": {},
+    "devDependencies": {}
 }
