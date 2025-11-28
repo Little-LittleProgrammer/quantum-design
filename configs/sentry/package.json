@@ -2,51 +2,51 @@
     "name": "@quantum-design-configs/vite-sentry",
     "version": "3.0.0",
     "description": "vite-sentry配置",
+    "license": "MIT",
+    "author": "Evan Wu",
+    "type": "module",
+    "scripts": {
+        "build": "rollup -c --environment TYPES:true"
+    },
+    "files": [
+        "README.md",
+        "dist"
+    ],
     "main": "dist/sentry.cjs.min.js",
     "module": "dist/sentry.esm.min.js",
     "source": "./index.ts",
     "types": "dist/types/index.d.ts",
-    "type": "module",
     "exports": {
         "./cli": {
+            "types": "./dist/types/vite-plugin.d.ts",
             "import": "./dist/sentry-cli.esm.min.js",
-            "require": "./dist/sentry-cli.cjs.min.js",
-            "types": "./dist/types/vite-plugin.d.ts"
+            "require": "./dist/sentry-cli.cjs.min.js"
         },
         "./project": {
+            "types": "./dist/types/project-inner.d.ts",
             "import": "./dist/sentry-inner.esm.min.js",
-            "require": "./dist/sentry-inner.cjs.min.js",
-            "types": "./dist/types/project-inner.d.ts"
+            "require": "./dist/sentry-inner.cjs.min.js"
         },
         "./nuxt": {
+            "types": "./dist/types/project-nuxt.d.ts",
             "import": "./dist/sentry-nuxt.esm.min.js",
-            "require": "./dist/sentry-nuxt.cjs.min.js",
-            "types": "./dist/types/project-nuxt.d.ts"
+            "require": "./dist/sentry-nuxt.cjs.min.js"
         }
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
     },
-    "scripts": {
-        "build": "rollup -c --environment TYPES:true"
-    },
-    "files": [
-        "dist",
-        "README.md"
-    ],
-    "author": "Evan Wu",
-    "license": "MIT",
-    "dependencies": {
-        "@sentry/vue": "catalog:",
-        "@sentry/cli": "catalog:",
-        "@sentry/vite-plugin": "catalog:"
-    },
-    "devDependencies": {
-        "rollup": "catalog:",
-        "@quantum-design-configs/rollup": "workspace:*"
-    },
     "peerDependencies": {
         "vue": "^3.4.0"
+    },
+    "dependencies": {
+        "@sentry/cli": "catalog:",
+        "@sentry/vite-plugin": "catalog:",
+        "@sentry/vue": "catalog:"
+    },
+    "devDependencies": {
+        "@quantum-design-configs/rollup": "workspace:*",
+        "rollup": "catalog:"
     }
 }

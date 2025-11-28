@@ -1,7 +1,6 @@
 {
     "name": "@quantum-design-configs/tailwind",
     "version": "3.0.0",
-    "private": true,
     "license": "MIT",
     "type": "module",
     "scripts": {
@@ -24,12 +23,12 @@
     },
     "exports": {
         ".": {
-            "types": "./src/index.ts",
+            "types": "./dist/types/index.d.ts",
             "import": "./dist/index.mjs",
             "require": "./dist/index.cjs"
         },
         "./postcss": {
-            "types": "./src/postcss.config.ts",
+            "types": "./dist/types/postcss.config.d.ts",
             "import": "./dist/postcss.config.mjs",
             "require": "./dist/postcss.config.cjs",
             "default": "./dist/postcss.config.mjs"
