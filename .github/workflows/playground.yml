@@ -34,12 +34,12 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: 10.10.0
+        version: 10.15.1
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.18.1' # 与 volta 配置保持一致
+        node-version: '22.19.0' # 与 volta 配置保持一致
         cache: 'pnpm'
 
     - name: Setup Pages
