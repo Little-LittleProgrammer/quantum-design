@@ -1,5 +1,5 @@
 # 基础镜像
-FROM --platform=linux/amd64 qimao-registry.cn-beijing.cr.aliyuncs.com/front/node:22.19
+FROM --platform=linux/amd64 node:22.19-alpine
 
 # 设置默认命令
 CMD ["/bin/sh"]
@@ -54,8 +54,7 @@ RUN npm config set registry=https://registry.npmmirror.com && \
 # ENV API_TIMEOUT_MS=600000
 
 # 配置 Claude MCP 工具
-RUN claude mcp add-json lighthouse '{"command":"npx","args":["-y","qm-lighthouse-mcp@0.1.4"]}' --scope user && \
-    claude mcp add-json larkmcp '{"command":"npx","args":["-y","@larksuiteoapi/lark-mcp","mcp","-a","cli_a751437852b01013","-s","Z4D2w1LK0ot96ebXzLEg7dH8Dkm86tvM","-l","zh","--token-mode","tenant_access_token"]}' --scope user
+RUN claude mcp add-json lighthouse '{"command":"npx","args":["-y","qm-lighthouse-mcp@0.1.4"]}' --scope user
 
 # 创建 /root/prompt 目录并写入性能优化指南
 RUN mkdir -p /root/prompt
