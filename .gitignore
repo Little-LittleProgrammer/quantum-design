@@ -42,6 +42,7 @@ yarn-error.log*
 *-cache
 **/stats.html
 .eslintcache
+configs/tailwind/src/index.ts
 
 # vite
 vite.config.ts.*
@@ -53,6 +54,10 @@ cache
 .temp
 **/.vitepress/cache/**/*
 @cache/
+report/sentryfix.json
+sentryfix.md
+report/performance.json
+performance.md
 
 # Nuxt dev/build outputs
 .output
@@ -68,8 +73,3 @@ cache
 # will have compiled files and executables
 **/target/
 **/gen/schemas
-configs/tailwind/src/index.ts
-report/sentryfix.json
-sentryfix.md
-report/performance.json
-performance.md
