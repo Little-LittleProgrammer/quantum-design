@@ -42,11 +42,11 @@ export function useAntdDesignTokens() {
 
             tokens.colorSuccess = getCssVariableValue('--success-color');
 
-            tokens.colorLink = getCssVariableValue('--link-color');
+            tokens.colorLink = getCssVariableValue('--primary-color-600');
 
-            tokens.colorPrimaryHover = getCssVariableValue('--hover-link-color');
+            tokens.colorPrimaryHover = getCssVariableValue('--primary-color-400');
 
-            tokens.colorLinkHover = getCssVariableValue('--hover-link-color');
+            tokens.colorLinkHover = getCssVariableValue('--primary-color-400');
 
             tokens.colorTextBase = getCssVariableValue('--text-color');
             tokens.colorTextDisabled = getCssVariableValue('--disabled-color');

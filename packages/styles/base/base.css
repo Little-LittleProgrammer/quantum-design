@@ -33,7 +33,7 @@
     /* 全站背景色 */
     --body-bg: hsl(0, 0%, 96%);
     --important-color: hsl(5, 90%, 55%);
-    --important-second-color: hsl(36, 100%, 49%);
+    --important-second-color: var(--warning-color);
     /* 表格表头背景色 */
     --table-th-bg: hsl(0, 0%, 94%);
     /* 表格隔行背景色 */
@@ -61,7 +61,7 @@
     /* 选中tab背景色 */
     --header-tabs-cur-bg: hsla(0, 0%, 100%, 0.12);
     /* 环境提示文案颜色 */
-    --header-environment-color: hsl(48, 100%, 49%);
+    --header-environment-color: var(--primary-color);
     /* 环境提示文案字体大小 */
     --header-environment-size: 16px;
 
@@ -77,7 +77,7 @@
     /* tab hover背景色 */
     --aside-tabs-hover-bg: transparent;
     /* tab hover文字颜色 */
-    --aside-tabs-hover-color: var(--link-color);
+    --aside-tabs-hover-color: var(--primary-color-600);
     /* tab 选中背景色 */
     --aside-tabs-cur-bg: var(--primary-color);
     /* tab 选中文字颜色 */
