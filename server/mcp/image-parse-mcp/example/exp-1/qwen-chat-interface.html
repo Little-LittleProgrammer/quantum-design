@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Qwen Chat Interface</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background-color: #0a0a0a;
+                display: flex;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            /* Sidebar Styles */
+            .sidebar {
+                width: 300px;
+                background-color: #141414;
+                border-right: 1px solid #2a2a2a;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .sidebar-header {
+                padding: 20px;
+                border-bottom: 1px solid #2a2a2a;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .app-title {
+                font-size: 24px;
+                font-weight: bold;
+                color: #ffffff;
+            }
+
+            .new-chat-btn {
+                background-color: #1a1a1a;
+                border: 2px solid #333;
+                border-radius: 8px;
+                padding: 10px 15px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: #fff;
+            }
+
+            .new-chat-btn:hover {
+                background-color: #252525;
+                border-color: #444;
+            }
+
+            .chat-section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                color: #999;
+            }
+
+            .section-title i {
+                margin-right: 8px;
+                transition: transform 0.2s ease;
+                color: #666;
+            }
+
+            .section-title.expanded i {
+                transform: rotate(90deg);
+            }
+
+            .chat-list {
+                list-style: none;
+            }
+
+            .chat-item {
+                padding: 12px 15px;
+                border-radius: 6px;
+                margin-bottom: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                color: #aaa;
+            }
+
+            .chat-item:hover {
+                background-color: #1a1a1a;
+                color: #fff;
+            }
+
+            .chat-item.active {
+                background-color: #1a1a1a;
+                border-left: 3px solid #3b82f6;
+                color: #fff;
+            }
+
+            .chat-date {
+                font-weight: bold;
+                margin: 15px 0 10px 0;
+                color: #666;
+                font-size: 14px;
+            }
+
+            .user-info {
+                padding: 20px;
+                border-top: 1px solid #2a2a2a;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: auto;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: #252525;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                font-weight: bold;
+                color: #fff;
+                border: 2px solid #333;
+            }
+
+            .username {
+                font-size: 16px;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            /* Main Content Styles */
+            .main-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                background-color: #0a0a0a;
+            }
+
+            .chat-header {
+                padding: 20px;
+                border-bottom: 1px solid #2a2a2a;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .chat-title {
+                font-size: 20px;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .dropdown-arrow {
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+                color: #666;
+                font-size: 12px;
+            }
+
+            .dropdown-arrow:hover {
+                background-color: #1a1a1a;
+                color: #fff;
+            }
+
+            .chat-container {
+                flex: 1;
+                padding: 30px 20px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .greeting {
+                font-size: 24px;
+                margin-bottom: 30px;
+                color: #fff;
+                font-weight: 300;
+            }
+
+            .message-box {
+                width: 100%;
+                max-width: 700px;
+                padding: 25px;
+                border: 1px solid #2a2a2a;
+                border-radius: 12px;
+                background-color: #141414;
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .message-text {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #ddd;
+                text-align: center;
+            }
+
+            .input-area {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px 20px;
+                border-top: 1px solid #2a2a2a;
+                background-color: #0f0f0f;
+            }
+
+            .input-actions {
+                display: flex;
+                gap: 8px;
+            }
+
+            .action-btn {
+                padding: 10px 16px;
+                border-radius: 20px;
+                border: 1px solid #333;
+                background-color: #1a1a1a;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 14px;
+                color: #888;
+            }
+
+            .action-btn:hover {
+                background-color: #252525;
+                border-color: #444;
+                color: #fff;
+            }
+
+            .send-btn {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background-color: #3b82f6;
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+            }
+
+            .send-btn:hover {
+                background-color: #2563eb;
+                transform: scale(1.05);
+            }
+
+            .input-field {
+                flex: 1;
+                padding: 12px 20px;
+                border: 1px solid #2a2a2a;
+                border-radius: 24px;
+                font-size: 15px;
+                outline: none;
+                background-color: #141414;
+                color: #fff;
+                transition: all 0.2s ease;
+            }
+
+            .input-field::placeholder {
+                color: #555;
+            }
+
+            .input-field:focus {
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            }
+
+            /* Scrollbar Styles */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #0a0a0a;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #444;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .sidebar {
+                    width: 250px;
+                }
+
+                .chat-header {
+                    padding: 15px;
+                }
+
+                .chat-title {
+                    font-size: 18px;
+                }
+
+                .message-box {
+                    padding: 20px;
+                }
+
+                .message-text {
+                    font-size: 15px;
+                }
+
+                .input-field {
+                    padding: 10px 16px;
+                    font-size: 14px;
+                }
+
+                .action-btn {
+                    padding: 8px 12px;
+                    font-size: 12px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .sidebar {
+                    width: 200px;
+                }
+
+                .sidebar-header {
+                    padding: 15px;
+                }
+
+                .new-chat-btn {
+                    font-size: 14px;
+                    padding: 8px 12px;
+                }
+
+                .chat-section {
+                    padding: 15px;
+                }
+
+                .section-title {
+                    font-size: 14px;
+                }
+
+                .chat-item {
+                    padding: 10px 12px;
+                    font-size: 13px;
+                }
+
+                .user-info {
+                    padding: 15px;
+                }
+
+                .avatar {
+                    width: 32px;
+                    height: 32px;
+                    font-size: 14px;
+                }
+
+                .username {
+                    font-size: 13px;
+                }
+
+                .chat-container {
+                    padding: 20px 15px;
+                }
+
+                .greeting {
+                    font-size: 20px;
+                }
+
+                .input-area {
+                    padding: 12px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="app-title">Qwen</div>
+                <button class="new-chat-btn"><span>+</span> New Chat</button>
+            </div>
+
+            <div class="chat-section">
+                <div class="section-title"><i>▶</i> All Chats</div>
+
+                <div class="chat-date">Today</div>
+                <ul class="chat-list">
+                    <li class="chat-item active">Chat 1</li>
+                    <li class="chat-item">Chat 2</li>
+                </ul>
+
+                <div class="chat-date">Yesterday</div>
+                <ul class="chat-list">
+                    <li class="chat-item">Chat 3</li>
+                    <li class="chat-item">Chat 4</li>
+                </ul>
+
+                <div class="chat-date">Previous 7 Days</div>
+                <ul class="chat-list">
+                    <li class="chat-item">Chat 5</li>
+                    <li class="chat-item">Chat 6</li>
+                </ul>
+            </div>
+
+            <div class="user-info">
+                <div class="avatar">U</div>
+                <div class="username">Username</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="chat-header">
+                <div class="chat-title">Qwen3-VL</div>
+                <div class="dropdown-arrow">▼</div>
+            </div>
+
+            <div class="chat-container">
+                <div class="greeting">Good evening, Qwen3-VL!</div>
+
+                <div class="message-box">
+                    <div class="message-text">How can I help you today?</div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-actions">
+                    <button class="action-btn">+</button>
+                    <button class="action-btn">Thinking</button>
+                    <button class="action-btn">Search</button>
+                </div>
+                <input type="text" class="input-field" placeholder="Type your message..." />
+                <button class="send-btn">↑</button>
+            </div>
+        </div>
+
+        <script>
+            // Add interactivity
+            document.addEventListener('DOMContentLoaded', function () {
+                // Toggle chat section expansion
+                const sectionTitle = document.querySelector('.section-title');
+                sectionTitle.addEventListener('click', function () {
+                    this.classList.toggle('expanded');
+                    const icon = this.querySelector('i');
+                    if (this.classList.contains('expanded')) {
+                        icon.textContent = '▼';
+                    } else {
+                        icon.textContent = '▶';
+                    }
+                });
+
+                // Chat item selection
+                const chatItems = document.querySelectorAll('.chat-item');
+                chatItems.forEach((item) => {
+                    item.addEventListener('click', function () {
+                        chatItems.forEach((i) => i.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+
+                // Send button functionality
+                const sendBtn = document.querySelector('.send-btn');
+                const inputField = document.querySelector('.input-field');
+
+                sendBtn.addEventListener('click', function () {
+                    if (inputField.value.trim()) {
+                        console.log('Message sent:', inputField.value);
+                        inputField.value = '';
+                    }
+                });
+
+                // Enter key to send
+                inputField.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        if (inputField.value.trim()) {
+                            console.log('Message sent:', inputField.value);
+                            inputField.value = '';
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
