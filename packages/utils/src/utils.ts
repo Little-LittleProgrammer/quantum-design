@@ -10,26 +10,38 @@ export function js_utils_deep_copy<T>(target: T, map = new Map()): T {
 
     // 不可遍历应用类型深拷贝
     // 拷贝方法
-    function clone_func(func: Fn): Fn | null {
-        const _bodyReg = /(?<=\{)(.|\n)+(?=\})/;
-        const _paramReg = /(?<=\().+(?=\)\s+\{)/;
-        const _funcStr = func.toString();
-        if (func.prototype) {
-            const _param = _paramReg.exec(_funcStr);
-            const _body = _bodyReg.exec(_funcStr);
-            if (_body) {
-                if (_param) {
-                    const _paramArr = _param[0].split(',');
-                    return new Function(..._paramArr, _body[0]) as Fn;
+    function clone_func(func: Fn): Fn | null | undefined {
+        // 目标：返回“新引用且可调用”的函数，不依赖 toString/new Function/eval（避免闭包/原生函数等场景失败）
+        const wrappedFunc: Fn = function (...args: any[]) {
+            // 不强依赖 this 语义，但转发 this 可最大化兼容性
+            return (func as any).apply(this, args);
+        };
+
+        // 先写入 map，避免函数挂载属性出现循环引用时递归爆栈
+        map.set(func, wrappedFunc);
+
+        // 仅复制“可枚举自有字符串属性”（不包含 Symbol/不可枚举）
+        const keys = Object.keys(func as any);
+        for (const key of keys) {
+            // 避免触碰内建只读字段导致异常
+            if (key === 'length' || key === 'name' || key === 'prototype' || key === 'caller' || key === 'arguments') continue;
+
+            const desc = Object.getOwnPropertyDescriptor(func as any, key);
+            if (!desc) continue;
+
+            try {
+                // 数据属性：value 深拷贝；访问器属性：按 descriptor 原样复制（get/set 不做深拷贝）
+                if ('value' in desc) {
+                    Object.defineProperty(wrappedFunc, key, { ...desc, value: js_utils_deep_copy((desc as any).value, map) });
                 } else {
-                    return new Function(_body[0]) as Fn;
+                    Object.defineProperty(wrappedFunc, key, desc);
                 }
-            } else {
-                return null;
+            } catch {
+                // 某些属性可能不可配置/只读，忽略即可，保证 deep_copy 主流程不被打断
             }
-        } else {
-            return eval(_funcStr);
         }
+
+        return wrappedFunc;
     }
     // 拷贝Symbol
     function clone_symbol(target: T): T {
@@ -266,7 +278,7 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
 /**
  * 查找多层值
  * @param object 要查找的对象 {a: {b:{c: {}}}}
- * @param string 要查找的属性 'a.b.c'
+ * @param path 要查找的属性 'a.b.c'
  * @returns 值
  */
 export function js_utils_find_attr(object: any, path: string) {
