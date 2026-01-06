@@ -1,6 +1,6 @@
 {
     "name": "qm-image-parse-mcp",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "视觉理解 MCP Server - 基于阿里云百炼 qwen3-vl-plus 模型的图像和视频分析能力",
     "keywords": [
         "mcp",

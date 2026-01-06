@@ -14,19 +14,19 @@ export function getUiToArtifactPrompt(args: Input): string {
     const { output_type, framework } = args;
 
     const prompts: Record<string, string> = {
-        code: `Analyze this UI screenshot and generate ${framework ? `in ${framework}` : ''} code.
+        code: `Analyze this UI image and generate ${framework ? `in ${framework}` : ''} code.
 Include all CSS styling, responsive design considerations, and component structure.
 Provide complete, working code that can be copy-pasted directly.`,
 
-        prompt: `Analyze this UI screenshot and generate a detailed image generation prompt.
+        prompt: `Analyze this UI image and generate a detailed image generation prompt.
 Include description of layout, colors, typography, components, and style.
 The prompt should be suitable for use with AI image generation tools.`,
 
-        design_spec: `Analyze this UI screenshot and extract design specifications.
+        design_spec: `Analyze this UI image and extract design specifications.
 Include: color palette, typography, spacing, component dimensions, layout grid, and design patterns.
 Format as a structured design system document.`,
 
-        natural_language: `Describe this UI screenshot in natural language.
+        natural_language: `Describe this UI image in natural language.
 Include: layout, components, content, visual style, and user experience observations.`,
     };
 

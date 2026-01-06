@@ -17,7 +17,7 @@ export interface ServerConfig {
 }
 
 const DEFAULT_CONFIG: Partial<ServerConfig> = {
-    model: 'qwen3-vl-plus',
+    model: 'qwen3-vl-plus-2025-12-19',
     endpoint: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
     logLevel: 'info',
 };
@@ -56,19 +56,20 @@ export function loadConfig(): ServerConfig {
     // eslint-disable-next-line n/prefer-global/process
     const ossRegion = process.env.OSS_REGION || 'oss-cn-hangzhou';
 
-    const ossConfig: OssConfig | undefined = ossAccessKeyId && ossAccessKeySecret && ossBucket
-        ? {
-            accessKeyId: ossAccessKeyId,
-            accessKeySecret: ossAccessKeySecret,
-            bucket: ossBucket,
-            region: ossRegion,
-        }
-        : undefined;
+    const ossConfig: OssConfig | undefined =
+        ossAccessKeyId && ossAccessKeySecret && ossBucket
+            ? {
+                  accessKeyId: ossAccessKeyId,
+                  accessKeySecret: ossAccessKeySecret,
+                  bucket: ossBucket,
+                  region: ossRegion,
+              }
+            : undefined;
 
     const configValue: ServerConfig = {
         apiKey: finalApiKey,
         // eslint-disable-next-line n/prefer-global/process
-        model: process.env.MODEL || DEFAULT_CONFIG.model || 'qwen3-vl-plus',
+        model: process.env.MODEL || DEFAULT_CONFIG.model || 'qwen3-vl-plus-2025-12-19',
         // eslint-disable-next-line n/prefer-global/process
         endpoint: process.env.ENDPOINT || DEFAULT_CONFIG.endpoint || 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
         logLevel,

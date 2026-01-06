@@ -12,7 +12,7 @@ type Input = z.infer<typeof InputSchema>;
 export function getDiagnoseErrorPrompt(args: Input): string {
     const language = args.language || 'unknown';
 
-    return `Analyze this error screenshot and provide:
+    return `Analyze this error image and provide:
 1. Error type identification (syntax, runtime, type, reference, etc.)
 2. Exact location (file, line number, function if visible)
 3. Root cause analysis

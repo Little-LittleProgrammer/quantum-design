@@ -13,7 +13,7 @@ export type ToolHandler = (args: Record<string, unknown>, context: ToolContext) 
 export const tools: ToolDefinition[] = [
     {
         name: 'ui_to_artifact',
-        description: 'Convert UI screenshot to code, prompt, design specification, or natural language description',
+        description: 'Convert UI image to code, prompt, design specification, or natural language description',
         inputSchema: {
             type: 'object',
             properties: {
@@ -36,7 +36,7 @@ export const tools: ToolDefinition[] = [
     },
     {
         name: 'extract_text_from_screenshot',
-        description: 'Extract and recognize text from screenshots using OCR. Optimized for code, terminal output, documents, and general text.',
+        description: 'Extract and recognize text from images using OCR. Optimized for code, terminal output, documents, and general text.',
         inputSchema: {
             type: 'object',
             properties: {
@@ -54,13 +54,13 @@ export const tools: ToolDefinition[] = [
     },
     {
         name: 'diagnose_error_screenshot',
-        description: 'Analyze error popups, stack traces, and log screenshots to provide location and fix suggestions.',
+        description: 'Analyze error popups, stack traces, and log images to provide location and fix suggestions.',
         inputSchema: {
             type: 'object',
             properties: {
                 image: {
                     type: 'string',
-                    description: 'Error screenshot input: local path, URL, or Base64',
+                    description: 'Error image input: local path, URL, or Base64',
                 },
                 language: {
                     type: 'string',
@@ -110,7 +110,7 @@ export const tools: ToolDefinition[] = [
     },
     {
         name: 'ui_diff_check',
-        description: 'Compare two UI screenshots to identify visual differences and implementation deviations.',
+        description: 'Compare two UI images to identify visual differences and implementation deviations.',
         inputSchema: {
             type: 'object',
             properties: {
