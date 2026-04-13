@@ -284,8 +284,11 @@ export function js_utils_add_to_object(obj: Record<string | number, any>, key: s
 export function js_utils_find_attr(object: any, path: string) {
     // 将路径转换为数组，支持 a.b.c[*].d 形式
     const tags = path
+        // 将 [key] 格式转换为 .key 格式
         .replace(/\[(\w+|\*)\]/g, '.$1')
+        // 将 ["key"] 格式转换为 .key 格式
         .replace(/\["(\w+|\*)"\]/g, '.$1')
+        // 将 ['key'] 格式转换为 .key 格式
         .replace(/\['(\w+|\*)'\]/g, '.$1')
         .split('.')
         .filter(Boolean);
