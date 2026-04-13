@@ -1,9 +1,9 @@
+import { createAliyunProvider, AliyunModels, aiHub } from '../dist/ai-hub.esm.min.js';
 /**
  * 简单测试 AI Hub 构建包
  */
 
 // 测试 CommonJS 导入
-const { createAliyunProvider, AliyunModels, aiHub, } = require('../dist/ai-hub.cjs.min.js');
 
 console.log('🧪 测试 AI Hub 包...');
 

@@ -3,7 +3,7 @@ packages:
   - "configs/*"
   # 内部共享包（工具、组件等），排除 @vue3-antd-pc-ui-nuxt/ 和 @vue3-pc-ui-nuxt/
   # 用于存放可复用的工具库、组件库等内部 npm 包
-  - "packages/*"
+  - "packages/**/*"
   - "!**/*-ui-nuxt/**"
   # 文档站点与文档工程（项目文档、组件文档等相关工程）
   - "docs/*"
@@ -240,6 +240,8 @@ catalog:
   "theme-colors": "^0.1.0"
   # @ctrl/tinycolor: 颜色处理工具
   "@ctrl/tinycolor": "^4.1.0"
+  "markdown-it": "^13.0.2"
+  "@types/markdown-it": "^13.0.2"
 
   # Node/脚手架与通用工具
   # fs-extra: 文件系统扩展库
@@ -302,3 +304,4 @@ catalog:
   "ali-oss": "^6.20.0"
   "@larksuiteoapi/node-sdk": "^1.54.0"
   "@anthropic-ai/claude-agent-sdk": "^0.1.55"
+  "@ag-ui/core": "^0.0.46"

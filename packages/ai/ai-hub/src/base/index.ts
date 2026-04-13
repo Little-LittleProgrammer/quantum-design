@@ -131,12 +131,12 @@ export class AIHub {
         if (!provider) {
             throw new Error(`Provider "${providerName}" not found`);
         }
-        yield * provider.generateStream(options);
+        yield* provider.generateStream(options);
     }
 
     clear(name?: string) {
         if (name && this.providers.has(name)) {
-            this.providers.get(name)!.clear();
+            this.providers.get(name)?.clear();
         } else {
             for (const provider of this.providers.values()) {
                 provider.clear();

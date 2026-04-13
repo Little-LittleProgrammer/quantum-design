@@ -1,0 +1,47 @@
+{
+    "name": "@quantum-design/ai-core-plugins",
+    "version": "1.0.0",
+    "description": "Q-Front npm aiCore plugins.",
+    "keywords": [
+        "ai-core",
+        "plugins"
+    ],
+    "license": "ISC",
+    "author": "Evan Wu",
+    "type": "module",
+    "scripts": {
+        "build": "rollup -c",
+        "build:types": "tsc --emitDeclarationOnly",
+        "dev": "rollup -c -w"
+    },
+    "files": [
+        "README.md",
+        "dist"
+    ],
+    "sideEffects": false,
+    "main": "dist/ai-core-plugins.cjs.min.js",
+    "module": "dist/ai-core-plugins.esm.min.js",
+    "types": "dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/ai-core-plugins.esm.min.js",
+            "require": "./dist/ai-core-plugins.cjs.min.js",
+            "default": "./dist/ai-core-plugins.esm.min.js"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "dependencies": {
+        "@quantum-design/ai-core": "workspace:*",
+        "markdown-it": "catalog:"
+    },
+    "devDependencies": {
+        "@ag-ui/core": "catalog:",
+        "@quantum-design-configs/rollup": "workspace:*",
+        "@types/markdown-it": "catalog:",
+        "rollup": "catalog:"
+    }
+}

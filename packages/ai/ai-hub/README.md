@@ -4,12 +4,12 @@
 
 ## 特性
 
--   🚀 **统一接口**: 为不同 AI 供应商提供统一的调用接口
--   🔄 **多供应商支持**: 支持阿里云通义千问、百炼应用等
--   💧 **流式响应**: 支持流式和非流式两种响应模式
--   🔁 **自动重试**: 内置指数退避重试机制
--   🎯 **类型安全**: 完整的 TypeScript 类型定义
--   📝 **会话管理**: 支持多轮对话会话管理
+- 🚀 **统一接口**: 为不同 AI 供应商提供统一的调用接口
+- 🔄 **多供应商支持**: 支持阿里云通义千问、百炼应用等
+- 💧 **流式响应**: 支持流式和非流式两种响应模式
+- 🔁 **自动重试**: 内置指数退避重试机制
+- 🎯 **类型安全**: 完整的 TypeScript 类型定义
+- 📝 **会话管理**: 支持多轮对话会话管理
 
 ## 安装
 
@@ -135,11 +135,11 @@ for await (const chunk of bailianProvider.generateStream({
 
 #### 方法
 
--   `register(name: string, provider: BaseAIProvider)`: 注册 AI 供应商
--   `getProvider(name: string)`: 获取指定供应商
--   `getProviderNames()`: 获取所有供应商名称
--   `generate(providerName: string, options: AIGenerateOptions)`: 生成回复
--   `generateStream(providerName: string, options: AIGenerateOptions)`: 流式生成回复
+- `register(name: string, provider: BaseAIProvider)`: 注册 AI 供应商
+- `getProvider(name: string)`: 获取指定供应商
+- `getProviderNames()`: 获取所有供应商名称
+- `generate(providerName: string, options: AIGenerateOptions)`: 生成回复
+- `generateStream(providerName: string, options: AIGenerateOptions)`: 流式生成回复
 
 ### AliyunProvider
 
