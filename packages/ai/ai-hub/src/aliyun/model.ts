@@ -54,16 +54,40 @@ export interface AliyunModelConfig {
     result_format?: 'text' | 'message';
 }
 
+// 阿里云 Function Call 工具定义
+export interface AliyunTool {
+    type: 'function';
+    function: {
+        name: string;
+        description: string;
+        parameters?: Record<string, unknown>;
+    };
+}
+
+// 阿里云 Function Call
+export interface AliyunToolCall {
+    id: string;
+    type: 'function';
+    function: {
+        name: string;
+        arguments: string;
+    };
+}
+
 // 阿里云 API 请求格式
 export interface AliyunRequest {
     model: string;
     input: {
         messages: Array<{
-            role: 'user' | 'assistant' | 'system';
-            content: string;
+            role: 'user' | 'assistant' | 'system' | 'tool';
+            content: string | Array<{ type: 'text'; text: string } | { type: 'image'; image: string }>;
+            tool_calls?: AliyunToolCall[];
+            tool_call_id?: string;
         }>;
     };
     parameters?: AliyunModelConfig;
+    tools?: AliyunTool[];
+    tool_choice?: 'auto' | 'none' | { type: 'function'; function: { name: string } };
 }
 
 // 百炼应用请求格式
@@ -89,6 +113,7 @@ export interface AliyunResponse {
                 role: string;
                 content: string;
                 reasoning_content?: string;
+                tool_calls?: AliyunToolCall[];
             };
         }>;
     };
@@ -123,10 +148,12 @@ export interface AliyunStreamChunk {
         finish_reason?: string;
         choices?: Array<{
             finish_reason: string;
+            index?: number;
             message: {
                 role: string;
                 content: string;
                 reasoning_content?: string;
+                tool_calls?: AliyunToolCall[];
             };
         }>;
     };

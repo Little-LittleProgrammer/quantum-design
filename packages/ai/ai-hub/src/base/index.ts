@@ -2,18 +2,45 @@
  * AI Hub 基础类型定义和接口
  */
 
-export interface AIConfig {
-    apiKey: string;
-    modelName?: string;
-    baseURL?: string;
-    timeout?: number;
-    maxRetries?: number;
+/**
+ * Function Call 工具定义
+ */
+export interface AITool {
+    type: 'function';
+    function: {
+        name: string;
+        description: string;
+        parameters?: Record<string, unknown>;
+    };
+}
+
+/**
+ * Function Call 结果
+ */
+export interface AIToolCall {
+    id: string;
+    type: 'function';
+    function: {
+        name: string;
+        arguments: string; // JSON string
+    };
+}
+
+/**
+ * Function Call 执行结果
+ */
+export interface AIToolResult {
+    toolCallId: string;
+    name: string;
+    content: string; // 工具执行结果
 }
 
 export interface AIMessage {
-    role: 'user' | 'assistant' | 'system';
+    role: 'user' | 'assistant' | 'system' | 'tool';
     content: string;
     reasoning_content?: string;
+    toolCalls?: AIToolCall[];
+    toolCallId?: string; // 用于 role: 'tool' 消息
 }
 
 export interface AIResponse {
@@ -26,6 +53,7 @@ export interface AIResponse {
     };
     model?: string;
     finishReason?: string;
+    toolCalls?: AIToolCall[];
 }
 
 export interface AIStreamResponse {
@@ -37,6 +65,12 @@ export interface AIStreamResponse {
         completionTokens?: number;
         totalTokens?: number;
     };
+    toolCalls?: AIToolCall[];
+    toolCallDelta?: {
+        id?: string;
+        name?: string;
+        arguments?: string;
+    };
 }
 
 export interface AIGenerateOptions {
@@ -46,6 +80,16 @@ export interface AIGenerateOptions {
     stream?: boolean;
     stop?: string[];
     resultFormat?: 'text' | 'message';
+    tools?: AITool[];
+    toolChoice?: 'auto' | 'none' | { type: 'function'; function: { name: string } };
+}
+
+export interface AIConfig {
+    apiKey: string;
+    modelName?: string;
+    baseURL?: string;
+    timeout?: number;
+    maxRetries?: number;
 }
 
 /**

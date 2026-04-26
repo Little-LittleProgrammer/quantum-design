@@ -7,10 +7,11 @@
  * - 流式和非流式响应
  * - 自动重试和错误处理
  * - 会话管理
+ * - Function Call 支持
  */
 
 // 基础类型和接口
-import type { AIConfig, AIMessage, AIResponse, AIStreamResponse, AIGenerateOptions } from './base';
+import type { AIConfig, AIMessage, AIResponse, AIStreamResponse, AIGenerateOptions, AITool, AIToolCall, AIToolResult } from './base';
 
 // 基础抽象类和管理器
 import { BaseAIProvider, AIHub, aiHub } from './base';
@@ -19,9 +20,9 @@ import { BaseAIProvider, AIHub, aiHub } from './base';
 import { AliyunProvider } from './aliyun/app';
 
 // 阿里云模型和配置
-import { AliyunModels, type AliyunConfig, type AliyunModelConfig, type AliyunRequest, type BailianRequest, type AliyunResponse, type BailianResponse, type AliyunStreamChunk, type BailianStreamChunk } from './aliyun/model';
+import { AliyunModels, type AliyunConfig, type AliyunModelConfig, type AliyunRequest, type BailianRequest, type AliyunResponse, type BailianResponse, type AliyunStreamChunk, type BailianStreamChunk, type AliyunTool, type AliyunToolCall } from './aliyun/model';
 
-export type { AIConfig, AIMessage, AIResponse, AIStreamResponse, AIGenerateOptions, AliyunConfig, AliyunModelConfig, AliyunRequest, BailianRequest, AliyunResponse, BailianResponse, AliyunStreamChunk, BailianStreamChunk };
+export type { AIConfig, AIMessage, AIResponse, AIStreamResponse, AIGenerateOptions, AITool, AIToolCall, AIToolResult, AliyunConfig, AliyunModelConfig, AliyunRequest, BailianRequest, AliyunResponse, BailianResponse, AliyunStreamChunk, BailianStreamChunk, AliyunTool, AliyunToolCall };
 
 export { BaseAIProvider, AIHub, aiHub, AliyunProvider, AliyunModels };
 
