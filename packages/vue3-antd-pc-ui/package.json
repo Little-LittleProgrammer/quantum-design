@@ -60,9 +60,9 @@
         "access": "public"
     },
     "peerDependencies": {
-        "pinia": "^2.2.2",
+        "pinia": "^3.0.0",
         "vue": "^3.5.0",
-        "vue-router": "^4.4.0"
+        "vue-router": "^4.5.0"
     },
     "dependencies": {
         "@quantum-design/hooks": "workspace:*",

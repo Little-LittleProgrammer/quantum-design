@@ -1,7 +1,6 @@
 {
     "extends": "@quantum-design-configs/tsconfig/vue.json",
     "compilerOptions": {
-        "baseUrl": ".",
         "isolatedModules": true,
     },
     "include": [

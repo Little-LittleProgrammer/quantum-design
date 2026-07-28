@@ -1,11 +1,10 @@
 {
     "extends": "@quantum-design-configs/tsconfig/vue.json",
     "compilerOptions": {
-        "baseUrl": ".",
         "isolatedModules": true,
         "paths": {
-            "@/*": ["src/*"],
-            "#/*": ["types/*"],
+            "@/*": ["./src/*"],
+            "#/*": ["./types/*"],
             "@quantum-design/*": ["../../packages/*"]
         }
     },

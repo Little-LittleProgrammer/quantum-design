@@ -1,9 +1,9 @@
 import * as monaco from 'monaco-editor';
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import CssWorker from 'monaco-editor/language/css/css.worker?worker';
+import HtmlWorker from 'monaco-editor/language/html/html.worker?worker';
+import JsonWorker from 'monaco-editor/language/json/json.worker?worker';
+import TsWorker from 'monaco-editor/language/typescript/ts.worker?worker';
 export function install_monaco() {
     window.MonacoEnvironment = {
         getWorker(_: any, label: string) {
@@ -20,7 +20,7 @@ export function install_monaco() {
                 return new TsWorker();
             }
             return new EditorWorker();
-        }
+        },
     };
 
     monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);

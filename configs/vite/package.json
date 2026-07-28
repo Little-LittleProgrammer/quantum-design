@@ -30,7 +30,7 @@
         "unplugin-vue-components": "catalog:",
         "vite": "^8.0.0",
         "rolldown": "catalog:",
-        "vue": "^3.4.0"
+        "vue": "^3.5.0"
     },
     "dependencies": {
         "@quantum-design-configs/vite-sentry": "workspace:*",

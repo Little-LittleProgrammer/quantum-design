@@ -3,11 +3,10 @@
   "compilerOptions": {
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
     "paths": {
-        "@vue3-antd/*": ["src/*"],
-        "vue-types": ["node_modules/vue-types"],
-        "csstype": ["node_modules/csstype"]
+        "@vue3-antd/*": ["./src/*"],
+        "vue-types": ["./node_modules/vue-types"],
+        "csstype": ["./node_modules/csstype"]
     },
   },
   "include": ["src", "index.ts", "types", "node_modules/@quantum-design/types/**/*.d.ts"],
