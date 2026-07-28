@@ -251,7 +251,7 @@ pnpm install
 │   │   ├── package.json # package.json
 ├── packages # 依赖目录 (v3.0.0 优化结构)
 │   ├── configs # 配置目录
-│   │   ├── eslint # eslint配置
+│   │   ├── oxlint # oxlint配置
 │   │   ├── vite # vite配置 (升级到v3.0.0)
 │   │   ├── tsconfig # tsconfig配置
 │   │   ├── tailwind # tailwind配置
