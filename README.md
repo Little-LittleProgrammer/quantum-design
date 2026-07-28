@@ -11,9 +11,9 @@
 
 ## 环境要求
 
-- Node: >= 20.19.0（推荐使用 Volta 固定到 `20.19.4`）
-- pnpm: >= 10.0.0（推荐 `10.13.1`）
-- 包管理器已在根 `package.json` 配置 `packageManager: pnpm@10.13.1`，并在 `volta` 指定了 Node 与 pnpm 版本，建议按此安装。
+- Node: >= 22.19.0（推荐使用 Volta 固定到 `22.19.0`）
+- pnpm: >= 10.0.0（推荐 `10.15.1`）
+- 包管理器已在根 `package.json` 配置 `packageManager: pnpm@10.15.1`，并在 `volta` 指定了 Node 与 pnpm 版本，建议按此安装。
 
 ## 快速开始
 
@@ -59,11 +59,11 @@ pnpm commit
     - `cli/workflow-cloud`: 工作流云端工具与客户端封装。
 
 - **统一配置 Configs**（作为独立包复用）
-    - `configs/eslint`: 统一 ESLint 配置。
+    - `configs/oxlint`: 统一 oxlint 配置。
     - `configs/prettier`: 统一 Prettier 配置。
     - `configs/tsconfig`: TypeScript 配置。
-    - `configs/vite`: Vite 插件与构建封装（当前 peer 依赖为 Vite ^6）。
-    - `configs/rollup`: Rollup 构建配置。
+    - `configs/vite`: Vite 插件与构建封装（当前 peer 依赖为 Vite ^8）。
+    - `configs/rolldown`: Rolldown 构建配置。
     - `configs/commitlint`: Commitlint 配置。
     - `configs/sentry`: Sentry 集成配置。
 
@@ -89,7 +89,7 @@ pnpm commit
 - `build`: 使用 Turbo 进行全量构建。
 - `build:lib`: 库包构建（依各包 `build:lib`）。
 - `test` / `test:coverage`: 使用 Vitest（含 UI/覆盖率）。
-- `lint`: 先运行 `oxlint` 再运行 `eslint`。
+- `lint`: 运行 `oxlint`（`lint:fix` 会附带 `--fix`）。
 - `format`: Prettier 批量格式化 `ts/tsx/md`。
 - `commit`: 使用 `czg` 进行规范化提交。
 - `prepare`: Husky 钩子安装。
@@ -99,8 +99,8 @@ pnpm commit
 ## 开发规范
 
 - 统一提交规范：使用 `pnpm commit` 调用 `czg`，遵守 Conventional Commits。
-- 统一 Lint：仓库提供 `@quantum-design-configs/eslint`，请在包内按需继承。
-- 统一构建：库包优先使用 `configs/rollup` 与 `configs/vite` 的封装。
+- 统一 Lint：仓库提供 `@quantum-design-configs/oxlint`，根目录 `oxlint.config.ts` 统一维护，子包默认继承。
+- 统一构建：库包优先使用 `configs/rolldown` 与 `configs/vite` 的封装。
 
 ## 升级指南
 
@@ -109,7 +109,7 @@ pnpm commit
 ### 3.0.0（进行中）
 
 - [x] Vite 升级到 v7，并同步更新 `configs/vite` 的 peer 依赖与适配。
-- [x] 重构 ESLint 配置（`configs/eslint`），统一各工作区规则与插件版本。
+- [x] 移除 ESLint，全量迁移到 oxlint（新增 `configs/oxlint`，删除 `configs/eslint`）。
 - [x] 支持 tarui
 - [x] 重构 项目偏好设置，支持 css variables 模式，多主题，支持系统主题获取
 - [x] 增加主题切换动画，视觉上降低卡顿效果

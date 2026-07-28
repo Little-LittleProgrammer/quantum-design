@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { joinTimestamp, joinEnvToUrl, joinCookieToUrl, dealToken } from '../axios/helper';
+import { js_create_local_storage } from '@quantum-design/utils/extra';
 
 describe('helper.ts', () => {
     describe('joinTimestamp', () => {
@@ -190,7 +191,7 @@ describe('helper.ts', () => {
                 // 模拟 localStorage
                 const mockToken = { 'x-qm-devops-token': 'test_token_123' };
                 if (typeof localStorage !== 'undefined') {
-                    localStorage.setItem('qm_token', JSON.stringify(mockToken));
+                    js_create_local_storage().set('qm_token', mockToken);
                 }
 
                 const options = {
@@ -232,10 +233,8 @@ describe('helper.ts', () => {
 
                 if (typeof localStorage !== 'undefined') {
                     setTokenToLs(true, response);
-                    const saved = localStorage.getItem('qm_token');
-                    if (saved) {
-                        expect(JSON.parse(saved)['x-qm-devops-token']).toBe('new_token_456');
-                    }
+                    const saved = js_create_local_storage().get('qm_token');
+                    expect(saved['x-qm-devops-token']).toBe('new_token_456');
                 }
             });
 

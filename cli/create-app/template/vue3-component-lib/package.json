@@ -6,21 +6,21 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && vue-tsc -p tsconfig.build.json",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage"
     },
     "files": [
         "dist"
     ],
-    "main": "dist/lib/index.js",
+    "main": "dist/lib/index.cjs",
     "module": "dist/es/index.js",
     "typings": "dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
             "import": "./dist/es/index.js",
-            "require": "./dist/lib/index.js"
+            "require": "./dist/lib/index.cjs"
         },
         "./es": {
             "types": "./dist/index.d.ts",
@@ -28,7 +28,7 @@
         },
         "./lib": {
             "types": "./dist/index.d.ts",
-            "require": "./dist/lib/index.js"
+            "require": "./dist/lib/index.cjs"
         },
         "./es/*": {
             "types": "./dist/src/*.d.ts",
@@ -36,7 +36,7 @@
         },
         "./lib/*": {
             "types": "./dist/src/*.d.ts",
-            "require": "./dist/lib/*.js"
+            "require": "./dist/lib/*.cjs"
         },
         "./*": "./*"
     },
@@ -53,20 +53,22 @@
     },
     "devDependencies": {
         "@changesets/cli": "^2.29.5",
-        "@quantum-design-configs/eslint": "~3.0.0",
+        "@quantum-design-configs/oxlint": "~3.0.0",
         "@quantum-design-configs/prettier": "~3.0.0",
         "@quantum-design-configs/tailwind": "~3.0.0",
         "@quantum-design-configs/tsconfig": "~3.0.0",
-        "@quantum-design-configs/vite": "~3.0.0",
+        "@quantum-design-configs/vite": "^4.0.0",
         "@quantum-design/types": "~3.0.0",
-        "@types/node": "^20.19.10",
+        "@types/node": "^22.19.0",
         "@vue/test-utils": "^2.4.6",
-        "eslint": "^9.22.0",
+        "oxlint": "^1.11.1",
         "sass": "^1.83.0",
+        "rolldown": "1.2.0",
         "tslib": "^2.8.1",
         "typescript": "^5.9.2",
-        "vite": "^7.1.1",
+        "vite": "^8.1.5",
         "vue": "^3.5.18",
-        "vue-router": "^4.5.1"
+        "vue-router": "^4.5.1",
+        "vue-tsc": "^3.0.5"
     }
 }

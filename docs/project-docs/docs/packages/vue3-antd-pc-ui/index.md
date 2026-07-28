@@ -181,7 +181,7 @@ export default defineConfig({
 #### 🔧 开发体验
 
 - **TypeScript**: 完整的类型定义和智能提示
-- **ESLint**: 集成代码规范检查
+- **Oxlint**: 集成代码规范检查
 - **Storybook**: 组件开发文档和示例
 - **单元测试**: 完整的测试覆盖率
 - **CI/CD**: 自动化构建和发布流程

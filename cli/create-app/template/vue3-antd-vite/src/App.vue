@@ -1,6 +1,6 @@
 <template>
     <a-config-provider :locale="locale" :theme="getThemeMode">
-        <div id="app" >
+        <div id="app">
             <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
             <export-file></export-file>
             <component v-if="dynamicComponent" :is="dynamicComponent"></component>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent} from 'vue';
+import { defineComponent, defineAsyncComponent } from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import { useMessage } from '@quantum-design/hooks/vue/use-message';
 import { api_global_env } from '@/http/api/global';
@@ -20,7 +20,7 @@ import { useUserStore } from '@/store/modules/user';
 import { useGlobalStore } from '@/store/modules/global';
 import { useSysStore } from '@/store/modules/systemManage';
 import ExportFile from '@/components/export-file/export-modal.vue';
-import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import { useGo } from '@quantum-design/hooks/vue/use-page';
@@ -32,16 +32,17 @@ export default defineComponent({
     },
     setup() {
         const locale = zhCN;
-        const {createMessage, } = useMessage();
+        const { createMessage } = useMessage();
         const userStore = useUserStore();
         const globalStore = useGlobalStore();
-        const {getSearchButton, } = useProjectSetting();
+        const { getSearchButton } = useProjectSetting();
         const sysStore = useSysStore();
-        const {getThemeMode, } = useThemeSetting();
+        const { getThemeMode } = useThemeSetting();
         let requestNum = 0;
-        const go = useGo()
-        const get_global_env = () => { // 环境检测
-            api_global_env().then(res => {
+        const go = useGo();
+        const get_global_env = () => {
+            // 环境检测
+            api_global_env().then((res) => {
                 if (res.code === 200) {
                     globalStore.set_environment_data(res.data);
                     userStore.username = res.data.username;
@@ -53,11 +54,14 @@ export default defineComponent({
                     alert(`错误信息: ${res.msg}`);
                 }
             });
-            setTimeout(() => {
-                get_global_env();
-            }, 3 * 60 * 1000);
+            setTimeout(
+                () => {
+                    get_global_env();
+                },
+                3 * 60 * 1000,
+            );
         };
-        const get_menus_data = async() => {
+        const get_menus_data = async () => {
             if (globalStore.authorityManage) {
                 const _res = await api_manage_user_auths();
                 if (_res.code == 200) {
@@ -91,7 +95,7 @@ export default defineComponent({
                 getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
                 go({
                     path: sysStore.initMenuData,
-                })
+                });
             }
         };
         if (globalStore.authorityManage) {
@@ -100,9 +104,12 @@ export default defineComponent({
             get_menus_data();
         }
 
-        const dynamicComponent = import.meta.env.VITE_USE_PWA === 'true' ? defineAsyncComponent(() => {
-            return import ('@/components/layout/qm-reload-prompt.vue');
-        }) : null;
+        const dynamicComponent =
+            import.meta.env.VITE_USE_PWA === 'true'
+                ? defineAsyncComponent(() => {
+                      return import('@/components/layout/qm-reload-prompt.vue');
+                  })
+                : null;
 
         return {
             locale,
@@ -123,17 +130,17 @@ export default defineComponent({
 <style lang="scss" scoped>
 #app {
     min-width: 1024px;
-    overflow-x: auto
+    overflow-x: auto;
 }
 </style>
 
 <style lang="scss">
 @use '@quantum-design/styles/antd/antd.scss';
 @use '@quantum-design/styles/base/index.scss';
-.table-nowrap{
+.table-nowrap {
     .ant-table-cell {
-        white-space: nowrap ;
-        min-width: 100px
+        white-space: nowrap;
+        min-width: 100px;
     }
 }
 </style>

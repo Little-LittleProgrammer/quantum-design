@@ -1,4 +1,4 @@
-# eslint
+# tsconfig
 
 ## 简介
 
@@ -6,7 +6,7 @@ npm 包名称: `@quantum-design/tsconfig`
 
 当前版本: 2.0.3
 
-提供了公共的 eslint 配置, 包括
+提供了公共的 tsconfig 配置, 包括
 
 1. `base.json`, 对应基础 tsconfigt 配置
 2. `lib.json`, 用于 lib 包

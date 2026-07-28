@@ -220,7 +220,7 @@ export function js_utils_format_money_num<T extends string | number>(num: T): st
     if (_int.includes(',')) {
         return _resArr.join('.');
     }
-    const _formatArr = [];
+    const _formatArr: string[] = [];
     for (let i = 0; i < _int.length; i++) {
         _formatArr.push(_int[i]);
         if ((i + 1) % 3 === 0 && i !== _int.length - 1) {

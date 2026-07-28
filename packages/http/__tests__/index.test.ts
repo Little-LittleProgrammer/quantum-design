@@ -240,7 +240,7 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
         });
 
         describe('responseInterceptorsCatch', () => {
-            it('应该处理网络错误', () => {
+            it('应该处理网络错误', async () => {
                 const mockErrorCb = vi.fn();
                 const error = {
                     toString: () => 'Error: Network Error',
@@ -254,10 +254,10 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
 
                 const result = defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
                 expect(mockErrorCb).toHaveBeenCalledWith('400', expect.any(String));
-                expect(result).rejects.toBeDefined();
+                await expect(result).rejects.toBe(error);
             });
 
-            it('应该处理超时错误', () => {
+            it('应该处理超时错误', async () => {
                 const mockErrorCb = vi.fn();
                 const error = {
                     toString: () => 'Error: timeout',
@@ -269,11 +269,12 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
                     },
                 };
 
-                defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
+                const result = defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
                 expect(mockErrorCb).toHaveBeenCalled();
+                await expect(result).rejects.toBe(error);
             });
 
-            it('应该处理取消的请求', () => {
+            it('应该处理取消的请求', async () => {
                 const error = {
                     code: 'ERR_CANCELED',
                 } as any;
@@ -283,11 +284,11 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
 
                 const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
                 const result = defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
-                expect(result).resolves.toBeDefined();
+                await expect(result).resolves.toBeDefined();
                 consoleSpy.mockRestore();
             });
 
-            it('应该在 GET 请求失败时启用重试机制', () => {
+            it('应该在 GET 请求失败时启用重试机制', async () => {
                 const error = {
                     config: {
                         method: 'GET',
@@ -295,7 +296,7 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
                             retryRequest: {
                                 isOpenRetry: true,
                                 count: 3,
-                                waitTime: 100,
+                                waitTime: 0,
                             },
                         },
                     },
@@ -308,18 +309,20 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
                         retryRequest: {
                             isOpenRetry: true,
                             count: 3,
-                            waitTime: 100,
+                            waitTime: 0,
                         },
                         errorMessageCb: vi.fn(),
                     },
                 };
 
-                defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
+                mockAxiosInstance.request.mockResolvedValueOnce({ data: 'success' });
+                const result = defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
                 // 验证重试逻辑被触发
                 expect(error.config).toBeDefined();
+                await expect(result).resolves.toEqual({ data: 'success' });
             });
 
-            it('应该调用自定义错误响应拦截器', () => {
+            it('应该调用自定义错误响应拦截器', async () => {
                 const customResponseError = vi.fn();
                 const error = new Error('Test error') as any;
                 const options: CreateAxiosOptions = {
@@ -331,8 +334,9 @@ describe('index.ts - defaultTransform 和 createAxios', () => {
                     },
                 };
 
-                defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
+                const result = defaultTransform.responseInterceptorsCatch?.(error, options, mockAxiosInstance as any);
                 expect(customResponseError).toHaveBeenCalledWith(error);
+                await expect(result).rejects.toBe(error);
             });
         });
     });

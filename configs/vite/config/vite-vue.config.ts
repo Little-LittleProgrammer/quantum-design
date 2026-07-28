@@ -9,7 +9,7 @@ import process from 'process';
 export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: CommonOptions): UserConfig {
     const getOptions = {
         outDir: outputDir,
-        rollupOptions: {},
+        rolldownOptions: {},
         buildOptions: {},
         ...(options || {}),
     };
@@ -36,14 +36,13 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
             open: true,
             proxy: vite_utils_create_proxy(VITE_PROXY),
         },
-        esbuild: {
-            pure: VITE_DROP_CONSOLE ? ['console.log', 'console.warn', 'console.info', 'console.error', 'console.debug'] : [],
-            drop: VITE_DROP_CONSOLE ? ['debugger'] : [],
-        },
         build: {
             target: 'es2015',
             outDir: getOptions.outDir,
-            rollupOptions: {
+            rolldownOptions: {
+                treeshake: {
+                    manualPureFunctions: VITE_DROP_CONSOLE ? ['console.log', 'console.warn', 'console.info', 'console.error', 'console.debug'] : [],
+                },
                 output: {
                     footer: '/**! license by QM Front-end team */',
                     manualChunks: (id) => {
@@ -74,7 +73,7 @@ export function vite_common_vue_config({ command, mode }: ConfigEnv, options?: C
                     },
                 },
                 external: VITE_USE_PWA ? [] : ['virtual:pwa-register/vue'],
-                ...getOptions.rollupOptions,
+                ...getOptions.rolldownOptions,
             },
             reportCompressedSize: false,
             chunkSizeWarningLimit: 2000,

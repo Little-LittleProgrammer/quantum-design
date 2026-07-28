@@ -4,15 +4,15 @@
     "license": "MIT",
     "type": "module",
     "scripts": {
-        "stub": "NODE_ENV=stub pnpm unbuild --stub ",
-        "build": "NODE_ENV=production pnpm unbuild "
+        "stub": "NODE_ENV=stub rolldown -c",
+        "build": "NODE_ENV=production rolldown -c"
     },
     "files": [
         "dist"
     ],
     "main": "./dist/index.mjs",
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/types/index.d.ts",
     "typesVersions": {
         "*": {
             "*": [
@@ -55,6 +55,7 @@
     },
     "devDependencies": {
         "@types/postcss-import": "catalog:",
-        "unbuild": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

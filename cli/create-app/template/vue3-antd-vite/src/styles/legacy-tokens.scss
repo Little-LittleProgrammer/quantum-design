@@ -1,0 +1,44 @@
+@use 'sass:math';
+
+$space: 12px;
+$primary-color: var(--primary-color, #1677ff);
+$header-bg: var(--header-bg, #fff);
+$header-height: 64px;
+$header-system-size: 16px;
+$header-system-color: var(--text-color, #1f2329);
+$header-environment-size: 14px;
+$header-environment-color: var(--text-color-secondary, #646a73);
+$header-tabs-color: var(--text-color, #1f2329);
+$header-tabs-hover-bg: var(--header-tabs-hover-bg, #f2f3f5);
+$header-tabs-hover-color: var(--primary-color, #1677ff);
+$header-tabs-cur-bg: var(--header-tabs-cur-bg, #e8f3ff);
+$header-tabs-cur-color: var(--primary-color, #1677ff);
+$aside-width: 240px;
+$aside-right-border-color: var(--border-color-base, #dee0e3);
+$aside-height: 40px;
+$aside-tabs-size: 14px;
+$aside-tabs-color: var(--text-color, #1f2329);
+$aside-tabs-hover-bg: var(--aside-tabs-hover-bg, #f2f3f5);
+$aside-tabs-hover-color: var(--primary-color, #1677ff);
+$aside-tabs-cur-bg: var(--aside-tabs-cur-bg, #e8f3ff);
+$aside-tabs-cur-color: var(--primary-color, #1677ff);
+
+@function div($value, $divisor) {
+    @return math.div($value, $divisor);
+}
+
+@mixin bg-color($token) {
+    background-color: var(--#{$token});
+}
+
+@mixin border-color($token, $side: null) {
+    @if $side {
+        border-#{$side}-color: var(--#{$token});
+    } @else {
+        border-color: var(--#{$token});
+    }
+}
+
+@mixin text-color($token) {
+    color: var(--#{$token});
+}

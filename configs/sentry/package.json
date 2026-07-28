@@ -6,7 +6,7 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true"
+        "build": "rolldown -c"
     },
     "files": [
         "README.md",
@@ -46,7 +46,7 @@
         "@sentry/vue": "catalog:"
     },
     "devDependencies": {
-        "@quantum-design-configs/rollup": "workspace:*",
-        "rollup": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

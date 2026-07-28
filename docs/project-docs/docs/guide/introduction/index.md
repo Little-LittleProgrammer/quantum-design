@@ -24,7 +24,7 @@
 
 - [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) - vue3 开发必备
 - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=vue.vscode-typescript-vue-plugin) - Vue 3.5+ 支持
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) - 脚本代码检查
+- [Oxc](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) - 脚本代码检查（oxlint）
 - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) - css 格式化
 - [DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv) - .env 文件 高亮
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) - Tailwind CSS 智能提示
@@ -67,7 +67,7 @@ node -v
 
 | 工具          | 版本要求  | 推荐版本    | 说明                         |
 | ------------- | --------- | ----------- | ---------------------------- |
-| Node.js       | ≥ 20.19.0 | 22.19.0     | 支持最新的Node.js特性        |
+| Node.js       | ≥ 22.19.0 | 22.19.0     | 支持最新的Node.js特性        |
 | pnpm          | ≥ 9.0.0   | 10.15.1     | 快速、节省磁盘空间的包管理器 |
 | Git           | ≥ 2.20.0  | 最新版本    | 代码版本控制                 |
 | PNPM Registry | 最新      | npm官方镜像 | npm包下载源                  |
@@ -164,7 +164,8 @@ pnpm lint
   "dev": "turbo run dev",                       # 启动开发服务
 
   # 代码质量
-  "lint": "pnpm dlx oxlint && eslint",          # 代码检查 (新增Oxlint)
+  "lint": "oxlint",                             # 代码检查
+  "lint:fix": "oxlint --fix",                   # 代码检查并自动修复
   "format": "prettier --write \"**/*.{ts,tsx,md}\"", # 代码格式化
   "type-check": "vue-tsc --noEmit",             # 类型检查
 
@@ -207,7 +208,7 @@ pnpm install
 ### 核心框架
 
 - **Vue**: 3.5.18 (最新稳定版)
-- **Vite**: 7.1.1 (最新稳定版)
+- **Vite**: 8.1.5
 - **TypeScript**: 5.9.2 (最新稳定版)
 - **Turbo**: 2.5.5 (Monorepo构建工具)
 
@@ -221,24 +222,23 @@ pnpm install
 
 ### 构建工具
 
-- **Rollup**: 4.46.2
-- **@vitejs/plugin-vue**: 6.0.1
-- **@vitejs/plugin-vue-jsx**: 5.0.1
+- **Rolldown**: 1.2.0
+- **@vitejs/plugin-vue**: 6.0.8
+- **@vitejs/plugin-vue-jsx**: 5.1.6
 - **unplugin-vue-components**: 29.0.0
 
 ### 开发工具
 
-- **ESLint**: 9.22.0
+- **Oxlint**: 1.75.0 (唯一 Linter，已完全取代 ESLint)
 - **Prettier**: 3.5.3
-- **Oxlint**: 1.11.1 (新增，高性能Linter)
-- **Vitest**: 4.0.13
+- **Vitest**: 4.1.10
 - **Vue Test Utils**: 2.4.6
 
 ### Nuxt 生态 (新增支持)
 
-- **Nuxt**: 4.0.3
-- **@nuxt/kit**: 4.0.3
-- **@nuxt/devtools**: 2.6.2
+- **Nuxt**: 4.5.0
+- **@nuxt/kit**: 4.5.0
+- **@nuxt/devtools**: 4.0.0-alpha.7
 
 接下来你可以修改代码进行业务开发了。我们内建了模拟数据、HMR 实时预览、状态管理、国际化、全局路由、**AI集成**等各种实用的功能辅助开发，请阅读其他章节了解更多。
 
@@ -255,7 +255,7 @@ pnpm install
 │   │   ├── vite # vite配置 (升级到v3.0.0)
 │   │   ├── tsconfig # tsconfig配置
 │   │   ├── tailwind # tailwind配置
-│   │   ├── rollup # rollup配置
+│   │   ├── rolldown # Rolldown 配置
 │   ├── hooks # hooks 用于ts项目 (v3.0.0升级)
 │   │   ├── base # 用于ts项目
 │   │   ├── vue # 用于vue项目
@@ -272,12 +272,12 @@ pnpm install
 │   ├── utils # 公共方法 (v3.0.0优化)
 │   │   ├── src # 用于ts项目
 │   │   ├── index.ts # 入口文件
-│   │   ├── rollup.config.js # 打包文件
+│   │   ├── rolldown.config.mjs # 打包文件
 │   │   ├── package.json # package.json
 │   ├── http # 通讯方法 (v3.0.0升级)
 │   │   ├── src # 用于ts项目
 │   │   ├── index.ts # 入口文件
-│   │   ├── rollup.config.js # 打包文件
+│   │   ├── rolldown.config.mjs # 打包文件
 │   │   ├── package.json # package.json
 │   ├── vue3-antd-pc-ui # antd公共组件 (v3.0.0升级)
 │   │   ├── src # 用于ts项目
@@ -313,7 +313,7 @@ pnpm install
 
 ### 🔄 破坏性变更
 
-1. **最低Node版本要求**: 20.19.0
+1. **最低Node版本要求**: 22.19.0
 2. **pnpm版本要求**: 9.0.0 → 10.15.1
 3. **Vue版本要求**: 3.4.0 → 3.5.18
 

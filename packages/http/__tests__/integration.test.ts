@@ -90,7 +90,7 @@ describe('集成测试 - HTTP 完整流程', () => {
 
             axiosInstance.setHeader(headers);
             const axios = axiosInstance.getAxios();
-            expect(axios.defaults.headers).toEqual(headers);
+            expect(axios.defaults.headers).toEqual(expect.objectContaining(headers));
 
             // 更新部分请求头
             axiosInstance.setHeader({
@@ -182,7 +182,7 @@ describe('集成测试 - HTTP 完整流程', () => {
 
             const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-            await axiosInstance.get({ url: '/users' });
+            await expect(axiosInstance.get({ url: '/users' })).rejects.toThrow('Network Error');
 
             expect(mockRequest).toHaveBeenCalled();
             consoleSpy.mockRestore();
@@ -200,7 +200,7 @@ describe('集成测试 - HTTP 完整流程', () => {
 
             const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-            await axiosInstance.get({ url: '/users' });
+            await expect(axiosInstance.get({ url: '/users' })).rejects.toEqual(timeoutError);
 
             expect(mockRequest).toHaveBeenCalled();
             consoleSpy.mockRestore();

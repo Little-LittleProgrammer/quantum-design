@@ -7,17 +7,15 @@ Quantum Design 使用现代化的工程工具链，提供高效的开发体验�
 ### 构建工具
 
 - **Vite**: 现代前端构建工具，提供极速的开发体验
-- **Rollup**: JavaScript 模块打包器，用于库的构建
-- **Unbuild**: 通用包构建工具，简化库的构建流程
+- **Rolldown**: Rust 驱动的 JavaScript/TypeScript 打包器，用于库和 CLI 构建
 - **Turbo**: Monorepo 构建加速工具，提供缓存和并行构建能力
 
 ### 代码质量工具
 
-- **ESLint**: JavaScript/TypeScript 代码质量检查工具
+- **Oxlint**: 高性能 JavaScript/TypeScript Linter，仓库唯一的 lint 工具
 - **Prettier**: 代码格式化工具
 - **TypeScript**: 类型检查和编译
 - **Vitest**: 单元测试框架
-- **Oxlint**: 高性能 JavaScript/TypeScript Linter
 
 ### 版本控制与发布
 
@@ -32,7 +30,7 @@ Quantum Design 使用现代化的工程工具链，提供高效的开发体验�
 
 Vite 是一个现代前端构建工具，提供极速的开发体验。
 
-**版本**: ^7.1.1
+**版本**: ^8.1.5
 
 **配置文件**: `vite.config.ts`
 
@@ -57,13 +55,13 @@ export default defineConfig({
 });
 ```
 
-### Rollup
+### Rolldown
 
-Rollup 是一个 JavaScript 模块打包器，专注于库的构建。
+Rolldown 是兼容 Rollup 插件模型的 Rust 打包器，负责仓库中的库和 CLI 构建。
 
-**版本**: ^4.46.2
+**版本**: 1.2.0
 
-**配置文件**: `rollup.config.mjs`
+**配置文件**: `rolldown.config.mjs`
 
 **主要功能**:
 
@@ -75,9 +73,11 @@ Rollup 是一个 JavaScript 模块打包器，专注于库的构建。
 **使用示例**:
 
 ```js
-import { rollupLibConfig } from '@quantum-design-configs/rollup';
+import { defineRolldownLibraryConfig } from '@quantum-design-configs/rolldown';
 
-export default rollupLibConfig;
+export default defineRolldownLibraryConfig({
+    entries: { name: 'example', input: './index.ts' },
+});
 ```
 
 ### Turbo
@@ -115,27 +115,29 @@ Turbo 是一个高性能的构建系统，专为 Monorepo 设计。
 
 ## 代码质量工具
 
-### ESLint
+### Oxlint
 
-ESLint 是一个可插拔的 JavaScript/TypeScript 代码质量检查工具。
+Oxlint 是基于 Rust 的高性能 JavaScript/TypeScript Linter，仓库中已完全取代 ESLint。
 
-**版本**: ^9.22.0
+**版本**: ^1.75.0
 
-**配置文件**: `.eslintrc.js`
+**配置文件**: `oxlint.config.ts`
 
-**主要规则集**:
+**内置插件**:
 
-- `@typescript-eslint`: TypeScript 规则
-- `eslint-plugin-vue`: Vue 规则
-- `eslint-plugin-prettier`: Prettier 集成
+- `typescript`: TypeScript 规则
+- `vue`: Vue 规则（仅检查 `<script>` 块）
+- `node`、`jsdoc`、`vitest`
 
 **使用示例**:
 
-```js
-module.exports = {
-    extends: ['@quantum-design-configs/eslint/vue'],
-};
+```ts
+import { defineOxlintConfig } from '@quantum-design-configs/oxlint';
+
+export default defineOxlintConfig();
 ```
+
+代码格式化由 Prettier 负责，lint 侧不声明格式化规则。
 
 ### Prettier
 
@@ -292,7 +294,7 @@ export default commitlintConfig;
 ### 开发流程
 
 1. **本地开发**: `pnpm dev` - 启动开发服务器
-2. **代码检查**: `pnpm lint` - 运行 ESLint 和 Prettier
+2. **代码检查**: `pnpm lint` - 运行 Oxlint
 3. **单元测试**: `pnpm test` - 运行 Vitest
 4. **构建**: `pnpm build` - 使用 Turbo 构建所有包
 5. **发布准备**: `pnpm changeset` - 创建变更集
@@ -303,7 +305,7 @@ export default commitlintConfig;
 
 项目使用 GitHub Actions 进行 CI/CD：
 
-- **代码检查**: 每次提交运行 ESLint 和 TypeScript 检查
+- **代码检查**: 每次提交运行 Oxlint 和 TypeScript 检查
 - **单元测试**: 每次提交运行单元测试
 - **构建验证**: 每次提交验证构建是否成功
 - **发布**: 合并到主分支时自动发布
@@ -312,7 +314,7 @@ export default commitlintConfig;
 
 ### 代码质量
 
-1. **遵循 ESLint 规则**: 确保代码通过 ESLint 检查
+1. **遵循 Oxlint 规则**: 确保代码通过 Oxlint 检查
 2. **使用类型注解**: 为函数和变量添加 TypeScript 类型
 3. **编写测试**: 为关键功能编写单元测试
 4. **遵循 Commit 规范**: 使用规范化的 Commit 消息

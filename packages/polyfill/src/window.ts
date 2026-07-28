@@ -1,23 +1,23 @@
 import { checkAndAdd } from './utils';
-type ResolveType<T = any> = (resolve_success_value: T) => any
-type RejectType = (reject_fail_value: any) => any
+type ResolveType<T = any> = (resolve_success_value: T) => any;
+type RejectType = (reject_fail_value: any) => any;
 
-type ExecutorType<T> = (resolve: ResolveType<T>, reject: RejectType) => any
+type ExecutorType<T> = (resolve: ResolveType<T>, reject: RejectType) => any;
 
 enum PromiseState {
     Pending,
     Fulfilled,
-    Rejected
+    Rejected,
 }
 
 class Promise<T = any> {
-    status:PromiseState= PromiseState.Pending
-    value: T | null= null
-    reason= null
-    onFulfilledCallback: Fn[]= []
-    onRejectedCallback: Fn[]= []
-    resolve: ResolveType<T>
-    reject: RejectType
+    status: PromiseState = PromiseState.Pending;
+    value: T | null = null;
+    reason = null;
+    onFulfilledCallback: Fn[] = [];
+    onRejectedCallback: Fn[] = [];
+    resolve: ResolveType<T>;
+    reject: RejectType;
     constructor(executor: ExecutorType<T>) {
         this.resolve = (value: T | PromiseLike<T>) => {
             if (this.status === PromiseState.Pending) {
@@ -46,7 +46,7 @@ class Promise<T = any> {
             throw error;
         }
     }
-    then<TResult1 = T, TResult2 = never>(resolveInThen: ResolveType, rejectInThen: RejectType) {
+    then<TResult1 = T, TResult2 = never>(resolveInThen?: ResolveType | null, rejectInThen?: RejectType | null) {
         return new Promise((resolve, reject) => {
             const fulfilled = (value: T) => {
                 try {
@@ -83,11 +83,11 @@ class Promise<T = any> {
             };
             let result;
             if (this.status === PromiseState.Fulfilled) {
-                result = resolveInThen(this.value);
+                result = resolveInThen?.(this.value);
                 resolve(result);
             }
             if (this.status === PromiseState.Rejected) {
-                result = rejectInThen(this.reason);
+                result = rejectInThen?.(this.reason);
                 reject(result);
             }
             if (this.status === PromiseState.Pending) {
@@ -101,8 +101,11 @@ class Promise<T = any> {
     }
     finily(fn: Fn): Promise<T> {
         return this.then(
-            value => Promise.resolve(fn()).then(() => value),
-            reason => Promise.resolve(fn()).then(() => { throw reason; })
+            (value) => Promise.resolve(fn()).then(() => value),
+            (reason) =>
+                Promise.resolve(fn()).then(() => {
+                    throw reason;
+                }),
         );
     }
     static race<T>(promises: Array<Promise<T>>): Promise<T> {
@@ -133,14 +136,17 @@ class Promise<T = any> {
         return new Promise((resolve, reject) => {
             const n = promiseList.length;
             const resolveArray = new Array(n);
-            promiseList.reduce((_resultList, curr, index) => {
-                curr.then(resolveValue => {
-                    prosessData(resolveValue, index);
-                }, (rejectValue) => {
-                    reject(rejectValue);// 任何一个promise失败,都执行reject
-                    return;
-                });
-            }, []);
+            promiseList.forEach((curr, index) => {
+                curr.then(
+                    (resolveValue) => {
+                        prosessData(resolveValue, index);
+                    },
+                    (rejectValue) => {
+                        reject(rejectValue); // 任何一个promise失败,都执行reject
+                        return;
+                    },
+                );
+            });
 
             function prosessData(resolveData: any, index: number) {
                 resolveArray[index] = resolveData;

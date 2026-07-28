@@ -14,8 +14,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         name: 'qmComponents',
         outDir: 'dist',
         isComponentsBuild: true,
-        target: 'modules',
-        rollupOptions: {
+        target: 'es2015',
+        rolldownOptions: {
             external: [
                 'vue',
                 'vue-router',
@@ -48,9 +48,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         buildOptions: {
             cssCodeSplit: true,
             minify: true,
-        },
-        dtsOptions: {
-            entryRoot: resolve(__dirname),
         },
     });
     return {

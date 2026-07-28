@@ -233,7 +233,7 @@ describe('axios.ts', () => {
 
                 const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
-                await vAxios.request({ url: '/api/test' });
+                await expect(vAxios.request({ url: '/api/test' })).rejects.toThrow('Network Error');
 
                 expect(consoleSpy).toHaveBeenCalled();
                 consoleSpy.mockRestore();

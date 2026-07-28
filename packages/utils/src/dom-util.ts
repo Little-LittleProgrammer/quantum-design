@@ -397,7 +397,7 @@ export function js_utils_base64_to_blob(base64: string, fileName?: string, mimeT
     }
 
     const byteCharacters = window.atob(base64Content);
-    const byteArrays = [];
+    const byteArrays: BlobPart[] = [];
 
     // 将字符串分片处理，避免单次处理过多数据导致内存问题
     const sliceSize = 1024;

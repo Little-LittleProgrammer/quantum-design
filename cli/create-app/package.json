@@ -7,8 +7,8 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "dev": "unbuild --stub",
-        "build": "unbuild",
+        "dev": "rolldown -c -w",
+        "build": "rolldown -c",
         "start": "cqap"
     },
     "files": [
@@ -36,6 +36,7 @@
         "kolorist": "catalog:",
         "minimist": "catalog:",
         "prompts": "catalog:",
-        "unbuild": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

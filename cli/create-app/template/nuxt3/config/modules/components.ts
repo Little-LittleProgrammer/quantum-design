@@ -2,16 +2,23 @@ import type { INuxtConfig } from './types';
 import fs from 'fs';
 import path from 'path';
 // 获取base.scss文件
-const antdCssStrTemp = (fs.readFileSync(path.resolve('node_modules/@quantum-design/styles/base/base.scss'), 'utf-8').toString().split('// antdend')[0].match(/\$(.*);/g) || []).join(',').replace(/;,/g, '",').replace(/;/g, '"').replace(/: /g, '": "').replace(/\$/g, '"');
+const antdCssStrTemp = (
+    fs
+        .readFileSync(path.resolve('node_modules/@quantum-design/styles/base/base.scss'), 'utf-8')
+        .toString()
+        .split('// antdend')[0]
+        .match(/\$(.*);/g) || []
+)
+    .join(',')
+    .replace(/;,/g, '",')
+    .replace(/;/g, '"')
+    .replace(/: /g, '": "')
+    .replace(/\$/g, '"');
 const antdCssData = JSON.parse('{' + antdCssStrTemp + '}');
 
 const baseScssFile = "@use '@quantum-design/styles/base/base.scss' as *; @use '@quantum-design/styles/base/mixin.scss' as *;";
 
-export {
-    antdCssStrTemp,
-    antdCssData,
-    baseScssFile
-};
+export { antdCssStrTemp, antdCssData, baseScssFile };
 function pathResolve(dir: string) {
     return path.resolve(process.cwd(), '.', dir);
 }
@@ -22,21 +29,21 @@ export const componentsModules: INuxtConfig = {
             link: [
                 {
                     rel: 'stylesheet',
-                    href: '/css/antd.css'
-                }
-            ]
-        }
+                    href: '/css/antd.css',
+                },
+            ],
+        },
     },
     imports: {
-        autoImport: true
+        autoImport: true,
     },
     vite: {
         css: {
             preprocessorOptions: {
                 scss: {
-                    additionalData: baseScssFile
-                }
-            }
+                    additionalData: baseScssFile,
+                },
+            },
         },
         resolve: {
             alias: {
@@ -45,13 +52,14 @@ export const componentsModules: INuxtConfig = {
                 'ant-design-vue/lib': pathResolve('./node_modules/ant-design-vue/es'),
                 'ant-design-vue': pathResolve('./node_modules/ant-design-vue/es'),
                 '@quantum-design/utils/extra': pathResolve('./node_modules/@quantum-design/utils/dist/extra.esm.min.js'),
-                '@quantum-design/utils': pathResolve('./node_modules/@quantum-design/utils/dist/utils.esm.min.js')
-            }
+                '@quantum-design/utils': pathResolve('./node_modules/@quantum-design/utils/dist/utils.esm.min.js'),
+            },
         },
 
         build: {
-            rollupOptions: {
-                external: ['monaco-editor',
+            rolldownOptions: {
+                external: [
+                    'monaco-editor',
                     'tinymce/tinymce',
                     'tinymce/plugins/anchor',
                     'tinymce/themes/silver',
@@ -82,9 +90,10 @@ export const componentsModules: INuxtConfig = {
                     'tinymce/plugins/textpattern',
                     'tinymce/plugins/visualblocks',
                     'tinymce/plugins/visualchars',
-                    'tinymce/plugins/wordcount']
-            }
-        }
+                    'tinymce/plugins/wordcount',
+                ],
+            },
+        },
     },
-    css: ['@quantum-design/styles/antd/antd.scss', '@quantum-design/styles/base/index.scss']
+    css: ['@quantum-design/styles/antd/antd.scss', '@quantum-design/styles/base/index.scss'],
 };

@@ -15,9 +15,9 @@
     "license": "ISC",
     "author": "Evan Wu",
     "scripts": {
-        "build": "rollup -c",
+        "build": "rolldown -c",
         "build:types": "tsc --emitDeclarationOnly",
-        "dev": "rollup -c -w"
+        "dev": "rolldown -c -w"
     },
     "files": [
         "README.md",
@@ -39,12 +39,12 @@
         "qs": "catalog:"
     },
     "devDependencies": {
-        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design-configs/rolldown": "workspace:*",
         "@quantum-design-configs/tsconfig": "workspace:*",
         "@quantum-design/types": "workspace:*",
         "@types/lodash-es": "catalog:",
         "@types/qs": "catalog:",
-        "rollup": "catalog:",
+        "rolldown": "catalog:",
         "typescript": "catalog:"
     }
 }

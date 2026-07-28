@@ -14,9 +14,9 @@ quantum-design/
 │   └── workflow-cloud/  # 工作流云工具
 ├── configs/             # 配置/规范相关
 │   ├── commitlint/      # commit 规范配置
-│   ├── eslint/          # ESLint 配置
+│   ├── oxlint/          # Oxlint 配置
 │   ├── prettier/        # Prettier 配置
-│   ├── rollup/          # Rollup 配置
+│   ├── rolldown/        # Rolldown 配置
 │   ├── sentry/          # Sentry 配置
 │   ├── tailwind/        # Tailwind CSS 配置
 │   ├── tsconfig/        # TypeScript 配置
@@ -87,9 +87,9 @@ packages:
 存放各类项目配置、规范和预设，包括：
 
 - **commitlint**: Commit 规范配置
-- **eslint**: ESLint 配置
+- **oxlint**: Oxlint 配置
 - **prettier**: Prettier 配置
-- **rollup**: Rollup 配置
+- **rolldown**: Rolldown 配置
 - **sentry**: Sentry 配置
 - **tailwind**: Tailwind CSS 配置
 - **tsconfig**: TypeScript 配置

@@ -1,0 +1,27 @@
+{
+    "name": "@quantum-design-configs/rolldown",
+    "version": "4.0.0",
+    "description": "Quantum Design 统一 Rolldown 构建配置",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {},
+    "author": "Evan Wu",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "keywords": [
+        "quantum-configs",
+        "monorepo",
+        "rolldown",
+        "turborepo"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "rolldown": "catalog:",
+        "rolldown-plugin-dts": "catalog:",
+        "typescript": "catalog:"
+    },
+    "devDependencies": {},
+    "peerDependencies": {}
+}

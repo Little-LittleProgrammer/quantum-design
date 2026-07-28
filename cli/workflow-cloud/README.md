@@ -22,6 +22,7 @@ yarn global add @quantum-design-cli/workflow
 ## 使用方法
 
 工具提供了两个命令行别名：
+
 - `qm-workflow`
 - `qw` (简写)
 
@@ -49,7 +50,7 @@ yarn global add @quantum-design-cli/workflow
 {
     "feishuConfig": {
         "appId": "your_feishu_app_id",
-        "appSecret": "your_feishu_app_secret",
+        "appSecret": "your_feishu_app_secret"
     },
     "aliConfig": {
         "token": "your_ali_token",
@@ -81,11 +82,11 @@ src/
 - Node.js (v18.18.2)
 - TypeScript
 - 主要依赖：
-  - axios：HTTP 客户端
-  - @larksuiteoapi/node-sdk：飞书 SDK
-  - openai：OpenAI API 客户端
-  - prompts：命令行交互
-  - unbuild：构建工具
+    - axios：HTTP 客户端
+    - @larksuiteoapi/node-sdk：飞书 SDK
+    - openai：OpenAI API 客户端
+    - prompts：命令行交互
+    - Rolldown：构建工具
 
 ## 开发
 
@@ -103,14 +104,14 @@ pnpm build
 ## TODO
 
 1. 飞书集成
-   - 获取飞书 userToken
-     - 文件：`src/client/feishu-client/feishu-base-client.ts`
-   - 获取知识库文档纯文本
-     - 文件：`src/client/feishu-client/docx-client.ts`
-   - 根据文档块内容的 token 获取图片地址，并下载到本地隐藏文件夹
-     - 文件：`src/client/feishu-client/docx-client.ts`
-   - 调用飞书 API 发送消息，创建云文档记录 MR 详情
-     - 文件：`src/command/codeup.ts`
+    - 获取飞书 userToken
+        - 文件：`src/client/feishu-client/feishu-base-client.ts`
+    - 获取知识库文档纯文本
+        - 文件：`src/client/feishu-client/docx-client.ts`
+    - 根据文档块内容的 token 获取图片地址，并下载到本地隐藏文件夹
+        - 文件：`src/client/feishu-client/docx-client.ts`
+    - 调用飞书 API 发送消息，创建云文档记录 MR 详情
+        - 文件：`src/command/codeup.ts`
 
 ## 许可证
 
@@ -121,6 +122,7 @@ ISC License © Evan Wu
 ### 参数等级
 
 2. 其次是 环境变量
+
 ```bash
 vim ~/.zshrc
 
@@ -137,13 +139,13 @@ export REPO_NAME=xxxx # 仓库名称
 export APP_STACK_NAME=xxxx # appstack名称
 ```
 
-或者
-具体参数同上
+或者具体参数同上
+
 ```js
 // .env 文件
 
-FEISHU_APP_ID=xxx
-FEISHU_APP_SECRET=xxx
+FEISHU_APP_ID = xxx;
+FEISHU_APP_SECRET = xxx;
 ```
 
 3. 最后是项目中的 `qm-workflow.json`
@@ -151,6 +153,7 @@ FEISHU_APP_SECRET=xxx
 ### 参数名称
 
 #### 普通变量
+
 ```js
 {
     "feishuConfig": {

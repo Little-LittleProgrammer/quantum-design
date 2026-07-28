@@ -46,6 +46,25 @@ interface UseVirtualScrollProps {
     size: 'small' | 'middle' | 'large';
 }
 
+export interface VirtualScrollReturn {
+    virtualState: Readonly<VirtualScrollState>;
+    isVirtualEnabled: ComputedRef<boolean>;
+    config: ComputedRef<VirtualScrollConfig>;
+    visibleData: ComputedRef<Recordable[]>;
+    scrollToIndex: (index: number, align?: 'top' | 'center' | 'bottom') => void;
+    scrollToRow: (rowKey: string | number, align?: 'top' | 'center' | 'bottom') => void;
+    getRealIndex: (virtualIndex: number) => number;
+    isIndexVisible: (index: number) => boolean;
+    updateConfig: (newConfig: Partial<VirtualScrollConfig>) => void;
+    scrollInfo: ComputedRef<{
+        start: number;
+        end: number;
+        currentOffset: number;
+        count: number;
+        totalCount: number;
+    }>;
+}
+
 const DEFAULT_CONFIG = {
     itemHeight: 54, // ant-design-vue 表格默认行高
     bufferSize: 5, // 缓冲区大小
@@ -54,7 +73,7 @@ const DEFAULT_CONFIG = {
     throttleDelay: 16, // 约 60fps
 };
 
-export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef, size }: UseVirtualScrollProps) {
+export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef, size }: UseVirtualScrollProps): VirtualScrollReturn {
     const virtualState = reactive<VirtualScrollState>({
         start: 0,
         end: 0,
@@ -340,5 +359,3 @@ export function useVirtualScroll({ propsRef, dataSource, containerRef, scrollRef
         })),
     };
 }
-
-export type VirtualScrollReturn = ReturnType<typeof useVirtualScroll>;

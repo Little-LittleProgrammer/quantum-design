@@ -6,7 +6,8 @@
         "build": "turbo run build",
         "build:lib": "turbo run build:lib",
         "dev": "turbo run dev",
-        "lint": "pnpm dlx oxlint && eslint",
+        "lint": "oxlint",
+        "lint:fix": "oxlint --fix",
         "test": "turbo run test",
         "test:coverage": "turbo run test:coverage",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -15,7 +16,7 @@
     },
     "devDependencies": {
         "@quantum-design-configs/commitlint": "catalog:",
-        "@quantum-design-configs/eslint": "catalog:",
+        "@quantum-design-configs/oxlint": "catalog:",
         "@quantum-design-configs/prettier": "catalog:",
         "@quantum-design-configs/tailwind": "catalog:",
         "@quantum-design-configs/tsconfig": "catalog:",
@@ -26,6 +27,7 @@
         "husky": "catalog:",
         "jsdom": "catalog:",
         "lint-staged": "catalog:",
+        "oxlint": "catalog:",
         "tslib": "catalog:",
         "turbo": "catalog:",
         "typescript": "catalog:",
@@ -34,22 +36,21 @@
     },
     "engines": {
         "npm": ">=9.0.0",
-        "node": ">=20.19.0"
+        "node": ">=22.19.0"
     },
-    "packageManager": "pnpm@10.13.1",
+    "packageManager": "pnpm@10.15.1",
     "volta": {
-        "node": "20.19.4",
-        "pnpm": "10.13.1"
+        "node": "22.19.0",
+        "pnpm": "10.15.1"
     },
     "pnpm": {
         "peerDependencyRules": {
             "allowedVersions": {
-                "eslint": "*",
                 "oxlint": "*"
             }
         },
         "overrides": {
-            "eslint": "catalog:",
+            "oxlint": "catalog:",
             "typescript": "catalog:",
             "vite": "catalog:"
         }

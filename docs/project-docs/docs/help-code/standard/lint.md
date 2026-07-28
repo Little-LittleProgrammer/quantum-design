@@ -191,26 +191,25 @@ declare interface UploadFileParams {
 }
 ```
 
-## ESLint规范
+## Oxlint规范
 
-使用 Flat Config，统一在仓库根目录创建 `eslint.config.mjs`：
+统一在仓库根目录创建 `oxlint.config.ts`：
 
-```js
-import { defineEslintConfig } from '@quantum-design-configs/eslint';
+```ts
+import { defineOxlintConfig } from '@quantum-design-configs/oxlint';
 
-export default await defineEslintConfig([
-    {
-        rules: {
-            'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-            'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        },
+export default defineOxlintConfig({
+    rules: {
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     },
-]);
+});
 ```
 
 说明：
 
-- 不再使用 `.eslintrc.*`；子项目默认继承根配置。
+- 不再使用 ESLint 及 `.eslintrc.*` / `eslint.config.mjs`；子项目默认继承根配置。
+- `overrides[].files` 的 glob 不支持 ESLint 的 extglob 语法（`?(...)`），请改用大括号展开。
 
 ## tsconfig.json规范
 

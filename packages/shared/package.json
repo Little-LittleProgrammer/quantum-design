@@ -5,7 +5,7 @@
     "license": "MIT",
     "author": "Evan Wu",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true"
+        "build": "rolldown -c"
     },
     "files": [
         "dist"
@@ -35,8 +35,8 @@
         "theme-colors": "catalog:"
     },
     "devDependencies": {
-        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design-configs/rolldown": "workspace:*",
         "@quantum-design/types": "workspace:*",
-        "rollup": "catalog:"
+        "rolldown": "catalog:"
     }
 }

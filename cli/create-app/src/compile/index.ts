@@ -24,8 +24,8 @@ export function copy_project() {
             }
             // 处理package.json
             for (const dir of _dirsList) {
-                // 删除 子项目中的 eslint.config.mjs/.lintstagedrc.mjs/.prettierignore/.prettierrc.mjs/commitlint.config.mjs 文件
-                rm_file(`${dir}/eslint.config.mjs`);
+                // 删除 子项目中的 oxlint.config.ts/.lintstagedrc.mjs/.prettierignore/.prettierrc.mjs/commitlint.config.mjs 文件
+                rm_file(`${dir}/oxlint.config.ts`);
                 rm_file(`${dir}/.lintstagedrc.mjs`);
                 rm_file(`${dir}/.prettierignore`);
                 rm_file(`${dir}/.prettierrc.mjs`);

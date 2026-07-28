@@ -7,8 +7,8 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "dev": "unbuild --stub",
-        "build": "unbuild"
+        "dev": "rolldown -c -w",
+        "build": "rolldown -c"
     },
     "files": [
         "README.md",
@@ -38,6 +38,7 @@
         "minimist": "catalog:",
         "prompts": "catalog:",
         "shx": "catalog:",
-        "unbuild": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

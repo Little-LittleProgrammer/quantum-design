@@ -1,5 +1,3 @@
-import { isWindow } from './is';
-
 /**
  * IndexedDB 操作结果接口
  * @interface IIndexedDBRes
@@ -68,6 +66,10 @@ interface QueueItem {
     reject: (reason?: any) => void;
 }
 
+function normalizeKey(key: string | number | symbol): string | number {
+    return typeof key === 'symbol' ? `@@symbol:${key.description ?? ''}` : key;
+}
+
 /**
  * IndexedDB 封装类
  * 提供对 IndexedDB 的基本 CRUD 操作
@@ -101,7 +103,7 @@ export class IndexedDB {
         this.dbName = dbName;
         this.dbversion = version;
         this.storeName = storeName;
-        this.indexedDB = isWindow(window) ? window.indexedDB : null;
+        this.indexedDB = typeof window !== 'undefined' && window.indexedDB ? window.indexedDB : null;
 
         // 注册表到预定义列表
         if (!IndexedDB.storeSchemas.has(dbName)) {
@@ -357,7 +359,8 @@ export class IndexedDB {
                 return new Promise((resolve, reject) => {
                     // 使用索引查询是否存在
                     const index = store.index('key');
-                    const getRequest = index.get(IDBKeyRange.only(key as any));
+                    const normalizedKey = normalizeKey(key);
+                    const getRequest = index.get(IDBKeyRange.only(normalizedKey));
 
                     getRequest.onsuccess = () => {
                         const existingItem = getRequest.result as IStoredItem<T> | undefined;
@@ -391,7 +394,7 @@ export class IndexedDB {
                         } else {
                             // 添加新数据
                             const newItem: IStoredItem<T> = {
-                                key,
+                                key: normalizedKey,
                                 value,
                                 createdAt: now,
                                 updatedAt: now,
@@ -449,7 +452,7 @@ export class IndexedDB {
                     if (key !== undefined) {
                         // 使用索引直接查询单个 key
                         const index = store.index('key');
-                        const getRequest = index.getAll(IDBKeyRange.only(key as any));
+                        const getRequest = index.getAll(IDBKeyRange.only(normalizeKey(key)));
 
                         getRequest.onsuccess = () => {
                             const results = getRequest.result as IStoredItem<T>[];
@@ -520,7 +523,7 @@ export class IndexedDB {
             return this._executeOperation<IIndexedDBRes>(async (store) => {
                 return new Promise((resolve, reject) => {
                     const index = store.index('key');
-                    const getRequest = index.get(IDBKeyRange.only(key as any));
+                    const getRequest = index.get(IDBKeyRange.only(normalizeKey(key)));
 
                     getRequest.onsuccess = () => {
                         const existingItem = getRequest.result as IStoredItem<T> | undefined;
@@ -591,7 +594,7 @@ export class IndexedDB {
             return this._executeOperation<IIndexedDBRes>(async (store) => {
                 return new Promise((resolve, reject) => {
                     const index = store.index('key');
-                    const cursorRequest = index.openCursor(IDBKeyRange.only(key as any));
+                    const cursorRequest = index.openCursor(IDBKeyRange.only(normalizeKey(key)));
                     let deletedCount = 0;
 
                     cursorRequest.onsuccess = (event) => {
@@ -700,7 +703,7 @@ export class IndexedDB {
 
                     if (key !== undefined) {
                         const index = store.index('key');
-                        countRequest = index.count(IDBKeyRange.only(key as any));
+                        countRequest = index.count(IDBKeyRange.only(normalizeKey(key)));
                     } else {
                         countRequest = store.count();
                     }

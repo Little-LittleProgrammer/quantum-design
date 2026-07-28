@@ -1,0 +1,42 @@
+{
+    "name": "@quantum-design-configs/oxlint",
+    "version": "3.0.0",
+    "description": "代码 oxlint 统一配置文件",
+    "keywords": [
+        "monorepo",
+        "oxc",
+        "oxlint",
+        "quantum-configs",
+        "turborepo"
+    ],
+    "license": "MIT",
+    "author": "Evan Wu",
+    "scripts": {
+        "build": "rolldown -c",
+        "stub": "rolldown -c"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com/",
+        "access": "public"
+    },
+    "peerDependencies": {
+        "oxlint": "catalog:"
+    },
+    "devDependencies": {
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "oxlint": "catalog:",
+        "rolldown": "catalog:"
+    }
+}

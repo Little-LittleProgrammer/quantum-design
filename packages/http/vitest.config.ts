@@ -12,9 +12,11 @@ export default defineConfig({
         include: ['**/__tests__/**/*.test.ts'],
     },
     resolve: {
-        alias: {
-            '@quantum-design/shared': path.resolve(__dirname, '../shared'),
-            '@quantum-design/utils': path.resolve(__dirname, '../utils'),
-        },
+        alias: [
+            { find: '@quantum-design/shared/enums', replacement: path.resolve(__dirname, '../shared/enums/enums.ts') },
+            { find: '@quantum-design/shared', replacement: path.resolve(__dirname, '../shared') },
+            { find: '@quantum-design/utils/extra', replacement: path.resolve(__dirname, '../utils/extra.ts') },
+            { find: '@quantum-design/utils', replacement: path.resolve(__dirname, '../utils/index.ts') },
+        ],
     },
 });

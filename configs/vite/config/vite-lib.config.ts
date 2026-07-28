@@ -1,23 +1,18 @@
 import type { UserConfig } from 'vite';
-import type { OutputOptions } from 'rollup';
+import type { OutputOptions } from 'rolldown';
 import vue from '@vitejs/plugin-vue';
 import VueJsx from '@vitejs/plugin-vue-jsx';
-import dts from 'vite-plugin-dts';
 import type { CommonOptions } from '../types';
 import { vite_plugin_component } from '../plugins/component';
 import type { Plugin } from 'vite';
-import process from 'process';
 
 // 定义 build 和 plugin
 const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'entry', string>): UserConfig => {
-    const { entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rollupOptions = {}, dtsOptions = {} } = options;
+    const { entry, name, formats = ['es', 'umd'], outDir = 'dist', buildOptions = {}, rolldownOptions = {} } = options;
     let plugin: Plugin[] = [vue(), VueJsx(), vite_plugin_component()];
     if (options.isComponentsBuild) {
         plugin.push({
             name: 'css-all',
-            resolveFileUrl({ fileName }) {
-                return `new URL('${fileName}', document.baseURI).href`;
-            },
             generateBundle(_options, bundle) {
                 //这里可以获取打包后的文件目录以及代码code
                 const _keys = Object.keys(bundle);
@@ -43,15 +38,6 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
     }
     if (options.customPlugins) {
         plugin = plugin.concat(options.customPlugins);
-    }
-    const isDeclaration = !(process.env.PIPELINE_NAME?.includes('生产') || process.env.PIPELINE_TAGS?.includes('生产') || process.env.PIPELINE_NAME?.includes('测试') || process.env.PIPELINE_TAGS?.includes('测试'));
-    if (isDeclaration) {
-        plugin.push(
-            dts({
-                outDir: 'dist',
-                ...dtsOptions,
-            }),
-        );
     }
     const _output: OutputOptions[] = options.isComponentsBuild
         ? [
@@ -104,9 +90,9 @@ const vite_common_lib_config = (options: Omit<CommonOptions, 'entry'> & Record<'
         build: {
             target: options.target || 'baseline-widely-available',
             outDir: outDir,
-            rollupOptions: {
-                external: rollupOptions?.external,
-                output: rollupOptions?.output ? rollupOptions.output : (_output as any),
+            rolldownOptions: {
+                external: rolldownOptions?.external,
+                output: rolldownOptions?.output ? rolldownOptions.output : (_output as any),
             },
             lib: {
                 formats: formats,

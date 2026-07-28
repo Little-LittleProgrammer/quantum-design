@@ -1,6 +1,7 @@
 # 项目开发
 
 ## monorepo项目
+
 1. 复制 `template` 文件夹下的 `monorepo`文件夹, 到各自组项目仓库中
 2. 复制 `vue3-antd-vite` 到 各自组项目仓库 中的 `apps`文件夹下, 并更改文件夹名称与`package.json`的名称
 3. 复制 `vue3-project-docs` 到 各自组项目仓库 中的 `docs` 文件夹下, 并更改文件夹名称与`package.json`的名称
@@ -11,10 +12,12 @@
 #### 公共的组件库
 
 ##### 要用到的基本包
+
 > @quantum-design 开头的包的版本 请按照 npm库版本进行更新
+
 ```json
 "dependencies": {
-    "@quantum-design/shared": "1.0.0", 
+    "@quantum-design/shared": "1.0.0",
     "@quantum-design/utils": "1.0.0",
     "@quantum-design-configs/vite": "1.0.0",
     "vue": "3.2.47",
@@ -27,12 +30,13 @@
 ```
 
 ##### 搭建流程
+
 具体请参考 [packages/vue3-pc-ui/vite.config.ts](packages/vue3-pc-ui/vite.config.ts)
 
 ##### 开发注意事项
 
-::: danger 注意事项
-开发文件夹格式要以下格式开发, 并且在组件中引入 `style/index.scss`
+::: danger 注意事项开发文件夹格式要以下格式开发, 并且在组件中引入 `style/index.scss`
+
 ```
 |-you-component
     |-src
@@ -41,13 +45,17 @@
         |- xxx
     |-index
 ```
+
 :::
 
 目的: 为了项目中不用再次引入样式
 
 #### 公共的方法库
+
 ##### 要用到的基本包
+
 > @quantum-design 开头的包的版本 请按照 npm库版本进行更新
+
 ```json
 "dependencies": {
     "@quantum-design/shared": "1.0.0",
@@ -55,20 +63,24 @@
 },
 "devDependencies": {
     "@quantum-design/types": "1.0.0",
-    "@quantum-design-configs/rollup": "1.0.0",
+    "@quantum-design-configs/rolldown": "^4.0.0",
 }
 ```
 
 ##### 搭建流程
-具体请参考 [packages/utils/rollup.config.mjs](packages/utils/rollup.config.mjs)
+
+具体请参考 `packages/utils/rolldown.config.mjs`。
 
 ## 单项目
+
 1. 复制 `vue3-antd-vite` 到 单仓库 下, 并更改`package.json`的名称
 
 ## 后台项目
 
 ### vite环境变量
+
 1. .env.development
+
 ```bash
 
 # 路由基本前缀路径

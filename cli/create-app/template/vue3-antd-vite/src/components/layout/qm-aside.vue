@@ -3,7 +3,7 @@
 import { Layout, Menu as AMenu } from 'ant-design-vue';
 import { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 import { useSysStore } from '@/store/modules/systemManage';
-import { useProjectSetting } from '@quantum-design/vue3-antd-pc-ui';
+import { useProjectSetting } from '@quantum-design/hooks/vue/use-project-setting';
 import type { IMenuData } from '@quantum-design/types/vue/router';
 interface DataProps {
     openKeys: number[];

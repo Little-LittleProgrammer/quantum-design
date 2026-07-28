@@ -2,9 +2,9 @@
 
 `@quantum-design-configs/*`为 Web应用 及 Lib应用 抽离了大部分重复的基本配置
 
-1. [齐全的eslint配置](/configs/eslint/)
+1. [齐全的oxlint配置](/configs/oxlint/)
 
-2. [齐全的rollup配置](/configs/rollup/)
+2. [统一的 Rolldown 配置](/configs/rolldown/)
 
 3. [齐全的tsconfig配置](/configs/tsconfig/)
 

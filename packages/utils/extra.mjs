@@ -1,1 +1,1 @@
-export * from './extra.js';
+export * from './dist/extra.mjs';

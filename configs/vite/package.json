@@ -12,14 +12,14 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true"
+        "build": "rolldown -c"
     },
     "files": [
         "README.md",
         "dist"
     ],
     "main": "dist/vite.esm.min.js",
-    "types": "dist/types/configs/vite/index.d.ts",
+    "types": "dist/types/index.d.ts",
     "publishConfig": {
         "registry": "https://registry.npmjs.com/",
         "access": "public"
@@ -28,8 +28,8 @@
         "@vitejs/plugin-vue": "catalog:",
         "@vitejs/plugin-vue-jsx": "catalog:",
         "unplugin-vue-components": "catalog:",
-        "vite": "^6.0.5 || ^7.0.0",
-        "vite-plugin-dts": "catalog:",
+        "vite": "^8.0.0",
+        "rolldown": "catalog:",
         "vue": "^3.4.0"
     },
     "dependencies": {
@@ -41,10 +41,10 @@
         "vite-plugin-pwa": "catalog:"
     },
     "devDependencies": {
-        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design-configs/rolldown": "workspace:*",
         "@sentry/vite-plugin": "catalog:",
         "@types/postcss-pxtorem": "catalog:",
         "kolorist": "catalog:",
-        "rollup": "catalog:"
+        "rolldown": "catalog:"
     }
 }

@@ -118,12 +118,12 @@ function createNav(): DefaultTheme.NavItem[] {
                     link: '/configs/',
                 },
                 {
-                    text: 'eslint',
-                    link: '/configs/eslint/',
+                    text: 'oxlint',
+                    link: '/configs/oxlint/',
                 },
                 {
-                    text: 'rollup',
-                    link: '/configs/rollup/',
+                    text: 'rolldown',
+                    link: '/configs/rolldown/',
                 },
                 {
                     text: 'tsconfig',
@@ -252,20 +252,20 @@ function createSidebar(): DefaultTheme.Sidebar {
                 ],
             },
             {
-                text: 'eslint',
+                text: 'oxlint',
                 items: [
                     {
                         text: '介绍',
-                        link: '/configs/eslint/',
+                        link: '/configs/oxlint/',
                     },
                 ],
             },
             {
-                text: 'rollup',
+                text: 'rolldown',
                 items: [
                     {
                         text: '介绍',
-                        link: '/configs/rollup/',
+                        link: '/configs/rolldown/',
                     },
                 ],
             },

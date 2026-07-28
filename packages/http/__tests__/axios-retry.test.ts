@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AxiosRetry } from '../axios/axios-retry';
 import axios, { AxiosError, type AxiosInstance } from 'axios';
 import type { CreateAxiosOptions } from '../axios/axios-transform';

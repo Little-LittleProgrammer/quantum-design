@@ -9,7 +9,7 @@
         "dist"
     ],
     "scripts": {
-        "build": "rollup -c --environment TYPES:true",
+        "build": "rolldown -c",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage"
     },
@@ -30,7 +30,7 @@
     },
     "devDependencies": {
         "@quantum-design/types": "workspace:*",
-        "@quantum-design-configs/rollup": "workspace:*",
-        "rollup": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

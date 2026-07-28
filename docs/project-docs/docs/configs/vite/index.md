@@ -2,9 +2,9 @@
 
 npm 包名称: `@quantum-design-configs/vite`
 
-当前版本: **3.0.0** (基于 Vite 7.1.1)
+当前版本: **4.0.0** (基于 Vite 8.1.5)
 
-提供了公共的 vite 配置，支持最新的 Vite 7 特性
+提供了公共的 Vite 配置，支持 Vite 8 与 Rolldown 构建选项。
 
 ## API
 
@@ -43,11 +43,10 @@ export interface CommonOptions {
     target?: string;
     formats?: ('es' | 'cjs' | 'umd' | 'iife')[],
     outDir?: string,
-    rollupOptions?: RollupOptions;
-    buildOptions?: Omit<BuildOptions, 'rollupOptions'>;
+    rolldownOptions?: RolldownOptions;
+    buildOptions?: Omit<BuildOptions, 'rolldownOptions'>;
     isComponentsBuild?: boolean;
     customPlugins?: any[];
-    dtsOptions?: PluginOptions;
     pluginsOption?: IPluginsCommonOptions // 增加部分, 配置sentry
     // v3.0.0 新增配置
     aiConfig?: AIConfig; // AI集成配置
@@ -139,7 +138,6 @@ export default defineConfig(({ command, mode }) => {
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
 import { vite_common_lib_config } from '@quantum-design-configs/vite';
-import { resolve } from 'path';
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
     const _common = vite_common_lib_config({
@@ -148,7 +146,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         outDir: 'dist',
         isComponentsBuild: true,
         target: 'modules',
-        rollupOptions: {
+        rolldownOptions: {
             external: ['vue', 'vue-router', '@quantum-design/shared', '@quantum-design/utils'],
         },
         buildOptions: {
@@ -157,12 +155,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             // v3.0.0 新增构建优化
             reportCompressedSize: true,
             chunkSizeWarningLimit: 1000,
-        },
-        dtsOptions: {
-            entryRoot: resolve(__dirname),
-            // v3.0.0 增强类型生成
-            skipDiagnostics: false,
-            logDiagnostics: true,
         },
     });
     return {
@@ -402,7 +394,7 @@ export default defineConfig(({ command, mode }) => {
 
 ```js
 // 在 vite.config.ts 中添加
-import { visualizer } from 'rollup-plugin-visualizer';
+import { visualizer } from 'rolldown-plugin-visualizer';
 
 export default defineConfig(({ command, mode }) => {
     const plugins = [];
@@ -433,7 +425,7 @@ export default defineConfig(({ command, mode }) => {
         ...vite_common_vue_config({ command, mode }),
         // v3.0.0 增强构建缓存
         build: {
-            rollupOptions: {
+            rolldownOptions: {
                 output: {
                     manualChunks: {
                         // 第三方库分离

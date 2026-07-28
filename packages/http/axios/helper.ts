@@ -16,21 +16,21 @@ export function joinTimestamp(join: boolean, restful = false): string | Recordab
     if (restful) {
         return `t=${now}`;
     }
-    return { t: now, };
+    return { t: now };
 }
 
 /**
  * @description: 添加环境变量
  */
 
-export function joinEnvToUrl(env: ()=>string, restful = false): string | Recordable<string> {
+export function joinEnvToUrl(env: () => string, restful = false): string | Recordable<string> {
     if (!env || !isFunction(env)) {
         return restful ? '' : {};
     }
     if (restful) {
-        return `env=${(env())}`;
+        return `env=${env()}`;
     }
-    return { env: env(), };
+    return { env: env() };
 }
 
 /**
@@ -42,9 +42,9 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
         return restful ? '' : {};
     }
     const _cookie = globalThis?.document?.cookie;
-    const _cookieObj:any = {};
+    const _cookieObj: any = {};
     if (_cookie) {
-        _cookie.split(';').forEach(item => {
+        _cookie.split(';').forEach((item) => {
             if (item.includes('=')) {
                 const _key = item.split('=')[0]?.trim() || '';
                 const _value = item.split('=')[1]?.trim();
@@ -55,7 +55,7 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
     if (restful) {
         return `qm_csrf_backend=${_cookieObj['qm_csrf_backend']}`;
     }
-    return { qm_csrf_backend: _cookieObj['qm_csrf_backend'], };
+    return { qm_csrf_backend: _cookieObj['qm_csrf_backend'] };
 }
 
 /**
@@ -63,12 +63,18 @@ export function joinCookieToUrl(join: boolean, restful = false): string | Record
  */
 
 export function dealToken() {
-    const ls = isClient ? js_create_local_storage() : {
-        get: () => { console.log('dealToken暂不支持service'); },
-        set: () => { console.log('dealToken暂不支持service'); },
-    };
+    const ls = isClient
+        ? js_create_local_storage()
+        : {
+              get: () => {
+                  console.log('dealToken暂不支持service');
+              },
+              set: () => {
+                  console.log('dealToken暂不支持service');
+              },
+          };
     function setTokenToHeader(options: CreateAxiosOptions, config: AxiosRequestConfig<any>) {
-        const {withToken = true, } = options.requestOptions!;
+        const { withToken = true } = options.requestOptions ?? {};
         if (!withToken) {
             return config;
         }
@@ -84,7 +90,7 @@ export function dealToken() {
         }
         return config;
     }
-    function setTokenToLs(join: boolean, res:AxiosResponse<any>) {
+    function setTokenToLs(join: boolean, res: AxiosResponse<any>) {
         if (!join) {
             return;
         }
@@ -95,6 +101,7 @@ export function dealToken() {
         }
     }
     return {
-        setTokenToHeader, setTokenToLs,
+        setTokenToHeader,
+        setTokenToLs,
     };
 }

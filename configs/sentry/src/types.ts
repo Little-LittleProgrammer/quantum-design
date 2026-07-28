@@ -2,26 +2,35 @@ import type { BrowserOptions } from '@sentry/vue';
 import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
 
 export interface SentryInnerOptions extends BrowserOptions {
-    Vue: any,
+    Vue: any;
     /**
      * 是否开启sentry
      */
     enable?: boolean;
-    [key: string]: any
+    [key: string]: any;
 }
 
 export interface SentryCliOptions extends SentryVitePluginOptions {
-    outputDir?: string,
-    [key: string]: any
+    outputDir?: string;
+    [key: string]: any;
+}
+
+interface LegacyBrowserOptions extends BrowserOptions {
+    autoSessionTracking?: boolean;
+    logErrors?: boolean;
+    tracingOptions?: {
+        trackComponents?: boolean;
+        [key: string]: unknown;
+    };
 }
 
 export interface SentryNuxtOptions {
-    dsn: string,
-    config: BrowserOptions,
-    clientConfig: BrowserOptions,
-    serverConfig: BrowserOptions,
-    publishRelease: Record<string, any>,
-    [key: string]: any
+    dsn: string;
+    config: LegacyBrowserOptions;
+    clientConfig: LegacyBrowserOptions;
+    serverConfig: LegacyBrowserOptions;
+    publishRelease: Record<string, any>;
+    [key: string]: any;
 }
 export interface ViteEnv {
     VITE_PORT: number; // 端口
@@ -29,7 +38,7 @@ export interface ViteEnv {
     VITE_APP_RELEASE_VERSION: string; // 项目版本
     // VITE_USE_MOCK: boolean;
     VITE_USE_PWA: boolean; // 使用pwa
-    VITE_UPDATE_NOTIFY?: boolean // pwa下是否提示更新
+    VITE_UPDATE_NOTIFY?: boolean; // pwa下是否提示更新
     VITE_PROXY: [string, string][];
     VITE_GLOB_APP_TITLE: string;
     VITE_BASE_PATH: string;

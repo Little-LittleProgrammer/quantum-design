@@ -9,17 +9,17 @@ Quantum Design 使用 pnpm workspace 和 catalog 功能管理依赖版本，确�
 ```json
 "engines": {
   "npm": ">=9.0.0",
-  "node": ">=20.19.0"
+  "node": ">=22.19.0"
 },
-"packageManager": "pnpm@10.13.1",
+"packageManager": "pnpm@10.15.1",
 "volta": {
-  "node": "20.19.4",
-  "pnpm": "10.13.1"
+  "node": "22.19.0",
+  "pnpm": "10.15.1"
 }
 ```
 
-- **Node.js**: 20.19.0 或更高版本（推荐 20.19.4）
-- **pnpm**: 10.13.1
+- **Node.js**: 22.19.0 或更高版本（推荐 22.19.0）
+- **pnpm**: 10.15.1
 - **npm**: 9.0.0 或更高版本
 
 ## 依赖管理策略
@@ -47,14 +47,13 @@ Quantum Design 使用 pnpm workspace 和 catalog 功能管理依赖版本，确�
 - **vue**: ^3.5.18
 - **vue-router**: ^4.5.1
 - **pinia**: ^3.0.3
-- **nuxt**: ^4.0.3
+- **nuxt**: ^4.5.0
 
 #### 构建工具
 
-- **vite**: ^7.1.1
-- **rollup**: ^4.46.2
+- **vite**: ^8.1.5
+- **rolldown**: 1.2.0
 - **typescript**: ^5.9.2
-- **unbuild**: ^3.6.0
 - **turbo**: ^2.5.5
 
 #### UI 组件库
@@ -78,7 +77,7 @@ Quantum Design 使用 pnpm workspace 和 catalog 功能管理依赖版本，确�
 
 #### 代码质量
 
-- **eslint**: ^9.22.0
+- **oxlint**: ^1.11.1
 - **prettier**: ^3.5.3
 - **vitest**: ^3.2.4
 
@@ -110,14 +109,13 @@ Quantum Design 使用 pnpm workspace 和 catalog 功能管理依赖版本，确�
 ### Lint/类型检查
 
 - **prettier**: ^3.5.3 - 代码格式化工具
-- **eslint**: ^9.22.0 - 代码质量和风格检查工具
+- **oxlint**: ^1.11.1 - 高性能 JS/TS Linter
 - **typescript**: ^5.9.2 - TypeScript 语言支持
 
 ### 构建工具链
 
-- **vite**: ^7.1.1 - 前端构建工具
-- **rollup**: ^4.46.2 - JS 打包工具
-- **unbuild**: ^3.6.0 - 通用包构建工具
+- **vite**: ^8.1.5 - 前端构建工具
+- **rolldown**: 1.2.0 - Rust 驱动的 JS/TS 打包工具
 - **turbo**: ^2.5.5 - monorepo 构建加速工具
 
 ### Vue 生态
@@ -153,7 +151,7 @@ Quantum Design 使用 pnpm workspace 和 catalog 功能管理依赖版本，确�
 ```json
 "pnpm": {
   "overrides": {
-    "eslint": "catalog:",
+    "oxlint": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

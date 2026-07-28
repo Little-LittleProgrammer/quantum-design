@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "declarationMap": false,
+        "emitDeclarationOnly": true,
+        "noEmit": false
+    },
+    "include": ["index.ts", "axios/**/*.ts", "../types/global/**/*.d.ts"],
+    "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+}

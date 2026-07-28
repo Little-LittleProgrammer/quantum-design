@@ -168,7 +168,7 @@ export const defaultTransform: AxiosTransform = {
         // 重试请求只针对get
         if (error && error.config?.method && error.config?.method?.toUpperCase() === gRequestEnum.GET) {
             if (isOpenRetry) {
-                retry.retry(axiosInstance, error);
+                return retry.retry(axiosInstance, error);
             }
         }
         return Promise.reject(error.response ? error.response : error);

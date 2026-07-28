@@ -7,7 +7,7 @@ function path_resolve(dir: string) {
     return resolve(process.cwd(), '.', dir);
 }
 
-export default ({ command, mode }: ConfigEnv):UserConfig => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
     const root = process.cwd();
     const env = loadEnv(mode, root);
     const viteEnv = wrapperEnv(env);
@@ -16,9 +16,9 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
         entry: resolve(__dirname, 'src/components/index.ts'),
         name: 'components-lib',
         outDir: 'dist-components',
-        rollupOptions: {
-            external: ['vue', 'ant-design-vue', '@quantum-design/vue3-antd-ui', '@quantum-design/vue3-ui', '@quantum-design/utils', '@quantum-design/shared', '@ant-design/icons-vue', 'pinia']
-        }
+        rolldownOptions: {
+            external: ['vue', 'ant-design-vue', '@quantum-design/vue3-antd-ui', '@quantum-design/vue3-ui', '@quantum-design/utils', '@quantum-design/shared', '@ant-design/icons-vue', 'pinia'],
+        },
     });
     return {
         base: VITE_BASE_PATH,
@@ -27,18 +27,18 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
             preprocessorOptions: {
                 less: {
                     modifyVars: antdCssData,
-                    javascriptEnabled: true
+                    javascriptEnabled: true,
                 },
                 scss: {
-                    additionalData: baseScssFile
-                }
-            }
+                    additionalData: baseScssFile,
+                },
+            },
         },
         resolve: {
             alias: {
                 '@/': path_resolve('src') + '/',
-                '#/': path_resolve('types') + '/'
-            }
-        }
+                '#/': path_resolve('types') + '/',
+            },
+        },
     };
 };

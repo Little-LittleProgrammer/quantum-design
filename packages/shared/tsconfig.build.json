@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": true,
+        "declarationMap": false,
+        "emitDeclarationOnly": true,
+        "noEmit": false,
+        "lib": ["ES2021", "DOM", "DOM.Iterable"]
+    },
+    "include": ["enums/**/*.ts", "color/**/*.ts"],
+    "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+}

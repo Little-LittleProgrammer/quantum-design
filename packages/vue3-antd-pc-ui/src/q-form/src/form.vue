@@ -3,7 +3,7 @@
     <a-form v-bind="getBindValue" id="q-form" class="q-form" :class="getFormClass" ref="formElRef" :model="formModel" @keypress.enter="handle_enter_press">
         <a-row class="row" v-bind="getRow">
             <slot name="formHeader"></slot>
-            <template v-for="schema in (displaySchemas as unknown as FormSchema[])" :key="schema.field">
+            <template v-for="schema in displaySchemas as unknown as FormSchema[]" :key="schema.field">
                 <form-item :formActionType="formActionType" :schema="schema" :formProps="getProps" :allDefaultValues="defaultValueRef" :formModel="formModel" :setFormModel="set_form_model" :blurEvent="blur_event" :tableAction="tableAction">
                     <template #[item]="data" v-for="item in Object.keys($slots)">
                         <slot :name="item" v-bind="data || {}"></slot>
@@ -45,7 +45,7 @@
                     :show-reset-button="getProps.showCustomFilterReset"
                     @confirm="handleCustomFilterConfirm"
                     @reset="handleCustomFilterReset"
-                    @update:visible="(value: boolean) => customFilter.modalVisible.value = value"
+                    @update:visible="(value: boolean) => (customFilter.modalVisible.value = value)"
                 />
             </template>
             <template #fallback>
@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import { js_utils_deep_merge, isArray, isFunction } from '@quantum-design/utils';
-import { computed, defineAsyncComponent, defineComponent, onMounted, reactive, type Ref, ref, unref, watch } from 'vue';
+import { computed, defineAsyncComponent, defineComponent, onMounted, reactive, type DefineComponent, type ExtractPropTypes, type Ref, ref, unref, watch } from 'vue';
 import { dateItemType } from './helper';
 import { basicProps } from './props';
 import type { FormActionType, FormProps, FormSchema } from './types/form';
@@ -75,11 +75,11 @@ import { SettingOutlined } from '@ant-design/icons-vue';
 // 按需引入自定义筛选弹窗组件
 const CustomFilterModal = defineAsyncComponent(() => import('./components/custom-filter-modal.vue'));
 
-export default defineComponent({
+const QAntdForm = defineComponent({
     name: 'QAntdForm',
     // 接收的 props
     props: {
-        ...basicProps
+        ...basicProps,
     },
     // 提交给父组件的, reset, 清空
     emits: ['reset', 'submit', 'register', 'change', 'blur', 'customFilterChange'],
@@ -97,7 +97,7 @@ export default defineComponent({
             return unref(getProps).compact ? 'compact' : '';
         });
         // a-from 所需的api, 可能会多传, 但是无所谓
-        const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) } as Record<string, any>));
+        const getBindValue = computed(() => ({ ...attrs, ...props, ...unref(getProps) }) as Record<string, any>);
         // 父组件传入的props + 通过 useForm暴露出去的 setProps() 设置的props合集
         const getProps = computed((): FormProps => {
             console.log('getProps', unref(propsRef));
@@ -109,7 +109,7 @@ export default defineComponent({
             const { baseRowStyle = {}, rowProps } = unref(getProps);
             return {
                 style: baseRowStyle,
-                ...rowProps
+                ...rowProps,
             };
         });
         // 主要, props.schemas
@@ -139,7 +139,7 @@ export default defineComponent({
             onConfigChange: (config) => {
                 emit('customFilterChange', config);
                 console.log('自定义筛选配置已更新:', config);
-            }
+            },
         });
 
         // 获取显示的 schemas（经过自定义筛选处理）
@@ -150,7 +150,7 @@ export default defineComponent({
             getProps,
             defaultValueRef,
             getSchema: displaySchemas,
-            formModel
+            formModel,
         });
 
         // 暴露出基本的 api, 供 useForm 以及本页面使用使用
@@ -162,12 +162,12 @@ export default defineComponent({
             defaultValueRef,
             formElRef: formElRef as Ref<FormActionType>,
             schemaRef: schemaRef as Ref<FormSchema[]>,
-            handle_form_values
+            handle_form_values,
         });
         // inject 注入, 供 form-action使用
         create_form_context({
             resetAction: resetFields,
-            submitAction: handleSubmit
+            submitAction: handleSubmit,
         });
 
         // 监听 传入的 model, 为了设置值
@@ -179,8 +179,8 @@ export default defineComponent({
                 setFieldsValue(model);
             },
             {
-                immediate: true
-            }
+                immediate: true,
+            },
         );
 
         // 监听 schemas,格式化 schemasRef = props.schemas, 区分出 分割线组件
@@ -188,7 +188,7 @@ export default defineComponent({
             () => unref(getProps).schemas,
             (schemas) => {
                 resetSchema((unref(schemas) ?? []) as FormSchema[]);
-            }
+            },
         );
 
         // 初始化数据
@@ -203,7 +203,7 @@ export default defineComponent({
                     init_default();
                     isInitedDefaultRef.value = true;
                 }
-            }
+            },
         );
 
         // 监听schemas变化并更新显示
@@ -221,7 +221,7 @@ export default defineComponent({
                     displaySchemas.value = [...(getSchema.value || [])];
                 }
             },
-            { immediate: true, deep: true }
+            { immediate: true, deep: true },
         );
 
         // 暴露给 useForm 用于更改传递 prop
@@ -277,18 +277,18 @@ export default defineComponent({
             validateFields,
             validate,
             submit: handleSubmit,
-            scrollToField: scrollToField
+            scrollToField: scrollToField,
         };
 
         // 处理自定义筛选弹窗事件
-        const handleCustomFilterConfirm = async(config: { selectedFields: string[]; fieldOrder: string[] }) => {
+        const handleCustomFilterConfirm = async (config: { selectedFields: string[]; fieldOrder: string[] }) => {
             if (!getProps.value.enableCustomFilter) return;
             try {
                 // 确保传递的是纯对象
                 const pureConfig = {
                     selectedFields: [...config.selectedFields], // 创建纯数组副本
                     fieldOrder: [...config.fieldOrder], // 创建纯数组副本
-                    timestamp: Date.now() // 添加时间戳
+                    timestamp: Date.now(), // 添加时间戳
                 };
                 await customFilter.saveConfig(pureConfig);
                 console.log('自定义筛选配置保存成功:', pureConfig);
@@ -297,7 +297,7 @@ export default defineComponent({
             }
         };
 
-        const handleCustomFilterReset = async() => {
+        const handleCustomFilterReset = async () => {
             if (!getProps.value.enableCustomFilter) return;
             try {
                 await customFilter.resetConfig();
@@ -331,8 +331,10 @@ export default defineComponent({
             handleCustomFilterReset,
             displaySchemas,
             // 方便暴露给useForm
-            ...formActionType
+            ...formActionType,
         };
-    }
-});
+    },
+}) as DefineComponent<ExtractPropTypes<typeof basicProps>>;
+
+export default QAntdForm;
 </script>

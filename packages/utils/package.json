@@ -11,7 +11,7 @@
     "license": "ISC",
     "author": "Evan Wu",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true",
+        "build": "rolldown -c",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage"
     },
@@ -51,11 +51,12 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@quantum-design-configs/rollup": "workspace:*",
+        "@quantum-design-configs/rolldown": "workspace:*",
         "@quantum-design/shared": "workspace:*",
         "@quantum-design/types": "workspace:*",
         "@types/crypto-js": "catalog:",
         "crypto-js": "catalog:",
-        "rollup": "catalog:"
+        "fake-indexeddb": "catalog:",
+        "rolldown": "catalog:"
     }
 }

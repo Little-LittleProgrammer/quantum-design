@@ -12,7 +12,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     const _common = vite_common_vue_config(
         { command, mode },
         {
-            rollupOptions: {
+            rolldownOptions: {
                 external: [
                     'monaco-editor',
                     'tinymce/tinymce',

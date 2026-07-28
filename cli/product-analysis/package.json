@@ -4,8 +4,8 @@
     "description": "性能分析脚本",
     "type": "module",
     "scripts": {
-        "dev": "unbuild --stub",
-        "build": "unbuild"
+        "dev": "rolldown -c -w",
+        "build": "rolldown -c"
     },
     "bin": {
         "product-analysis": "index.js"
@@ -35,6 +35,7 @@
     "devDependencies": {
         "@types/fs-extra": "catalog:",
         "@types/minimist": "catalog:",
-        "unbuild": "catalog:"
+        "@quantum-design-configs/rolldown": "workspace:*",
+        "rolldown": "catalog:"
     }
 }

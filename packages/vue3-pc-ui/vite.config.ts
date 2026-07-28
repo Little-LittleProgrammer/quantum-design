@@ -2,7 +2,6 @@
 import { ConfigEnv } from 'vite';
 import { UserConfig } from 'vite';
 import { vite_common_lib_config } from '@quantum-design-configs/vite';
-import { resolve } from 'path';
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
     const _common = vite_common_lib_config({
@@ -10,7 +9,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         name: 'qComponents',
         outDir: 'dist',
         isComponentsBuild: true,
-        rollupOptions: {
+        rolldownOptions: {
             external: [
                 'vue',
                 'vue-router',
@@ -53,9 +52,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         buildOptions: {
             cssCodeSplit: true,
             minify: true,
-        },
-        dtsOptions: {
-            entryRoot: resolve(__dirname),
         },
     });
     _common.plugins?.splice(2, 1);

@@ -1,9 +1,4 @@
-import type {
-	AxiosRequestConfig,
-	AxiosInstance,
-	AxiosResponse,
-	AxiosError,
-} from 'axios';
+import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import type { RequestOptions } from './interface';
 import type { AxiosResponseAgent, CreateAxiosOptions } from './axios-transform';
 import axios from 'axios';
@@ -24,20 +19,20 @@ export class VAxios {
     private readonly options: CreateAxiosOptions;
 
     constructor(options: CreateAxiosOptions) {
-        this.options = { ...options, };
+        this.options = { ...options };
         this.axiosInstance = axios.create(options);
         this.setupInterceptors();
     }
 
     /**
-	 * @description:  Create axios instance
-	 */
+     * @description:  Create axios instance
+     */
     private createAxios(config: CreateAxiosOptions): void {
         this.axiosInstance = axios.create(config);
     }
 
     private getTransform() {
-        const { defaultTransform, } = this.options;
+        const { defaultTransform } = this.options;
         return {
             ...defaultTransform,
         };
@@ -48,8 +43,8 @@ export class VAxios {
     }
 
     /**
-	 * @description: Reconfigure axios
-	 */
+     * @description: Reconfigure axios
+     */
     configAxios(config: CreateAxiosOptions) {
         if (!this.axiosInstance) {
             return;
@@ -58,8 +53,8 @@ export class VAxios {
     }
 
     /**
-	 * @description: Set general header
-	 */
+     * @description: Set general header
+     */
     setHeader(headers: any): void {
         if (!this.axiosInstance) {
             return;
@@ -68,90 +63,60 @@ export class VAxios {
     }
 
     /**
-	 * @description: Interceptor configuration
-	 */
+     * @description: Interceptor configuration
+     */
     private setupInterceptors() {
         const transform = this.getTransform();
         if (!transform) {
             return;
         }
-        const {
-            requestInterceptors,
-            requestInterceptorsCatch,
-            responseInterceptors,
-            responseInterceptorsCatch,
-        } = transform;
+        const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch } = transform;
 
         const axiosCanceler = new AxiosCanceler();
         // Request interceptor configuration processing
         this.axiosInstance.interceptors.request.use(
-            (config: CreateAxiosOptions) => {
+            ((config: CreateAxiosOptions) => {
                 // If cancel repeat request is turned on, then cancel repeat request is prohibited
 
-                const { cancelToken, } = config.requestOptions!;
+                const { cancelToken } = config.requestOptions!;
 
-                const ignoreRepeat =
-					cancelToken !== undefined
-					    ? cancelToken
-					    : this.options.requestOptions?.cancelToken;
+                const ignoreRepeat = cancelToken !== undefined ? cancelToken : this.options.requestOptions?.cancelToken;
                 ignoreRepeat && axiosCanceler.addPending(config);
-                if (
-                    requestInterceptors &&
-					isFunction(requestInterceptors)
-                ) {
-                    config = requestInterceptors(
-						config as SelectPartial<
-							AxiosRequestConfig,
-							'url' | 'headers' | 'method'
-						>,
-						this.options
-                    );
+                if (requestInterceptors && isFunction(requestInterceptors)) {
+                    config = requestInterceptors(config as SelectPartial<AxiosRequestConfig, 'url' | 'headers' | 'method'>, this.options);
                 }
                 return config;
-            },
-            undefined
+            }) as any,
+            undefined,
         );
 
         // Request interceptor error capture
         requestInterceptorsCatch &&
-			isFunction(requestInterceptorsCatch) &&
-			this.axiosInstance.interceptors.request.use(undefined, (error) => {
-			    requestInterceptorsCatch(error, this.options);
-			});
+            isFunction(requestInterceptorsCatch) &&
+            this.axiosInstance.interceptors.request.use(undefined, (error) => {
+                requestInterceptorsCatch(error, this.options);
+            });
 
         // Response result interceptor processing
-        this.axiosInstance.interceptors.response.use(
-            (res: AxiosResponse<any>) => {
-                res && axiosCanceler.removePending(res.config);
-                if (
-                    responseInterceptors &&
-					isFunction(responseInterceptors)
-                ) {
-                    res = responseInterceptors(
-						res as AxiosResponseAgent<any>,
-						this.options
-                    );
-                }
-                return res;
-            },
-            undefined
-        );
+        this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
+            res && axiosCanceler.removePending(res.config);
+            if (responseInterceptors && isFunction(responseInterceptors)) {
+                res = responseInterceptors(res as AxiosResponseAgent<any>, this.options);
+            }
+            return res;
+        }, undefined);
 
         // Response result interceptor error capture
         responseInterceptorsCatch &&
-			isFunction(responseInterceptorsCatch) &&
-			this.axiosInstance.interceptors.response.use(undefined, (error) => {
-			    responseInterceptorsCatch(
-			        error,
-			        this.options,
-			        this.axiosInstance
-			    );
-			});
+            isFunction(responseInterceptorsCatch) &&
+            this.axiosInstance.interceptors.response.use(undefined, (error) => {
+                return responseInterceptorsCatch(error, this.options, this.axiosInstance);
+            });
     }
 
     /**
-	 * @description:  上传文件
-	 */
+     * @description:  上传文件
+     */
     uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
         const formData = new window.FormData();
         if (params.data) {
@@ -175,25 +140,12 @@ export class VAxios {
             formData.append(key, customParams[key]);
         });
 
-        const uploadUrl = this.options.requestOptions?.uploadUrl
-            ? this.options.requestOptions?.uploadUrl
-            : '';
-        const url =
-			uploadUrl +
-			'' +
-			config.url +
-			`?${joinEnvToUrl(
-			    this.options.requestOptions?.env || (() => ''),
-			    true
-			)}`;
+        const uploadUrl = this.options.requestOptions?.uploadUrl ? this.options.requestOptions?.uploadUrl : '';
+        const url = uploadUrl + '' + config.url + `?${joinEnvToUrl(this.options.requestOptions?.env || (() => ''), true)}`;
 
-        const opt: RequestOptions = Object.assign(
-            {},
-            this.options.requestOptions || {},
-            {
-                cancelToken: false,
-            }
-        );
+        const opt: RequestOptions = Object.assign({}, this.options.requestOptions || {}, {
+            cancelToken: false,
+        });
 
         const _option: CreateAxiosOptions = {
             ...config,
@@ -212,14 +164,9 @@ export class VAxios {
     // 格式化请求参数
     supportFormData(config: AxiosRequestConfig) {
         const headers = config.headers || this.options.headers;
-        const contentType =
-			headers?.['Content-Type'] || headers?.['content-type'];
+        const contentType = headers?.['Content-Type'] || headers?.['content-type'];
 
-        if (
-            contentType !== gContentTypeEnum.FORM_URLENCODED ||
-			!Reflect.has(config, 'data') ||
-			config.method?.toUpperCase() === gRequestEnum.GET
-        ) {
+        if (!contentType?.startsWith('application/x-www-form-urlencoded') || !Reflect.has(config, 'data') || config.method?.toUpperCase() === gRequestEnum.GET) {
             return config;
         }
 
@@ -229,46 +176,31 @@ export class VAxios {
         };
     }
 
-    get<T = any>(
-        config: AxiosRequestConfig,
-        options?: RequestOptions
-    ): Promise<T> {
-        return this.request({ ...config, method: 'GET', }, options);
+    get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+        return this.request({ ...config, method: 'GET' }, options);
     }
 
-    post<T = any>(
-        config: AxiosRequestConfig,
-        options?: RequestOptions
-    ): Promise<T> {
-        return this.request({ ...config, method: 'POST', }, options);
+    post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+        return this.request({ ...config, method: 'POST' }, options);
     }
 
-    put<T = any>(
-        config: AxiosRequestConfig,
-        options?: RequestOptions
-    ): Promise<T> {
-        return this.request({ ...config, method: 'PUT', }, options);
+    put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+        return this.request({ ...config, method: 'PUT' }, options);
     }
 
-    delete<T = any>(
-        config: AxiosRequestConfig,
-        options?: RequestOptions
-    ): Promise<T> {
-        return this.request({ ...config, method: 'DELETE', }, options);
+    delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+        return this.request({ ...config, method: 'DELETE' }, options);
     }
 
-    request<T = any>(
-        config: AxiosRequestConfig,
-        options?: RequestOptions
-    ): Promise<T> {
+    request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         let conf: CreateAxiosOptions = cloneDeep(config);
         const transform = this.getTransform();
 
-        const { requestOptions, } = this.options;
+        const { requestOptions } = this.options;
 
         const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-        const { beforeRequestHook, } = transform || {};
+        const { beforeRequestHook } = transform || {};
         if (beforeRequestHook && isFunction(beforeRequestHook)) {
             conf = beforeRequestHook(conf, opt);
         }
@@ -277,7 +209,7 @@ export class VAxios {
 
         conf = this.supportFormData(conf);
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.axiosInstance
                 .request<any, AxiosResponse<Result>>(conf)
                 .then((res: AxiosResponse<Result>) => {
@@ -295,6 +227,7 @@ export class VAxios {
                 })
                 .catch((e: Error | AxiosError) => {
                     console.log(e || '请求取消');
+                    reject(e);
                 });
         });
     }

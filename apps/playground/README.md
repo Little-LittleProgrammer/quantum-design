@@ -8,23 +8,25 @@
 
 ### 如果使用 `<script setup>`
 
-[` <script setup> `](https://github.com/vuejs/rfcs/pull/227)是目前处于RFC阶段的一个特性。要获得对语法的正确IDE支持，请使用[Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)而不是Vetur(并禁用Vetur)。
+[`<script setup>`](https://github.com/vuejs/rfcs/pull/227)是目前处于RFC阶段的一个特性。要获得对语法的正确IDE支持，请使用[Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)而不是Vetur(并禁用Vetur)。
 
 ## 支持 `.vue` TS中的引入
 
 因为TypeScript不能处理`.vue `的导入，所以`import 'xxx.vue'` 的时候会报错, 有两种解决方法
+
 1. 使用volar插件
 2. 声明
+
 ```js
 declare module '*.vue' {
     import { DefineComponent } from 'vue'
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
+    // oxlint-disable-next-line typescript/no-explicit-any
     const component: DefineComponent<{}, {}, any>
     export default component
   }
 ```
 
-
 ## 使用
+
 1. ****使用前请更新 quantum-design 所有组件版本****
 2. 开发前, 请务必看文档

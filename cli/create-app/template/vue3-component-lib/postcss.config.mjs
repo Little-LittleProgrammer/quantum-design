@@ -1,1 +1,1 @@
-export { default } from '@quantum-design-configs/tailwind/postcss.config';
+export { default } from '@quantum-design-configs/tailwind/postcss';

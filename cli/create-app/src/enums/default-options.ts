@@ -1,5 +1,4 @@
-import { ICliOptions } from "../type/options";
-
+import type { ICliOptions } from '../type/options';
 
 export const cliOptions: ICliOptions = {
     projectName: 'qm-project-name',
@@ -7,6 +6,5 @@ export const cliOptions: ICliOptions = {
     frame: 'vue3',
     infrastructureMode: 'polyrepo',
     template: 'vue3-antd-vite',
-    communication: 'only_http'
-}
- 
+    communication: 'only_http',
+};

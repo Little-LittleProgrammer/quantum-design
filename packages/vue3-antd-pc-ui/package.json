@@ -13,7 +13,7 @@
     "author": "Evan Wu",
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && vue-tsc -p tsconfig.build.json",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage"
     },
@@ -87,6 +87,7 @@
         "sass": "catalog:",
         "vue": "catalog:",
         "vue-router": "catalog:",
+        "vue-tsc": "catalog:",
         "vue-types": "catalog:"
     }
 }

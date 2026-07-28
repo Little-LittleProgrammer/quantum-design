@@ -3,13 +3,13 @@ import { isArray, isNull, isObject } from './is';
 
 type IOptionsTable<C extends string | number | symbol> = {
     alignData?: Partial<Record<C | 'all', 'left' | 'right' | 'center'>>;
-    widthData?: Partial<Record<C | 'all', string | number>>,
-    fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>,
-    sortData?: (C | 'all' | undefined)[] | Partial<Record<(C | 'all'), Fn>>;
-    customTitle?: (C | 'all')[],
-    customCell?:Partial< Record<(C | 'all'), any>>,
-    resizableData?: Partial<Record<C | 'all', boolean>> // 是否可拖拽
-}
+    widthData?: Partial<Record<C | 'all', string | number>>;
+    fixedData?: Partial<Record<C | 'all', 'left' | 'right'>>;
+    sortData?: (C | 'all' | undefined)[] | Partial<Record<C | 'all', Fn>>;
+    customTitle?: (C | 'all')[];
+    customCell?: Partial<Record<C | 'all', any>>;
+    resizableData?: Partial<Record<C | 'all', boolean>>; // 是否可拖拽
+};
 /**
  * 设置表格头
  * @param headerObj 服务端返回的表格头
@@ -32,13 +32,13 @@ type IOptionsTable<C extends string | number | symbol> = {
  */
 export function js_utils_get_table_header_columns<T extends Record<string, any>>(headerObj: T, options: IOptionsTable<keyof T> = {}, list?: any) {
     const { alignData, widthData, sortData = [], customTitle = [], customCell, resizableData } = options;
-    const fixedData:Record<string, 'left' | 'right'> = {
+    const fixedData: Record<string, 'left' | 'right'> = {
         action: 'right',
-        ...options.fixedData
+        ...options.fixedData,
     };
     function dfs<T extends Record<string, any>>(headerObj: T) {
-        const _resObj = [];
-        let _rowSpan:any = {};
+        const _resObj: any[] = [];
+        let _rowSpan: any = {};
         if (isArray(list)) {
             _rowSpan = js_utils_get_custom_cell(headerObj, list);
         }
@@ -49,7 +49,7 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
                     title: customTitle.indexOf(_key) > 1 ? undefined : headerObj[_key].title,
                     dataIndex: _key,
                     key: _key,
-                    children: dfs(headerObj[_key].children)
+                    children: dfs(headerObj[_key].children),
                 };
             } else {
                 _temObj = {
@@ -57,19 +57,20 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
                     title: customTitle.indexOf(_key) > 1 ? undefined : headerObj[_key],
                     key: _key,
                     dataIndex: _key,
-                    width: widthData ? widthData[_key] ?? (widthData.all ?? '') : '',
-                    resizable: resizableData ? resizableData[_key] ?? (resizableData.all ?? undefined) : undefined,
-                    align: alignData ? alignData[_key] ?? (alignData.all ?? 'center') : 'center',
+                    width: widthData ? (widthData[_key] ?? widthData.all ?? '') : '',
+                    resizable: resizableData ? (resizableData[_key] ?? resizableData.all ?? undefined) : undefined,
+                    align: alignData ? (alignData[_key] ?? alignData.all ?? 'center') : 'center',
                     fixed: fixedData[_key] ?? '',
                     sorter: isObject(sortData) ? (sortData as Record<string, Fn>)[_key] : (sortData as string[]).indexOf(_key) > -1,
-                    customCell: customCell ? customCell[_key]
+                    customCell: customCell
                         ? customCell[_key]
-                        : Object.keys(_rowSpan).length > 0
-                            ? (_: any, index: number) => ({
-                                rowSpan: !isNull(_rowSpan) ? _rowSpan[_key][index as number] : 1
-                            })
-                            : null
-                        : null
+                            ? customCell[_key]
+                            : Object.keys(_rowSpan).length > 0
+                              ? (_: any, index: number) => ({
+                                    rowSpan: !isNull(_rowSpan) ? _rowSpan[_key][index as number] : 1,
+                                })
+                              : null
+                        : null,
                 };
             }
             _resObj.push(_temObj);
@@ -84,8 +85,8 @@ export function js_utils_get_table_header_columns<T extends Record<string, any>>
  * @param list 服务端返回的list
  * @returns  Record<keyof T, number[]>
  */
-export function js_utils_get_custom_cell<T extends Record<string, any>>(headerObj:T, list: Partial<T>[]): Record<keyof T, number[]> | null {
-    type Ikey = keyof T
+export function js_utils_get_custom_cell<T extends Record<string, any>>(headerObj: T, list: Partial<T>[]): Record<keyof T, number[]> | null {
+    type Ikey = keyof T;
     const _n = list.length;
     if (_n === 0) return null;
     const _keyObj: Record<Ikey, any> = {} as any;
@@ -106,7 +107,7 @@ export function js_utils_get_custom_cell<T extends Record<string, any>>(headerOb
                 _res++;
             }
             // 如果不相等, 将 start赋值为 res
-            if ((_keyObj[key as Ikey] !== list[i][key])) {
+            if (_keyObj[key as Ikey] !== list[i][key]) {
                 _resObj[key as Ikey][_start] = _res;
                 for (let j = _start + 1; j < i; j++) {
                     _resObj[key as Ikey][j] = 0;

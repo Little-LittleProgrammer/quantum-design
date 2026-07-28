@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **环境要求**：
 
-- Node.js: >= 20.19.0（推荐 22.19.0）
+- Node.js: >= 22.19.0（推荐 22.19.0）
 - pnpm: >= 10.0.0（推荐 10.15.1）
 - 包管理器已在根 `package.json` 中配置 `packageManager: pnpm@10.15.1`，并使用 Volta 管理版本
 
@@ -34,7 +34,8 @@ pnpm test:unit        # 单次运行测试
 pnpm test:coverage    # 带覆盖率的测试
 
 # 代码检查与格式化
-pnpm lint             # 先运行 oxlint 再运行 eslint
+pnpm lint             # 运行 oxlint（唯一 linter，已移除 eslint）
+pnpm lint:fix         # oxlint 自动修复
 pnpm format           # Prettier 批量格式化 ts/tsx/md
 
 # 规范提交（使用 czg 交互式提交）
@@ -70,11 +71,11 @@ pnpm migrator         # Sass 模块化迁移辅助工具
     - `workflow-cloud`: 工作流云端工具与客户端封装
 
 - **configs/** - 统一配置包（作为独立包复用）
-    - `eslint`: 统一 ESLint 配置（v9.x，使用 flat config）
+    - `oxlint`: 统一 oxlint 配置（导出 `defineOxlintConfig`）
     - `prettier`: 统一 Prettier 配置
     - `tsconfig`: TypeScript 配置
     - `vite`: Vite 插件与构建封装（当前 peer 依赖为 Vite ^7）
-    - `rollup`: Rollup 构建配置
+    - `rolldown`: Rolldown 构建配置
     - `commitlint`: Commitlint 配置
     - `sentry`: Sentry 集成配置
     - `tailwind`: Tailwind CSS 配置
@@ -105,12 +106,12 @@ pnpm migrator         # Sass 模块化迁移辅助工具
 
 ## 技术栈
 
-- **构建工具**: Vite 7.x、Rollup
+- **构建工具**: Vite 8.x、Rolldown 1.x
 - **包管理**: pnpm 10.x + workspaces
 - **Monorepo**: Turbo 2.x
 - **语言**: TypeScript（严格模式）
 - **测试**: Vitest + @vitest/ui + happy-dom/jsdom
-- **代码质量**: ESLint 9.x（flat config）、oxlint、Prettier 3.x
+- **代码质量**: oxlint 1.x（唯一 linter）、Prettier 3.x
 - **Git 工作流**: Husky + lint-staged + commitlint + czg
 - **版本管理**: @changesets/cli
 - **样式**: Sass、Tailwind CSS、CSS Variables
@@ -127,10 +128,10 @@ pnpm migrator         # Sass 模块化迁移辅助工具
 
 ### 2. 代码质量
 
-- 统一 Lint：仓库提供 `@quantum-design-configs/eslint`，包内按需继承
-- 统一构建：库包优先使用 `configs/rollup` 与 `configs/vite` 的封装
-- ESLint 配置使用 flat config 格式（`eslint.config.mjs`）
-- Lint 流程：先运行 `oxlint` 再运行 `eslint`
+- 统一 Lint：仓库提供 `@quantum-design-configs/oxlint`，根目录 `oxlint.config.ts` 统一继承
+- 统一构建：库包优先使用 `configs/rolldown` 与 `configs/vite` 的封装
+- Lint 流程：仅运行 `oxlint`（`pnpm lint` / `pnpm lint:fix`），ESLint 已完全移除
+- 代码格式化统一交给 Prettier，lint 侧不声明格式化规则
 
 ### 3. 包发布
 
@@ -143,7 +144,7 @@ pnpm migrator         # Sass 模块化迁移辅助工具
 ### 3.0.0（进行中）
 
 - ✅ Vite 升级到 v7，更新 `configs/vite` 的 peer 依赖
-- ✅ 重构 ESLint 配置（`configs/eslint`）
+- ✅ 移除 ESLint，全量迁移到 oxlint（新增 `configs/oxlint`，删除 `configs/eslint`）
 - ✅ 支持 Tailwind CSS
 - ✅ 重构项目偏好设置，支持 CSS Variables 模式、多主题、系统主题
 - ✅ 增加主题切换动画，优化视觉体验

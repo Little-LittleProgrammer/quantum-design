@@ -5,7 +5,7 @@
     "license": "ISC",
     "author": "",
     "scripts": {
-        "build": "rollup -c --environment TYPES:true",
+        "build": "rolldown -c",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "files": [
@@ -20,9 +20,9 @@
     "devDependencies": {
         "@protobuf-ts/plugin": "^2.9.7",
         "@protobuf-ts/protoc": "^2.9.7",
-        "@quantum-design-configs/rollup": "~3.0.0",
+        "@quantum-design-configs/rolldown": "^4.0.0",
         "@quantum-design-configs/tsconfig": "~3.0.0",
-        "rollup": "^4.46.2",
+        "rolldown": "1.2.0",
         "tslib": "^2.8.1"
     }
 }

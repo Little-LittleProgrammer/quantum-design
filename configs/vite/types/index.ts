@@ -1,6 +1,5 @@
-import type { RollupOptions } from 'rollup';
+import type { RolldownOptions } from 'rolldown';
 import type { BuildOptions, ProxyOptions } from 'vite';
-import type { PluginOptions } from 'vite-plugin-dts';
 import type { SentryVitePluginOptions } from '@sentry/vite-plugin';
 import type { VitePWAOptions } from 'vite-plugin-pwa';
 
@@ -41,11 +40,10 @@ export interface CommonOptions {
     target?: string;
     formats?: ('es' | 'cjs' | 'umd' | 'iife')[];
     outDir?: string;
-    rollupOptions?: RollupOptions;
-    buildOptions?: Omit<BuildOptions, 'rollupOptions'>;
+    rolldownOptions?: RolldownOptions;
+    buildOptions?: Omit<BuildOptions, 'rolldownOptions'>;
     isComponentsBuild?: boolean;
     customPlugins?: any[];
-    dtsOptions?: PluginOptions;
     pluginsOption?: IPluginsCommonOptions;
 }
 
