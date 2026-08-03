@@ -1,6 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@quantum-design-configs/tailwind/theme.css';
+
+/*
+ * v4 的自动源检测不会扫描 node_modules，也不会跨包扫描，
+ * 因此组件库中用到的 class 需显式声明，否则会被 purge。
+ * 以下相对路径在 workspace（packages/*）与已发布场景
+ * （node_modules/@quantum-design/*）下均成立。
+ */
+@source '../../vue3-antd-pc-ui/src';
+@source '../../vue3-pc-ui/src';
 
 @layer base {
     *,
@@ -105,15 +114,15 @@
     }
 
     .outline-box {
-        @apply outline-border relative cursor-pointer rounded-md p-1 outline outline-1;
+        @apply outline-border relative cursor-pointer rounded-md p-1 outline-1;
     }
 
     .outline-box::after {
-        @apply absolute left-1/2 top-1/2 z-20 h-0 w-[1px] rounded-sm opacity-0 outline outline-2 outline-transparent transition-all duration-300 content-[""];
+        @apply rounded-xs absolute left-1/2 top-1/2 z-20 h-0 w-[1px] opacity-0 outline-2 outline-transparent transition-all duration-300 content-[""];
     }
 
     .outline-box.outline-box-active {
-        @apply outline-primary outline 
+        @apply outline-primary outline-1;
     }
 
     .outline-box.outline-box-active::after {

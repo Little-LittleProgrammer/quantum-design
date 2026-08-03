@@ -1,0 +1,370 @@
+/**
+ * quantum-design 的 Tailwind CSS v4 主题定义（CSS-first）
+ *
+ * 使用方在自己的 CSS 入口中按如下顺序引入：
+ *   @import 'tailwindcss';
+ *   @import '@quantum-design-configs/tailwind/theme.css';
+ *
+ * 主题值统一引用 packages/styles 提供的 CSS 变量，
+ * 因此运行时切换主题（use-project-setting）无需重新构建 CSS。
+ */
+
+/* v3 的 darkMode: 'selector' 等价写法 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* v3 的 safelist: ['dark']，保证主题切换用到的 dark 类不被 purge */
+@source inline("dark");
+
+@theme {
+    /*
+     * v3 中逐个列举的 spacing（1=4px、2=8px … 96=384px）本质是 4px × n，
+     * 与 v4 的 spacing 基数乘法完全一致，故用基数一行代替整张表，
+     * 同时额外获得任意值支持（如 p-[13]）。
+     */
+    --spacing: 4px;
+
+    /* 主色 */
+    --color-primary: var(--primary-color);
+    --color-primary-hover: var(--hover-link-color);
+    --color-primary-active: var(--primary-color);
+
+    /* 边框 */
+    --color-border: var(--border-color-base);
+
+    /* 卡片 */
+    --color-card: var(--aside-bg);
+    --color-card-foreground: var(--text-color);
+
+    /* 文本 */
+    --color-text-primary: var(--text-color);
+    --color-text-primary-hover: var(--link-color);
+    --color-text-primary-active: var(--primary-color);
+    --color-text-secondary: var(--text-color-secondary);
+
+    /* 布局 */
+    --color-header: var(--header-bg);
+    --color-main: var(--body-bg);
+
+    /* 语义色 */
+    --color-success: var(--success-color);
+    --color-warning: var(--warning-color);
+
+    /* 调色板：green（success） */
+    --color-green-50: var(--green-color-50);
+    --color-green-100: var(--green-color-100);
+    --color-green-200: var(--green-color-200);
+    --color-green-300: var(--green-color-300);
+    --color-green-400: var(--green-color-400);
+    --color-green-500: var(--green-color-500);
+    --color-green-600: var(--green-color-600);
+    --color-green-700: var(--green-color-700);
+    --color-green-active: var(--green-color-700);
+    --color-green-background-light: var(--green-color-200);
+    --color-green-background-lighter: var(--green-color-100);
+    --color-green-background-lightest: var(--green-color-50);
+    --color-green-border: var(--green-color-400);
+    --color-green-border-light: var(--green-color-300);
+    --color-green-hover: var(--green-color-600);
+    --color-green-text: var(--green-color-500);
+    --color-green-text-active: var(--green-color-700);
+    --color-green-text-hover: var(--green-color-600);
+
+    /* 调色板：red（error） */
+    --color-red-50: var(--red-color-50);
+    --color-red-100: var(--red-color-100);
+    --color-red-200: var(--red-color-200);
+    --color-red-300: var(--red-color-300);
+    --color-red-400: var(--red-color-400);
+    --color-red-500: var(--red-color-500);
+    --color-red-600: var(--red-color-600);
+    --color-red-700: var(--red-color-700);
+    --color-red-active: var(--red-color-700);
+    --color-red-background-light: var(--red-color-200);
+    --color-red-background-lighter: var(--red-color-100);
+    --color-red-background-lightest: var(--red-color-50);
+    --color-red-border: var(--red-color-400);
+    --color-red-border-light: var(--red-color-300);
+    --color-red-hover: var(--red-color-600);
+    --color-red-text: var(--red-color-500);
+    --color-red-text-active: var(--red-color-700);
+    --color-red-text-hover: var(--red-color-600);
+
+    /* 调色板：yellow（warning） */
+    --color-yellow-50: var(--yellow-color-50);
+    --color-yellow-100: var(--yellow-color-100);
+    --color-yellow-200: var(--yellow-color-200);
+    --color-yellow-300: var(--yellow-color-300);
+    --color-yellow-400: var(--yellow-color-400);
+    --color-yellow-500: var(--yellow-color-500);
+    --color-yellow-600: var(--yellow-color-600);
+    --color-yellow-700: var(--yellow-color-700);
+    --color-yellow-active: var(--yellow-color-700);
+    --color-yellow-background-light: var(--yellow-color-200);
+    --color-yellow-background-lighter: var(--yellow-color-100);
+    --color-yellow-background-lightest: var(--yellow-color-50);
+    --color-yellow-border: var(--yellow-color-400);
+    --color-yellow-border-light: var(--yellow-color-300);
+    --color-yellow-hover: var(--yellow-color-600);
+    --color-yellow-text: var(--yellow-color-500);
+    --color-yellow-text-active: var(--yellow-color-700);
+    --color-yellow-text-hover: var(--yellow-color-600);
+
+    /* 调色板：success / warning 的分级（与 green / yellow 同源） */
+    --color-success-50: var(--success-color-50);
+    --color-success-100: var(--success-color-100);
+    --color-success-200: var(--success-color-200);
+    --color-success-300: var(--success-color-300);
+    --color-success-400: var(--success-color-400);
+    --color-success-500: var(--success-color-500);
+    --color-success-600: var(--success-color-600);
+    --color-success-700: var(--success-color-700);
+    --color-warning-50: var(--warning-color-50);
+    --color-warning-100: var(--warning-color-100);
+    --color-warning-200: var(--warning-color-200);
+    --color-warning-300: var(--warning-color-300);
+    --color-warning-400: var(--warning-color-400);
+    --color-warning-500: var(--warning-color-500);
+    --color-warning-600: var(--warning-color-600);
+    --color-warning-700: var(--warning-color-700);
+
+    /* 圆角 */
+    --radius-sm: calc(var(--border-radius-base) - 4px);
+    --radius-md: calc(var(--border-radius-base) - 2px);
+    --radius-lg: var(--border-radius-base);
+    --radius-xl: calc(var(--border-radius-base) + 4px);
+
+    /* 阴影 */
+    --shadow-float: 0 6px 16px 0 rgb(0 0 0 / 8%), 0 3px 6px -4px rgb(0 0 0 / 12%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+
+    /* 动画 */
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+    --animate-collapsible-down: collapsible-down 0.2s ease-in-out;
+    --animate-collapsible-up: collapsible-up 0.2s ease-in-out;
+    --animate-float: float 5s linear 0ms infinite;
+
+    @keyframes accordion-down {
+        from {
+            height: 0;
+        }
+        to {
+            height: var(--radix-accordion-content-height);
+        }
+    }
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height);
+        }
+        to {
+            height: 0;
+        }
+    }
+    @keyframes collapsible-down {
+        from {
+            height: 0;
+        }
+        to {
+            height: var(--radix-collapsible-content-height);
+        }
+    }
+    @keyframes collapsible-up {
+        from {
+            height: var(--radix-collapsible-content-height);
+        }
+        to {
+            height: 0;
+        }
+    }
+    @keyframes float {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+}
+
+/*
+ * v3 的 theme.container（center / padding / screens）在 v4 已移除，
+ * 需改用 @utility 重建。
+ */
+@utility container {
+    margin-inline: auto;
+    padding-inline: 2rem;
+    max-width: 1400px;
+}
+
+/*
+ * 入场动画（原 configs/tailwind/src/plugins/entry.ts）。
+ * 依赖 :nth-child 选择器，故以普通 CSS 声明而非 @utility。
+ * 前 5 个子元素依次延迟 0.1s ~ 0.5s。
+ */
+@keyframes enter-x-animation {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes enter-y-animation {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@layer utilities {
+    .enter-x,
+    .-enter-x,
+    .enter-y,
+    .-enter-y {
+        opacity: 0;
+    }
+
+    .enter-x:nth-child(1),
+    .-enter-x:nth-child(1),
+    .enter-y:nth-child(1),
+    .-enter-y:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    .enter-x:nth-child(2),
+    .-enter-x:nth-child(2),
+    .enter-y:nth-child(2),
+    .-enter-y:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .enter-x:nth-child(3),
+    .-enter-x:nth-child(3),
+    .enter-y:nth-child(3),
+    .-enter-y:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    .enter-x:nth-child(4),
+    .-enter-x:nth-child(4),
+    .enter-y:nth-child(4),
+    .-enter-y:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    .enter-x:nth-child(5),
+    .-enter-x:nth-child(5),
+    .enter-y:nth-child(5),
+    .-enter-y:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .enter-x,
+    .enter-y,
+    .-enter-x,
+    .-enter-y {
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
+    .enter-x {
+        transform: translateX(50px);
+        animation-name: enter-x-animation;
+    }
+    .-enter-x {
+        transform: translateX(-50px);
+        animation-name: enter-x-animation;
+    }
+    .enter-y {
+        transform: translateY(50px);
+        animation-name: enter-y-animation;
+    }
+    .-enter-y {
+        transform: translateY(-50px);
+        animation-name: enter-y-animation;
+    }
+}
+
+/*
+ * 原 configs/tailwind/src/plugins/entry.ts 的 CSS 等价实现。
+ * 依赖 :nth-child 选择器，故用普通 CSS 而非 @utility。
+ */
+@layer utilities {
+    .enter-x,
+    .enter-y,
+    .-enter-x,
+    .-enter-y {
+        opacity: 0;
+    }
+
+    .enter-x:nth-child(1),
+    .enter-y:nth-child(1),
+    .-enter-x:nth-child(1),
+    .-enter-y:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    .enter-x:nth-child(2),
+    .enter-y:nth-child(2),
+    .-enter-x:nth-child(2),
+    .-enter-y:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    .enter-x:nth-child(3),
+    .enter-y:nth-child(3),
+    .-enter-x:nth-child(3),
+    .-enter-y:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    .enter-x:nth-child(4),
+    .enter-y:nth-child(4),
+    .-enter-x:nth-child(4),
+    .-enter-y:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    .enter-x:nth-child(5),
+    .enter-y:nth-child(5),
+    .-enter-x:nth-child(5),
+    .-enter-y:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .enter-x:nth-child(-n + 5) {
+        animation-name: enter-x-animation;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        transform: translateX(50px);
+    }
+    .-enter-x:nth-child(-n + 5) {
+        animation-name: enter-x-animation;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        transform: translateX(-50px);
+    }
+    .enter-y:nth-child(-n + 5) {
+        animation-name: enter-y-animation;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        transform: translateY(50px);
+    }
+    .-enter-y:nth-child(-n + 5) {
+        animation-name: enter-y-animation;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+        transform: translateY(-50px);
+    }
+
+    @keyframes enter-x-animation {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes enter-y-animation {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

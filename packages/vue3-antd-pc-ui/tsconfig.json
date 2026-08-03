@@ -3,6 +3,8 @@
   "compilerOptions": {
     "isolatedModules": true,
     "noEmit": true,
+    // paths 依赖 baseUrl 才能解析到本包 node_modules，避免 vue-types 被解析到 .pnpm 物理路径导致 TS2742
+    "baseUrl": ".",
     "paths": {
         "@vue3-antd/*": ["./src/*"],
         "vue-types": ["./node_modules/vue-types"],

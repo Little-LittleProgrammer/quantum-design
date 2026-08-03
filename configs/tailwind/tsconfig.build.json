@@ -6,6 +6,6 @@
         "emitDeclarationOnly": true,
         "noEmit": false
     },
-    "include": ["src/index.ts", "src/postcss.config.ts"],
+    "include": ["src/postcss.config.ts"],
     "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
 }

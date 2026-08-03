@@ -8,25 +8,14 @@
         "build": "NODE_ENV=production rolldown -c"
     },
     "files": [
-        "dist"
+        "dist",
+        "theme.css"
     ],
-    "main": "./dist/index.mjs",
-    "module": "./dist/index.mjs",
-    "types": "./dist/types/index.d.ts",
-    "typesVersions": {
-        "*": {
-            "*": [
-                "./dist/*",
-                "./*"
-            ]
-        }
-    },
+    "main": "./dist/postcss.config.mjs",
+    "style": "./theme.css",
     "exports": {
-        ".": {
-            "types": "./dist/types/index.d.ts",
-            "import": "./dist/index.mjs",
-            "require": "./dist/index.cjs"
-        },
+        ".": "./theme.css",
+        "./theme.css": "./theme.css",
         "./postcss": {
             "types": "./dist/types/postcss.config.d.ts",
             "import": "./dist/postcss.config.mjs",
@@ -43,18 +32,15 @@
         "tailwindcss": "catalog:"
     },
     "dependencies": {
-        "@manypkg/get-packages": "catalog:",
-        "autoprefixer": "catalog:",
+        "@tailwindcss/postcss": "catalog:",
         "cssnano": "catalog:",
         "postcss": "catalog:",
         "postcss-antd-fixes": "catalog:",
-        "postcss-import": "catalog:",
         "postcss-preset-env": "catalog:",
         "tailwindcss": "catalog:",
-        "tailwindcss-animate": "catalog:"
+        "tw-animate-css": "catalog:"
     },
     "devDependencies": {
-        "@types/postcss-import": "catalog:",
         "@quantum-design-configs/rolldown": "workspace:*",
         "rolldown": "catalog:"
     }
